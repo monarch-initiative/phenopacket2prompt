@@ -6,7 +6,7 @@ import picocli.CommandLine;
 
 import java.util.concurrent.Callable;
 @CommandLine.Command(name = "phenopacket2promot", mixinStandardHelpOptions = true, version = "0.2.0",
-        description = "Convert phenopacket to promot for GPT")
+        description = "Convert phenopacket to prompt for GPT")
 public class Main implements Callable<Integer> {
 
     public static void main(String[] args){
@@ -15,8 +15,9 @@ public class Main implements Callable<Integer> {
             args = new String[]{"-h"};
         }
         CommandLine cline = new CommandLine(new Main())
-                .addSubcommand("gpt", new OntoGptCsvCommand())
                 .addSubcommand("download", new DownloadCommand())
+                .addSubcommand("gpt", new OntoGptCsvCommand())
+                .addSubcommand("time", new OntoGptTimeCourseCommand())
                 ;
         cline.setToggleBooleanFlags(false);
         int exitCode = cline.execute(args);
