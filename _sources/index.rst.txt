@@ -74,8 +74,7 @@ It will contain four subdirectories
     :name: phenopacket2prompt
     :maxdepth: 1
 
-    installation
-    contributing
+    cases/PMID_33471980.rst
     authors
     developers
     history
