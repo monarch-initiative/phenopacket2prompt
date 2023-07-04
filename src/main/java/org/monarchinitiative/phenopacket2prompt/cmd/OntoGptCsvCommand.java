@@ -125,13 +125,6 @@ public class OntoGptCsvCommand implements Callable<Integer> {
                 throw new PhenolRuntimeException("Could not create phenopacket_query_dir directory");
             }
         }
-        File txt_dir = new File(outDir + File.separator + "txt_cases");
-        if (! txt_dir.isDirectory()) {
-            boolean dirCreated = txt_dir.mkdir();
-            if (!dirCreated) {
-                throw new PhenolRuntimeException("Could not create txt_dir directory");
-            }
-        }
         File txt_with_differential = new File(outDir + File.separator + "txt_with_differential");
         if (! txt_with_differential.isDirectory()) {
             boolean dirCreated = txt_with_differential.mkdir();
@@ -164,13 +157,6 @@ public class OntoGptCsvCommand implements Callable<Integer> {
             outpath = phenopacket_query_dir + File.separator + pmid + "-phenopacket-based_query.txt";
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(outpath))) {
                 writer.write(factory.getPhenopacketBasedQuery());
-            } catch (IOException e) {
-                throw new PhenotoolsRuntimeException(e.getMessage());
-            }
-            // output text case
-            outpath = txt_dir + File.separator + pmid + "-case.txt";
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(outpath))) {
-                writer.write(factory.getCaseTxt());
             } catch (IOException e) {
                 throw new PhenotoolsRuntimeException(e.getMessage());
             }
