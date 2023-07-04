@@ -54,9 +54,13 @@ public class OntoGptTimeCourseCommand implements Callable<Integer> {
     /**
      * The case reports are not valid differential diagnostic exercises
      * 34496178: Discussing HIV prophylaxis
+     *  33730458: primarily imaging, not enough text in initial presentation to be a fair comparison
      */
-    private final Set<String> INVALID_CASE_REPORTS = Set.of("34496178");
+    private final Set<String> INVALID_CASE_REPORTS = Set.of("PMID:34496178", "PMID:33730458");
 
+
+    //Case 8-2021: A 34-Year-Old Woman
+    //with Cholangiocarcinoma
     Map<String, List<String>> caseIdToTimePhraseMap;
     @Override
     public Integer call() {
@@ -68,33 +72,38 @@ public class OntoGptTimeCourseCommand implements Callable<Integer> {
             ChatGptImporter importer = new ChatGptImporter(fpath);
             List<String> lines = importer.getLines();
             String caseName = getCaseName(fname);
+            if (INVALID_CASE_REPORTS.contains(caseName)) {
+                System.out.printf("[INFO] Skipping invalid case %s.\n", caseName);
+            }
             if (targetCase != null && ! caseName.contains(targetCase)) {
                 continue;
             } else {
-                System.out.printf("[INFO] Parsing targetCase %s.\n", targetCase);
+               // System.out.printf("[INFO] Parsing targetCase %s.\n", targetCase);
             }
             id2lines.put(caseName, lines);
         }
+        System.out.printf("[INFO] Parsed %d cases.\n", id2lines.size());
+        System.out.printf("[INFO] Got %d cases in template map.\n", caseIdToTimePhraseMap.size());
         int validParsedCases = 0;
         Ontology hpo = OntologyLoader.loadOntology(new File(hpoJsonPath));
         Map<String, TimeBasedFactory> id2factory = new HashMap<>();
         final TermMiner miner = TermMiner.defaultNonFuzzyMapper(hpo);
-        List<String> timePoints = List.of();
-        for (var entry: id2lines.entrySet()) {
-            boolean skipEntry = false;
-            for (var pmid : caseIdToTimePhraseMap.keySet()) {
-                if (entry.getKey().contains(pmid)) {
-                    timePoints = caseIdToTimePhraseMap.get(pmid);
-                } else {
-                    skipEntry = true;
-                }
-            }
-            if (skipEntry) continue;
 
+        for (var entry: id2lines.entrySet()) {
+            List<String> timePoints = List.of();
+            boolean skipEntry = false;
+
+            if (caseIdToTimePhraseMap.containsKey(entry.getKey())) {
+                timePoints = caseIdToTimePhraseMap.get(entry.getKey());
+            } else {
+                System.out.printf("[WARNING] No time course information for %s.\n", entry.getKey());
+                continue;
+            }
+            System.out.printf("[INFO] Creating prompt for %s.\n",entry.getKey());
             try {
                 ChatGptFilterer filterer = new ChatGptFilterer(entry.getKey(), entry.getValue());
                 if (!filterer.validParse()) {
-                    System.out.printf("%s: Not Valid.\n", entry.getKey());
+                    System.out.printf("ChatGptFilterer -- %s: Not Valid.\n", entry.getKey());
                     continue;
                 }
                 TimeBasedFactory factory = new TimeBasedFactory(filterer, entry.getKey(), miner, hpo, timePoints);
@@ -105,6 +114,7 @@ public class OntoGptTimeCourseCommand implements Callable<Integer> {
             }
             validParsedCases++;
         }
+        System.out.printf("[INFO] Factory map has %d cases.\n", id2factory.size());
         System.out.printf("We parsed %d cases, of which %d were valid.\n", id2lines.entrySet().size(), validParsedCases);
         File outdirfile = new File(outDir);
         if (! outdirfile.isDirectory()) {
@@ -127,7 +137,6 @@ public class OntoGptTimeCourseCommand implements Callable<Integer> {
 
 
         int n_output = 0;
-        Map<String, String> caseIdToDxMap = new HashMap<>();
         for (var entry : id2factory.entrySet()) {
             String pmid = entry.getKey().replace(":", "_");
             TimeBasedFactory factory = entry.getValue();
@@ -155,12 +164,16 @@ public class OntoGptTimeCourseCommand implements Callable<Integer> {
                 throw new PhenolRuntimeException("Malformed header line: " + line);
             }
             while ((line = br.readLine()) != null) {
+                if (line.isEmpty()) continue;
                 String [] fields = line.split("\t");
                 if (fields.length != 2) {
                     throw new PhenolRuntimeException("Malformed line: " + line);
                 }
                 String caseId = fields[0];
                 String times = fields[1];
+                if (! caseId.startsWith("PMID:")) {
+                    throw new PhenolRuntimeException("Malformed case id in template: " + caseId);
+                }
                 if (times.equalsIgnoreCase("NA")) {
                     casemap.put(caseId, List.of());
                 } else {

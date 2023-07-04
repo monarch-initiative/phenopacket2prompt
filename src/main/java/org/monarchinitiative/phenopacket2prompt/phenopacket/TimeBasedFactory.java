@@ -20,6 +20,10 @@ import java.util.regex.Pattern;
 
 public class TimeBasedFactory extends QueryFactory {
 
+    /**
+     * If the description segment of a time period is less than 5 characters, skip it.
+     */
+    private final static int MIN_DESCRIPTION_LENGTH = 5;
     private final ChatGptFilterer filterer;
 
     private final TermMiner miner;
@@ -110,8 +114,12 @@ public class TimeBasedFactory extends QueryFactory {
         for (var entry : timeSegments.entrySet()) {
             String timePoint = entry.getKey();
             String description = entry.getValue();
-            String output = getPhenopacketBasedQuerySegment(timePoint, description);
-            sb.append(output).append("\n");
+            if ( description.length() > MIN_DESCRIPTION_LENGTH) {
+                String output = getPhenopacketBasedQuerySegment(timePoint, description);
+                if (output.isEmpty()) continue;
+                sb.append(output).append("\n");
+            }
+
         }
         return sb.toString();
     }
@@ -119,6 +127,9 @@ public class TimeBasedFactory extends QueryFactory {
 
     public String getPhenopacketBasedQuerySegment(String timePoint, String input) {
         List<PhenotypicFeature> pfeatures = getPhenotypicFeatures(input);
+        if (pfeatures.isEmpty()) {
+            return ""; // no features detected for this time period
+        }
         List<String> observed_terms = pfeatures.stream()
                 .filter(Predicate.not(PhenotypicFeature::getExcluded))
                 .map(PhenotypicFeature::getType)
@@ -137,16 +148,24 @@ public class TimeBasedFactory extends QueryFactory {
             capitalizedTimepoint = timePoint.substring(0, 1).toUpperCase() + timePoint.substring(1);
         }
         sb.append(capitalizedTimepoint);
-        if (capitalizedTimepoint.isEmpty()) {
-            sb.append("The patient presented with ");
-        } else {
-            sb.append(", the patient presented with ");
+        boolean observedEmpty = true;
+        if (! observed_terms.isEmpty()) {
+            observedEmpty = false;
+            if (capitalizedTimepoint.isEmpty()) {
+                sb.append("The patient presented with ");
+            } else {
+                sb.append(", the patient presented with ");
+            }
+            String observedSymptoms = getSymptomList(observed_terms);
+            sb.append(observedSymptoms).append(" ");
         }
-        String observedSymptoms = getSymptomList(observed_terms);
-        sb.append(observedSymptoms).append(" ");
         if (! excluded_terms.isEmpty()) {
-            String excludededSymptoms = getSymptomList(observed_terms);
-            sb.append("The following signs and symptoms were excluded: ");
+            String excludededSymptoms = getSymptomList(excluded_terms);
+            if (observedEmpty) {
+                sb.append(", the following signs and symptoms were excluded: ");
+            } else {
+                sb.append("The following signs and symptoms were excluded: ");
+            }
             sb.append(excludededSymptoms).append(" ");
         }
         return sb.toString();
@@ -179,13 +198,17 @@ public class TimeBasedFactory extends QueryFactory {
                 continue;
             }
             Optional<String> labelOpt = hpo.getTermLabel(tid);
-            if (labelOpt.isPresent()) {
-                PhenotypicFeatureBuilder builder = PhenotypicFeatureBuilder.builder(tid.getValue(), labelOpt.get());
-                if (!hpoObserved) {
-                    builder.excluded();
-                }
-                pflist.add(builder.build());
+            if (labelOpt.isEmpty()) continue;
+            String label = labelOpt.get();
+            if (label.equalsIgnoreCase("Negativism")) {
+                continue; // common false positive, Negative is a synonym for negativism
             }
+            PhenotypicFeatureBuilder builder = PhenotypicFeatureBuilder.builder(tid.getValue(), labelOpt.get());
+            if (!hpoObserved) {
+                builder.excluded();
+            }
+            pflist.add(builder.build());
+
         }
         return pflist;
     }
