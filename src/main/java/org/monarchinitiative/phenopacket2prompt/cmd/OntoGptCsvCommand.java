@@ -217,14 +217,15 @@ public class OntoGptCsvCommand implements Callable<Integer> {
 
     public Set<String> listGptFiles(String dir) {
         File dirFile = new File(dir);
-        if (! dirFile.isDirectory()) {
+        if (dirFile.isDirectory()) {
+            return Stream.of(dirFile.listFiles())
+                    .filter(file -> !file.isDirectory())
+                    .filter(file -> file.getAbsolutePath().endsWith(".txt"))
+                    .map(File::getName)
+                    .collect(Collectors.toSet());
+        } else {
             throw new PhenolRuntimeException("input directory did not point to valid directory");
         }
-        return Stream.of(dirFile.listFiles())
-                .filter(file -> !file.isDirectory())
-                .filter(file -> file.getAbsolutePath().endsWith(".txt"))
-                .map(File::getName)
-                .collect(Collectors.toSet());
     }
 
 }

@@ -143,8 +143,8 @@ Here is the case:
      * concatenate cases lines and remove the name of the first
      * physician to contribute, e.g.,
      * Dr. Kathy M. Tran  (Medicine):
-     * @param lines
-     * @return
+     * @param lines the lines repreenting the case parsed from the original file
+     * @return a single line with all text between the first and the second discussant.
      */
     public String caseLines(List<String> lines) {
         if (lines.isEmpty()) {
