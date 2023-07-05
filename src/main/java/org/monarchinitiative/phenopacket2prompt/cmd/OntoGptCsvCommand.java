@@ -1,13 +1,12 @@
 package org.monarchinitiative.phenopacket2prompt.cmd;
 
+import org.monarchinitiative.fenominal.core.TermMiner;
 import org.monarchinitiative.phenopacket2prompt.phenopacket.PhenopacketFactory;
 import org.monarchinitiative.phenopacket2prompt.llm.ChatGptFilterer;
 import org.monarchinitiative.phenopacket2prompt.llm.ChatGptImporter;
-import org.monarchinitiative.fenominal.core.TermMiner;
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenol.io.OntologyLoader;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
-import org.phenopackets.phenopackettools.builder.exceptions.PhenotoolsRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
@@ -151,28 +150,28 @@ public class OntoGptCsvCommand implements Callable<Integer> {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(outpath))) {
                 writer.write(factory.getPhenopacketJsonString());
             } catch (IOException e) {
-                throw new PhenotoolsRuntimeException(e.getMessage());
+                throw new PhenolRuntimeException(e.getMessage());
             }
             // output phenopacket-based text query
             outpath = phenopacket_query_dir + File.separator + pmid + "-phenopacket-based_query.txt";
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(outpath))) {
                 writer.write(factory.getPhenopacketBasedQuery());
             } catch (IOException e) {
-                throw new PhenotoolsRuntimeException(e.getMessage());
+                throw new PhenolRuntimeException(e.getMessage());
             }
             // output text case with differential
             outpath = txt_with_differential + File.separator + pmid + "-case-with-ddx.txt";
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(outpath))) {
                 writer.write(factory.getCaseWithDifferentialTxt());
             } catch (IOException e) {
-                throw new PhenotoolsRuntimeException(e.getMessage());
+                throw new PhenolRuntimeException(e.getMessage());
             }
             // outpout case prior to discussion with other doctors
             outpath = txt_without_discussion + File.separator + pmid + "-case-prior-to-discussion.txt";
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(outpath))) {
                 writer.write(factory.getCasePriorToDiscussionTxt());
             } catch (IOException e) {
-                throw new PhenotoolsRuntimeException(e.getMessage());
+                throw new PhenolRuntimeException(e.getMessage());
             }
             caseIdToDxMap.put(pmid, factory.getDiagnosis());
             n_output++;
@@ -184,7 +183,7 @@ public class OntoGptCsvCommand implements Callable<Integer> {
                 writer.write(String.format("%s\t%s\n", e.getKey(), e.getValue()));
             }
         } catch (IOException e) {
-            throw new PhenotoolsRuntimeException(e.getMessage());
+            throw new PhenolRuntimeException(e.getMessage());
         }
         return 0;
     }

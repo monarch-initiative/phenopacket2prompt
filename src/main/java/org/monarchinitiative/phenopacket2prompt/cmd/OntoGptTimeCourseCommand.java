@@ -1,7 +1,7 @@
 package org.monarchinitiative.phenopacket2prompt.cmd;
 
+
 import org.monarchinitiative.fenominal.core.TermMiner;
-import org.monarchinitiative.phenol.annotations.constants.hpo.HpoModeOfInheritanceTermIds;
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenol.io.OntologyLoader;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
@@ -9,7 +9,6 @@ import org.monarchinitiative.phenopacket2prompt.llm.ChatGptFilterer;
 import org.monarchinitiative.phenopacket2prompt.llm.ChatGptImporter;
 import org.monarchinitiative.phenopacket2prompt.phenopacket.PhenopacketFactory;
 import org.monarchinitiative.phenopacket2prompt.phenopacket.TimeBasedFactory;
-import org.phenopackets.phenopackettools.builder.exceptions.PhenotoolsRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
@@ -90,7 +89,7 @@ public class OntoGptTimeCourseCommand implements Callable<Integer> {
         final TermMiner miner = TermMiner.defaultNonFuzzyMapper(hpo);
 
         for (var entry: id2lines.entrySet()) {
-            List<String> timePoints = List.of();
+            List<String> timePoints;
             boolean skipEntry = false;
 
             if (caseIdToTimePhraseMap.containsKey(entry.getKey())) {
@@ -146,7 +145,7 @@ public class OntoGptTimeCourseCommand implements Callable<Integer> {
                 writer.write(factory.getPhenopacketBasedQuery());
                 System.out.println(factory.getPhenopacketBasedQuery());
             } catch (IOException e) {
-                throw new PhenotoolsRuntimeException(e.getMessage());
+                throw new PhenolRuntimeException(e.getMessage());
             }
 
 

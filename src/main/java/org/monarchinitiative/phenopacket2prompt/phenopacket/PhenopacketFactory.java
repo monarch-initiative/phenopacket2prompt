@@ -186,7 +186,7 @@ public class PhenopacketFactory extends QueryFactory {
         PhenotypicFeatureFilter filter = new PhenotypicFeatureFilter(phenotypicFeaturesSet, ontology);
         List<PhenotypicFeature> allFeatures = new ArrayList<>(filter.getFinalFeatures());
         System.out.printf("%s: %d unique and %d total features\n", this.caseId, allFeatures.size(), total);
-        builder.addAllPhenotypicFeatures(allFeatures);
+        builder.addPhenotypicFeatures(allFeatures);
 
         return builder.build();
 
