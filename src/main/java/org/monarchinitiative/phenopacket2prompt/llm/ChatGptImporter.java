@@ -52,6 +52,9 @@ public class ChatGptImporter {
             while ((line = br.readLine()) != null) {
                 if (line.length() < 3) continue; // empty or very short lines should be skipped
                 String processed = cleanLine(line);
+                if (processed.contains("  ")) {
+                    throw new PhenolRuntimeException("Double white space found in line"+line);
+                }
                 if (isValid(processed)) {
                     lines.add(processed);
                     // System.out.println(processed);
@@ -103,8 +106,13 @@ public class ChatGptImporter {
             output.append(line, lastIndex, line.length());
         }
         String processed = output.toString();
+
         processed = processed.replace("-| ", "");
         processed = processed.replace("|", "");
+        processed = processed.replaceAll("\\s+", " ");
+        if (processed.contains("  ")) {
+            throw new PhenolRuntimeException("Double space in processed: " + processed);
+        }
         return processed.trim();
     }
 

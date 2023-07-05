@@ -38,12 +38,10 @@ public class TimeBasedFactory extends QueryFactory {
 
     private final String person_string;
 
-    private final List<String> timePoints;
-    public TimeBasedFactory(ChatGptFilterer filterer, String id, TermMiner miner, Ontology hpo, List<String> timePoints) {
+    public TimeBasedFactory(ChatGptFilterer filterer, String id, TermMiner miner, Ontology hpo) {
         this.filterer = filterer;
         this.miner = miner;
         this.hpo = hpo;
-        this.timePoints = timePoints;
         this.phenopacketSex = filterer.getPhenopacketSex();
         this.isoAge = filterer.getIsoAge();
         this.person_string = get_person_string();
@@ -69,6 +67,7 @@ public class TimeBasedFactory extends QueryFactory {
 
     @Override
     public String getPhenopacketBasedQuery() {
+        TimePointParser timePointParser = new TimePointParser();
         List<String> lines = filterer.getPresentationWithoutDiscussionLines();
         String vignette = String.join(" ", lines);
         int ii = vignette.indexOf(".");
@@ -77,35 +76,25 @@ public class TimeBasedFactory extends QueryFactory {
         }
         String firstSentence = vignette.substring(0, ii+1).strip();
         vignette = vignette.substring(ii+1);
-        List<Integer> starts = new ArrayList<>();
-        List<Integer> ends = new ArrayList<>();
-        Map<Integer, String> start2pointMap = new HashMap<>();
-        int i=0,j=0;
-        for (var point : timePoints) {
-            i = vignette.indexOf(point, j);
-            if (i < 0) {
-                System.out.printf("[ERROR] Could not find %s in vignette\n", point);
-                System.exit(1); // should never happen if so die early
-            }
-            j = i + point.length() - 1;
-            starts.add(i);
-            ends.add(j);
-            start2pointMap.put(i, point);
-        }
+        List<TimePoint> timePointList = timePointParser.getTimePoints(vignette);
+
         StringBuilder sb = new StringBuilder();
         sb.append(QUERY_HEADER);
         sb.append(firstSentence).append("\n");
         try {
-            Map<String, String> timeSegments = timeSegments(starts, ends, vignette, start2pointMap);
+            //Map<String, String> timeSegments = timeSegments(starts, ends, vignette, start2pointMap);
+            Map<String, String> timeSegments = timeSegments(vignette, timePointList);
             for (var entry : timeSegments.entrySet()) {
                 String timePoint = entry.getKey();
                 String description = entry.getValue();
+                if (description.equals("Examination was notable for")) {
+                    description = "On examination";
+                }
                 if ( description.length() > MIN_DESCRIPTION_LENGTH) {
                     String output = getPhenopacketBasedQuerySegment(timePoint, description);
                     if (output.isEmpty()) continue;
                     sb.append(output).append("\n");
                 }
-
             }
         } catch (Exception eee) {
             System.out.printf("[ERROR(TimeBasedFactory.java] Could not parse time segments for %s because of %s", caseId, eee.getMessage());
@@ -117,22 +106,17 @@ public class TimeBasedFactory extends QueryFactory {
         return sb.toString();
     }
 
-
-
-    private Map<String, String> timeSegments(List<Integer> starts,
-                                             List<Integer> ends,
-                                             String vignette,
-                                             Map<Integer, String> start2pointMap) {
+    private Map<String, String> timeSegments(String vignette, List<TimePoint> timePointList) {
         Map<String, String> timeSegments = new TreeMap<>(); // ordered map
         String nextStart = "";
         int lastEnd = 0;
-        for (int i = 0; i <starts.size(); i++) {
-            int s = starts.get(i);
-            int e = ends.get(i);
+        for (var timePoint: timePointList) {
+            int s = timePoint.start();
+            int e = timePoint.end();
             String seg = nextStart + vignette.substring(lastEnd, s);
             lastEnd = e + 1;
             timeSegments.put(nextStart, seg.strip());
-            nextStart = start2pointMap.get(s);
+            nextStart = timePoint.point();
         }
         if (lastEnd < vignette.length()) {
             String seg = nextStart + vignette.substring(lastEnd);
@@ -142,7 +126,7 @@ public class TimeBasedFactory extends QueryFactory {
     }
 
 
-    public String getPhenopacketBasedQuerySegment(String timePoint, String input) {
+    public String getPhenopacketBasedQuerySegment(String presentationTimeDescription, String input) {
         List<PhenotypicFeature> pfeatures = getPhenotypicFeatures(input);
         if (pfeatures.isEmpty()) {
             return ""; // no features detected for this time period
@@ -159,11 +143,15 @@ public class TimeBasedFactory extends QueryFactory {
                 .toList();
         StringBuilder sb = new StringBuilder();
         String capitalizedTimepoint;
-        if (timePoint == null || timePoint.length() < 2) {
+        if (presentationTimeDescription.equalsIgnoreCase("Examination was notable for")) {
+            presentationTimeDescription = "On examination";
+        }
+        if (presentationTimeDescription == null || presentationTimeDescription.length() < 2) {
             capitalizedTimepoint = "";
         } else {
-            capitalizedTimepoint = timePoint.substring(0, 1).toUpperCase() + timePoint.substring(1);
+            capitalizedTimepoint = presentationTimeDescription.substring(0, 1).toUpperCase() + presentationTimeDescription.substring(1);
         }
+
         sb.append(capitalizedTimepoint);
         boolean observedEmpty = true;
         if (! observed_terms.isEmpty()) {

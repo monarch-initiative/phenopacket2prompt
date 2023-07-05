@@ -115,15 +115,68 @@ public class TimePointParserTest {
 
     @Test
     public void test10() {
-        String input = "Five years later (4 years before the current admission) some text";
+        String input = "Some text (4 years before the current admission) some text";
         List<TimePoint> tplist = timePointParser.getTimePoints(input);
         assertEquals(1, tplist.size());
         TimePoint tp = tplist.get(0);
         assertEquals("4 years before the current admission", tp.point());
-        assertEquals(18, tp.start());
-        assertEquals(54, tp.end());
+        assertEquals(11, tp.start());
+        assertEquals(47, tp.end());
     }
 
-//Aft
+    @Test
+    public void test11() {
+        String input = " been well until 20 hours before this admission, when diffuse  abdominal pain and nausea developed";
+        List<TimePoint> tplist = timePointParser.getTimePoints(input);
+        assertEquals(1, tplist.size());
+        TimePoint tp = tplist.get(0);
+        assertEquals("20 hours before this admission", tp.point());
+        assertEquals(17, tp.start());
+        assertEquals(47, tp.end());
+    }
 
+    @Test
+    public void test12() {
+        String input = "After a 1-week admission, the dyspnea abated, ";
+        List<TimePoint> tplist = timePointParser.getTimePoints(input);
+        assertEquals(1, tplist.size());
+        TimePoint tp = tplist.get(0);
+        assertEquals("After a 1-week admission", tp.point());
+        assertEquals(0, tp.start());
+        assertEquals(24, tp.end());
+    }
+
+    @Test
+    public void test13() {
+        String input = "The patient had been in his usual state of good health until 1 hour before evaluation, some other text.";
+        List<TimePoint> tplist = timePointParser.getTimePoints(input);
+        assertEquals(1, tplist.size());
+        TimePoint tp = tplist.get(0);
+        assertEquals("1 hour before evaluation", tp.point());
+        assertEquals(61, tp.start());
+        assertEquals(85, tp.end());
+    }
+    @Test
+    public void test14() {
+        String input = "Approximately 2 weeks before the current admission, she sought evaluation at the emergency department of another  hospital.";
+        List<TimePoint> tplist = timePointParser.getTimePoints(input);
+        assertEquals(1, tplist.size());
+        TimePoint tp = tplist.get(0);
+        assertEquals("Approximately 2 weeks before the current admission", tp.point());
+        assertEquals(0, tp.start());
+        assertEquals(50, tp.end());
+    }
+
+    @Test
+    public void test15() {
+        String input = "he patient had been in her usual state of health until 4 days before admission, when she awoke from sleep with swelling .";
+        List<TimePoint> tplist = timePointParser.getTimePoints(input);
+        assertEquals(1, tplist.size());
+        TimePoint tp = tplist.get(0);
+        assertEquals("4 days before admission", tp.point());
+        assertEquals(55, tp.start());
+        assertEquals(78, tp.end());
+    }
+
+//The patient had been in her usual state of health until 4 days before admission,  when she awoke from sleep with swelling and discoloration o
 }
