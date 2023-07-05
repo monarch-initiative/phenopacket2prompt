@@ -85,6 +85,8 @@ public class ChatGptImporter {
     }
 
     private String cleanLine(String line) {
+        // remove duplicated whitespace
+        line = line.replaceAll("\\s+", " ");
         int lastIndex = 0;
         // remove trailing dash, which is a sign that the word at the end of the line was hypenated
         // and now is spread over two lines
