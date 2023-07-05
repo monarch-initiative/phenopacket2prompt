@@ -80,18 +80,49 @@ public class TimeBasedFactory extends QueryFactory {
         List<Integer> starts = new ArrayList<>();
         List<Integer> ends = new ArrayList<>();
         Map<Integer, String> start2pointMap = new HashMap<>();
-
+        int i=0,j=0;
         for (var point : timePoints) {
-            int i = vignette.indexOf(point);
+            i = vignette.indexOf(point, j);
             if (i < 0) {
                 System.out.printf("[ERROR] Could not find %s in vignette\n", point);
                 System.exit(1); // should never happen if so die early
             }
-            int j = i + point.length() - 1;
+            j = i + point.length() - 1;
             starts.add(i);
             ends.add(j);
             start2pointMap.put(i, point);
         }
+        StringBuilder sb = new StringBuilder();
+        sb.append(QUERY_HEADER);
+        sb.append(firstSentence).append("\n");
+        try {
+            Map<String, String> timeSegments = timeSegments(starts, ends, vignette, start2pointMap);
+            for (var entry : timeSegments.entrySet()) {
+                String timePoint = entry.getKey();
+                String description = entry.getValue();
+                if ( description.length() > MIN_DESCRIPTION_LENGTH) {
+                    String output = getPhenopacketBasedQuerySegment(timePoint, description);
+                    if (output.isEmpty()) continue;
+                    sb.append(output).append("\n");
+                }
+
+            }
+        } catch (Exception eee) {
+            System.out.printf("[ERROR(TimeBasedFactory.java] Could not parse time segments for %s because of %s", caseId, eee.getMessage());
+            System.exit(1);
+        }
+
+
+
+        return sb.toString();
+    }
+
+
+
+    private Map<String, String> timeSegments(List<Integer> starts,
+                                             List<Integer> ends,
+                                             String vignette,
+                                             Map<Integer, String> start2pointMap) {
         Map<String, String> timeSegments = new TreeMap<>(); // ordered map
         String nextStart = "";
         int lastEnd = 0;
@@ -107,21 +138,7 @@ public class TimeBasedFactory extends QueryFactory {
             String seg = nextStart + vignette.substring(lastEnd);
             timeSegments.put(nextStart, seg.strip());
         }
-        StringBuilder sb = new StringBuilder();
-        sb.append(QUERY_HEADER);
-        sb.append(firstSentence).append("\n");
-
-        for (var entry : timeSegments.entrySet()) {
-            String timePoint = entry.getKey();
-            String description = entry.getValue();
-            if ( description.length() > MIN_DESCRIPTION_LENGTH) {
-                String output = getPhenopacketBasedQuerySegment(timePoint, description);
-                if (output.isEmpty()) continue;
-                sb.append(output).append("\n");
-            }
-
-        }
-        return sb.toString();
+        return timeSegments;
     }
 
 
