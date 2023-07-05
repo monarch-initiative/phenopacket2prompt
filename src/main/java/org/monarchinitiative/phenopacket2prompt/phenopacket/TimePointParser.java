@@ -1,8 +1,6 @@
 package org.monarchinitiative.phenopacket2prompt.phenopacket;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -70,8 +68,7 @@ public class TimePointParser {
                 }
             }
         }
-
-
+        Collections.sort(timepoints);
         return timepoints;
     }
 
