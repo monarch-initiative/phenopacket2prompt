@@ -70,7 +70,7 @@ public class ChatGptFilterer {
             } else if (line.startsWith("Differential Diagnosis")) {
                 inDifferentialDiagnosis = true;
             } else if (caseId.equalsIgnoreCase("PMID:34437787") &&
-                    line.startsWith("Discussion of Bone Marrow  Biopsy Results")) {
+                    line.startsWith("Discussion of Bone Marrow Biopsy Results")) {
                 inDifferentialDiagnosis = true;
             } else if (caseId.equalsIgnoreCase("PMID:36383716") &&
                     line.startsWith("Pathological Diagnosis")){

@@ -90,9 +90,11 @@ public class OntoGptCsvCommand implements Callable<Integer> {
                 for (var l : filterer.getCaseLines()) {
                     System.out.println(l);
                 }
-                System.out.printf("%s: Valid? %b.\n", entry.getKey(), filterer.validParse());
-                if (!filterer.validParse())
+
+                if (!filterer.validParse()) {
+                    System.out.printf("[ERROR(OntoGptCsvCommand)]%s: Valid? %b.\n", entry.getKey(), filterer.validParse());
                     System.exit(0);
+                }
                 PhenopacketFactory factory = new PhenopacketFactory(filterer, entry.getKey(), miner, hpo);
                 id2factory.put(entry.getKey(), factory);
             } catch (Exception e) {

@@ -106,7 +106,7 @@ public class TimeBasedFactory extends QueryFactory {
     }
 
     private Map<String, String> timeSegments(String vignette, List<TimePoint> timePointList) {
-        Map<String, String> timeSegments = new TreeMap<>(); // ordered map
+        Map<String, String> timeSegments = new LinkedHashMap<>(); // ordered map
         String nextStart = "";
         int lastEnd = 0;
         for (var timePoint: timePointList) {
@@ -157,9 +157,12 @@ public class TimeBasedFactory extends QueryFactory {
             observedEmpty = false;
             if (capitalizedTimepoint.isEmpty()) {
                 sb.append("The patient presented with ");
+            } else if (capitalizedTimepoint.equalsIgnoreCase("Other medical history included")) {
+                sb.append(" "); // this will output Other medical history included X, Y, and Z
             } else {
                 sb.append(", the patient presented with ");
             }
+
             String observedSymptoms = getSymptomList(observed_terms);
             sb.append(observedSymptoms).append(" ");
         }

@@ -72,6 +72,7 @@ public class OntoGptTimeCourseCommand implements Callable<Integer> {
             String caseName = getCaseName(fname);
             if (INVALID_CASE_REPORTS.contains(caseName)) {
                 System.out.printf("[INFO] Skipping invalid case %s.\n", caseName);
+                continue;
             }
             if (targetCase != null && ! caseName.contains(targetCase)) {
                 continue;

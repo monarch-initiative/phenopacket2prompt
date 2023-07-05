@@ -175,5 +175,16 @@ public class TimePointParserTest {
         assertEquals(78, tp.end());
     }
 
-//The patient had been in her usual state of health until 4 days before admission,  when she awoke from sleep with swelling and discoloration o
+    @Test
+    public void test16() {
+        String input = "The patient had been in his usual state of health until 8 days before this admission, when constant aching pain developed in the left eye and the left side of the head.";
+        List<TimePoint> tplist = timePointParser.getTimePoints(input);
+        assertEquals(1, tplist.size());
+        TimePoint tp = tplist.get(0);
+        assertEquals("8 days before this admission", tp.point());
+        assertEquals(56, tp.start());
+        assertEquals(84, tp.end());
+    }
+
+//T
 }
