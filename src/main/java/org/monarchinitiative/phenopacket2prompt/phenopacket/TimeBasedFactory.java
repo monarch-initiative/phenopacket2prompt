@@ -8,8 +8,6 @@ import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenol.ontology.data.TermId;
 import org.monarchinitiative.phenopacket2prompt.llm.ChatGptFilterer;
 import org.phenopackets.phenopackettools.builder.builders.PhenotypicFeatureBuilder;
-import org.phenopackets.schema.v2.Phenopacket;
-import org.phenopackets.schema.v2.core.Individual;
 import org.phenopackets.schema.v2.core.OntologyClass;
 import org.phenopackets.schema.v2.core.PhenotypicFeature;
 
@@ -17,6 +15,7 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class TimeBasedFactory extends QueryFactory {
 
@@ -131,16 +130,16 @@ public class TimeBasedFactory extends QueryFactory {
         if (pfeatures.isEmpty()) {
             return ""; // no features detected for this time period
         }
-        List<String> observed_terms = pfeatures.stream()
+        Set<String> observed_terms = pfeatures.stream()
                 .filter(Predicate.not(PhenotypicFeature::getExcluded))
                 .map(PhenotypicFeature::getType)
                 .map(OntologyClass::getLabel)
-                .toList();
-        List<String> excluded_terms = pfeatures.stream()
+                .collect(Collectors.toSet());
+        Set<String> excluded_terms = pfeatures.stream()
                 .filter(PhenotypicFeature::getExcluded)
                 .map(PhenotypicFeature::getType)
                 .map(OntologyClass::getLabel)
-                .toList();
+                .collect(Collectors.toSet());
         StringBuilder sb = new StringBuilder();
         String capitalizedTimepoint;
         if (presentationTimeDescription.equalsIgnoreCase("Examination was notable for")) {
@@ -180,7 +179,7 @@ public class TimeBasedFactory extends QueryFactory {
      * @param symptoms a list of HPO labels, e.g., X and Y and Z
      * @return A string formatted as X, Y, and Z.
      */
-    private String getSymptomList(List<String> symptoms) {
+    private String getSymptomList(Set<String> symptoms) {
         StringBuilder sb = new StringBuilder();
         String symList = String.join(", ", symptoms);
         int jj = symList.lastIndexOf(", ");

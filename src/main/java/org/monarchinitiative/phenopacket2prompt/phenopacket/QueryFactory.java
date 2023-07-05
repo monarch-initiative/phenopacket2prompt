@@ -2,10 +2,6 @@ package org.monarchinitiative.phenopacket2prompt.phenopacket;
 
 import org.monarchinitiative.phenol.ontology.data.TermId;
 
-import java.io.File;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public abstract class QueryFactory {
 
     protected final TermId PHENOTYPIC_ABNORMALITY_ROOT = TermId.of("HP:0000118");

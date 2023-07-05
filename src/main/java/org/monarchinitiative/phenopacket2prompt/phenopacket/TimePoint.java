@@ -1,7 +1,5 @@
 package org.monarchinitiative.phenopacket2prompt.phenopacket;
 
-import java.util.Objects;
-
 public record TimePoint(String point, int start, int end) implements Comparable<TimePoint>{
 
 

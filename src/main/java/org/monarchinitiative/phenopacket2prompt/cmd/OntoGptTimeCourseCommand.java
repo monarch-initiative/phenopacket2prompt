@@ -7,7 +7,6 @@ import org.monarchinitiative.phenol.io.OntologyLoader;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenopacket2prompt.llm.ChatGptFilterer;
 import org.monarchinitiative.phenopacket2prompt.llm.ChatGptImporter;
-import org.monarchinitiative.phenopacket2prompt.phenopacket.PhenopacketFactory;
 import org.monarchinitiative.phenopacket2prompt.phenopacket.TimeBasedFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,8 +55,10 @@ public class OntoGptTimeCourseCommand implements Callable<Integer> {
      *  33730458: primarily imaging, not enough text in initial presentation to be a fair comparison
      *  PMID:33913642: scant information in case presented by first discussant. Imaging plays prominent role in case.
      *  PMID:34587390: scant information in case presented by first discussant. Imaging plays prominent role in case.
+     *  PMID:34670047: scant information in case presented by first discussant. Imaging plays prominent role in case.
      */
-    private final Set<String> INVALID_CASE_REPORTS = Set.of("PMID:34496178", "PMID:33730458", "PMID:33913642", "PMID:34587390");
+    private final Set<String> INVALID_CASE_REPORTS = Set.of("PMID:34496178", "PMID:33730458", "PMID:33913642",
+            "PMID:34587390", "PMID:34670047");
 
 
     @Override

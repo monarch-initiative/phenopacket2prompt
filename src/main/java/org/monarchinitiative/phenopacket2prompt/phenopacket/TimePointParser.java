@@ -15,7 +15,7 @@ public class TimePointParser {
 
     private final Pattern pattern3 = Pattern.compile("(approximately)?\\s?\\b\\w+\\b (hours?|days?|weeks?|months?|years?|decades?) before (the current )?admission",Pattern.CASE_INSENSITIVE);
 //Five hours before this admission
-    private final Pattern pattern3a = Pattern.compile("(approximately)?\\s?\\b\\w+\\b (hours?|weeks?|months?|years?|decades?) before this admission",Pattern.CASE_INSENSITIVE);
+    private final Pattern pattern3a = Pattern.compile("(approximately)?\\s?\\b\\w+\\b (hours?|days?|weeks?|months?|years?|decades?) before this admission",Pattern.CASE_INSENSITIVE);
 
 
     /** e.g. his ocular history included */
@@ -34,15 +34,9 @@ public class TimePointParser {
     private final Pattern pattern11 = Pattern.compile("Over the next \\b\\w+\\b (hours?|days?|weeks?|months?|years?)",Pattern.CASE_INSENSITIVE);
 
 
-    //
-
-//After a 1-week admission
-
-    ///2 months before this evaluation
-
-    //During the next 3 days
     /** Note we do all searching in lower case */
-    private final Set<String> fixedPatterns = Set.of("in the emergency department", "on examination", "in childhood", "examination was notable for");
+    private final Set<String> fixedPatterns = Set.of("in the emergency department", "on examination", "in childhood", "examination was notable for",
+            "the night before the current evaluation","on arrival at the emergency department");
 
 
 
