@@ -1,5 +1,6 @@
 package org.monarchinitiative.phenopacket2prompt.cmd;
 
+
 import org.monarchinitiative.fenominal.core.TermMiner;
 import org.monarchinitiative.phenopacket2prompt.phenopacket.PhenopacketFactory;
 import org.monarchinitiative.phenopacket2prompt.llm.ChatGptFilterer;
@@ -29,7 +30,6 @@ import java.util.regex.Pattern;
         mixinStandardHelpOptions = true,
         description = "convert CSV to phenopackets (no time)")
 public class OntoGptCsvCommand implements Callable<Integer> {
-    Logger LOGGER = LoggerFactory.getLogger(OntoGptCsvCommand.class);
     @CommandLine.Option(names = {"-g", "--gpt"},
             required = true,
             description = "path to directory with data for chatGPT etc")

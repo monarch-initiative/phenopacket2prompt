@@ -25,7 +25,6 @@ import java.util.stream.Stream;
         mixinStandardHelpOptions = true,
         description = "Create GPT time-course prompt")
 public class OntoGptTimeCourseCommand implements Callable<Integer> {
-    Logger LOGGER = LoggerFactory.getLogger(OntoGptCsvCommand.class);
     @CommandLine.Option(names = {"-g", "--gpt"},
             required = true,
             description = "path to directory with data for chatGPT etc")
@@ -42,12 +41,6 @@ public class OntoGptTimeCourseCommand implements Callable<Integer> {
     @CommandLine.Option(names = {"-c", "--case"},
             description = "case ID (just analyze this case)" )
     private String targetCase = null;
-
-    @CommandLine.Option(names = {"--template"},
-            required = true,
-            description = "time periods template file")
-    private String templateFile = null;
-
 
     /**
      * The case reports are not valid differential diagnostic exercises
@@ -145,43 +138,6 @@ public class OntoGptTimeCourseCommand implements Callable<Integer> {
         System.out.printf("We output %d cases from %d valid cases.\n", n_output, validParsedCases);
         return 0;
     }
-
-    private Map<String, List<String>> getCaseIdToTimePhraseMap(String templateFile) {
-        Map<String, List<String>> casemap = new HashMap<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(templateFile))) {
-            String line = br.readLine();
-            if (! line.startsWith("case")) {
-                throw new PhenolRuntimeException("Malformed header line: " + line);
-            }
-            while ((line = br.readLine()) != null) {
-                if (line.isEmpty()) continue;
-                String [] fields = line.split("\t");
-                if (fields.length != 2) {
-                    throw new PhenolRuntimeException("Malformed line: " + line);
-                }
-                String caseId = fields[0];
-                String times = fields[1];
-                if (! caseId.startsWith("PMID:")) {
-                    throw new PhenolRuntimeException("Malformed case id in template: " + caseId);
-                }
-                if (times.equalsIgnoreCase("NA")) {
-                    casemap.put(caseId, List.of());
-                } else {
-                    String [] timefields = times.split(";");
-                    List<String> tf = new ArrayList<>();
-                    for (var t : timefields) {
-                        tf.add(t.strip());
-                    }
-                    casemap.put(caseId, tf);
-                }
-            }
-
-        } catch (IOException e) {
-            throw new PhenolRuntimeException(e.getMessage());
-        }
-        return casemap;
-    }
-
 
     private String getCaseName(String filePath) {
         File f = new File(filePath);
