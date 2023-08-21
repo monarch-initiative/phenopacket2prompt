@@ -3,13 +3,11 @@ package org.monarchinitiative.phenopacket2prompt.cmd;
 
 import org.monarchinitiative.fenominal.core.TermMiner;
 import org.monarchinitiative.phenopacket2prompt.phenopacket.PhenopacketFactory;
-import org.monarchinitiative.phenopacket2prompt.llm.ChatGptFilterer;
+import org.monarchinitiative.phenopacket2prompt.llm.NejmCaseReportFromPdfFilterer;
 import org.monarchinitiative.phenopacket2prompt.llm.ChatGptImporter;
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenol.io.OntologyLoader;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
 
 import java.io.BufferedWriter;
@@ -84,9 +82,7 @@ public class OntoGptCsvCommand implements Callable<Integer> {
 
             if (skipEntry) continue;
             try {
-                ChatGptFilterer filterer = new ChatGptFilterer(entry.getKey(), entry.getValue());
-                System.out.println(filterer.getSex());
-                System.out.println(filterer.getAge());
+                NejmCaseReportFromPdfFilterer filterer = new NejmCaseReportFromPdfFilterer(entry.getKey(), entry.getValue());
                 for (var l : filterer.getCaseLines()) {
                     System.out.println(l);
                 }

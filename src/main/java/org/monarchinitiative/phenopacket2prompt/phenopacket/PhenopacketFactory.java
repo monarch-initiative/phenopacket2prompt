@@ -3,7 +3,7 @@ package org.monarchinitiative.phenopacket2prompt.phenopacket;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
-import org.monarchinitiative.phenopacket2prompt.llm.ChatGptFilterer;
+import org.monarchinitiative.phenopacket2prompt.llm.NejmCaseReportFromPdfFilterer;
 import org.monarchinitiative.fenominal.core.TermMiner;
 import org.monarchinitiative.fenominal.model.MinedTerm;
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
@@ -31,7 +31,7 @@ public class PhenopacketFactory extends QueryFactory {
     private final String isoAge;
 
     private final String phenopacketSex;
-    private final ChatGptFilterer filterer;
+    private final NejmCaseReportFromPdfFilterer filterer;
     private final Ontology ontology;
 
 
@@ -48,9 +48,9 @@ public class PhenopacketFactory extends QueryFactory {
         return diagnosis;
     }
 
-    public PhenopacketFactory(ChatGptFilterer filterer, String id, TermMiner tminer, Ontology ontology) {
-        String age = filterer.getAge();
-        String sex = filterer.getSex();
+    public PhenopacketFactory(NejmCaseReportFromPdfFilterer filterer, String id, TermMiner tminer, Ontology ontology) {
+//        String age = filterer.getAge();
+//        String sex = filterer.getSex();
         this.phenopacketSex = filterer.getPhenopacketSex();
         this.isoAge = filterer.getIsoAge();
         this.filterer = filterer;

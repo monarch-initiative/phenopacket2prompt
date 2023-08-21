@@ -10,11 +10,16 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ChatGptFilterer {
-
-    private final String age;
-    private final String sex;
-
+/**
+ * This class is responsible for cleaning up the text that was parsed from the NEJM case report PDF files.
+ * It also extracts age and sex.
+ */
+public class NejmCaseReportFromPdfFilterer {
+    /** Age of the probad, e.g. P20Y for twenty years old. This must be at the beginning of the
+     * parsed NEJM file, e.g.
+     * age: 20
+     * sex: M
+     */
     private final String isoAge;
 
     private final String phenopacketSex;
@@ -44,14 +49,11 @@ public class ChatGptFilterer {
 
 
 
-    public ChatGptFilterer(String caseId, List<String> lines) {
-        age = lines.get(0);
-        isoAge = getAge(age);
-        sex = lines.get(1);
-        phenopacketSex = getSex(sex);
+    public NejmCaseReportFromPdfFilterer(String caseId, List<String> lines) {
+        isoAge = getIso8601Age(lines.get(0));
+        phenopacketSex = getSex(lines.get(1));
         caseLines = new ArrayList<>();
         allLines = new ArrayList<>();
-        int howManyDrDiscussions = 0;
         int index = 2;
         for (String line : lines.subList(2, lines.size())) {
             //System.out.println(line);
@@ -152,9 +154,9 @@ public class ChatGptFilterer {
      * @param age a line such as age: 26
      * @return an iso8601 duration string
      */
-    String getAge(String age) {
+    String getIso8601Age(String age) {
         if (! age.startsWith("age:") && (! age.startsWith("Age:"))) {
-            throw new PhenolRuntimeException("Malformed age line: " + age);
+            throw new PhenolRuntimeException("[NejmCaseReportFromPdfFilterer] Malformed age line: " + age);
         }
         String years = age.substring(4).trim();
         years = years.replace(".", "");// remove stray period
@@ -186,18 +188,12 @@ public class ChatGptFilterer {
         } else if (s.equalsIgnoreCase("boy")) {
             return "MALE";
         } else {
-            throw  new PhenolRuntimeException("Malformed sex line: " + sex);
+            throw  new PhenolRuntimeException("[NejmCaseReportFromPdfFilterer] Malformed sex line: " + sex);
         }
     }
 
 
-    public String getAge() {
-        return age;
-    }
 
-    public String getSex() {
-        return sex;
-    }
 
     public String getIsoAge() {
         return isoAge;

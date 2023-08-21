@@ -6,7 +6,7 @@ import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenol.ontology.algo.OntologyAlgorithm;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenol.ontology.data.TermId;
-import org.monarchinitiative.phenopacket2prompt.llm.ChatGptFilterer;
+import org.monarchinitiative.phenopacket2prompt.llm.NejmCaseReportFromPdfFilterer;
 import org.phenopackets.phenopackettools.builder.builders.PhenotypicFeatureBuilder;
 import org.phenopackets.schema.v2.core.OntologyClass;
 import org.phenopackets.schema.v2.core.PhenotypicFeature;
@@ -23,7 +23,7 @@ public class TimeBasedFactory extends QueryFactory {
      * If the description segment of a time period is less than 5 characters, skip it.
      */
     private final static int MIN_DESCRIPTION_LENGTH = 5;
-    private final ChatGptFilterer filterer;
+    private final NejmCaseReportFromPdfFilterer filterer;
 
     private final TermMiner miner;
 
@@ -37,7 +37,7 @@ public class TimeBasedFactory extends QueryFactory {
 
     private final String person_string;
 
-    public TimeBasedFactory(ChatGptFilterer filterer, String id, TermMiner miner, Ontology hpo) {
+    public TimeBasedFactory(NejmCaseReportFromPdfFilterer filterer, String id, TermMiner miner, Ontology hpo) {
         this.filterer = filterer;
         this.miner = miner;
         this.hpo = hpo;

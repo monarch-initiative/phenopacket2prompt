@@ -5,11 +5,9 @@ import org.monarchinitiative.fenominal.core.TermMiner;
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenol.io.OntologyLoader;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
-import org.monarchinitiative.phenopacket2prompt.llm.ChatGptFilterer;
+import org.monarchinitiative.phenopacket2prompt.llm.NejmCaseReportFromPdfFilterer;
 import org.monarchinitiative.phenopacket2prompt.llm.ChatGptImporter;
 import org.monarchinitiative.phenopacket2prompt.phenopacket.TimeBasedFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
 
 import java.io.*;
@@ -56,21 +54,27 @@ public class OntoGptTimeCourseCommand implements Callable<Integer> {
 
     @Override
     public Integer call() {
+        // key: identifier of PMID; value - lines of text
         Map<String, List<String>> id2lines = new HashMap<>();
-        Set<String> gptFiles = listGptFiles(gptDirectoryPath);
-        for (String fname : gptFiles) {
+        // raw text from PDF parsiong of the NEJM cases
+        Set<String> nejmCaseReportFiles = listNejmCaseReportFiles(gptDirectoryPath);
+        for (String fname : nejmCaseReportFiles) {
             File fpath = new File(gptDirectoryPath + File.separator + fname);
             ChatGptImporter importer = new ChatGptImporter(fpath);
             List<String> lines = importer.getLines();
             String caseName = getCaseName(fname);
+            // we skip five of the 80 raw files for reasons listed above
             if (INVALID_CASE_REPORTS.contains(caseName)) {
-                System.out.printf("[INFO] Skipping invalid case %s.\n", caseName);
                 continue;
             }
-            if (targetCase != null && ! caseName.contains(targetCase)) {
-                continue;
-            } else {
-               // System.out.printf("[INFO] Parsing targetCase %s.\n", targetCase);
+            // If run with the --targetCase argument, just the targetCase is processed.
+            // if targetCase == null, that means we are processing all files
+            if (targetCase != null) {
+                if (!caseName.contains(targetCase)) {
+                    continue;
+                } else {
+                    System.out.printf("[INFO] Parsing targetCase %s.\n", targetCase);
+                }
             }
             id2lines.put(caseName, lines);
         }
@@ -81,10 +85,9 @@ public class OntoGptTimeCourseCommand implements Callable<Integer> {
         final TermMiner miner = TermMiner.defaultNonFuzzyMapper(hpo);
 
         for (var entry: id2lines.entrySet()) {
-            List<String> timePoints;
             System.out.printf("[INFO] Creating prompt for %s.\n",entry.getKey());
             try {
-                ChatGptFilterer filterer = new ChatGptFilterer(entry.getKey(), entry.getValue());
+                NejmCaseReportFromPdfFilterer filterer = new NejmCaseReportFromPdfFilterer(entry.getKey(), entry.getValue());
                 if (!filterer.validParse()) {
                     System.out.printf("ChatGptFilterer -- %s: Not Valid.\n", entry.getKey());
                     continue;
@@ -150,7 +153,13 @@ public class OntoGptTimeCourseCommand implements Callable<Integer> {
         return bname;
     }
 
-    public Set<String> listGptFiles(String dir) {
+    /**
+     * This function reads the txt files from a directory in which we put
+     * texts parsed from the PDF files representing the NEJM case reports.
+     * @param dir directory with txt files
+     * @return list of file paths
+     */
+    public Set<String> listNejmCaseReportFiles(String dir) {
         File dirFile = new File(dir);
         if (dirFile.isDirectory()) {
             return Stream.of(dirFile.listFiles())
