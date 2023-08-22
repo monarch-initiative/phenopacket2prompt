@@ -1,9 +1,9 @@
-package org.monarchinitiative.phenopacket2prompt.phenopacket;
+package org.monarchinitiative.phenopacket2prompt.querygen;
 
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
-import org.monarchinitiative.phenopacket2prompt.llm.NejmCaseReportFromPdfFilterer;
+import org.monarchinitiative.phenopacket2prompt.nejm.NejmCaseReportFromPdfFilterer;
 import org.monarchinitiative.fenominal.core.TermMiner;
 import org.monarchinitiative.fenominal.model.MinedTerm;
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;

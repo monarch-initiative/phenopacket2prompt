@@ -1,8 +1,7 @@
-package org.monarchinitiative.phenopacket2prompt.phenopacket;
+package org.monarchinitiative.phenopacket2prompt.querygen;
 
 import org.junit.jupiter.api.Test;
 
-import java.nio.file.Path;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

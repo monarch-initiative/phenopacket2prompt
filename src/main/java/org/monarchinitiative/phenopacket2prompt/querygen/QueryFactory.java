@@ -1,4 +1,4 @@
-package org.monarchinitiative.phenopacket2prompt.phenopacket;
+package org.monarchinitiative.phenopacket2prompt.querygen;
 
 import org.monarchinitiative.phenol.ontology.data.TermId;
 

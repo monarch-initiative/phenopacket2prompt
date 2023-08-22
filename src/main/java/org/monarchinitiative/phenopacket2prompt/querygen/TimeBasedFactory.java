@@ -1,4 +1,4 @@
-package org.monarchinitiative.phenopacket2prompt.phenopacket;
+package org.monarchinitiative.phenopacket2prompt.querygen;
 
 import org.monarchinitiative.fenominal.core.TermMiner;
 import org.monarchinitiative.fenominal.model.MinedTerm;
@@ -6,7 +6,7 @@ import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenol.ontology.algo.OntologyAlgorithm;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenol.ontology.data.TermId;
-import org.monarchinitiative.phenopacket2prompt.llm.NejmCaseReportFromPdfFilterer;
+import org.monarchinitiative.phenopacket2prompt.nejm.NejmCaseReportFromPdfFilterer;
 import org.phenopackets.phenopackettools.builder.builders.PhenotypicFeatureBuilder;
 import org.phenopackets.schema.v2.core.OntologyClass;
 import org.phenopackets.schema.v2.core.PhenotypicFeature;

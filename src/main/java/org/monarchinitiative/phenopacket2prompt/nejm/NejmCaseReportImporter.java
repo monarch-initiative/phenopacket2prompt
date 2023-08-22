@@ -1,4 +1,4 @@
-package org.monarchinitiative.phenopacket2prompt.llm;
+package org.monarchinitiative.phenopacket2prompt.nejm;
 
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 
@@ -12,7 +12,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ChatGptImporter {
+public class NejmCaseReportImporter {
     private final List<String> lines;
     /** Remove HTML tags */
     final Pattern CLEAN_HTML_TAG = Pattern.compile("<.*?>");
@@ -35,7 +35,7 @@ public class ChatGptImporter {
     final Set<String> EQUALS_FILTER_TOKENS = Set.of("the", "medicine", "Case Records", "of the" );
 
 
-    public ChatGptImporter(File gptFilePath) {
+    public NejmCaseReportImporter(File gptFilePath) {
         lines = new ArrayList<>();
         try {
             CodingErrorAction codingErrorAction = CodingErrorAction.IGNORE;
