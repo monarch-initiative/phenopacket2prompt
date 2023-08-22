@@ -8,7 +8,7 @@ public enum QueryOutputType {
     TEXT_PLUS_MANUAL;
 
 
-    public static String dirpath(QueryOutputType qtype) {
+    public static String outputString(QueryOutputType qtype) {
         return switch (qtype) {
             case TIME_BASED -> "phenopacket_time_based_queries";
             case QC -> "QC";

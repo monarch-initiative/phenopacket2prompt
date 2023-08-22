@@ -24,6 +24,6 @@ public class QcQueryGenerator extends AbstractQueryGenerator {
 
     @Override
     public String getQuery() {
-        return null;
+        return promptText;
     }
 }

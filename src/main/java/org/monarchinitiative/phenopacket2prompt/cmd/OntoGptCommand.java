@@ -1,7 +1,6 @@
 package org.monarchinitiative.phenopacket2prompt.cmd;
 
 
-import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenol.io.OntologyLoader;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenopacket2prompt.nejm.NejmCaseReportIngestor;
@@ -70,7 +69,7 @@ public class OntoGptCommand implements Callable<Integer> {
                 useTreatment);
 
         int validParsedCases = 0;
-        Map<String, TimeBasedFactory> id2timeCourseFactory = ppIngestor.getId2timeCourseFactory();
+        Map<String, QueryPromptFactory> id2timeCourseFactory = ppIngestor.getId2timeCourseFactory();
         System.out.printf("[INFO] Factory map has %d cases.\n", id2timeCourseFactory.size());
         System.out.printf("We parsed %d cases, of which %d were valid.\n", id2lines.entrySet().size(), validParsedCases);
 

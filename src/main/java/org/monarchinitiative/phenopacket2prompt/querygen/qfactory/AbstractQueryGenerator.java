@@ -65,15 +65,15 @@ Here is the case:
     /**
      * If the description segment of a time period is less than 5 characters, skip it.
      */
-    private final static int MIN_DESCRIPTION_LENGTH = 5;
+    protected final static int MIN_DESCRIPTION_LENGTH = 5;
 
     public  abstract  String getQuery();
 
-    private final TermMiner miner;
+    protected final TermMiner miner;
 
-    private final Ontology hpo;
+    protected final Ontology hpo;
 
-    private final NejmCaseReportFromPdfFilterer filterer;
+    protected final NejmCaseReportFromPdfFilterer filterer;
 
     private final String patientId;
 
@@ -265,7 +265,7 @@ Here is the case:
      * @param lines the lines repreenting the case parsed from the original file
      * @return a single line with all text between the first and the second discussant.
      */
-    public String caseLines(List<String> lines) {
+    protected String caseLines(List<String> lines) {
         if (lines.isEmpty()) {
             throw new PhenolRuntimeException("Empty case lines (Should never happen");
         }

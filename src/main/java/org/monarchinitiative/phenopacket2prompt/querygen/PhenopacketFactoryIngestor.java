@@ -11,7 +11,7 @@ import java.util.Map;
 public class PhenopacketFactoryIngestor {
 
 
-    private final Map<String, TimeBasedFactory> id2timeCourseFactory;
+    private final Map<String, QueryPromptFactory> id2timeCourseFactory;
 
     public PhenopacketFactoryIngestor(Map<String, List<String>> id2lines,
                                       Ontology hpo,
@@ -30,7 +30,7 @@ public class PhenopacketFactoryIngestor {
                     System.out.printf("ChatGptFilterer -- %s: Not Valid.\n", entry.getKey());
                     continue;
                 }
-                TimeBasedFactory factory = new TimeBasedFactory(filterer, caseNameAsPmid, miner, hpo, useManual);
+                QueryPromptFactory factory = new QueryPromptFactory(filterer, caseNameAsPmid, miner, hpo, useManual);
                 id2timeCourseFactory.put(caseNameAsPmid, factory);
             } catch (Exception e) {
                 System.out.printf("Exception with %s: %s.\n", entry.getKey(), e.getMessage());
@@ -42,7 +42,7 @@ public class PhenopacketFactoryIngestor {
         System.out.printf("We parsed %d cases, of which %d were valid.\n", id2lines.entrySet().size(), validParsedCases);
     }
 
-    public Map<String, TimeBasedFactory> getId2timeCourseFactory() {
+    public Map<String, QueryPromptFactory> getId2timeCourseFactory() {
         return id2timeCourseFactory;
     }
 }

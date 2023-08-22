@@ -1,26 +1,21 @@
 package org.monarchinitiative.phenopacket2prompt.querygen;
 
 import org.monarchinitiative.fenominal.core.TermMiner;
-import org.monarchinitiative.fenominal.model.MinedTerm;
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
-import org.monarchinitiative.phenol.ontology.algo.OntologyAlgorithm;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
-import org.monarchinitiative.phenol.ontology.data.TermId;
 import org.monarchinitiative.phenopacket2prompt.nejm.NejmCaseReportFromPdfFilterer;
 import org.monarchinitiative.phenopacket2prompt.querygen.qfactory.QcQueryGenerator;
+import org.monarchinitiative.phenopacket2prompt.querygen.qfactory.TextPlusManualGenerator;
 import org.monarchinitiative.phenopacket2prompt.querygen.qfactory.TextWithoutDiscussionQuery;
 import org.monarchinitiative.phenopacket2prompt.querygen.qfactory.TimeBasedPhenopacketOnlyQuery;
-import org.phenopackets.phenopackettools.builder.builders.PhenotypicFeatureBuilder;
-import org.phenopackets.schema.v2.core.OntologyClass;
-import org.phenopackets.schema.v2.core.PhenotypicFeature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.*;
-import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
-public class TimeBasedFactory  {
+public class QueryPromptFactory {
+    Logger LOGGER = LoggerFactory.getLogger(QueryPromptFactory.class);
 
     /**
      * If the description segment of a time period is less than 5 characters, skip it.
@@ -42,8 +37,8 @@ public class TimeBasedFactory  {
     private final boolean useManual;
 
 
-    public TimeBasedFactory(NejmCaseReportFromPdfFilterer filterer, String id, TermMiner miner, Ontology hpo,
-                            boolean useManual) {
+    public QueryPromptFactory(NejmCaseReportFromPdfFilterer filterer, String id, TermMiner miner, Ontology hpo,
+                              boolean useManual) {
         this.filterer = filterer;
         this.miner = miner;
         this.hpo = hpo;
@@ -55,7 +50,9 @@ public class TimeBasedFactory  {
     }
 
     public String getQuery(QueryOutputType outputType) {
+        LOGGER.error("Getting query for {}", outputType.name());
         switch (outputType) {
+
             case TIME_BASED -> {
                 TimeBasedPhenopacketOnlyQuery tbq = new TimeBasedPhenopacketOnlyQuery(filterer, caseId, miner, hpo);
                 return tbq.getQuery();
@@ -69,7 +66,8 @@ public class TimeBasedFactory  {
                 return qcg.getQuery();
             }
             case TEXT_PLUS_MANUAL -> {
-                throw new IllegalStateException("Unexpected value: " + outputType);
+                TextPlusManualGenerator tpm = new TextPlusManualGenerator(filterer, caseId, miner, hpo);
+                return tpm.getQuery();
             }
         }
         // should never happen

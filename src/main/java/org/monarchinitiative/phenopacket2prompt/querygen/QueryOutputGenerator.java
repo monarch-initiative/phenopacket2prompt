@@ -1,6 +1,5 @@
 package org.monarchinitiative.phenopacket2prompt.querygen;
 
-import jdk.jshell.spi.ExecutionControl;
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 
 import java.io.BufferedWriter;
@@ -21,7 +20,7 @@ public class QueryOutputGenerator {
         this.outdirPath = outdirPath;
         createOutputDirectoryIfNeeded(outdirPath);
         for (var qtype: outputTypeList) {
-            String outpath = outdirPath + File.separator + QueryOutputType.dirpath(qtype);
+            String outpath = outdirPath + File.separator + QueryOutputType.outputString(qtype);
             createOutputDirectoryIfNeeded(outpath);
         }
     }
@@ -37,13 +36,14 @@ public class QueryOutputGenerator {
     }
 
 
-    public void outputEntry(String pmidString, TimeBasedFactory timeBasedFactory) {
+    public void outputEntry(String pmidString, QueryPromptFactory timeBasedFactory) {
         String pmid = pmidString.replace(":", "_"); // avoid colon in file paths
         for (var otype : this.outputTypeList) {
-            String outpath = this.outdirPath + File.separator + pmidString +
-                    QueryOutputType.dirpath(otype);
+            String outputString = QueryOutputType.outputString(otype);
+            String outpath = this.outdirPath + File.separator + outputString + File.separator +
+                    pmid + outputString + ".txt";
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(outpath))) {
-                writer.write(timeBasedFactory.getQuery(QueryOutputType.TIME_BASED));
+                writer.write(timeBasedFactory.getQuery(otype));
             } catch (IOException e) {
                 throw new PhenolRuntimeException(e.getMessage());
             }
