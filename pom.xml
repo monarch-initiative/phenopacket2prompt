@@ -6,7 +6,7 @@
 
     <groupId>org.monarchinitiative</groupId>
     <artifactId>phenopacket2prompt</artifactId>
-    <version>0.3.1</version>
+    <version>0.3.3</version>
 
     <name>phenopacket2prompt</name>
     <url>https://github.com/monarch-initiative/phenopacket2prompt</url>

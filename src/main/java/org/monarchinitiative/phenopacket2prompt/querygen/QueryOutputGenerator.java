@@ -40,46 +40,17 @@ public class QueryOutputGenerator {
     public void outputEntry(String pmidString, TimeBasedFactory timeBasedFactory) {
         String pmid = pmidString.replace(":", "_"); // avoid colon in file paths
         for (var otype : this.outputTypeList) {
-            switch (otype) {
-                case TIME_BASED -> outputTimeBased(pmid, timeBasedFactory);
-                case QC -> outputQC(pmid, timeBasedFactory);
-                case TEXT_WITHOUT_DISCUSSION -> outputTextWithoutDiscussion(pmid, timeBasedFactory);
-                case TEXT_PLUS_MANUAL ->  outputTextPlusManual(pmid, timeBasedFactory);
+            String outpath = this.outdirPath + File.separator + pmidString +
+                    QueryOutputType.dirpath(otype);
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(outpath))) {
+                writer.write(timeBasedFactory.getQuery(QueryOutputType.TIME_BASED));
+            } catch (IOException e) {
+                throw new PhenolRuntimeException(e.getMessage());
             }
         }
     }
 
-    private void outputTimeBased(String pmidString, TimeBasedFactory timeBasedFactory) {
-        String outpath = this.outdirPath + File.separator + pmidString +
-                QueryOutputType.dirpath(QueryOutputType.TIME_BASED);
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outpath))) {
-            writer.write(timeBasedFactory.getPhenopacketBasedQuery());
-        } catch (IOException e) {
-            throw new PhenolRuntimeException(e.getMessage());
-        }
-    }
 
-    private void outputQC(String pmidString, TimeBasedFactory timeBasedFactory) {
-        String outpath = this.outdirPath + File.separator + pmidString +
-                QueryOutputType.dirpath(QueryOutputType.QC);
-        String textBased = timeBasedFactory.getPhenopacketTextOnly();
-        String original = timeBasedFactory.getOriginalVignetteText();
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outpath))) {
-            writer.write("### query text### \n\n");
-            writer.write(textBased);
-            writer.write("\n\n### original text ###\n\n");
-            writer.write(original);
-        } catch (IOException e) {
-            throw new PhenolRuntimeException(e.getMessage());
-        }
-    }
 
-    private void outputTextPlusManual(String pmidString, TimeBasedFactory timeBasedFactory) {
-        throw new PhenolRuntimeException("NOT IMPLEMENTED");
-    }
-
-    private void outputTextWithoutDiscussion(String pmidString, TimeBasedFactory timeBasedFactory) {
-        throw new PhenolRuntimeException("NOT IMPLEMENTED");
-    }
 
 }

@@ -71,7 +71,6 @@ public class OntoGptCommand implements Callable<Integer> {
 
         int validParsedCases = 0;
         Map<String, TimeBasedFactory> id2timeCourseFactory = ppIngestor.getId2timeCourseFactory();
-        Map<String, PhenopacketFactory> id2phenopacketFactory = ppIngestor.getId2phenopacketFactory();
         System.out.printf("[INFO] Factory map has %d cases.\n", id2timeCourseFactory.size());
         System.out.printf("We parsed %d cases, of which %d were valid.\n", id2lines.entrySet().size(), validParsedCases);
 
