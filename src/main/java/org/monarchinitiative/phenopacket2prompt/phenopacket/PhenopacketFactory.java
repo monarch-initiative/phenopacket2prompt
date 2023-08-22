@@ -49,8 +49,6 @@ public class PhenopacketFactory extends QueryFactory {
     }
 
     public PhenopacketFactory(NejmCaseReportFromPdfFilterer filterer, String id, TermMiner tminer, Ontology ontology) {
-//        String age = filterer.getAge();
-//        String sex = filterer.getSex();
         this.phenopacketSex = filterer.getPhenopacketSex();
         this.isoAge = filterer.getIsoAge();
         this.filterer = filterer;
@@ -86,6 +84,16 @@ public class PhenopacketFactory extends QueryFactory {
             sb.append(String.join("\n", excluded_terms)).append("\n\n");
         }
         return sb.toString();
+    }
+
+    @Override
+    public String getPhenopacketTextOnly() {
+        return null;
+    }
+
+    @Override
+    public String getOriginalVignetteText() {
+        return null;
     }
 
     private String get_person_string(Phenopacket phenopacket) {

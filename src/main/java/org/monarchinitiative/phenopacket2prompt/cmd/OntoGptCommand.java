@@ -7,6 +7,8 @@ import org.monarchinitiative.phenol.io.OntologyLoader;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenopacket2prompt.llm.NejmCaseReportFromPdfFilterer;
 import org.monarchinitiative.phenopacket2prompt.llm.ChatGptImporter;
+import org.monarchinitiative.phenopacket2prompt.phenopacket.BracketParser;
+import org.monarchinitiative.phenopacket2prompt.phenopacket.PhenopacketFactory;
 import org.monarchinitiative.phenopacket2prompt.phenopacket.TimeBasedFactory;
 import picocli.CommandLine;
 
@@ -22,7 +24,7 @@ import java.util.stream.Stream;
 @CommandLine.Command(name = "gpt-time", aliases = {"T"},
         mixinStandardHelpOptions = true,
         description = "Create GPT time-course prompt")
-public class OntoGptTimeCourseCommand implements Callable<Integer> {
+public class OntoGptCommand implements Callable<Integer> {
     @CommandLine.Option(names = {"-g", "--gpt"},
             required = true,
             description = "path to directory with data for chatGPT etc")
@@ -39,6 +41,14 @@ public class OntoGptTimeCourseCommand implements Callable<Integer> {
     @CommandLine.Option(names = {"-c", "--case"},
             description = "case ID (just analyze this case)" )
     private String targetCase = null;
+
+    boolean useManual = true;
+    boolean useDiagnostic = true;
+    boolean useTreatment = true;
+    /** OUTPUT the Q/C file? */
+    private final static boolean DO_QUALITY_CONTROL = true;
+
+
 
     /**
      * The case reports are not valid differential diagnostic exercises
@@ -62,38 +72,42 @@ public class OntoGptTimeCourseCommand implements Callable<Integer> {
             File fpath = new File(gptDirectoryPath + File.separator + fname);
             ChatGptImporter importer = new ChatGptImporter(fpath);
             List<String> lines = importer.getLines();
-            String caseName = getCaseName(fname);
+            String caseNameAsPmid = getCaseNameAsPmid(fname);
             // we skip five of the 80 raw files for reasons listed above
-            if (INVALID_CASE_REPORTS.contains(caseName)) {
+            if (INVALID_CASE_REPORTS.contains(caseNameAsPmid)) {
                 continue;
             }
             // If run with the --targetCase argument, just the targetCase is processed.
             // if targetCase == null, that means we are processing all files
             if (targetCase != null) {
-                if (!caseName.contains(targetCase)) {
+                if (!caseNameAsPmid.contains(targetCase)) {
                     continue;
                 } else {
                     System.out.printf("[INFO] Parsing targetCase %s.\n", targetCase);
                 }
             }
-            id2lines.put(caseName, lines);
+            id2lines.put(caseNameAsPmid, lines);
         }
         System.out.printf("[INFO] Parsed %d cases.\n", id2lines.size());
         int validParsedCases = 0;
         Ontology hpo = OntologyLoader.loadOntology(new File(hpoJsonPath));
         Map<String, TimeBasedFactory> id2factory = new HashMap<>();
+        Map<String, PhenopacketFactory> id2phenopacketFactory = new HashMap<>();
         final TermMiner miner = TermMiner.defaultNonFuzzyMapper(hpo);
-
+        PhenopacketFactory phenopacketfactory = null;
         for (var entry: id2lines.entrySet()) {
-            System.out.printf("[INFO] Creating prompt for %s.\n",entry.getKey());
+            String caseNameAsPmid = entry.getKey();
+            System.out.printf("[INFO] Creating prompt for %s.\n", caseNameAsPmid);
             try {
-                NejmCaseReportFromPdfFilterer filterer = new NejmCaseReportFromPdfFilterer(entry.getKey(), entry.getValue());
+                NejmCaseReportFromPdfFilterer filterer = new NejmCaseReportFromPdfFilterer(caseNameAsPmid, entry.getValue());
                 if (!filterer.validParse()) {
                     System.out.printf("ChatGptFilterer -- %s: Not Valid.\n", entry.getKey());
                     continue;
                 }
-                TimeBasedFactory factory = new TimeBasedFactory(filterer, entry.getKey(), miner, hpo);
-                id2factory.put(entry.getKey(), factory);
+                TimeBasedFactory factory = new TimeBasedFactory(filterer, caseNameAsPmid, miner, hpo, useManual, useDiagnostic, useTreatment);
+                phenopacketfactory = new PhenopacketFactory(filterer, caseNameAsPmid, miner, hpo);
+                id2factory.put(caseNameAsPmid, factory);
+                id2phenopacketFactory.put(caseNameAsPmid, phenopacketfactory);
             } catch (Exception e) {
                 System.out.printf("Exception with %s: %s.\n", entry.getKey(), e.getMessage());
                 System.exit(1);
@@ -102,6 +116,7 @@ public class OntoGptTimeCourseCommand implements Callable<Integer> {
         }
         System.out.printf("[INFO] Factory map has %d cases.\n", id2factory.size());
         System.out.printf("We parsed %d cases, of which %d were valid.\n", id2lines.entrySet().size(), validParsedCases);
+        // CREATE THE OUTPUT DIRECTORIES IF NEEDED.
         File outdirfile = new File(outDir);
         if (! outdirfile.isDirectory()) {
             boolean dirCreated = outdirfile.mkdir();
@@ -109,8 +124,6 @@ public class OntoGptTimeCourseCommand implements Callable<Integer> {
                 throw new PhenolRuntimeException("Could not create outdirfile directory");
             }
         }
-
-
         File phenopacket_query_dir = new File(outDir + File.separator + "phenopacket_time_based_queries");
         if (! phenopacket_query_dir.isDirectory()) {
             boolean dirCreated = phenopacket_query_dir.mkdir();
@@ -119,7 +132,21 @@ public class OntoGptTimeCourseCommand implements Callable<Integer> {
             }
         }
 
+        File phenopacket_QC_dir = new File(outDir + File.separator + "QC");
+        if (! phenopacket_QC_dir.isDirectory()) {
+            boolean dirCreated = phenopacket_QC_dir.mkdir();
+            if (!dirCreated) {
+                throw new PhenolRuntimeException("Could not create phenopacket_QC_dir directory");
+            }
+        }
 
+        File txt_without_discussion = new File(outDir + File.separator + "txt_without_discussion");
+        if (! txt_without_discussion.isDirectory()) {
+            boolean dirCreated = txt_without_discussion.mkdir();
+            if (!dirCreated) {
+                throw new PhenolRuntimeException("Could not create txt_without_discussion directory");
+            }
+        }
 
 
         int n_output = 0;
@@ -130,19 +157,65 @@ public class OntoGptTimeCourseCommand implements Callable<Integer> {
             String outpath = phenopacket_query_dir + File.separator + pmid + "-phenopacket-time-based_query.txt";
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(outpath))) {
                 writer.write(factory.getPhenopacketBasedQuery());
-                System.out.println(factory.getPhenopacketBasedQuery());
+              //  System.out.println(factory.getPhenopacketBasedQuery());
             } catch (IOException e) {
                 throw new PhenolRuntimeException(e.getMessage());
             }
-
+            if (DO_QUALITY_CONTROL) {
+                String textBased = factory.getPhenopacketTextOnly();
+                String original = factory.getOriginalVignetteText();
+                BracketParser bparser = new BracketParser(original);
+                original = bparser.getTrimmedVignette();
+                String qc_path = phenopacket_QC_dir + File.separator + pmid + "-QC.txt";
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(qc_path))) {
+                    writer.write("### query text### \n\n");
+                    writer.write(textBased);
+                    writer.write("\n\n### original text ###\n\n");
+                    writer.write(original);
+                } catch (IOException e) {
+                    throw new PhenolRuntimeException(e.getMessage());
+                }
+            }
 
             n_output++;
         }
+
+        if (true) {
+            // output QC files for checking!
+            for (var entry : id2factory.entrySet()) {
+                String pmid = entry.getKey().replace(":", "_");
+
+                String outpath = phenopacket_QC_dir + File.separator + pmid + "-phenopacket-QC.txt";
+                List<String> lines = id2lines.get(entry.getKey());
+                if (lines == null || lines.isEmpty()) {
+                    System.err.println("[ERROR] Could not find lines for " + pmid);
+                    System.exit(1);
+                }
+
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(outpath))) {
+                    for (var line : lines)
+                    writer.write(line + "\n");
+                } catch (IOException e) {
+                    throw new PhenolRuntimeException(e.getMessage());
+                }
+
+                // outpout case prior to discussion with other doctors
+                String txt_no_disc_output = txt_without_discussion + File.separator + pmid + "-case-prior-to-discussion.txt";
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(outpath))) {
+                    writer.write(phenopacketfactory.getCasePriorToDiscussionTxt());
+                } catch (IOException e) {
+                    throw new PhenolRuntimeException(e.getMessage());
+                }
+                n_output++;
+            }
+        }
+
+
         System.out.printf("We output %d cases from %d valid cases.\n", n_output, validParsedCases);
         return 0;
     }
 
-    private String getCaseName(String filePath) {
+    private String getCaseNameAsPmid(String filePath) {
         File f = new File(filePath);
         String bname = f.getName();
         Pattern p = Pattern.compile("\\d+");

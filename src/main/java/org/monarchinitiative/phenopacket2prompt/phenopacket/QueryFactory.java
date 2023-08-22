@@ -37,5 +37,7 @@ Here is the case:
 """;
 
     public abstract String getPhenopacketBasedQuery();
+    public abstract String getPhenopacketTextOnly();
+    public abstract String getOriginalVignetteText();
 
 }

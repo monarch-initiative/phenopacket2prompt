@@ -36,8 +36,12 @@ public class TimeBasedFactory extends QueryFactory {
     private final String phenopacketSex;
 
     private final String person_string;
+    private final boolean useManual;
+    private final boolean useDiagnostic;
+    private final boolean useTreatment;
 
-    public TimeBasedFactory(NejmCaseReportFromPdfFilterer filterer, String id, TermMiner miner, Ontology hpo) {
+    public TimeBasedFactory(NejmCaseReportFromPdfFilterer filterer, String id, TermMiner miner, Ontology hpo,
+                            boolean useManual, boolean useDiagnostic, boolean useTreatment) {
         this.filterer = filterer;
         this.miner = miner;
         this.hpo = hpo;
@@ -45,6 +49,9 @@ public class TimeBasedFactory extends QueryFactory {
         this.isoAge = filterer.getIsoAge();
         this.person_string = get_person_string();
         this.caseId = id;
+        this.useManual = useManual;
+        this.useDiagnostic = useDiagnostic;
+        this.useTreatment = useTreatment;
     }
 
     private String get_person_string() {
@@ -66,6 +73,12 @@ public class TimeBasedFactory extends QueryFactory {
 
     @Override
     public String getPhenopacketBasedQuery() {
+        String text = getPhenopacketTextOnly();
+        return String.format("%s\n\n%s", QUERY_HEADER, text);
+    }
+
+    @Override
+    public String getPhenopacketTextOnly() {
         TimePointParser timePointParser = new TimePointParser();
         List<String> lines = filterer.getPresentationWithoutDiscussionLines();
         String vignette = String.join(" ", lines);
@@ -78,7 +91,6 @@ public class TimeBasedFactory extends QueryFactory {
         List<TimePoint> timePointList = timePointParser.getTimePoints(vignette);
 
         StringBuilder sb = new StringBuilder();
-        sb.append(QUERY_HEADER);
         sb.append(firstSentence).append("\n");
         try {
             //Map<String, String> timeSegments = timeSegments(starts, ends, vignette, start2pointMap);
@@ -99,10 +111,14 @@ public class TimeBasedFactory extends QueryFactory {
             System.out.printf("[ERROR(TimeBasedFactory.java] Could not parse time segments for %s because of %s", caseId, eee.getMessage());
             System.exit(1);
         }
-
-
-
         return sb.toString();
+    }
+
+    @Override
+    public String getOriginalVignetteText() {
+        TimePointParser timePointParser = new TimePointParser();
+        List<String> lines = filterer.getPresentationWithoutDiscussionLines();
+        return String.join("\n", lines);
     }
 
     private Map<String, String> timeSegments(String vignette, List<TimePoint> timePointList) {
@@ -126,7 +142,9 @@ public class TimeBasedFactory extends QueryFactory {
 
 
     public String getPhenopacketBasedQuerySegment(String presentationTimeDescription, String input) {
-        List<PhenotypicFeature> pfeatures = getPhenotypicFeatures(input);
+        BracketParser bparser = new BracketParser(input);
+        String trimmedInput = bparser.getTrimmedVignette();
+        List<PhenotypicFeature> pfeatures = getPhenotypicFeatures(trimmedInput);
         if (pfeatures.isEmpty()) {
             return ""; // no features detected for this time period
         }
@@ -140,12 +158,17 @@ public class TimeBasedFactory extends QueryFactory {
                 .map(PhenotypicFeature::getType)
                 .map(OntologyClass::getLabel)
                 .collect(Collectors.toSet());
+        // ADD FROM BRACKET
+        if (this.useManual) {
+            observed_terms.addAll(bparser.getOBSERVED());
+            excluded_terms.addAll(bparser.getEXCLUDED());
+        }
         StringBuilder sb = new StringBuilder();
         String capitalizedTimepoint;
         if (presentationTimeDescription.equalsIgnoreCase("Examination was notable for")) {
             presentationTimeDescription = "On examination";
         }
-        if (presentationTimeDescription == null || presentationTimeDescription.length() < 2) {
+        if (presentationTimeDescription.length() < 2) {
             capitalizedTimepoint = "";
         } else {
             capitalizedTimepoint = presentationTimeDescription.substring(0, 1).toUpperCase() + presentationTimeDescription.substring(1);
@@ -164,7 +187,7 @@ public class TimeBasedFactory extends QueryFactory {
             }
 
             String observedSymptoms = getSymptomList(observed_terms);
-            sb.append(observedSymptoms).append(" ");
+            sb.append(observedSymptoms).append(" \n");
         }
         if (! excluded_terms.isEmpty()) {
             String excludededSymptoms = getSymptomList(excluded_terms);
@@ -174,6 +197,22 @@ public class TimeBasedFactory extends QueryFactory {
                 sb.append("The following signs and symptoms were excluded: ");
             }
             sb.append(excludededSymptoms).append(" ");
+        }
+        Set<String> TREATMENT = bparser.getTREATMENT();
+        if (this.useTreatment && TREATMENT.size() > 0) {
+            sb.append("\n The following treatments were applied: ");
+            sb.append(getSymptomList(TREATMENT));
+        }
+        Set<String> DIAG = bparser.getDIAGNOSTIC();
+        if (useDiagnostic && DIAG.size() > 0) {
+            sb.append("\n The following diagnostic investigations were performed: ");
+            sb.append(getSymptomList(TREATMENT));
+        }
+        Set<String> VERBATIM = bparser.getVERBATIM();
+        if (useManual && VERBATIM.size() > 0) {
+            for (var v : VERBATIM) {
+                sb.append(v).append("\n");
+            }
         }
         return sb.toString();
     }

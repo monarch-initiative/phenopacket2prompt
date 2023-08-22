@@ -2,11 +2,11 @@ package org.monarchinitiative.phenopacket2prompt.llm;
 
 
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
+import org.monarchinitiative.phenopacket2prompt.model.AdditionalConcept;
+import org.monarchinitiative.phenopacket2prompt.model.AdditionalConceptI;
+import org.monarchinitiative.phenopacket2prompt.model.AdditionalReplacementConceptType;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -46,8 +46,11 @@ public class NejmCaseReportFromPdfFilterer {
      * lines such as Case 40-2022
      */
     private static final Pattern CASE_LINE_REGEX = Pattern.compile("Case \\d+-20\\d{2}");
-
-
+    /**
+     * Additional contents not picked up by fenomial text parsing, but added manually at the top of the
+     * input file.
+     */
+    private final Set<AdditionalConceptI> additionalConcepts;
 
     public NejmCaseReportFromPdfFilterer(String caseId, List<String> lines) {
         isoAge = getIso8601Age(lines.get(0));
@@ -55,7 +58,39 @@ public class NejmCaseReportFromPdfFilterer {
         caseLines = new ArrayList<>();
         allLines = new ArrayList<>();
         int index = 2;
-        for (String line : lines.subList(2, lines.size())) {
+        boolean in_clinical_vignette = false;
+        this.additionalConcepts = new HashSet<>();
+        while (! in_clinical_vignette) {
+            String line = lines.get(index);
+            index++;
+            if (! line.contains(":")) {
+                continue; // skip empty lines
+            }
+            if (line.equals("begin_vignette:")) {
+                in_clinical_vignette = true;
+                break;
+            }
+            String [] fields = line.split(":");
+            if (fields.length < 2) {
+                throw new PhenolRuntimeException("Malformed header line: " + line);
+            } else if (fields.length == 2){
+                String payload = fields[0].trim();
+                String category = fields[1].trim();
+                additionalConcepts.add(AdditionalConcept.of(category, payload));
+            } else if (fields.length == 3) {
+                String payload = fields[0].trim();
+                String category = fields[1].trim();
+                String replacement = fields[2].trim();
+                additionalConcepts.add(AdditionalReplacementConceptType.of(category, payload, replacement));
+            }
+        }
+        if (! in_clinical_vignette) {
+            throw new PhenolRuntimeException("Did not find \"begin_vignette:\" line!");
+        }
+        if (index >= lines.size()) {
+            throw new PhenolRuntimeException("Did not find text after \"begin_vignette:\" line!");
+        }
+        for (String line : lines.subList(index, lines.size())) {
             //System.out.println(line);
             Matcher caseLineMatcher = CASE_LINE_REGEX.matcher(line);
             if (caseLineMatcher.find()) {
@@ -219,6 +254,9 @@ public class NejmCaseReportFromPdfFilterer {
         return Optional.ofNullable(this.diagnosis);
     }
 
+    public Set<AdditionalConceptI> getAdditionalConcepts() {
+        return additionalConcepts;
+    }
 
     public boolean validParse() {
         return this.inCase && this.inDifferentialDiagnosis && inActualDiagnosis;
