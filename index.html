@@ -12,11 +12,11 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=938c9ccc"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -75,12 +75,12 @@
            <div itemprop="articleBody">
              
   <section id="phenopacket2prompt">
-<span id="home"></span><h1>Phenopacket2Prompt<a class="headerlink" href="#phenopacket2prompt" title="Permalink to this heading"></a></h1>
+<span id="home"></span><h1>Phenopacket2Prompt<a class="headerlink" href="#phenopacket2prompt" title="Link to this heading"></a></h1>
 <p>phenopacket2promot is a Java 17 application that performs text mining on files that have been extracted
 from New England Journal of Medicine (NEJM) <a class="reference external" href="https://www.nejm.org/case-challenges">Case Challenges</a>, i.e.,
 NEJM Case Records of the Massachusetts General Hospital.</p>
 <section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
 <p>Most users should download the prebuilt executable file from the
 <a class="reference external" href="https://github.com/monarch-initiative/phenopacket2prompt/releases">Releases</a> page of the GutHub repository.</p>
 <p>It is also possible to build the application from source using standard Maven and Java tools.</p>
@@ -92,7 +92,7 @@ NEJM Case Records of the Massachusetts General Hospital.</p>
 </div>
 </section>
 <section id="setup">
-<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this heading"></a></h2>
+<h2>Setup<a class="headerlink" href="#setup" title="Link to this heading"></a></h2>
 <p>First download the latest copy of the <a class="reference external" href="https://hpo.jax.org/app/">Human Phenotype Ontology</a> hp.json file. This file is
 used for text mining of clinical signs and symptoms. For more information about the HPO, see
 <a class="reference external" href="https://pubmed.ncbi.nlm.nih.gov/33264411/">Koehler et al. (2021)</a>. Adjust the path to the <cite>phenopacket2prompt.jar</cite>
@@ -102,11 +102,11 @@ file as necessary.</p>
 </div>
 </section>
 <section id="preparing-the-case-report-files">
-<h2>Preparing the case report files<a class="headerlink" href="#preparing-the-case-report-files" title="Permalink to this heading"></a></h2>
+<h2>Preparing the case report files<a class="headerlink" href="#preparing-the-case-report-files" title="Link to this heading"></a></h2>
 <p>TODO describe the Python script or add it to this repo</p>
 </section>
 <section id="running-phenopacket2prompt">
-<h2>Running phenopacket2prompt<a class="headerlink" href="#running-phenopacket2prompt" title="Permalink to this heading"></a></h2>
+<h2>Running phenopacket2prompt<a class="headerlink" href="#running-phenopacket2prompt" title="Link to this heading"></a></h2>
 <p>Assuming the hp.json file has been downloaded as described above and all of the case report text files
 are available in a directory at <code class="docutils literal notranslate"><span class="pre">some/path/gptdocs</span></code>, run</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span>java<span class="w"> </span>-jar<span class="w"> </span>phenopacket2prompt.jar<span class="w"> </span>gpt<span class="w"> </span>-g<span class="w"> </span>some/path/gptdocs
@@ -127,7 +127,7 @@ It will contain four subdirectories</p>
 </ul>
 </div>
 <section id="feedback">
-<h3>Feedback<a class="headerlink" href="#feedback" title="Permalink to this heading"></a></h3>
+<h3>Feedback<a class="headerlink" href="#feedback" title="Link to this heading"></a></h3>
 <p>The best place to leave feedback, ask questions, and report bugs is the <a class="reference external" href="https://github.com/TheJacksonLaboratory/wn2vec/issues">WN2vec Issue Tracker</a>.</p>
 </section>
 </section>
