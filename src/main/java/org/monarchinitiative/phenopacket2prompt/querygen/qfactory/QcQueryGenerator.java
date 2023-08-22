@@ -17,7 +17,7 @@ public class QcQueryGenerator extends AbstractQueryGenerator {
         String phenopacketText = getPlainPhenopacketText(filterer, id, miner, hpo);
         List<String> lines = filterer.getPresentationWithoutDiscussionLines();
         String original = caseLines(lines);
-        promptText = String.format("### Phenopacket-text ###\n\n%s\n\n###%s###\n\n",
+        promptText = String.format("### Phenopacket-text ###\n\n%s\n\n###Original###\n\n%s",
                 phenopacketText, original);
     }
 

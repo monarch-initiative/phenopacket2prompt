@@ -27,7 +27,7 @@ public class TextPlusManualGenerator extends AbstractQueryGenerator {
         super(filterer, id, miner, hpo);
         this.additionalConcepts = filterer.getAdditionalConcepts();
         String intro = getPersonIntroduction();
-        String phenotext = getPlainPhenopacketText(filterer, id, miner, hpo);
+        String phenotext = getPhenopacketTextWithAdditions();
         promptText = String.format("%s%s%s", QUERY_HEADER, intro, phenotext);
     }
 
