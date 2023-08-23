@@ -5,7 +5,7 @@ import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenopacket2prompt.nejm.NejmCaseReportFromPdfFilterer;
 import org.monarchinitiative.phenopacket2prompt.querygen.qfactory.QcQueryGenerator;
-import org.monarchinitiative.phenopacket2prompt.querygen.qfactory.TextPlusManualGenerator;
+import org.monarchinitiative.phenopacket2prompt.querygen.qfactory.TextWithManualAnnotsGenerator;
 import org.monarchinitiative.phenopacket2prompt.querygen.qfactory.TextWithoutDiscussionQuery;
 import org.monarchinitiative.phenopacket2prompt.querygen.qfactory.PhenopacketOnlyQuery;
 import org.slf4j.Logger;
@@ -60,7 +60,7 @@ public class QueryPromptFactory {
                 return qcg.getQuery();
             }
             case TEXT_PLUS_MANUAL -> {
-                TextPlusManualGenerator tpm = new TextPlusManualGenerator(filterer, caseId, miner, hpo);
+                TextWithManualAnnotsGenerator tpm = new TextWithManualAnnotsGenerator(filterer, caseId, miner, hpo);
                 return tpm.getQuery();
             }
         }

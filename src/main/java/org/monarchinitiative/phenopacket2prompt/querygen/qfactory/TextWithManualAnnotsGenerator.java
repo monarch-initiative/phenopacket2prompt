@@ -17,8 +17,8 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class TextPlusManualGenerator extends AbstractQueryGenerator {
-    private final Logger LOGGER = LoggerFactory.getLogger(TextPlusManualGenerator.class);
+public class TextWithManualAnnotsGenerator extends AbstractQueryGenerator {
+    private final Logger LOGGER = LoggerFactory.getLogger(TextWithManualAnnotsGenerator.class);
     private final String promptText;
 
     private final Set<AdditionalConceptI> additionalConcepts;
@@ -28,7 +28,7 @@ public class TextPlusManualGenerator extends AbstractQueryGenerator {
     private final List<String> outputLines;
 
 
-    public  TextPlusManualGenerator(NejmCaseReportFromPdfFilterer filterer, String id, TermMiner miner, Ontology hpo) {
+    public TextWithManualAnnotsGenerator(NejmCaseReportFromPdfFilterer filterer, String id, TermMiner miner, Ontology hpo) {
         super(filterer, id, miner, hpo);
         this.outputLines = new ArrayList<>();
         this.pmh = new HashSet<>();
@@ -37,16 +37,18 @@ public class TextPlusManualGenerator extends AbstractQueryGenerator {
                         .map(AdditionalConceptI::insertText)
                         .collect(Collectors.toSet());
         this.additionalConcepts = filterer.getAdditionalConcepts();
-        String phenotext = getPhenopacketTextWithAdditions();
+        String phenotext = getPhenopacketTextWithManualAdditions();
         promptText = String.format("%s%s", QUERY_HEADER, phenotext);
     }
 
 
 
-    protected String getPhenopacketTextWithAdditions() {
+    protected String getPhenopacketTextWithManualAdditions() {
         TimePointParser timePointParser = new TimePointParser();
         List<String> lines = filterer.getPresentationWithoutDiscussionLines();
         String vignette = String.join(" ", lines);
+        // the next five lines extract the first sentence from the text -- we include the first sentence verbatim
+        // in our query prompts
         int ii = vignette.indexOf(".");
         if (ii < 0) {
             throw new PhenolRuntimeException("Malformed vignette without one single period");
@@ -58,18 +60,16 @@ public class TextPlusManualGenerator extends AbstractQueryGenerator {
 
 
         try {
-            //Map<String, String> timeSegments = timeSegments(starts, ends, vignette, start2pointMap);
             Map<String, String> timeSegments = timeSegments(vignette, timePointList);
             for (var entry : timeSegments.entrySet()) {
                 String timePoint = entry.getKey();
-                String description = entry.getValue();
-                if (description.equals("Examination was notable for")) {
-                    description = "On examination ";
+                String vignette_at_timepoint = entry.getValue();
+                if (vignette_at_timepoint.equals("Examination was notable for")) {
+                    vignette_at_timepoint = "On examination ";
                 }
-                if (description.length() > MIN_DESCRIPTION_LENGTH) {
-                    String output = getPhenopacketBasedQuerySegmentWithAdditions(timePoint, description);
+                if (vignette_at_timepoint.length() > MIN_DESCRIPTION_LENGTH) {
+                    String output = getPhenopacketBasedQuerySegmentWithAdditions(timePoint, vignette_at_timepoint);
                     if (output.isEmpty()) continue;
-                    //sb.append(output).append("\n");
                     outputLines.add(output);
                 }
             }
@@ -96,15 +96,12 @@ public class TextPlusManualGenerator extends AbstractQueryGenerator {
     }
 
 
-    protected String getPhenopacketBasedQuerySegmentWithAdditions(String presentationTimeDescription, String input) {
-        List<PhenotypicFeature> pfeatures = getPhenotypicFeatures(input);
-        if (pfeatures.isEmpty()) {
-            return ""; // no features detected for this time period
-        }
+    protected String getPhenopacketBasedQuerySegmentWithAdditions(String presentationTimeDescription, String vignette_at_timepoint) {
+        List<PhenotypicFeature> pfeatures = getPhenotypicFeatures(vignette_at_timepoint);
+
         Set<String> diagnostics = new HashSet<>();
         Set<String> treatment = new HashSet<>();
         Set<String> verbatim = new HashSet<>();
-        /* Past medical history */
 
         Set<String> observed_terms = pfeatures.stream()
                 .filter(Predicate.not(PhenotypicFeature::getExcluded))
@@ -117,7 +114,15 @@ public class TextPlusManualGenerator extends AbstractQueryGenerator {
                 .map(OntologyClass::getLabel)
                 .collect(Collectors.toSet());
         for (var addcon : this.additionalConcepts ) {
-            if (input.contains(addcon.originalText())) {
+            String x = addcon.insertText();
+            // check if the vignette for the current time period includes a text from the
+            // additional concepts listed at the top of the input file
+            // e.g.  if the input file has
+            // Cough:PHENOTYPTE and we find the string "Cough" in the original_vignette_text,
+            // then we would add "Cough" to the set observed_terms
+            // if the input file has
+            // Aspirin:TREATMENT, then we add "Aspirin" to the set treatment
+            if (vignette_at_timepoint.contains(addcon.originalText())) {
                 switch (addcon.conceptType()) {
                     case PHENOTYPE -> observed_terms.add(addcon.insertText());
                     case EXCLUDE -> excluded_terms.add(addcon.insertText());

@@ -30,7 +30,14 @@ public class NejmCaseReportImporter {
             "my nejm in the journal online",
             "Individual subscribers can store articles",
             "From the Department",
-            "Founded by Richard C. Cabot"
+            "Founded by Richard C. Cabot",
+            "Medical School",
+            "DOI: ",
+            "Eric S. Rosenberg",
+            "Dennis C. Sgroi",
+            "Emily K. McDonald",
+            "Miriam B. Barshak",
+            "The new engl"
     );
     final Set<String> EQUALS_FILTER_TOKENS = Set.of("the", "medicine", "Case Records", "of the" );
 
