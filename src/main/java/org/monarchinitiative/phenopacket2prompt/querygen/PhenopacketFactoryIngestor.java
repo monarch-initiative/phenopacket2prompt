@@ -27,7 +27,8 @@ public class PhenopacketFactoryIngestor {
                 NejmCaseReportFromPdfFilterer filterer = new NejmCaseReportFromPdfFilterer(caseNameAsPmid, entry.getValue());
                 if (!filterer.validParse()) {
                     LOGGER.error("NejmCaseReportFromPdfFilterer -- {}: Not Valid.\n", caseNameAsPmid);
-                    continue;
+                    System.err.printf("Exiting because of problems with %s. Fix this and come back later\n", caseNameAsPmid);
+                    System.exit(1);
                 }
                 QueryPromptFactory factory = new QueryPromptFactory(filterer, caseNameAsPmid, miner, hpo);
                 id2timeCourseFactory.put(caseNameAsPmid, factory);

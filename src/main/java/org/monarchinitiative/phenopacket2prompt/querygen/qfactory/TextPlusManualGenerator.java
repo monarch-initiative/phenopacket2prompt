@@ -1,6 +1,5 @@
 package org.monarchinitiative.phenopacket2prompt.querygen.qfactory;
 
-import org.checkerframework.checker.units.qual.A;
 import org.monarchinitiative.fenominal.core.TermMiner;
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
@@ -171,8 +170,9 @@ public class TextPlusManualGenerator extends AbstractQueryGenerator {
             sb.append(excludededSymptoms).append("\n");
         }
         if (! diagnostics.isEmpty()) {
-            sb.append("The following diagnostic observations were made: \n");
+            sb.append("The following diagnostic observations were made: ");
             sb.append(getOxfordCommaList(diagnostics));
+            sb.append("\n");
         }
         if (! treatment.isEmpty()) {
             sb.append("The following treatments were administered: ");
@@ -181,7 +181,7 @@ public class TextPlusManualGenerator extends AbstractQueryGenerator {
         }
         if (! verbatim.isEmpty()) {
             for (var v : verbatim)
-            sb.append(v).append("\n");
+                sb.append(v).append("\n");
         }
         return sb.toString();
     }

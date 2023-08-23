@@ -89,11 +89,18 @@ Here is the case:
         return  String.format("%s presented with the following signs and symptoms:\n", person_string);
     }
 
-    private String stripFamilyHistory(String originalSeg) {
+    /**
+     * Remove sentences that describe the past medical history (PMH) or family history (FH)
+     * We add these lines back manually
+     * @param originalSeg original text from case report
+     * @return segment, with lines about PMH or FH removed
+     */
+    private String stripFamilyHistoryAndPmh(String originalSeg) {
         List<String> validLines = new ArrayList<>(); // everything but family history
         String [] lines = originalSeg.split("\\.");
         for (var line : lines) {
             if (line.toLowerCase().contains("family history")) continue;
+            if (line.toLowerCase().contains("medical history")) continue;
             validLines.add(line);
         }
         return String.join(". ", validLines);
@@ -107,7 +114,7 @@ Here is the case:
             int s = timePoint.start();
             int e = timePoint.end();
             String seg = nextStart + vignette.substring(lastEnd, s);
-            seg = stripFamilyHistory(seg);
+            seg = stripFamilyHistoryAndPmh(seg);
             lastEnd = e + 1;
             timeSegments.put(nextStart, seg.strip());
             nextStart = timePoint.point();

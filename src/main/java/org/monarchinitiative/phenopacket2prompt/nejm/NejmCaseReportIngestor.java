@@ -1,7 +1,6 @@
 package org.monarchinitiative.phenopacket2prompt.nejm;
 
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
-import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenopacket2prompt.nejm.NejmCaseReportImporter;
 
 import java.io.File;

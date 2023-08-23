@@ -127,15 +127,7 @@ public class NejmCaseReportFromPdfFilterer {
             if (m.find()) {
                 inActualDiagnosis = true;
                 diagnosis = lines.get(index+1);
-            } else if (caseId.equalsIgnoreCase("PMID:34437787") &&
-                    line.startsWith("Pathological Diagnosis")) {
-                inActualDiagnosis = true;
-                diagnosis = lines.get(index + 1);
-            } else if (caseId.equalsIgnoreCase("PMID:36383716") &&
-                    line.startsWith("Pathological Diagnosis")) {
-                inActualDiagnosis = true;
-                diagnosis = lines.get(index + 1);
-            } else if (caseId.equalsIgnoreCase("PMID:33730458") &&
+            } else if (
                     line.startsWith("Pathological Diagnosis")) {
                 inActualDiagnosis = true;
                 diagnosis = lines.get(index + 1);
