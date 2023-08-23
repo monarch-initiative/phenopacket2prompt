@@ -9,7 +9,7 @@ public class TimePointParser {
 
 
     /** gets 2 dats before presentation, Two days before presentation etc.*/
-    private final Pattern pattern1 = Pattern.compile("\\b\\w+\\b\\s+(hours?|days?|weeks?|months?|years?|decades?) before presentation",Pattern.CASE_INSENSITIVE);
+    private final Pattern pattern1 = Pattern.compile("\\b\\w+\\b\\s+(hours?|days?|weeks?|months?|years?|decades?) before (the current )?presentation",Pattern.CASE_INSENSITIVE);
 
     private final Pattern pattern2 = Pattern.compile("\\b\\w+\\b\\s+(hours?|days?|weeks?|months?|years?|decades?) earlier",Pattern.CASE_INSENSITIVE);
 

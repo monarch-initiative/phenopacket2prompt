@@ -101,6 +101,8 @@ Here is the case:
         for (var line : lines) {
             if (line.toLowerCase().contains("family history")) continue;
             if (line.toLowerCase().contains("medical history")) continue;
+            if (line.toLowerCase().contains(" mother ")) continue; // e.g. the patient's mother had
+            if (line.toLowerCase().contains(" father ")) continue;
             validLines.add(line);
         }
         return String.join(". ", validLines);

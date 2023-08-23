@@ -57,8 +57,6 @@ public class TextWithManualAnnotsGenerator extends AbstractQueryGenerator {
         vignette = vignette.substring(ii + 1);
         List<TimePoint> timePointList = timePointParser.getTimePoints(vignette);
 
-
-
         try {
             Map<String, String> timeSegments = timeSegments(vignette, timePointList);
             for (var entry : timeSegments.entrySet()) {
@@ -85,6 +83,7 @@ public class TextWithManualAnnotsGenerator extends AbstractQueryGenerator {
                     .append("\n");
         }
         if (familyHistory.size() > 0) {
+            sb.append("The family history was notable for the following. ");
             for (String item: familyHistory) {
                 sb.append(item).append("\n");
             }
@@ -150,8 +149,9 @@ public class TextWithManualAnnotsGenerator extends AbstractQueryGenerator {
             capitalizedTimepoint = presentationTimeDescription.substring(0, 1).toUpperCase() + presentationTimeDescription.substring(1);
         }
 
-        sb.append(capitalizedTimepoint);
+        sb.append(capitalizedTimepoint).append(" ");
         boolean observedEmpty = true;
+        boolean needEmpty = true;
         if (!observed_terms.isEmpty()) {
             observedEmpty = false;
             if (capitalizedTimepoint.isEmpty()) {
@@ -166,20 +166,23 @@ public class TextWithManualAnnotsGenerator extends AbstractQueryGenerator {
             sb.append(observedSymptoms).append(" \n");
         }
         if (!excluded_terms.isEmpty()) {
+            if (needEmpty) { sb.append(" "); needEmpty = false; }
             String excludededSymptoms = getOxfordCommaList(excluded_terms);
             if (observedEmpty) {
-                sb.append(", the following signs and symptoms were excluded: ");
+                sb.append("The following signs and symptoms were excluded: ");
             } else {
                 sb.append("The following signs and symptoms were excluded: ");
             }
             sb.append(excludededSymptoms).append("\n");
         }
         if (! diagnostics.isEmpty()) {
+            if (needEmpty) { sb.append(" "); needEmpty = false; }
             sb.append("The following diagnostic observations were made: ");
             sb.append(getOxfordCommaList(diagnostics));
             sb.append("\n");
         }
         if (! treatment.isEmpty()) {
+            if (needEmpty) { sb.append(" "); needEmpty = false; }
             sb.append("The following treatments were administered: ");
             sb.append(getOxfordCommaList(treatment));
             sb.append("\n");
