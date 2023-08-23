@@ -19,6 +19,7 @@ public enum AdditionalConceptType {
     DIAGNOSTICS,
     TREATMENT,
     PMH,
+    FAMILY_HISTORY,
     VERBATIM;
 
 
@@ -30,6 +31,7 @@ public enum AdditionalConceptType {
             case "DIAGNOSTICS" ->  DIAGNOSTICS;
             case "TREATMENT" -> TREATMENT;
             case "PMH" -> PMH;
+            case "FAMILY_HISTORY" -> FAMILY_HISTORY;
             case "VERBATIM" -> VERBATIM;
             default -> throw new PhenolRuntimeException("Unrecognised concept \"" + concept + "\"");
         };

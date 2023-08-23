@@ -1,9 +1,11 @@
 package org.monarchinitiative.phenopacket2prompt.querygen.qfactory;
 
+import org.checkerframework.checker.units.qual.A;
 import org.monarchinitiative.fenominal.core.TermMiner;
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenopacket2prompt.model.AdditionalConceptI;
+import org.monarchinitiative.phenopacket2prompt.model.AdditionalConceptType;
 import org.monarchinitiative.phenopacket2prompt.nejm.NejmCaseReportFromPdfFilterer;
 import org.monarchinitiative.phenopacket2prompt.querygen.TimePoint;
 import org.monarchinitiative.phenopacket2prompt.querygen.TimePointParser;
@@ -12,10 +14,7 @@ import org.phenopackets.schema.v2.core.PhenotypicFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -24,10 +23,20 @@ public class TextPlusManualGenerator extends AbstractQueryGenerator {
     private final String promptText;
 
     private final Set<AdditionalConceptI> additionalConcepts;
+    private final Set<String> pmh;
+    private final Set<String> familyHistory;
+
+    private final List<String> outputLines;
 
 
     public  TextPlusManualGenerator(NejmCaseReportFromPdfFilterer filterer, String id, TermMiner miner, Ontology hpo) {
         super(filterer, id, miner, hpo);
+        this.outputLines = new ArrayList<>();
+        this.pmh = new HashSet<>();
+        familyHistory = filterer.getAdditionalConcepts().stream()
+                        .filter(a -> a.conceptType() == AdditionalConceptType.FAMILY_HISTORY)
+                        .map(AdditionalConceptI::insertText)
+                        .collect(Collectors.toSet());
         this.additionalConcepts = filterer.getAdditionalConcepts();
         String phenotext = getPhenopacketTextWithAdditions();
         promptText = String.format("%s%s", QUERY_HEADER, phenotext);
@@ -47,8 +56,7 @@ public class TextPlusManualGenerator extends AbstractQueryGenerator {
         vignette = vignette.substring(ii + 1);
         List<TimePoint> timePointList = timePointParser.getTimePoints(vignette);
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(firstSentence).append("\n");
+
 
         try {
             //Map<String, String> timeSegments = timeSegments(starts, ends, vignette, start2pointMap);
@@ -62,12 +70,28 @@ public class TextPlusManualGenerator extends AbstractQueryGenerator {
                 if (description.length() > MIN_DESCRIPTION_LENGTH) {
                     String output = getPhenopacketBasedQuerySegmentWithAdditions(timePoint, description);
                     if (output.isEmpty()) continue;
-                    sb.append(output).append("\n");
+                    //sb.append(output).append("\n");
+                    outputLines.add(output);
                 }
             }
         } catch (Exception eee) {
             System.out.printf("[ERROR(TextPlusManualGenerator.java] Could not parse time segments for because of %s",  eee.getMessage());
             System.exit(1);
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append(firstSentence).append("\n");
+        if (pmh.size() > 0) {
+            sb.append("The past medical history was notable for ")
+                    .append(getOxfordCommaList(pmh))
+                    .append("\n");
+        }
+        if (familyHistory.size() > 0) {
+            for (String item: familyHistory) {
+                sb.append(item).append("\n");
+            }
+        }
+        for (var line : outputLines) {
+            sb.append(line);
         }
         return sb.toString();
     }
@@ -82,7 +106,6 @@ public class TextPlusManualGenerator extends AbstractQueryGenerator {
         Set<String> treatment = new HashSet<>();
         Set<String> verbatim = new HashSet<>();
         /* Past medical history */
-        Set<String> pmh = new HashSet<>();
 
         Set<String> observed_terms = pfeatures.stream()
                 .filter(Predicate.not(PhenotypicFeature::getExcluded))
@@ -95,25 +118,24 @@ public class TextPlusManualGenerator extends AbstractQueryGenerator {
                 .map(OntologyClass::getLabel)
                 .collect(Collectors.toSet());
         for (var addcon : this.additionalConcepts ) {
-            LOGGER.error("TOP {}", addcon);
             if (input.contains(addcon.originalText())) {
-                LOGGER.error("FOUND INPUT {}", addcon);
                 switch (addcon.conceptType()) {
                     case PHENOTYPE -> observed_terms.add(addcon.insertText());
                     case EXCLUDE -> excluded_terms.add(addcon.insertText());
                     case DIAGNOSTICS -> diagnostics.add(addcon.insertText());
                     case TREATMENT -> treatment.add(addcon.insertText());
                     case VERBATIM -> verbatim.add(addcon.insertText());
-                    case PMH -> pmh.add(addcon.insertText());
+                    case PMH -> {
+                        // do not repeat the PMH even if the original text mentions it more than once
+                        if (!pmh.contains(addcon.originalText())) {
+                            pmh.add(addcon.insertText());
+                        }
+                    }
+                    case FAMILY_HISTORY -> familyHistory.add(addcon.insertText());
                 }
             }
         }
         StringBuilder sb = new StringBuilder();
-        if (! pmh.isEmpty()) {
-            sb.append("The past medical history was notable for ");
-            sb.append(getOxfordCommaList(pmh));
-            sb.append(".\n");
-        }
         String capitalizedTimepoint;
         if (presentationTimeDescription.equalsIgnoreCase("Examination was notable for")) {
             presentationTimeDescription = "On examination";
@@ -146,15 +168,16 @@ public class TextPlusManualGenerator extends AbstractQueryGenerator {
             } else {
                 sb.append("The following signs and symptoms were excluded: ");
             }
-            sb.append(excludededSymptoms).append(" ");
+            sb.append(excludededSymptoms).append("\n");
         }
         if (! diagnostics.isEmpty()) {
             sb.append("The following diagnostic observations were made: \n");
             sb.append(getOxfordCommaList(diagnostics));
         }
         if (! treatment.isEmpty()) {
-            sb.append("The following treatments were administered: \n");
+            sb.append("The following treatments were administered: ");
             sb.append(getOxfordCommaList(treatment));
+            sb.append("\n");
         }
         if (! verbatim.isEmpty()) {
             for (var v : verbatim)

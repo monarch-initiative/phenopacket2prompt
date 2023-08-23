@@ -89,6 +89,16 @@ Here is the case:
         return  String.format("%s presented with the following signs and symptoms:\n", person_string);
     }
 
+    private String stripFamilyHistory(String originalSeg) {
+        List<String> validLines = new ArrayList<>(); // everything but family history
+        String [] lines = originalSeg.split("\\.");
+        for (var line : lines) {
+            if (line.toLowerCase().contains("family history")) continue;
+            validLines.add(line);
+        }
+        return String.join(". ", validLines);
+    }
+
     protected Map<String, String> timeSegments(String vignette, List<TimePoint> timePointList) {
         Map<String, String> timeSegments = new LinkedHashMap<>(); // ordered map
         String nextStart = "";
@@ -97,6 +107,7 @@ Here is the case:
             int s = timePoint.start();
             int e = timePoint.end();
             String seg = nextStart + vignette.substring(lastEnd, s);
+            seg = stripFamilyHistory(seg);
             lastEnd = e + 1;
             timeSegments.put(nextStart, seg.strip());
             nextStart = timePoint.point();
@@ -113,6 +124,11 @@ Here is the case:
      * @return A string formatted as X, Y, and Z.
      */
     protected String getOxfordCommaList(Set<String> items) {
+        if (items.size() == 2) {
+            // no comma if we just have two items.
+            // one item will work with the below code
+            return String.join(" and ", items) + ".";
+        }
         StringBuilder sb = new StringBuilder();
         String symList = String.join(", ", items);
         int jj = symList.lastIndexOf(", ");
