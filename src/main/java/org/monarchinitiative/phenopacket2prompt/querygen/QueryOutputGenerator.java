@@ -41,7 +41,7 @@ public class QueryOutputGenerator {
         for (var otype : this.outputTypeList) {
             String outputString = QueryOutputType.outputString(otype);
             String outpath = this.outdirPath + File.separator + outputString + File.separator +
-                    pmid + outputString + ".txt";
+                    pmid + "-" + outputString + ".txt";
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(outpath))) {
                 writer.write(timeBasedFactory.getQuery(otype));
             } catch (IOException e) {

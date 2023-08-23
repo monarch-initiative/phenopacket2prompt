@@ -7,7 +7,7 @@ import org.monarchinitiative.phenopacket2prompt.nejm.NejmCaseReportFromPdfFilter
 import org.monarchinitiative.phenopacket2prompt.querygen.qfactory.QcQueryGenerator;
 import org.monarchinitiative.phenopacket2prompt.querygen.qfactory.TextPlusManualGenerator;
 import org.monarchinitiative.phenopacket2prompt.querygen.qfactory.TextWithoutDiscussionQuery;
-import org.monarchinitiative.phenopacket2prompt.querygen.qfactory.TimeBasedPhenopacketOnlyQuery;
+import org.monarchinitiative.phenopacket2prompt.querygen.qfactory.PhenopacketOnlyQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class QueryPromptFactory {
-    Logger LOGGER = LoggerFactory.getLogger(QueryPromptFactory.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(QueryPromptFactory.class);
 
     /**
      * If the description segment of a time period is less than 5 characters, skip it.
@@ -33,28 +33,22 @@ public class QueryPromptFactory {
 
     private final String phenopacketSex;
 
-    private final String person_string;
-    private final boolean useManual;
 
-
-    public QueryPromptFactory(NejmCaseReportFromPdfFilterer filterer, String id, TermMiner miner, Ontology hpo,
-                              boolean useManual) {
+    public QueryPromptFactory(NejmCaseReportFromPdfFilterer filterer, String id, TermMiner miner, Ontology hpo) {
         this.filterer = filterer;
         this.miner = miner;
         this.hpo = hpo;
         this.phenopacketSex = filterer.getPhenopacketSex();
         this.isoAge = filterer.getIsoAge();
-        this.person_string = get_person_string();
         this.caseId = id;
-        this.useManual = useManual;
     }
 
     public String getQuery(QueryOutputType outputType) {
-        LOGGER.error("Getting query for {}", outputType.name());
+        LOGGER.trace("Getting query for {}", outputType.name());
         switch (outputType) {
 
             case TIME_BASED -> {
-                TimeBasedPhenopacketOnlyQuery tbq = new TimeBasedPhenopacketOnlyQuery(filterer, caseId, miner, hpo);
+                PhenopacketOnlyQuery tbq = new PhenopacketOnlyQuery(filterer, caseId, miner, hpo);
                 return tbq.getQuery();
             }
             case TEXT_WITHOUT_DISCUSSION -> {
@@ -71,7 +65,7 @@ public class QueryPromptFactory {
             }
         }
         // should never happen
-        throw new PhenolRuntimeException("COuld not find querty type");
+        throw new PhenolRuntimeException("Could not find query type");
     }
 
 

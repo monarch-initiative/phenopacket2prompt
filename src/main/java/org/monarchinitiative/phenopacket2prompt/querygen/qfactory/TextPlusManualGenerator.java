@@ -9,6 +9,8 @@ import org.monarchinitiative.phenopacket2prompt.querygen.TimePoint;
 import org.monarchinitiative.phenopacket2prompt.querygen.TimePointParser;
 import org.phenopackets.schema.v2.core.OntologyClass;
 import org.phenopackets.schema.v2.core.PhenotypicFeature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.List;
@@ -18,17 +20,17 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class TextPlusManualGenerator extends AbstractQueryGenerator {
-
+    private final Logger LOGGER = LoggerFactory.getLogger(TextPlusManualGenerator.class);
     private final String promptText;
 
     private final Set<AdditionalConceptI> additionalConcepts;
 
+
     public  TextPlusManualGenerator(NejmCaseReportFromPdfFilterer filterer, String id, TermMiner miner, Ontology hpo) {
         super(filterer, id, miner, hpo);
         this.additionalConcepts = filterer.getAdditionalConcepts();
-        String intro = getPersonIntroduction();
         String phenotext = getPhenopacketTextWithAdditions();
-        promptText = String.format("%s%s%s", QUERY_HEADER, intro, phenotext);
+        promptText = String.format("%s%s", QUERY_HEADER, phenotext);
     }
 
 
@@ -47,6 +49,7 @@ public class TextPlusManualGenerator extends AbstractQueryGenerator {
 
         StringBuilder sb = new StringBuilder();
         sb.append(firstSentence).append("\n");
+
         try {
             //Map<String, String> timeSegments = timeSegments(starts, ends, vignette, start2pointMap);
             Map<String, String> timeSegments = timeSegments(vignette, timePointList);
@@ -54,7 +57,7 @@ public class TextPlusManualGenerator extends AbstractQueryGenerator {
                 String timePoint = entry.getKey();
                 String description = entry.getValue();
                 if (description.equals("Examination was notable for")) {
-                    description = "On examination";
+                    description = "On examination ";
                 }
                 if (description.length() > MIN_DESCRIPTION_LENGTH) {
                     String output = getPhenopacketBasedQuerySegmentWithAdditions(timePoint, description);
@@ -78,6 +81,9 @@ public class TextPlusManualGenerator extends AbstractQueryGenerator {
         Set<String> diagnostics = new HashSet<>();
         Set<String> treatment = new HashSet<>();
         Set<String> verbatim = new HashSet<>();
+        /* Past medical history */
+        Set<String> pmh = new HashSet<>();
+
         Set<String> observed_terms = pfeatures.stream()
                 .filter(Predicate.not(PhenotypicFeature::getExcluded))
                 .map(PhenotypicFeature::getType)
@@ -89,17 +95,25 @@ public class TextPlusManualGenerator extends AbstractQueryGenerator {
                 .map(OntologyClass::getLabel)
                 .collect(Collectors.toSet());
         for (var addcon : this.additionalConcepts ) {
+            LOGGER.error("TOP {}", addcon);
             if (input.contains(addcon.originalText())) {
+                LOGGER.error("FOUND INPUT {}", addcon);
                 switch (addcon.conceptType()) {
                     case PHENOTYPE -> observed_terms.add(addcon.insertText());
                     case EXCLUDE -> excluded_terms.add(addcon.insertText());
                     case DIAGNOSTICS -> diagnostics.add(addcon.insertText());
                     case TREATMENT -> treatment.add(addcon.insertText());
                     case VERBATIM -> verbatim.add(addcon.insertText());
+                    case PMH -> pmh.add(addcon.insertText());
                 }
             }
         }
         StringBuilder sb = new StringBuilder();
+        if (! pmh.isEmpty()) {
+            sb.append("The past medical history was notable for ");
+            sb.append(getOxfordCommaList(pmh));
+            sb.append(".\n");
+        }
         String capitalizedTimepoint;
         if (presentationTimeDescription.equalsIgnoreCase("Examination was notable for")) {
             presentationTimeDescription = "On examination";

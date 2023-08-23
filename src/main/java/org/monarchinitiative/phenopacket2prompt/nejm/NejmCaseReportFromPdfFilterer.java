@@ -5,6 +5,8 @@ import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenopacket2prompt.model.AdditionalConcept;
 import org.monarchinitiative.phenopacket2prompt.model.AdditionalConceptI;
 import org.monarchinitiative.phenopacket2prompt.model.AdditionalReplacementConceptType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -15,6 +17,7 @@ import java.util.regex.Pattern;
  * It also extracts age and sex.
  */
 public class NejmCaseReportFromPdfFilterer {
+    private final Logger LOGGER = LoggerFactory.getLogger(NejmCaseReportFromPdfFilterer.class);
     /** Age of the probad, e.g. P20Y for twenty years old. This must be at the beginning of the
      * parsed NEJM file, e.g.
      * age: 20
@@ -32,7 +35,6 @@ public class NejmCaseReportFromPdfFilterer {
     private String diagnosis = null;
     private boolean inCase = false;
     private boolean inDifferentialDiagnosis = false;
-
     private boolean inActualDiagnosis = false;
 
     /**
@@ -60,6 +62,7 @@ public class NejmCaseReportFromPdfFilterer {
         int index = 2;
         boolean in_clinical_vignette = false;
         this.additionalConcepts = new HashSet<>();
+        LOGGER.error("Filterer for {}", caseId);
         while (! in_clinical_vignette) {
             String line = lines.get(index);
             index++;
@@ -136,6 +139,9 @@ public class NejmCaseReportFromPdfFilterer {
                     line.startsWith("Pathological Diagnosis")) {
                 inActualDiagnosis = true;
                 diagnosis = lines.get(index + 1);
+            } else if (caseId.equals("PMID:33979492") && line.startsWith("Final Diagnosis")) {
+                inActualDiagnosis = true;
+                diagnosis = lines.get(index+1);
             }
 
 

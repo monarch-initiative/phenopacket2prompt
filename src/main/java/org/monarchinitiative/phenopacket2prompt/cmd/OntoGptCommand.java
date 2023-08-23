@@ -35,13 +35,6 @@ public class OntoGptCommand implements Callable<Integer> {
             description = "case ID (just analyze this case)" )
     private String targetCase = null;
 
-    boolean useManual = true;
-    boolean useDiagnostic = true;
-    boolean useTreatment = true;
-    /** OUTPUT the Q/C file? */
-    private final static boolean DO_QUALITY_CONTROL = true;
-
-
 
 
 
@@ -50,7 +43,7 @@ public class OntoGptCommand implements Callable<Integer> {
         // 1. Ingest the NEJM case report texts. Clean up the original text (PDF parse oddities)
         // but otherwise leave the processing for subsequent steps
         Ontology hpo = OntologyLoader.loadOntology(new File(hpoJsonPath));
-        NejmCaseReportIngestor nejmIngestor = new NejmCaseReportIngestor(this.nejmDirectoryPath, hpo);
+        NejmCaseReportIngestor nejmIngestor = new NejmCaseReportIngestor(this.nejmDirectoryPath);
         // If run with the --targetCase argument, just the targetCase is processed.
         // if targetCase == null, that means we are processing all files
         if (targetCase != null) {
@@ -62,16 +55,10 @@ public class OntoGptCommand implements Callable<Integer> {
 
         // 2. Create factory objects from the above lines. The factory objects know how to create
         // the various output
-        PhenopacketFactoryIngestor ppIngestor = new PhenopacketFactoryIngestor(id2lines,
-                hpo,
-                useManual,
-                useDiagnostic,
-                useTreatment);
-
-        int validParsedCases = 0;
+        PhenopacketFactoryIngestor ppIngestor = new PhenopacketFactoryIngestor(id2lines, hpo);
         Map<String, QueryPromptFactory> id2timeCourseFactory = ppIngestor.getId2timeCourseFactory();
         System.out.printf("[INFO] Factory map has %d cases.\n", id2timeCourseFactory.size());
-        System.out.printf("We parsed %d cases, of which %d were valid.\n", id2lines.entrySet().size(), validParsedCases);
+        System.out.printf("[INFO] We parsed %d cases.\n", id2lines.entrySet().size());
 
         // CREATE THE OUTPUT DIRECTORIES IF NEEDED.
         List<QueryOutputType> outputTypes = List.of(TIME_BASED,
@@ -87,7 +74,7 @@ public class OntoGptCommand implements Callable<Integer> {
             outputGenerator.outputEntry(entry.getKey(), entry.getValue());
             n_output++;
         }
-        System.out.printf("We output %d cases from %d valid cases.\n", n_output, validParsedCases);
+        System.out.printf("We output %d cases.\n", n_output);
         return 0;
     }
 

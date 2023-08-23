@@ -33,13 +33,11 @@ public class NejmCaseReportIngestor {
             "PMID:34587390", "PMID:34670047");
 
 
-    private final Ontology hpo;
     /**  key: identifier of PMID; value - lines of text */
     private final  Map<String, List<String>> id2lines;
 
 
-    public NejmCaseReportIngestor(String nejmDirectory, Ontology hpo) {
-        this.hpo = hpo;
+    public NejmCaseReportIngestor(String nejmDirectory) {
         this.id2lines = new HashMap<>();
         init(nejmDirectory);
     }
