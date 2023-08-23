@@ -62,7 +62,7 @@ public class NejmCaseReportFromPdfFilterer {
         int index = 2;
         boolean in_clinical_vignette = false;
         this.additionalConcepts = new HashSet<>();
-        LOGGER.error("Filterer for {}", caseId);
+        LOGGER.trace("Filterer for {}", caseId);
         while (! in_clinical_vignette) {
             String line = lines.get(index);
             index++;
@@ -131,7 +131,7 @@ public class NejmCaseReportFromPdfFilterer {
                     line.startsWith("Pathological Diagnosis")) {
                 inActualDiagnosis = true;
                 diagnosis = lines.get(index + 1);
-            } else if (caseId.equals("PMID:33979492") && line.startsWith("Final Diagnosis")) {
+            } else if (line.strip().startsWith("Final Diagnosis")) {
                 inActualDiagnosis = true;
                 diagnosis = lines.get(index+1);
             }

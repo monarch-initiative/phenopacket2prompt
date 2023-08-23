@@ -22,7 +22,7 @@ public class PhenopacketFactoryIngestor {
         final TermMiner miner = TermMiner.defaultNonFuzzyMapper(hpo);
         for (var entry : id2lines.entrySet()) {
             String caseNameAsPmid = entry.getKey();
-            LOGGER.error("[INFO] Creating prompt for {}.", caseNameAsPmid);
+            LOGGER.trace("Creating prompt for {}.", caseNameAsPmid);
             try {
                 NejmCaseReportFromPdfFilterer filterer = new NejmCaseReportFromPdfFilterer(caseNameAsPmid, entry.getValue());
                 if (!filterer.validParse()) {
