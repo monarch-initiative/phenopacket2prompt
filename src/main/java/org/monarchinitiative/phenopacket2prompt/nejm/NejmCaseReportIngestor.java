@@ -1,7 +1,6 @@
 package org.monarchinitiative.phenopacket2prompt.nejm;
 
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
-import org.monarchinitiative.phenopacket2prompt.nejm.NejmCaseReportImporter;
 
 import java.io.File;
 import java.util.HashMap;
@@ -47,7 +46,7 @@ public class NejmCaseReportIngestor {
         for (String fname : nejmCaseReportFiles) {
             File fpath = new File(nejmDirectory + File.separator + fname);
             NejmCaseReportImporter importer = new NejmCaseReportImporter(fpath);
-            List<String> lines = importer.getLines();
+            List<String> lines = importer.getCleanedLines();
             String caseNameAsPmid = getCaseNameAsPmid(fname);
             // we skip five of the 80 raw files for reasons listed above
             if (INVALID_CASE_REPORTS.contains(caseNameAsPmid)) {

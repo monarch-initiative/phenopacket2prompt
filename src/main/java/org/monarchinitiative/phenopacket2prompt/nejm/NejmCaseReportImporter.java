@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class NejmCaseReportImporter {
-    private final List<String> lines;
+    private final List<String> cleanedLines;
     /** Remove HTML tags */
     final Pattern CLEAN_HTML_TAG = Pattern.compile("<.*?>");
     /** Skip line if it begins with one of these tokens */
@@ -43,7 +43,7 @@ public class NejmCaseReportImporter {
 
 
     public NejmCaseReportImporter(File gptFilePath) {
-        lines = new ArrayList<>();
+        List<String> lines = new ArrayList<>();
         try {
             CodingErrorAction codingErrorAction = CodingErrorAction.IGNORE;
             Charset charset = Charset.defaultCharset();
@@ -70,7 +70,14 @@ public class NejmCaseReportImporter {
         } catch (IOException e) {
             throw new PhenolRuntimeException("Could not read Gpt file: " + e.getLocalizedMessage());
         }
+        // Some lines will end with a hypen and the rest of the word continues on the following
+        // line. our strategy is to extract the prefix with the hypen and add it to the next line.
+        // We extract the last
+        this.cleanedLines = Dehyphenizer.dehyphenizeLines(lines);
     }
+
+
+
 
 
     private boolean isValid(String line) {
@@ -100,9 +107,9 @@ public class NejmCaseReportImporter {
         int lastIndex = 0;
         // remove trailing dash, which is a sign that the word at the end of the line was hypenated
         // and now is spread over two lines
-        if (line.endsWith("-")) {
-            line = line.substring(0, line.length()-1);
-        }
+//        if (line.endsWith("-")) {
+//            line = line.substring(0, line.length()-1);
+//        }
         Matcher htmlCleaner = CLEAN_HTML_TAG.matcher(line);
         StringBuilder output = new StringBuilder();
         while (htmlCleaner.find()) {
@@ -127,8 +134,8 @@ public class NejmCaseReportImporter {
 
 
 
-    public List<String> getLines() {
-        return this.lines;
+    public List<String> getCleanedLines() {
+        return this.cleanedLines;
     }
 
 

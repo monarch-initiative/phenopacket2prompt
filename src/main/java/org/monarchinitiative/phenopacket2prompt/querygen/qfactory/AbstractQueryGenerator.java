@@ -8,6 +8,7 @@ import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenol.ontology.algo.OntologyAlgorithm;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenol.ontology.data.TermId;
+import org.monarchinitiative.phenopacket2prompt.model.TimeSegment;
 import org.monarchinitiative.phenopacket2prompt.nejm.NejmCaseReportFromPdfFilterer;
 import org.monarchinitiative.phenopacket2prompt.querygen.PhenotypicFeatureFilter;
 import org.monarchinitiative.phenopacket2prompt.querygen.TimePoint;
@@ -108,8 +109,16 @@ Here is the case:
         return String.join(". ", validLines);
     }
 
-    protected Map<String, String> timeSegments(String vignette, List<TimePoint> timePointList) {
+    /**
+     * Break up the original vignette, which contains the entire cqse report, into segemnts that represent
+     * indivudal time points such as "Two months before admission" ...
+     * @param vignette the original vignette
+     * @param timePointList subvignettes, one per time point
+     * @return
+     */
+    protected List<TimeSegment> timeSegments(String vignette, List<TimePoint> timePointList) {
         Map<String, String> timeSegments = new LinkedHashMap<>(); // ordered map
+        List<TimeSegment> timeSegmentList = new ArrayList<>();
         String nextStart = "";
         int lastEnd = 0;
         for (var timePoint: timePointList) {
@@ -119,13 +128,15 @@ Here is the case:
             seg = stripFamilyHistoryAndPmh(seg);
             lastEnd = e + 1;
             timeSegments.put(nextStart, seg.strip());
+            timeSegmentList.add(new TimeSegment(nextStart, seg.strip()));
             nextStart = timePoint.point();
         }
         if (lastEnd < vignette.length()) {
             String seg = nextStart + vignette.substring(lastEnd);
             timeSegments.put(nextStart, seg.strip());
+            timeSegmentList.add(new TimeSegment(nextStart, seg.strip()));
         }
-        return timeSegments;
+        return timeSegmentList;
     }
 
     /**
@@ -263,10 +274,11 @@ Here is the case:
         sb.append(firstSentence).append("\n");
         try {
             //Map<String, String> timeSegments = timeSegments(starts, ends, vignette, start2pointMap);
-            Map<String, String> timeSegments = timeSegments(vignette, timePointList);
-            for (var entry : timeSegments.entrySet()) {
-                String timePoint = entry.getKey();
-                String description = entry.getValue();
+           // Map<String, String> timeSegments = timeSegments(vignette, timePointList);
+            List<TimeSegment> timeSegList = timeSegments(vignette, timePointList);
+            for (var tseg : timeSegList) {
+                String timePoint = tseg.getTimeDesgination(); //= entry.getKey();
+                String description = tseg.getPayload(); //entry.getValue();
                 if (description.equals("Examination was notable for")) {
                     description = "On examination";
                 }

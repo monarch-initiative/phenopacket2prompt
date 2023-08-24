@@ -56,19 +56,19 @@ public class TextWithManualAnnotsGenerator extends AbstractQueryGenerator {
         String firstSentence = vignette.substring(0, ii + 1).strip();
         vignette = vignette.substring(ii + 1);
         List<TimePoint> timePointList = timePointParser.getTimePoints(vignette);
-
+        System.out.printf("Vignatte includes nitroglycerin? %s\n", vignette.contains("nitroglycerin"));
         try {
-            Map<String, String> timeSegments = timeSegments(vignette, timePointList);
-            for (var entry : timeSegments.entrySet()) {
-                String timePoint = entry.getKey();
-                String vignette_at_timepoint = entry.getValue();
+            for (var tseg : timeSegments(vignette, timePointList)) {
+                String timePoint = tseg.getTimeDesgination();//entry.getKey();
+                String vignette_at_timepoint = tseg.getPayload();//entry.getValue();
+                System.out.printf("Vignatte AT TP  includes nitroglycerin? %s\n", vignette_at_timepoint.contains("nitroglycerin"));
                 if (vignette_at_timepoint.equals("Examination was notable for")) {
                     vignette_at_timepoint = "On examination ";
                 }
                 if (vignette_at_timepoint.length() > MIN_DESCRIPTION_LENGTH) {
                     String output = getPhenopacketBasedQuerySegmentWithAdditions(timePoint, vignette_at_timepoint);
                     if (output.isEmpty()) continue;
-                    outputLines.add(output);
+                    outputLines.add(output.trim());
                 }
             }
         } catch (Exception eee) {
@@ -97,7 +97,6 @@ public class TextWithManualAnnotsGenerator extends AbstractQueryGenerator {
 
     protected String getPhenopacketBasedQuerySegmentWithAdditions(String presentationTimeDescription, String vignette_at_timepoint) {
         List<PhenotypicFeature> pfeatures = getPhenotypicFeatures(vignette_at_timepoint);
-
         Set<String> diagnostics = new HashSet<>();
         Set<String> treatment = new HashSet<>();
         Set<String> verbatim = new HashSet<>();
