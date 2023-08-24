@@ -115,7 +115,9 @@ public class NejmCaseReportFromPdfFilterer {
                     line.startsWith("Pathological Diagnosis")){
                 inDifferentialDiagnosis = true;
             } else if (caseId.equalsIgnoreCase("PMID:33730458") &&
-                    line.startsWith("Pathological Discussion")){
+                    line.startsWith("Pathological Discussion")) {
+                inDifferentialDiagnosis = true;
+            } else if (caseId.equals("PMID:34437787") && line.startsWith("Dr. Andrew M. Crabbe")) {
                 inDifferentialDiagnosis = true;
             } else {
                 if (inCase && ! inDifferentialDiagnosis) {
@@ -131,6 +133,9 @@ public class NejmCaseReportFromPdfFilterer {
                 inActualDiagnosis = true;
                 diagnosis = lines.get(index + 1);
             } else if (line.strip().startsWith("Final Diagnosis")) {
+                inActualDiagnosis = true;
+                diagnosis = lines.get(index+1);
+            } else if (line.strip().startsWith("Anatomical Diagnosis")) {
                 inActualDiagnosis = true;
                 diagnosis = lines.get(index+1);
             }
@@ -159,7 +164,7 @@ public class NejmCaseReportFromPdfFilterer {
         int start=-1;
         int end=-1;
         while(matcher.find()) {
-            n_matched++;
+                n_matched++;
             if (n_matched==1){
                 start = matcher.end()+1;
             } else if (n_matched==2) {

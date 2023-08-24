@@ -32,7 +32,7 @@ public class TimePointParser {
     private final Pattern pattern9 = Pattern.compile("After a \\b\\w+\\b[ -](weeks?|days?|months?|years?) admission",Pattern.CASE_INSENSITIVE);
     private final Pattern pattern10 = Pattern.compile("On admission to (the other|another) hospital",Pattern.CASE_INSENSITIVE);
     private final Pattern pattern11 = Pattern.compile("Over the next \\b\\w+\\b (hours?|days?|weeks?|months?|years?)",Pattern.CASE_INSENSITIVE);
-
+    private final Pattern pattern12 = Pattern.compile("3.5 years before the current evaluation");
 
     /** Note we do all searching in lower case */
     private final Set<String> fixedPatterns = Set.of("in the emergency department", "on examination", "in childhood", "examination was notable for",
@@ -55,7 +55,7 @@ public class TimePointParser {
         patternList.add(pattern8);
         patternList.add(pattern9);
         patternList.add(pattern10);
-       // patternList.add(pattern11);
+        patternList.add(pattern12);
 
     }
 
