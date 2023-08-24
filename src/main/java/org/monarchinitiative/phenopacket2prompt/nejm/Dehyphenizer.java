@@ -16,19 +16,19 @@ public class Dehyphenizer {
         List<String> cleansedLines = new ArrayList<>();
         boolean previousLineHadHyphen = false;
         String previousLinePrefix = "";
-        for (int i = 0; i < lines.size(); i++) {
+        for (String line : lines) {
             String currentLine;
             // get next line and add prefix from previous line if there was one
             if (previousLineHadHyphen) {
-                currentLine = previousLinePrefix + lines.get(i).strip();
+                currentLine = previousLinePrefix + line.strip();
                 previousLinePrefix = "";
             } else {
-                currentLine = lines.get(i);
+                currentLine = line;
             }
             if (currentLine.endsWith("-")) {
-                String [] tokens = currentLine.split("\\s+");
+                String[] tokens = currentLine.split("\\s+");
                 String prefix = tokens[tokens.length - 1];
-                tokens = Arrays.copyOf(tokens, tokens.length-1);
+                tokens = Arrays.copyOf(tokens, tokens.length - 1);
                 currentLine = String.join(" ", tokens);
                 // remove hyphen
                 previousLinePrefix = prefix.substring(0, prefix.length() - 1);

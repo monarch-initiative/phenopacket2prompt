@@ -56,12 +56,10 @@ public class TextWithManualAnnotsGenerator extends AbstractQueryGenerator {
         String firstSentence = vignette.substring(0, ii + 1).strip();
         vignette = vignette.substring(ii + 1);
         List<TimePoint> timePointList = timePointParser.getTimePoints(vignette);
-        System.out.printf("Vignatte includes nitroglycerin? %s\n", vignette.contains("nitroglycerin"));
         try {
             for (var tseg : timeSegments(vignette, timePointList)) {
-                String timePoint = tseg.getTimeDesgination();//entry.getKey();
-                String vignette_at_timepoint = tseg.getPayload();//entry.getValue();
-                System.out.printf("Vignatte AT TP  includes nitroglycerin? %s\n", vignette_at_timepoint.contains("nitroglycerin"));
+                String timePoint = tseg.getTimeDesgination();
+                String vignette_at_timepoint = tseg.getPayload();
                 if (vignette_at_timepoint.equals("Examination was notable for")) {
                     vignette_at_timepoint = "On examination ";
                 }
@@ -89,7 +87,7 @@ public class TextWithManualAnnotsGenerator extends AbstractQueryGenerator {
             }
         }
         for (var line : outputLines) {
-            sb.append(line);
+            sb.append(line).append("\n");
         }
         return sb.toString();
     }
@@ -147,8 +145,15 @@ public class TextWithManualAnnotsGenerator extends AbstractQueryGenerator {
         } else {
             capitalizedTimepoint = presentationTimeDescription.substring(0, 1).toUpperCase() + presentationTimeDescription.substring(1);
         }
-
-        sb.append(capitalizedTimepoint).append(" ");
+        if (observed_terms.isEmpty() &&
+                excluded_terms.isEmpty() &&
+                treatment.isEmpty() &&
+                diagnostics.isEmpty() &&
+                verbatim.isEmpty()) {
+            return "";
+        }  else {
+            sb.append(capitalizedTimepoint);//.append(" ");
+        }
         boolean observedEmpty = true;
         boolean needEmpty = true;
         if (!observed_terms.isEmpty()) {

@@ -94,7 +94,6 @@ public class NejmCaseReportFromPdfFilterer {
             throw new PhenolRuntimeException("Did not find text after \"begin_vignette:\" line!");
         }
         for (String line : lines.subList(index, lines.size())) {
-            //System.out.println(line);
             Matcher caseLineMatcher = CASE_LINE_REGEX.matcher(line);
             if (caseLineMatcher.find()) {
                 continue;
