@@ -17,6 +17,7 @@ public class Main implements Callable<Integer> {
         CommandLine cline = new CommandLine(new Main())
                 .addSubcommand("download", new DownloadCommand())
                 .addSubcommand("gpt", new OntoGptCommand())
+                .addSubcommand("translate", new GptTranslateCommand())
                 ;
         cline.setToggleBooleanFlags(false);
         int exitCode = cline.execute(args);

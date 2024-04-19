@@ -14,7 +14,7 @@ import java.util.concurrent.Callable;
 import static org.monarchinitiative.phenopacket2prompt.querygen.QueryOutputType.*;
 
 
-@CommandLine.Command(name = "gpt-time", aliases = {"T"},
+@CommandLine.Command(name = "gpt-time", aliases = {"G"},
         mixinStandardHelpOptions = true,
         description = "Create GPT time-course prompt")
 public class OntoGptCommand implements Callable<Integer> {
