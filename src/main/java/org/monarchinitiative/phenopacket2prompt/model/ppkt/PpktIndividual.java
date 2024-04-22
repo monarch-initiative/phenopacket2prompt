@@ -1,17 +1,22 @@
 package org.monarchinitiative.phenopacket2prompt.model.ppkt;
 
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
+import org.monarchinitiative.phenol.ontology.data.TermId;
 import org.phenopackets.schema.v2.Phenopacket;
 import com.google.protobuf.util.JsonFormat;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.phenopackets.schema.v2.core.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class PpktIndividual {
     Logger LOGGER = LoggerFactory.getLogger(PpktIndividual.class);
@@ -41,6 +46,75 @@ public class PpktIndividual {
         return phenopacketId;
     }
 
+    public PhenopacketSex getSex() {
+        Sex sex = ppkt.getSubject().getSex();
+        return switch (sex) {
+            case MALE -> PhenopacketSex.MALE;
+            case FEMALE -> PhenopacketSex.FEMALE;
+            case OTHER_SEX -> PhenopacketSex.OTHER;
+            default -> PhenopacketSex.UNKNOWN;
+        };
+    }
+
+    private Optional<PhenopacketAge> getAgeFromTimeElement(TimeElement telem) {
+        if (telem.hasAge()) {
+            return Optional.of(new Iso8601Age(telem.getAge().getIso8601Duration()));
+        } else if (telem.hasOntologyClass()) {
+            OntologyClass clz = telem.getOntologyClass();
+            return Optional.of(new HpoOnsetAge(clz.getId(), clz.getLabel()));
+        } else {
+            return Optional.empty();
+        }
+
+    }
+
+    public Optional<PhenopacketAge> getAgeAtLastExamination() {
+        if (ppkt.getSubject().hasTimeAtLastEncounter()) {
+            TimeElement telem = ppkt.getSubject().getTimeAtLastEncounter();
+            return getAgeFromTimeElement(telem);
+        }
+        return Optional.empty();
+    }
 
 
+    public Optional<PhenopacketAge> getAgeAtOnset() {
+        if (ppkt.getDiseasesCount() == 1) {
+            Disease dx = ppkt.getDiseases(0);
+            if (dx.hasOnset()) {
+                TimeElement telem = dx.getOnset();
+                return getAgeFromTimeElement(telem);
+            }
+        }
+        return Optional.empty();
+    }
+
+
+    public List<PhenopacketDisease> getDiseases() {
+        List<PhenopacketDisease> diseases = new ArrayList<>();
+        for (Disease d : ppkt.getDiseasesList()) {
+            if (d.getExcluded()) continue;
+            diseases.add(new PhenopacketDisease(d.getTerm().getId(), d.getTerm().getLabel()));
+        }
+        return diseases;
+    }
+
+    public List<OntologyTerm> getPhenotypicFeatures() {
+        List<OntologyTerm> termList = new ArrayList<>();
+        for (var pf : ppkt.getPhenotypicFeaturesList()) {
+            TermId hpoId = TermId.of(pf.getType().getId());
+            String label = pf.getType().getLabel();
+            boolean excluded = pf.getExcluded();
+            Optional<PhenopacketAge> opt = Optional.empty();
+            if (pf.hasOnset()) {
+                TimeElement telem = pf.getOnset();
+                opt = getAgeFromTimeElement(telem);
+            }
+            if (opt.isPresent()) {
+                termList.add(new OntologyTerm(hpoId, label, excluded, opt.get()));
+            } else {
+                termList.add(new OntologyTerm(hpoId, label, excluded));
+            }
+        }
+        return termList;
+    }
 }
