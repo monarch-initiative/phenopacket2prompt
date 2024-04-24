@@ -1,7 +1,6 @@
 package org.monarchinitiative.phenopacket2prompt.output;
 
 import org.monarchinitiative.phenopacket2prompt.model.OntologyTerm;
-import org.monarchinitiative.phenopacket2prompt.model.PhenopacketAge;
 
 import java.util.List;
 import java.util.function.Predicate;

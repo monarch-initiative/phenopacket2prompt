@@ -8,7 +8,6 @@ import org.monarchinitiative.phenopacket2prompt.legacy.querygen.PhenopacketFacto
 import org.monarchinitiative.phenopacket2prompt.legacy.querygen.QueryOutputGenerator;
 import org.monarchinitiative.phenopacket2prompt.legacy.querygen.QueryOutputType;
 import org.monarchinitiative.phenopacket2prompt.legacy.querygen.QueryPromptFactory;
-import org.monarchinitiative.phenopacket2prompt.querygen.*;
 import picocli.CommandLine;
 
 import java.io.*;

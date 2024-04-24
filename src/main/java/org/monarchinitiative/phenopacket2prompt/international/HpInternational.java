@@ -3,6 +3,7 @@ package org.monarchinitiative.phenopacket2prompt.international;
 import org.monarchinitiative.phenol.ontology.data.TermId;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Optional;
 
 public class HpInternational {
 
@@ -26,4 +27,13 @@ public class HpInternational {
     public Map<TermId, String> getTermIdToLabelMap() {
         return termIdToLabelMap;
     }
+
+    public Optional<String> getLabel(TermId hpoId) {
+        if (termIdToLabelMap.containsKey(hpoId)) {
+            return Optional.of(termIdToLabelMap.get(hpoId));
+        } else {
+            return Optional.empty();
+        }
+    }
+
 }

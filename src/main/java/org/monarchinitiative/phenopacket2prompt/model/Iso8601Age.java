@@ -36,7 +36,6 @@ public class Iso8601Age implements PhenopacketAge {
         i = ageString.indexOf("D");
         if (i>0) {
             days = Integer.parseInt(ageString.substring(0,i));
-            ageString = ageString.substring(i+1);
         } else {
             days = 0;
         }

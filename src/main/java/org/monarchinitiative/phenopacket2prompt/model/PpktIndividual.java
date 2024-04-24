@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class PpktIndividual {
-    Logger LOGGER = LoggerFactory.getLogger(PpktIndividual.class);
+    final Logger LOGGER = LoggerFactory.getLogger(PpktIndividual.class);
 
     private final Phenopacket ppkt;
 

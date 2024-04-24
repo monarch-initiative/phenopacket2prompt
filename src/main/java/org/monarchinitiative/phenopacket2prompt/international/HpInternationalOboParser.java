@@ -38,6 +38,18 @@ public class HpInternationalOboParser {
         }
     }
 
+    public Optional<String> getTranslation(String annots) {
+        final String translation = "translation:language=\"(\\w{2,2})\"";
+        final Pattern pattern = Pattern.compile(translation);
+        Matcher matcher = pattern.matcher(annots);
+        if (matcher.find()) {
+            String language = matcher.group(1);
+            return Optional.of(language);
+        } else {
+            return Optional.empty();
+        }
+    }
+
     public HpInternationalOboParser(File file) {
         languageToInternationalMap = new HashMap<>();
         String pattern = "id: (HP:\\d{7,7})";
@@ -56,7 +68,7 @@ public class HpInternationalOboParser {
                 if (matcher.find()) {
                     currentHpoTermId = TermId.of(matcher.group(1));
                     inHpTerm = true;
-                    System.out.println(currentHpoTermId.getValue());
+                    //System.out.println(currentHpoTermId.getValue());
                 } else if (inHpTerm) {
                     if (line.isEmpty()) {
                         inHpTerm = false;
@@ -64,17 +76,14 @@ public class HpInternationalOboParser {
                         line = line.substring(5);
                         String [] fields = line.split("\\{");
                         if (fields.length == 1) {
-                            System.out.println("English! " + fields[0]);
                             String hpoLabel = fields[0].trim();
                             languageToInternationalMap.get(ENGLISH).addTerm(currentHpoTermId, hpoLabel);
                         } else if (fields.length == 2) {
-                            System.out.println("OTHER! " + fields[0] + "--" + fields[1]);
                             String hpoLabel = fields[0].trim();
                             String annots = fields[1];
                             Optional<String> opt = getLanguage(annots);
                             if (opt.isPresent()) {
                                 String language = opt.get();
-                                System.out.println(language);
                                 languageToInternationalMap.get(language).addTerm(currentHpoTermId, hpoLabel);
                             } else {
                                 System.err.printf("[ERROR] Could not extract language for %s.", line);
