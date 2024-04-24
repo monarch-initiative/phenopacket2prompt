@@ -1,4 +1,4 @@
-package org.monarchinitiative.phenopacket2prompt.querygen;
+package org.monarchinitiative.phenopacket2prompt.legacy.querygen;
 
 public enum QueryOutputType {
 

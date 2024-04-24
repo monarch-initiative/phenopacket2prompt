@@ -1,4 +1,4 @@
-package org.monarchinitiative.phenopacket2prompt.querygen.qfactory;
+package org.monarchinitiative.phenopacket2prompt.legacy.querygen.qfactory;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
@@ -10,9 +10,9 @@ import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenol.ontology.data.TermId;
 import org.monarchinitiative.phenopacket2prompt.legacy.TimeSegment;
 import org.monarchinitiative.phenopacket2prompt.legacy.nejm.NejmCaseReportFromPdfFilterer;
-import org.monarchinitiative.phenopacket2prompt.querygen.PhenotypicFeatureFilter;
-import org.monarchinitiative.phenopacket2prompt.querygen.TimePoint;
-import org.monarchinitiative.phenopacket2prompt.querygen.TimePointParser;
+import org.monarchinitiative.phenopacket2prompt.legacy.querygen.PhenotypicFeatureFilter;
+import org.monarchinitiative.phenopacket2prompt.legacy.querygen.TimePoint;
+import org.monarchinitiative.phenopacket2prompt.legacy.querygen.TimePointParser;
 import org.phenopackets.phenopackettools.builder.PhenopacketBuilder;
 import org.phenopackets.phenopackettools.builder.builders.IndividualBuilder;
 import org.phenopackets.phenopackettools.builder.builders.MetaDataBuilder;

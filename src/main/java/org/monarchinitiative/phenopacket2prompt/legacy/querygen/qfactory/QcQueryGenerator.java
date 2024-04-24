@@ -1,4 +1,4 @@
-package org.monarchinitiative.phenopacket2prompt.querygen.qfactory;
+package org.monarchinitiative.phenopacket2prompt.legacy.querygen.qfactory;
 
 import org.monarchinitiative.fenominal.core.TermMiner;
 import org.monarchinitiative.phenol.ontology.data.Ontology;

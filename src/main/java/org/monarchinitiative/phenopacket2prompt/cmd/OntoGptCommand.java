@@ -4,6 +4,10 @@ package org.monarchinitiative.phenopacket2prompt.cmd;
 import org.monarchinitiative.phenol.io.OntologyLoader;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenopacket2prompt.legacy.nejm.NejmCaseReportIngestor;
+import org.monarchinitiative.phenopacket2prompt.legacy.querygen.PhenopacketFactoryIngestor;
+import org.monarchinitiative.phenopacket2prompt.legacy.querygen.QueryOutputGenerator;
+import org.monarchinitiative.phenopacket2prompt.legacy.querygen.QueryOutputType;
+import org.monarchinitiative.phenopacket2prompt.legacy.querygen.QueryPromptFactory;
 import org.monarchinitiative.phenopacket2prompt.querygen.*;
 import picocli.CommandLine;
 
@@ -11,7 +15,7 @@ import java.io.*;
 import java.util.*;
 import java.util.concurrent.Callable;
 
-import static org.monarchinitiative.phenopacket2prompt.querygen.QueryOutputType.*;
+import static org.monarchinitiative.phenopacket2prompt.legacy.querygen.QueryOutputType.*;
 
 
 @CommandLine.Command(name = "gpt-time", aliases = {"G"},

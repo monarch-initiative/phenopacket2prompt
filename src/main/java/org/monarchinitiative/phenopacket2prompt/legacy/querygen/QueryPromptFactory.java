@@ -1,13 +1,13 @@
-package org.monarchinitiative.phenopacket2prompt.querygen;
+package org.monarchinitiative.phenopacket2prompt.legacy.querygen;
 
 import org.monarchinitiative.fenominal.core.TermMiner;
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenopacket2prompt.legacy.nejm.NejmCaseReportFromPdfFilterer;
-import org.monarchinitiative.phenopacket2prompt.querygen.qfactory.QcQueryGenerator;
-import org.monarchinitiative.phenopacket2prompt.querygen.qfactory.TextWithManualAnnotsGenerator;
-import org.monarchinitiative.phenopacket2prompt.querygen.qfactory.TextWithoutDiscussionQuery;
-import org.monarchinitiative.phenopacket2prompt.querygen.qfactory.PhenopacketOnlyQuery;
+import org.monarchinitiative.phenopacket2prompt.legacy.querygen.qfactory.PhenopacketOnlyQuery;
+import org.monarchinitiative.phenopacket2prompt.legacy.querygen.qfactory.QcQueryGenerator;
+import org.monarchinitiative.phenopacket2prompt.legacy.querygen.qfactory.TextWithManualAnnotsGenerator;
+import org.monarchinitiative.phenopacket2prompt.legacy.querygen.qfactory.TextWithoutDiscussionQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

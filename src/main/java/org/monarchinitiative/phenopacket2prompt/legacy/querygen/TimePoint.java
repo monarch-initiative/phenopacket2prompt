@@ -1,4 +1,4 @@
-package org.monarchinitiative.phenopacket2prompt.querygen;
+package org.monarchinitiative.phenopacket2prompt.legacy.querygen;
 
 public record TimePoint(String point, int start, int end) implements Comparable<TimePoint>{
 

@@ -3,11 +3,12 @@ package org.monarchinitiative.phenopacket2prompt.model;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.monarchinitiative.phenol.ontology.data.TermId;
-import org.monarchinitiative.phenopacket2prompt.model.ppkt.*;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -50,7 +51,7 @@ public class PpktIndividualTest {
         PhenopacketAge ppktAge = opt.get();
         assertEquals(PhenopacketAgeType.ISO8601_AGE_TYPE, ppktAge.ageType());
         String iso = ppktAge.age();
-        assertEquals("P20Y", iso);
+        assertEquals("20 year-old", iso);
     }
 
     @Test
@@ -60,7 +61,7 @@ public class PpktIndividualTest {
         PhenopacketAge onsetAge = opt.get();
         assertEquals(PhenopacketAgeType.ISO8601_AGE_TYPE, onsetAge.ageType());
         String iso = onsetAge.age();
-        assertEquals("P5M", iso);
+        assertEquals("5 month-old", iso);
     }
 
     @Test
@@ -76,10 +77,14 @@ public class PpktIndividualTest {
 
     @Test
     public void testPhenotypicFeatures() {
-        List<OntologyTerm> ppktFeatures = ppktIndividual.getPhenotypicFeatures();
-        assertFalse(ppktFeatures.isEmpty());
+        Map<PhenopacketAge, List<OntologyTerm>> ppktFeatureMap = ppktIndividual.getPhenotypicFeatures();
+        assertFalse(ppktFeatureMap.isEmpty());
         Predicate<OntologyTerm> termPredicate = term -> term.getLabel().equals("Cerebral atrophy");
-        Optional<OntologyTerm> opt = ppktFeatures.stream().filter(termPredicate).findAny();
+        List<OntologyTerm> otlist = new ArrayList<>();
+        for (var list: ppktFeatureMap.values()) {
+            otlist.addAll(list);
+        }
+        Optional<OntologyTerm> opt = otlist.stream().filter(termPredicate).findAny();
         assertTrue(opt.isPresent());
         OntologyTerm term = opt.get();
         assertEquals("Cerebral atrophy", term.getLabel());

@@ -1,4 +1,4 @@
-package org.monarchinitiative.phenopacket2prompt.querygen.qfactory;
+package org.monarchinitiative.phenopacket2prompt.legacy.querygen.qfactory;
 
 import org.monarchinitiative.fenominal.core.TermMiner;
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
@@ -6,8 +6,8 @@ import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenopacket2prompt.legacy.AdditionalConceptI;
 import org.monarchinitiative.phenopacket2prompt.legacy.AdditionalConceptType;
 import org.monarchinitiative.phenopacket2prompt.legacy.nejm.NejmCaseReportFromPdfFilterer;
-import org.monarchinitiative.phenopacket2prompt.querygen.TimePoint;
-import org.monarchinitiative.phenopacket2prompt.querygen.TimePointParser;
+import org.monarchinitiative.phenopacket2prompt.legacy.querygen.TimePoint;
+import org.monarchinitiative.phenopacket2prompt.legacy.querygen.TimePointParser;
 import org.phenopackets.schema.v2.core.OntologyClass;
 import org.phenopackets.schema.v2.core.PhenotypicFeature;
 import org.slf4j.Logger;
