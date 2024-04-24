@@ -2,7 +2,7 @@ package org.monarchinitiative.phenopacket2prompt.querygen;
 
 import org.monarchinitiative.fenominal.core.TermMiner;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
-import org.monarchinitiative.phenopacket2prompt.nejm.NejmCaseReportFromPdfFilterer;
+import org.monarchinitiative.phenopacket2prompt.legacy.nejm.NejmCaseReportFromPdfFilterer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,4 +1,4 @@
-package org.monarchinitiative.phenopacket2prompt.model.ppkt;
+package org.monarchinitiative.phenopacket2prompt.model;
 
 public enum PhenopacketSex {
 

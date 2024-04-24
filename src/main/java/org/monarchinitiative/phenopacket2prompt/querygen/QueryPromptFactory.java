@@ -3,7 +3,7 @@ package org.monarchinitiative.phenopacket2prompt.querygen;
 import org.monarchinitiative.fenominal.core.TermMiner;
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
-import org.monarchinitiative.phenopacket2prompt.nejm.NejmCaseReportFromPdfFilterer;
+import org.monarchinitiative.phenopacket2prompt.legacy.nejm.NejmCaseReportFromPdfFilterer;
 import org.monarchinitiative.phenopacket2prompt.querygen.qfactory.QcQueryGenerator;
 import org.monarchinitiative.phenopacket2prompt.querygen.qfactory.TextWithManualAnnotsGenerator;
 import org.monarchinitiative.phenopacket2prompt.querygen.qfactory.TextWithoutDiscussionQuery;

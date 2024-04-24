@@ -1,4 +1,4 @@
-package org.monarchinitiative.phenopacket2prompt.model.ppkt;
+package org.monarchinitiative.phenopacket2prompt.model;
 
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenol.ontology.data.TermId;
@@ -14,9 +14,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class PpktIndividual {
     Logger LOGGER = LoggerFactory.getLogger(PpktIndividual.class);
@@ -98,9 +96,16 @@ public class PpktIndividual {
         return diseases;
     }
 
-    public List<OntologyTerm> getPhenotypicFeatures() {
-        List<OntologyTerm> termList = new ArrayList<>();
+    public Map<PhenopacketAge, List<OntologyTerm>> getPhenotypicFeatures() {
+        Map<PhenopacketAge, List<OntologyTerm>> ageToFeatureMap = new HashMap<>();
+        PhenopacketAge notSpecified = new AgeNotSpecified();
+        ageToFeatureMap.put(notSpecified, new ArrayList<>());
         for (var pf : ppkt.getPhenotypicFeaturesList()) {
+            OntologyClass clz = pf.getType();
+            if (clz.getId().isEmpty()) {
+                System.err.println("Warning, empty ontology term");
+                continue;
+            }
             TermId hpoId = TermId.of(pf.getType().getId());
             String label = pf.getType().getLabel();
             boolean excluded = pf.getExcluded();
@@ -110,11 +115,12 @@ public class PpktIndividual {
                 opt = getAgeFromTimeElement(telem);
             }
             if (opt.isPresent()) {
-                termList.add(new OntologyTerm(hpoId, label, excluded, opt.get()));
+                ageToFeatureMap.putIfAbsent(opt.get(), new ArrayList<>());
+                ageToFeatureMap.get(opt.get()).add(new OntologyTerm(hpoId, label, excluded, opt.get()));
             } else {
-                termList.add(new OntologyTerm(hpoId, label, excluded));
+                ageToFeatureMap.get(notSpecified).add(new OntologyTerm(hpoId, label, excluded));
             }
         }
-        return termList;
+        return ageToFeatureMap;
     }
 }

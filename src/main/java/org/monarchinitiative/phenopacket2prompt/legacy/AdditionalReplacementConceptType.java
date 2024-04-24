@@ -1,4 +1,4 @@
-package org.monarchinitiative.phenopacket2prompt.model;
+package org.monarchinitiative.phenopacket2prompt.legacy;
 
 public record AdditionalReplacementConceptType(AdditionalConceptType ctype,
                                                String text,

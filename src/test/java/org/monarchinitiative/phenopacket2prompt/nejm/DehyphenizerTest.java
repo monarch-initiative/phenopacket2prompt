@@ -2,6 +2,7 @@ package org.monarchinitiative.phenopacket2prompt.nejm;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.monarchinitiative.phenopacket2prompt.legacy.nejm.Dehyphenizer;
 
 import java.util.ArrayList;
 import java.util.List;

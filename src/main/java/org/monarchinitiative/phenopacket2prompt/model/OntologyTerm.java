@@ -1,7 +1,6 @@
-package org.monarchinitiative.phenopacket2prompt.model.ppkt;
+package org.monarchinitiative.phenopacket2prompt.model;
 
 import org.monarchinitiative.phenol.ontology.data.TermId;
-import org.phenopackets.schema.v2.core.Disease;
 
 import java.util.Optional;
 

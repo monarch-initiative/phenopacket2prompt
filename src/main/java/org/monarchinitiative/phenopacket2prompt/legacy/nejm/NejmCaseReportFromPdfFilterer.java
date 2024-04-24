@@ -1,10 +1,10 @@
-package org.monarchinitiative.phenopacket2prompt.nejm;
+package org.monarchinitiative.phenopacket2prompt.legacy.nejm;
 
 
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
-import org.monarchinitiative.phenopacket2prompt.model.AdditionalConcept;
-import org.monarchinitiative.phenopacket2prompt.model.AdditionalConceptI;
-import org.monarchinitiative.phenopacket2prompt.model.AdditionalReplacementConceptType;
+import org.monarchinitiative.phenopacket2prompt.legacy.AdditionalConcept;
+import org.monarchinitiative.phenopacket2prompt.legacy.AdditionalConceptI;
+import org.monarchinitiative.phenopacket2prompt.legacy.AdditionalReplacementConceptType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

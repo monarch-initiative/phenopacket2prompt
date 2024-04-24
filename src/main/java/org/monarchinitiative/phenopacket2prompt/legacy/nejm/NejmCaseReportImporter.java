@@ -1,4 +1,4 @@
-package org.monarchinitiative.phenopacket2prompt.nejm;
+package org.monarchinitiative.phenopacket2prompt.legacy.nejm;
 
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 

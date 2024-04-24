@@ -3,7 +3,7 @@ package org.monarchinitiative.phenopacket2prompt.cmd;
 
 import org.monarchinitiative.phenol.io.OntologyLoader;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
-import org.monarchinitiative.phenopacket2prompt.nejm.NejmCaseReportIngestor;
+import org.monarchinitiative.phenopacket2prompt.legacy.nejm.NejmCaseReportIngestor;
 import org.monarchinitiative.phenopacket2prompt.querygen.*;
 import picocli.CommandLine;
 
