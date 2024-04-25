@@ -1,35 +1,25 @@
-name: Sphinx Documentation
+name: mkdocs-generation 
 on:
   push:
-    branches: [  main ]
-
+    branches:
+      - main
+permissions:
+  contents: write
 jobs:
-  build-docs:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@main
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v5
         with:
-          ref: ${{ github.ref }}
+          python-version: 3.x
 
-      - name: Set up Python 3.
-        uses: actions/setup-python@v3
+      - uses: actions/cache@v2
         with:
-          python-version: 3.9
+          key: ${{ github.ref }}
+          path: .cache
 
-      - name: install
-        run: pip3 install sphinx sphinx-rtd-theme click ddt pandas setuptools
+      - run: python3 -m pip install .[docs]
 
-      - name: Build documentation.
-        run: |
-          cd docs/
-          sphinx-build -b html . _build
-          touch _build/.nojekyll
-
-      - name: Deploy documentation.
-        if: ${{ github.event_name == 'push' }}
-        uses: JamesIves/github-pages-deploy-action@v4.3.0
-        with:
-          branch: gh-pages
-          clean: true
-          folder: docs/_build
+      - run: mkdocs gh-deploy --force

@@ -1,0 +1,224 @@
+format-version: 1.2
+data-version: hp/releases/2024-04-19/hp-international.owl
+subsetdef: 1_STAR ""
+subsetdef: 2_STAR ""
+subsetdef: 3_STAR ""
+subsetdef: abnormal_slim ""
+subsetdef: absent_slim ""
+subsetdef: attribute_slim ""
+subsetdef: BDS_subset ""
+subsetdef: blood_and_immune_upper_slim ""
+subsetdef: cell_quality ""
+subsetdef: cellxgene_subset ""
+subsetdef: common_anatomy ""
+subsetdef: cumbo ""
+subsetdef: cyclostome_subset ""
+subsetdef: defined_by_ordinal_series ""
+subsetdef: developmental_classification ""
+subsetdef: disposition_slim ""
+subsetdef: early_development ""
+subsetdef: efo_slim ""
+subsetdef: emapa_ehdaa2 ""
+subsetdef: eye_upper_slim ""
+subsetdef: feed_aligned ""
+subsetdef: functional_classification ""
+subsetdef: general_cell_types_upper_slim ""
+subsetdef: gocheck_do_not_annotate ""
+subsetdef: gocheck_do_not_manually_annotate ""
+subsetdef: goslim_agr ""
+subsetdef: goslim_candida ""
+subsetdef: goslim_chembl ""
+subsetdef: goslim_drosophila ""
+subsetdef: goslim_flybase_ribbon ""
+subsetdef: goslim_generic ""
+subsetdef: goslim_metagenomics ""
+subsetdef: goslim_mouse ""
+subsetdef: goslim_pir ""
+subsetdef: goslim_plant ""
+subsetdef: goslim_pombe ""
+subsetdef: goslim_prokaryote ""
+subsetdef: goslim_synapse ""
+subsetdef: goslim_yeast ""
+subsetdef: grouping_class ""
+subsetdef: homology_grouping ""
+subsetdef: hpo_slim ""
+subsetdef: hposlim_core "Core clinical terminology"
+subsetdef: http://purl.obolibrary.org/obo/valid_for_go_annotation_extension ""
+subsetdef: http://purl.obolibrary.org/obo/valid_for_go_gp2term ""
+subsetdef: http://purl.obolibrary.org/obo/valid_for_go_ontology ""
+subsetdef: http://purl.obolibrary.org/obo/valid_for_gocam ""
+subsetdef: human_reference_atlas ""
+subsetdef: inconsistent_with_fma ""
+subsetdef: kidney_upper_slim ""
+subsetdef: location_grouping ""
+subsetdef: major_organ ""
+subsetdef: mpath_slim ""
+subsetdef: non_informative ""
+subsetdef: organ_slim ""
+subsetdef: pheno_slim ""
+subsetdef: phenotype_rcn ""
+subsetdef: relational_slim ""
+subsetdef: ro-eco ""
+subsetdef: RO:0002259 ""
+subsetdef: scalar_slim ""
+subsetdef: secondary_consequence "Consequence of a disorder in another organ system."
+subsetdef: uberon_slim ""
+subsetdef: ubprop:upper_level ""
+subsetdef: unverified_taxonomic_grouping ""
+subsetdef: upper_level ""
+subsetdef: value_slim ""
+subsetdef: vertebrate_core ""
+synonymtypedef: abbreviation "abbreviation"
+synonymtypedef: BRAND_NAME ""
+synonymtypedef: Gene-based ""
+synonymtypedef: HP:0034334 "対立遺伝子：要求性"
+synonymtypedef: INN ""
+synonymtypedef: IUPAC_NAME ""
+synonymtypedef: layperson "layperson term"
+synonymtypedef: obsolete_synonym "discarded/obsoleted synonym"
+synonymtypedef: OMO:0003000 ""
+synonymtypedef: OMO:0003002 ""
+synonymtypedef: OMO:0003004 ""
+synonymtypedef: OMO:0003011 ""
+synonymtypedef: plural_form "plural form"
+synonymtypedef: PRO-short-label ""
+synonymtypedef: syngo_official_label ""
+synonymtypedef: systematic_synonym ""
+synonymtypedef: uk_spelling "UK spelling"
+default-namespace: human_phenotype
+remark: Please see license of HPO at http://www.human-phenotype-ontology.org
+ontology: hp/hp-international
+property_value: http://purl.org/dc/elements/1.1/creator "Human Phenotype Ontology Consortium" xsd:string
+property_value: http://purl.org/dc/elements/1.1/creator "Monarch Initiative" xsd:string
+property_value: http://purl.org/dc/elements/1.1/creator "Peter Robinson" xsd:string
+property_value: http://purl.org/dc/elements/1.1/creator "Sebastian Köhler" xsd:string
+property_value: http://purl.org/dc/elements/1.1/description "The Human Phenotype Ontology (HPO) provides a standardized vocabulary of phenotypic abnormalities and clinical features encountered in human disease." xsd:string
+property_value: http://purl.org/dc/elements/1.1/rights "Peter Robinson, Sebastian Koehler, The Human Phenotype Ontology Consortium, and The Monarch Initiative" xsd:string
+property_value: http://purl.org/dc/elements/1.1/subject "Phenotypic abnormalities encountered in human disease" xsd:string
+property_value: http://purl.org/dc/elements/1.1/title "Human Phenotype Ontology" xsd:string
+property_value: http://purl.org/dc/terms/license https://hpo.jax.org/app/license
+property_value: IAO:0000700 HP:0000001
+property_value: owl:versionInfo "2024-04-19" xsd:string
+logical-definition-view-relation: has_part
+
+[Term]
+id: BFO:0000002
+name: continuant
+def: "An entity that exists in full at any time in which it exists at all, persists through time while maintaining its identity and has no temporal parts." []
+disjoint_from: BFO:0000003 ! occurrent
+relationship: part_of BFO:0000002 {all_only="true"} ! continuant
+
+
+[Term]
+id: HP:0001166
+name: Arachnodactylie {translation:language="fr", source:value="Arachnodactyly", translation:status="OFFICIAL", https://w3id.org/babelon/comment="label of HP:0001166 (Arachnodactyly)  ; abnormality of limbs ; abnormality of the skeletal system", source:language="en"}
+name: Arachnodactylie {translation:status="CANDIDATE", source:value="Arachnodactyly", source:language="en", translation:language="nl"}
+name: Arachnodactyly
+name: Arachnodaktylie {source:value="Arachnodactyly", translation:status="OFFICIAL", translation:language="cs", source:language="en"}
+name: Aracnodactilia {source:value="Arachnodactyly", translation:status="OFFICIAL", source:language="en", translation:language="es"}
+name: Araknodaktili {source:value="Arachnodactyly", translation:status="OFFICIAL", source:language="en", translation:language="tr"}
+name: くも指 {https://w3id.org/babelon/source="http://purl.obolibrary.org/obo/hp.owl", translation:date="2023-07-31", translation:precision="EXACT", source:value="Arachnodactyly", translation:confidence="1.0", translation:language="ja", translation:status="OFFICIAL", source:language="en", source:version="http://purl.obolibrary.org/obo/hp/releases/2023-07-21/hp.owl"}
+name: 细长指(趾) {source:value="Arachnodactyly", translation:status="OFFICIAL", source:language="en", translation:language="zh"}
+alt_id: HP:0001505
+def: "\"Abnormálně dlouhé a štíhlé prsty (\"\"pavoučí prsty\"\")\"" [] {source:value="\"Abnormally long and slender fingers (\"\"spider fingers\"\").\"", translation:status="OFFICIAL", translation:language="cs", source:language="en"}
+def: "\"Anormal uzun ve ince parmaklar (\"\"örümcek parmaklar\"\")\"" [] {source:value="\"Abnormally long and slender fingers (\"\"spider fingers\"\").\"", translation:status="OFFICIAL", source:language="en", translation:language="tr"}
+def: "Abnormally long and slender fingers (\"spider fingers\")." [https://orcid.org/0000-0002-0736-9199]
+synonym: "Dlouhé prsty" EXACT []
+synonym: "Long slender fingers" EXACT layperson []
+synonym: "Long slender fingers" EXACT []
+synonym: "Long slender fingers|Long, slender fingers|Spider fingers" EXACT []
+synonym: "Long, slender fingers" EXACT []
+synonym: "Pavoučí prsty" EXACT []
+synonym: "Spider fingers" EXACT []
+synonym: "Spider fingers" EXACT layperson []
+synonym: "Štíhlé prsty" EXACT []
+xref: MSH:D054119
+xref: SNOMEDCT_US:62250003
+xref: UMLS:C0003706
+is_a: HP:0001238 ! Nsatea  εyε  teatea/tratra   sen nipadua no size
+is_a: HP:0100807 ! 長い指
+
+[Term]
+id: HP:0001167
+name: Abnormal finger morphology
+name: Abnormalita prstu {translation:status="CANDIDATE", translation:language="cs", source:language="en", source:value="Abnormal finger morphology"}
+name: Afwijking van vinger {translation:status="CANDIDATE", source:language="en", source:value="Abnormal finger morphology", translation:language="nl"}
+name: Anomalie des doigts {translation:language="fr", https://w3id.org/babelon/comment="label of HP:0001167 (Abnormality of finger)  ; abnormality of limbs ; abnormality of the skeletal system", translation:status="CANDIDATE", source:language="en", source:value="Abnormal finger morphology"}
+name: Anomalía del dedo de la mano {translation:status="CANDIDATE", source:language="en", source:value="Abnormal finger morphology", translation:language="es"}
+name: Parmak anormalliği {translation:status="CANDIDATE", source:language="en", source:value="Abnormal finger morphology", translation:language="tr"}
+name: 手指异常 {translation:status="CANDIDATE", source:language="en", source:value="Abnormal finger morphology", translation:language="zh"}
+name: 指の異常 {https://w3id.org/babelon/source="http://purl.obolibrary.org/obo/hp.owl", translation:date="2023-07-31", translation:precision="EXACT", translation:confidence="1.0", translation:language="ja", translation:status="OFFICIAL", source:language="en", source:value="Abnormal finger morphology", source:version="http://purl.obolibrary.org/obo/hp/releases/2023-07-21/hp.owl"}
+alt_id: HP:0003035
+def: "An anomaly of a finger." [https://orcid.org/0000-0002-0736-9199]
+def: "Anomálie prstu" [] {translation:status="OFFICIAL", source:value="An anomaly of a finger.", translation:language="cs", source:language="en"}
+def: "Parmağın bir anomalisi" [] {translation:status="OFFICIAL", source:value="An anomaly of a finger.", source:language="en", translation:language="tr"}
+synonym: "Abnormalities of the fingers" EXACT []
+synonym: "Abnormalities of the fingers" EXACT layperson []
+synonym: "Abnormality of finger" EXACT layperson []
+synonym: "Abnormality prstů" EXACT []
+xref: UMLS:C2674737
+is_a: HP:0001155 ! Afwijking van de hand
+is_a: HP:0011297 ! Afwijking van vinger/teen
+
+[Term]
+id: HP:0001169
+name: Brede palm {translation:status="CANDIDATE", source:value="Broad palm", source:language="en", translation:language="nl"}
+name: Broad palm
+name: Geniş avuç {source:value="Broad palm", translation:status="OFFICIAL", source:language="en", translation:language="tr"}
+name: Mains larges {translation:language="fr", https://w3id.org/babelon/comment="label of HP:0001169 (Broad palm)  ; abnormality of limbs", source:value="Broad palm", translation:status="OFFICIAL", source:language="en"}
+name: Palma de la mano ancha {source:value="Broad palm", translation:status="OFFICIAL", source:language="en", translation:language="es"}
+name: Široká dlaň {source:value="Broad palm", translation:status="OFFICIAL", translation:language="cs", source:language="en"}
+name: 宽掌 {source:value="Broad palm", translation:status="OFFICIAL", source:language="en", translation:language="zh"}
+name: 幅広い手掌 {https://w3id.org/babelon/source="http://purl.obolibrary.org/obo/hp.owl", translation:date="2023-07-31", translation:precision="EXACT", translation:confidence="1.0", translation:language="ja", source:value="Broad palm", translation:status="OFFICIAL", source:language="en", source:version="http://purl.obolibrary.org/obo/hp/releases/2023-07-21/hp.owl"}
+alt_id: HP:0001174
+def: "For children from birth to 4 years of age the palm width is more than 2 SD above the mean; for children from 4 to 16 years of age the palm width is above the 95th centile; or, the width of the palm appears disproportionately wide for the length." [https://orcid.org/0000-0002-0736-9199, PMID:19125433]
+def: "Pro děti od narození do 4 let věku šířka dlaně větší než 2 SD; pro děti od 4 do 16 let šířka dlaně nad 95. percentilem; nebo očividně disproporční šířka dlaně k délku" [] {source:value="For children from birth to 4 years of age the palm width is more than 2 SD above the mean; for children from 4 to 16 years of age the palm width is above the 95th centile; or, the width of the palm appears disproportionately wide for the length.", translation:status="OFFICIAL", translation:language="cs", source:language="en"}
+def: "Çocuklarda doğumdan 4 yaşına kadar avuç genişliğinin ortalamanın 2 SD üzerinde olmasıdır; 4 yaşından 16 yaşında kadar avuç genişliğinin 95. yüzdelik dilimin üzerinde olmasıdır; veya avuç genişliğinin uzunluğuna göre orantısız olarak görünmesi" [] {source:value="For children from birth to 4 years of age the palm width is more than 2 SD above the mean; for children from 4 to 16 years of age the palm width is above the 95th centile; or, the width of the palm appears disproportionately wide for the length.", translation:status="OFFICIAL", source:language="en", translation:language="tr"}
+comment: Hand width is measured across the palm at the level of the MCPJ (radial aspect of the second MCPJ to the ulnar aspect of the fifth MCPJ) [Hall et al., 2007]. Caution is advised with the subjective assessment as short metacarpals can mimic a broad palm. In persons with polydactyly that includes a supernumerary metacarpal, that should be separately coded and the measurement technique from Hall et al, [2007] would need to be modified to account for the supernumerary digit (i.e., with postaxial polydactyly, measure to the sixth MCPJ).
+synonym: "Broad hand" EXACT layperson []
+synonym: "Broad hand" EXACT []
+synonym: "Broad hands" EXACT []
+synonym: "Broad hands" EXACT layperson [https://orcid.org/0000-0002-5316-1399]
+synonym: "Broad palm" EXACT layperson []
+synonym: "Mains larges" EXACT []
+synonym: "mains larges et courtes" EXACT []
+synonym: "Wide palm" EXACT []
+synonym: "Wide palm" EXACT layperson []
+synonym: "Široké dlaně" EXACT []
+synonym: "Široké ruce" EXACT []
+xref: SNOMEDCT_US:48251003
+xref: UMLS:C0264142
+is_a: HP:0100871 ! Afwijking van de palm
+intersection_of: PATO:0000600 ! increased width
+intersection_of: inheres_in UBERON:0008878 ! palmar part of manus
+intersection_of: qualifier PATO:0000460 ! abnormal
+
+[Term]
+id: HP:0001171
+name: Ectrodactylie {translation:status="CANDIDATE", source:value="Split hand", source:language="en", translation:language="nl"}
+name: Ectrodactylie {https://w3id.org/babelon/comment="label of HP:0001171 (Split hand)  ; abnormality of limbs ; abnormality of the skeletal system", translation:language="fr", source:value="Split hand", translation:status="OFFICIAL", source:language="en"}
+name: Laar Parirr {source:value="Split hand", translation:status="OFFICIAL", source:language="en", translation:language="nna"}
+name: Mano hendida {source:value="Split hand", translation:status="OFFICIAL", source:language="en", translation:language="es"}
+name: Nsatea  baako,mmienu anaa deε  boro saa akabom baako na agya kokurobeti no koraa {source:value="Split hand", translation:status="OFFICIAL", translation:language="tw", source:language="en"}
+name: Rozštěp ruky {source:value="Split hand", translation:status="OFFICIAL", translation:language="cs", source:language="en"}
+name: Split hand
+name: Yarık el {source:value="Split hand", translation:status="OFFICIAL", source:language="en", translation:language="tr"}
+name: 手劈裂 {source:value="Split hand", translation:status="OFFICIAL", source:language="en", translation:language="zh"}
+name: 裂手 {https://w3id.org/babelon/source="http://purl.obolibrary.org/obo/hp.owl", translation:date="2023-07-31", translation:precision="EXACT", source:value="Split hand", translation:confidence="1.0", translation:language="ja", translation:status="OFFICIAL", source:language="en", source:version="http://purl.obolibrary.org/obo/hp/releases/2023-07-21/hp.owl"}
+alt_id: HP:0001247
+alt_id: HP:0003050
+def: "A condition in which middle parts of the hand (fingers and metacarpals) are missing giving a cleft appearance. The severity is very variable ranging from slightly hypoplastic middle fingers over absent middel fingers as far as oligo- or monodactyl hands." [https://orcid.org/0009-0006-4530-3154]
+def: "Stav, kdy chybí střední části ruky (prsty na ruce a metakarlální kosti), což vypadá jako rozštěp. Závažnost je velmi variabilní od mírně hypoplastických středních prstů přes chybění středních prstů nebo až oligo- nebo monodaktylické ruce." [] {source:value="A condition in which middle parts of the hand (fingers and metacarpals) are missing giving a cleft appearance. The severity is very variable ranging from slightly hypoplastic middle fingers over absent middel fingers as far as oligo- or monodactyl hands.", translation:status="OFFICIAL", translation:language="cs", source:language="en"}
+def: "Yarık görünümü veren elin orta kısımlarının (parmaklar ve metakarpaller) eksik olması durumudur. Hafif hipoplastik orta parmaktan, orta parmak yokluğuna hatta oligo-monodaktiliye kadar ciddiyeti oldukça değişkendir" [] {source:value="A condition in which middle parts of the hand (fingers and metacarpals) are missing giving a cleft appearance. The severity is very variable ranging from slightly hypoplastic middle fingers over absent middel fingers as far as oligo- or monodactyl hands.", translation:status="OFFICIAL", source:language="en", translation:language="tr"}
+synonym: "Ectrodactyly of the hand" EXACT []
+synonym: "Ektrodaktylie ruky" EXACT []
+synonym: "Hand ectrodactyly" EXACT []
+synonym: "Main fendue" EXACT []
+synonym: "Rozštěpená ruka" EXACT []
+synonym: "Split hand" EXACT layperson []
+synonym: "Split-hand" EXACT layperson []
+synonym: "Split-hand" EXACT []
+xref: SNOMEDCT_US:299034005
+xref: UMLS:C0221373
+is_a: HP:0005922 ! Anomalie de la morphologie de la main
+is_a: HP:0100257 ! Ektrodaktylie

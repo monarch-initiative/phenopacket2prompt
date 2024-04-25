@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -33,11 +35,13 @@ public class DownloadCommand implements Callable<Integer>{
     public boolean overwrite;
 
     @Override
-    public Integer call() throws FileDownloadException {
+    public Integer call() throws FileDownloadException, MalformedURLException {
         logger.info(String.format("Download analysis to %s", datadir));
         Path destination = Paths.get(datadir);
         BioDownloaderBuilder builder = BioDownloader.builder(destination);
         builder.hpoJson();
+        URL hpoInternational = new URL("https://github.com/obophenotype/human-phenotype-ontology/releases/latest/download/hp-international.obo");
+        builder.custom("hp-international.obo", hpoInternational);
         BioDownloader downloader = builder.build();
         List<File> files = downloader.download();
         return 0;

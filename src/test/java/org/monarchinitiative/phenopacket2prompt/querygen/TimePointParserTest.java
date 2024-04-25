@@ -1,6 +1,8 @@
 package org.monarchinitiative.phenopacket2prompt.querygen;
 
 import org.junit.jupiter.api.Test;
+import org.monarchinitiative.phenopacket2prompt.legacy.querygen.TimePoint;
+import org.monarchinitiative.phenopacket2prompt.legacy.querygen.TimePointParser;
 
 import java.util.List;
 
