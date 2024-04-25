@@ -12,9 +12,8 @@ public class SpanishPromptGenerator implements PromptGenerator {
 
     private final Ontology hpo;
 
-    private final  PhenopacketSexGenerator sexGenerator;
 
-    private final PhenopacketAgeGenerator ppktAgeGenerator;
+    private final PhenopacketAgeSexGenerator ppktAgeSexGenerator;
 
     private final PhenopacketTextGenerator ppktTextGenerator;
 
@@ -22,11 +21,10 @@ public class SpanishPromptGenerator implements PromptGenerator {
 
 
 
-    public SpanishPromptGenerator(Ontology hpo, PhenopacketSexGenerator sgen, PhenopacketAgeGenerator page, PhenopacketTextGenerator ptext, PpktPhenotypicFeatureGenerator pfgen) {
+    public SpanishPromptGenerator(Ontology hpo, PpktPhenotypicFeatureGenerator pfgen) {
         this.hpo = hpo;
-        sexGenerator = sgen;
-        ppktAgeGenerator = page;
-        ppktTextGenerator = ptext;
+        ppktAgeSexGenerator = new PpktAgeSexSpanish();
+        ppktTextGenerator = new PpktTextSpanish();
         this.ppktPhenotypicFeatureGenerator = pfgen;
     }
 
@@ -38,21 +36,21 @@ public class SpanishPromptGenerator implements PromptGenerator {
     @Override
     public String getIndividualInformation(PpktIndividual ppktIndividual) {
         StringBuilder sb = new StringBuilder();
-        String sex = sexGenerator.ppktSex(ppktIndividual);
+       /* String sex = sexGenerator.ppktSex(ppktIndividual);
         Optional<PhenopacketAge> lastAgeOpt = ppktIndividual.getAgeAtLastExamination();
         Optional<PhenopacketAge> onsetOpt = ppktIndividual.getAgeAtOnset();
         if (lastAgeOpt.isPresent()) {
             PhenopacketAge lastExamAge = lastAgeOpt.get();
-            String examAge = ppktAgeGenerator.age(lastExamAge);
+            String examAge = ppktAgeSexGenerator.age(lastExamAge);
             sb.append("El probando era un ").append(examAge).append( " ").append(sex).append(". ");
         } else {
             sb.append("El probando era un ").append(sex).append(". ");
         }
         if (onsetOpt.isPresent()) {
             PhenopacketAge onsetAge = onsetOpt.get();
-            String onset = ppktAgeGenerator.age(onsetAge);
+            String onset = ppktAgeSexGenerator.age(onsetAge);
             sb.append("Las manifestaciones iniciales de la enfermedad aparecieron cuando el probando era ").append(onset).append(". ");
-        }
+        }*/
         return sb.toString();
     }
 
@@ -82,7 +80,7 @@ public class SpanishPromptGenerator implements PromptGenerator {
                     }
                 }
             } else {
-                String ageString = ppktAgeGenerator.age(age);
+                String ageString = "";//ppktAgeSexGenerator.age(age);
 
                 if (ppktPhenotypicFeatureGenerator.hasObservedFeatures(terms)) {
                     sb.append(ageString).append(", se observaron las siguientes manifestaciones clínicas: ").append(ppktPhenotypicFeatureGenerator.featureList(terms)).append(". ");

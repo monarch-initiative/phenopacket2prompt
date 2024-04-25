@@ -12,9 +12,8 @@ public class EnglishPromptGenerator implements PromptGenerator  {
 
     private final Ontology hpo;
 
-    private final  PhenopacketSexGenerator sexGenerator;
 
-    private final PhenopacketAgeGenerator ppktAgeGenerator;
+    private final PhenopacketAgeSexGenerator ppktAgeGenerator;
 
     private final PhenopacketTextGenerator ppktTextGenerator;
 
@@ -22,12 +21,11 @@ public class EnglishPromptGenerator implements PromptGenerator  {
 
 
 
-    public EnglishPromptGenerator(Ontology hpo, PhenopacketSexGenerator sgen, PhenopacketAgeGenerator page, PhenopacketTextGenerator ptext, PpktPhenotypicFeatureGenerator pfgen){
+    public EnglishPromptGenerator(Ontology hpo){
         this.hpo = hpo;
-        sexGenerator = sgen;
-        ppktAgeGenerator = page;
-        ppktTextGenerator = ptext;
-        this.ppktPhenotypicFeatureGenerator = pfgen;
+        ppktAgeGenerator = new PpktAgeSexEnglish();
+        ppktTextGenerator = new PpktTextEnglish();
+        this.ppktPhenotypicFeatureGenerator = new PpktPhenotypicfeatureEnglish();
     }
 
 
@@ -36,7 +34,7 @@ public class EnglishPromptGenerator implements PromptGenerator  {
     @Override
     public String getIndividualInformation(PpktIndividual ppktIndividual) {
         StringBuilder sb = new StringBuilder();
-        String sex = sexGenerator.ppktSex(ppktIndividual);
+        /*String sex = sexGenerator.ppktSex(ppktIndividual);
         Optional<PhenopacketAge> lastAgeOpt = ppktIndividual.getAgeAtLastExamination();
         Optional<PhenopacketAge> onsetOpt = ppktIndividual.getAgeAtOnset();
         if (lastAgeOpt.isPresent()) {
@@ -50,7 +48,7 @@ public class EnglishPromptGenerator implements PromptGenerator  {
             PhenopacketAge onsetAge = onsetOpt.get();
             String onset = ppktAgeGenerator.age(onsetAge);
             sb.append("Initial manifestations of disease appeared when the proband was ").append(onset).append(". ");
-        }
+        }*/
         return sb.toString();
     }
 
@@ -80,7 +78,7 @@ public class EnglishPromptGenerator implements PromptGenerator  {
                     }
                 }
             } else {
-                String ageString = ppktAgeGenerator.age(age);
+                String ageString = "";//ppktAgeGenerator.age(age);
 
                 if (ppktPhenotypicFeatureGenerator.hasObservedFeatures(terms)) {
                     sb.append(ageString).append(", the following clinical manifestations were observed: ").append(ppktPhenotypicFeatureGenerator.featureList(terms)).append(". ");

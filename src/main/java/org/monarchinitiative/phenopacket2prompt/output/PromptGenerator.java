@@ -4,10 +4,6 @@ import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenopacket2prompt.international.HpInternational;
 import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
 import org.monarchinitiative.phenopacket2prompt.output.impl.english.EnglishPromptGenerator;
-import org.monarchinitiative.phenopacket2prompt.output.impl.english.PhenopacketSexEnglish;
-import org.monarchinitiative.phenopacket2prompt.output.impl.english.PpktAgeEnglish;
-import org.monarchinitiative.phenopacket2prompt.output.impl.english.PpktPhenotypicfeatureEnglish;
-import org.monarchinitiative.phenopacket2prompt.output.impl.english.PpktTextEnglish;
 import org.monarchinitiative.phenopacket2prompt.output.impl.spanish.*;
 
 public interface PromptGenerator {
@@ -22,19 +18,13 @@ public interface PromptGenerator {
 
 
     public static PromptGenerator english(Ontology ontology){
-        PhenopacketSexGenerator sgen = new PhenopacketSexEnglish();
-        PhenopacketAgeGenerator page = new PpktAgeEnglish();
-        PhenopacketTextGenerator ptext = new PpktTextEnglish();
-        PpktPhenotypicFeatureGenerator pfgen = new PpktPhenotypicfeatureEnglish();
-        return new EnglishPromptGenerator(ontology, sgen, page, ptext, pfgen);
+
+        return new EnglishPromptGenerator(ontology);
     }
 
     static PromptGenerator spanish(Ontology hpo, HpInternational international) {
-        PhenopacketSexGenerator sgen = new PhenopacketSexSpanish();
-        PhenopacketAgeGenerator page = new PpktAgeSpanish();
-        PhenopacketTextGenerator ptext = new PpktTextSpanish();
         PpktPhenotypicFeatureGenerator pfgen = new PpktPhenotypicfeatureSpanish(international);
-        return new SpanishPromptGenerator(hpo, sgen, page, ptext, pfgen);
+        return new SpanishPromptGenerator(hpo, pfgen);
     }
 
     default String createPrompt(PpktIndividual individual) {
