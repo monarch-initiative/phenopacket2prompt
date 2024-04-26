@@ -2,7 +2,7 @@ name: mkdocs-generation
 on:
   push:
     branches:
-      - [main, develop]
+      - develop
 permissions:
   contents: write
 jobs:
@@ -20,6 +20,6 @@ jobs:
           key: ${{ github.ref }}
           path: .cache
 
-      - run: python3 -m pip install .[docs]
+      - run: python3 -m pip install mkdocs-material[imaging],mkdocs-material-extensions,mkdocstrings[python],pillow,cairosvg
 
       - run: mkdocs gh-deploy --force
