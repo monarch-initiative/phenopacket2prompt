@@ -15,8 +15,8 @@ public class Main implements Callable<Integer> {
             args = new String[]{"-h"};
         }
         CommandLine cline = new CommandLine(new Main())
+                .addSubcommand("batch", new GbtTranslateBatchCommand())
                 .addSubcommand("download", new DownloadCommand())
-                .addSubcommand("gpt", new OntoGptCommand())
                 .addSubcommand("translate", new GptTranslateCommand())
                 ;
         cline.setToggleBooleanFlags(false);
@@ -30,4 +30,8 @@ public class Main implements Callable<Integer> {
         // work done in subcommands
         return 0;
     }
+
+
+
+
 }

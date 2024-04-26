@@ -22,6 +22,7 @@ public class HpoOnsetAge implements PhenopacketAge {
     /** Childhood onset */
     private final static TermId childhoodOnset = TermId.of("HP:0011463");
 
+    private final static TermId juvenileOnset = TermId.of("HP:0003621");
 
     /** Infantile onset */
     private final static TermId infantileOnset = TermId.of("HP:0003593");
@@ -54,6 +55,11 @@ public class HpoOnsetAge implements PhenopacketAge {
         return PhenopacketAgeType.HPO_ONSET_AGE_TYPE;
     }
 
+    @Override
+    public boolean isJuvenile() {
+        return tid.equals(juvenileOnset);
+    }
+
 
     @Override
     public boolean isChild() {
@@ -79,5 +85,9 @@ public class HpoOnsetAge implements PhenopacketAge {
     @Override
     public int totalDays() {
         return totalDays;
+    }
+
+    public TermId getTid() {
+        return tid;
     }
 }

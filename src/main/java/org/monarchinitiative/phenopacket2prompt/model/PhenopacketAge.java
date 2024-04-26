@@ -5,6 +5,8 @@ public interface PhenopacketAge {
     String age();
     PhenopacketAgeType ageType();
 
+    boolean isJuvenile();
+
     boolean isChild();
 
     boolean isInfant();

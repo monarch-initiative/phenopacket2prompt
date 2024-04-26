@@ -96,10 +96,10 @@ public class PpktIndividual {
         return diseases;
     }
 
-    public Map<PhenopacketAge, List<OntologyTerm>> getPhenotypicFeatures() {
-        Map<PhenopacketAge, List<OntologyTerm>> ageToFeatureMap = new HashMap<>();
-        PhenopacketAge notSpecified = new AgeNotSpecified();
-        ageToFeatureMap.put(notSpecified, new ArrayList<>());
+
+
+    public List<OntologyTerm> getPhenotypicFeaturesWithNoSpecifiedAge() {
+        List<OntologyTerm> unspecifiedFeatures = new ArrayList<>();
         for (var pf : ppkt.getPhenotypicFeaturesList()) {
             OntologyClass clz = pf.getType();
             if (clz.getId().isEmpty()) {
@@ -109,16 +109,95 @@ public class PpktIndividual {
             TermId hpoId = TermId.of(pf.getType().getId());
             String label = pf.getType().getLabel();
             boolean excluded = pf.getExcluded();
-            Optional<PhenopacketAge> opt = Optional.empty();
+            if (pf.hasOnset()) {
+                continue;
+            } else {
+                unspecifiedFeatures.add(new OntologyTerm(hpoId, label, excluded));
+            }
+        }
+        return unspecifiedFeatures;
+    }
+
+
+    private boolean agesEqual(PhenopacketAge ageOne, PhenopacketAge ageTwo) {
+        if (ageOne.ageType().equals(ageTwo.ageType())) {
+            if (ageOne.ageType().equals(PhenopacketAgeType.ISO8601_AGE_TYPE)) {
+                Iso8601Age isoOne = (Iso8601Age) ageOne;
+                Iso8601Age isoTwo = (Iso8601Age) ageTwo;
+                return isoOne.getDays() == isoTwo.getDays() &&
+                        isoOne.getMonths() == isoTwo.getMonths() &&
+                        isoOne.getYears() == isoTwo.getYears();
+            } else if (ageOne.ageType().equals(PhenopacketAgeType.HPO_ONSET_AGE_TYPE)) {
+                HpoOnsetAge onsetOne = (HpoOnsetAge) ageOne;
+                HpoOnsetAge onsetTwo = (HpoOnsetAge) ageTwo;
+                return onsetOne.getTid().equals(onsetTwo.getTid());
+            }
+        }
+        return false;
+    }
+
+
+    public List<OntologyTerm> getPhenotypicFeaturesAtOnset() {
+        Optional<PhenopacketAge> opt = getAgeAtOnset();
+        if (opt.isEmpty()) {
+            return new ArrayList<>(); //
+        }
+        List<OntologyTerm> onsetFeatures = new ArrayList<>();
+        PhenopacketAge onsetAge = opt.get();
+
+        for (var pf : ppkt.getPhenotypicFeaturesList()) {
+            OntologyClass clz = pf.getType();
+            if (clz.getId().isEmpty()) {
+                System.err.println("Warning, empty ontology term");
+                continue;
+            }
+            TermId hpoId = TermId.of(pf.getType().getId());
+            String label = pf.getType().getLabel();
+            boolean excluded = pf.getExcluded();
             if (pf.hasOnset()) {
                 TimeElement telem = pf.getOnset();
-                opt = getAgeFromTimeElement(telem);
+                Optional<PhenopacketAge> ageOpt = getAgeFromTimeElement(telem);
+                if (ageOpt.isPresent()) {
+                    if (agesEqual(onsetAge, ageOpt.get())) {
+                        onsetFeatures.add(new OntologyTerm(hpoId, label, excluded, onsetAge));
+                    }
+                }
             }
-            if (opt.isPresent()) {
-                ageToFeatureMap.putIfAbsent(opt.get(), new ArrayList<>());
-                ageToFeatureMap.get(opt.get()).add(new OntologyTerm(hpoId, label, excluded, opt.get()));
-            } else {
-                ageToFeatureMap.get(notSpecified).add(new OntologyTerm(hpoId, label, excluded));
+        }
+        return onsetFeatures;
+    }
+
+    /**
+     * This code does not include features with unspecified onset (for that, use {@code getPhenotypicFeaturesWithNoSpecifiedAge}) or terms at the age of onset
+     * @return map of phenotypic features with specified onset after the age of onset
+     */
+    public Map<PhenopacketAge, List<OntologyTerm>> getSpecifiedAgePhenotypicFeatures() {
+        Map<PhenopacketAge, List<OntologyTerm>> ageToFeatureMap = new HashMap<>();
+        Optional<PhenopacketAge> onsetOpt = getAgeAtOnset();
+        for (var pf : ppkt.getPhenotypicFeaturesList()) {
+            OntologyClass clz = pf.getType();
+            if (clz.getId().isEmpty()) {
+                System.err.println("Warning, empty ontology term");
+                continue;
+            }
+            TermId hpoId = TermId.of(pf.getType().getId());
+            String label = pf.getType().getLabel();
+            boolean excluded = pf.getExcluded();
+            Optional<PhenopacketAge> ageOpt = Optional.empty();
+            if (pf.hasOnset()) {
+                TimeElement telem = pf.getOnset();
+                ageOpt = getAgeFromTimeElement(telem);
+            }
+            // skip features that occur at age of onset
+            if (ageOpt.isPresent() && onsetOpt.isPresent()) {
+                if (agesEqual(ageOpt.get(), onsetOpt.get())) {
+                    continue;
+                }
+            }
+            // only add features with specified onset here.
+            if (ageOpt.isPresent()) {
+                ageToFeatureMap.putIfAbsent(ageOpt.get(), new ArrayList<>());
+                ageToFeatureMap.get(ageOpt.get()).add(new OntologyTerm(hpoId, label, excluded, ageOpt.get()));
             }
         }
         return ageToFeatureMap;
