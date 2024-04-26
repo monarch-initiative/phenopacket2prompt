@@ -140,7 +140,7 @@ public class PpktIndividual {
     public List<OntologyTerm> getPhenotypicFeaturesAtOnset() {
         Optional<PhenopacketAge> opt = getAgeAtOnset();
         if (opt.isEmpty()) {
-            return List.of(); //
+            return new ArrayList<>(); //
         }
         List<OntologyTerm> onsetFeatures = new ArrayList<>();
         PhenopacketAge onsetAge = opt.get();
