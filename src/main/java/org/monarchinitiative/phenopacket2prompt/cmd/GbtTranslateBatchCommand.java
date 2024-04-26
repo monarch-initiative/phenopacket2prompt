@@ -4,6 +4,8 @@ package org.monarchinitiative.phenopacket2prompt.cmd;
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenol.io.OntologyLoader;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
+import org.monarchinitiative.phenopacket2prompt.international.HpInternational;
+import org.monarchinitiative.phenopacket2prompt.international.HpInternationalOboParser;
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketDisease;
 import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
 import org.monarchinitiative.phenopacket2prompt.output.PromptGenerator;
@@ -19,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 @CommandLine.Command(name = "batch", aliases = {"B"},
@@ -47,9 +50,19 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
         }
         Ontology hpo = OntologyLoader.loadOntology(hpJsonFile);
         LOGGER.info("HPO version {}", hpo.version().orElse("n/a"));
+        File translationsFile = new File(translationsPath);
+        if (! translationsFile.isFile()) {
+            System.err.printf("Could not find translations file at %s. Try download command", translationsPath);
+            return 1;
+        }
+        HpInternationalOboParser oboParser = new HpInternationalOboParser(translationsFile);
+        Map<String, HpInternational> internationalMap = oboParser.getLanguageToInternationalMap();
+        LOGGER.info("Got {} translations", internationalMap.size());
         List<File> ppktFiles = getAllPhenopacketJsonFiles();
         createDir("prompts");
         outputPromptsEnglish(ppktFiles, hpo);
+        PromptGenerator spanish = PromptGenerator.spanish(hpo, internationalMap.get("es"));
+        outputPromptsInternational(ppktFiles, hpo, "es", spanish);
         return 0;
     }
 
@@ -57,6 +70,32 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
 
     private String getFileName(String phenopacketID) {
         return phenopacketID.replaceAll("[^\\w]", phenopacketID).replaceAll("/","_") + "-prompt.txt";
+    }
+
+
+
+    private void outputPromptsInternational(List<File> ppktFiles, Ontology hpo, String languageCode, PromptGenerator generator) {
+        String dirpath = String.format("prompts/%s", languageCode);
+        createDir(dirpath);
+        List<String> diagnosisList = new ArrayList<>();
+        for (var f: ppktFiles) {
+            PpktIndividual individual = new PpktIndividual(f);
+            List<PhenopacketDisease> diseaseList = individual.getDiseases();
+            if (diseaseList.size() != 1) {
+                System.err.println(String.format("[ERROR] Got %d diseases for %s.\n", diseaseList.size(), individual.getPhenopacketId()));
+                continue;
+            }
+            PhenopacketDisease pdisease = diseaseList.get(0);
+            String promptFileName = getFileName( individual.getPhenopacketId());
+            String diagnosisLine = String.format("%s\t%s\t%s\t%s", pdisease.getDiseaseId(), pdisease.getLabel(), promptFileName, f.getAbsolutePath());
+            try {
+                diagnosisList.add(diagnosisLine);
+                String prompt = generator.createPrompt(individual);
+                outputPrompt(prompt, promptFileName, dirpath);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
