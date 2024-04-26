@@ -168,9 +168,8 @@ public class PpktIndividual {
     }
 
     /**
-     * Get a map of phenotypic features with specified onset after the age of onset
-     * This does not include features with unspecified onset (for that, use {@code getPhenotypicFeaturesWithNoSpecifiedAge}).
-     * @return
+     * This code does not include features with unspecified onset (for that, use {@code getPhenotypicFeaturesWithNoSpecifiedAge}) or terms at the age of onset
+     * @return map of phenotypic features with specified onset after the age of onset
      */
     public Map<PhenopacketAge, List<OntologyTerm>> getSpecifiedAgePhenotypicFeatures() {
         Map<PhenopacketAge, List<OntologyTerm>> ageToFeatureMap = new HashMap<>();

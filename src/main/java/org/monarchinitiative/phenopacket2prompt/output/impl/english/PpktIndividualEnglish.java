@@ -2,15 +2,15 @@ package org.monarchinitiative.phenopacket2prompt.output.impl.english;
 
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenopacket2prompt.model.*;
-import org.monarchinitiative.phenopacket2prompt.output.PhenopacketAgeSexGenerator;
+import org.monarchinitiative.phenopacket2prompt.output.PhenopacketIndividualInformationGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PpktAgeSexEnglish implements PhenopacketAgeSexGenerator {
+public class PpktIndividualEnglish implements PhenopacketIndividualInformationGenerator {
 
-    public PpktAgeSexEnglish() {
+    public PpktIndividualEnglish() {
 
     }
 
