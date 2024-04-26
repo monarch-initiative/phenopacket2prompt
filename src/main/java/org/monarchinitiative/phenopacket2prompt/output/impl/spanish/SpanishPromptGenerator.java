@@ -3,6 +3,7 @@ package org.monarchinitiative.phenopacket2prompt.output.impl.spanish;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenopacket2prompt.model.OntologyTerm;
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketAge;
+import org.monarchinitiative.phenopacket2prompt.model.PhenopacketSex;
 import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
 import org.monarchinitiative.phenopacket2prompt.output.*;
 
@@ -55,43 +56,21 @@ public class SpanishPromptGenerator implements PromptGenerator {
     }
 
     @Override
-    public String getPhenotypicFeatures(PpktIndividual ppktIndividual) {
-        StringBuilder sb = new StringBuilder();
-        Map<PhenopacketAge, List<OntologyTerm>> termMap = ppktIndividual.getPhenotypicFeatures();
-        List<PhenopacketAge> ageList = new ArrayList<>(termMap.keySet());
-        Collections.sort(ageList,(a, b) -> Integer.compare(a.totalDays(), b.totalDays()));
-        for (var age: ageList) {
-            List<OntologyTerm> terms = termMap.get(age);
-            if (! age.specified()) {
-                if (termMap.size() > 1) {
-                    // if size is greater than one, there was at least one specified time point
-                    if (ppktPhenotypicFeatureGenerator.hasObservedFeatures(terms)) {
-                        sb.append("Características adicionales comprendían").append(ppktPhenotypicFeatureGenerator.featureList(terms)).append(". ");
-                    }
-                    if (ppktPhenotypicFeatureGenerator.hasExcludedFeatures(terms)) {
-                        sb.append("Otras características excluidas fueron ").append(ppktPhenotypicFeatureGenerator.excludedFeatureList(terms)).append(". ");
-                    }
-                } else {
-                    if (ppktPhenotypicFeatureGenerator.hasObservedFeatures(terms)) {
-                        sb.append("Se observaron las siguientes manifestaciones clínicas: ").append(ppktPhenotypicFeatureGenerator.featureList(terms)).append(". ");
-                    }
-                    if (ppktPhenotypicFeatureGenerator.hasExcludedFeatures(terms)) {
-                        sb.append("Se excluyeron las siguientes manifestaciones clínicas: ").append(ppktPhenotypicFeatureGenerator.excludedFeatureList(terms)).append(". ");
-                    }
-                }
-            } else {
-                String ageString = "";//ppktAgeSexGenerator.age(age);
+    public String formatFeatures(List<OntologyTerm> ontologyTerms) {
+        return "";
+    }
 
-                if (ppktPhenotypicFeatureGenerator.hasObservedFeatures(terms)) {
-                    sb.append(ageString).append(", se observaron las siguientes manifestaciones clínicas: ").append(ppktPhenotypicFeatureGenerator.featureList(terms)).append(". ");
-                }
-                if (ppktPhenotypicFeatureGenerator.hasExcludedFeatures(terms)) {
-                    sb.append(ageString).append(", se excluyeron las siguientes manifestaciones clínicas: ").append(ppktPhenotypicFeatureGenerator.excludedFeatureList(terms)).append(". ");
-                }
-            }
-        }
+    @Override
+    public String getVignetteAtAge(PhenopacketAge page, PhenopacketSex psex, List<OntologyTerm> terms) {
+        return "";
+    }
 
-        return sb.toString();
+
+
+
+    @Override
+    public String createPrompt(PpktIndividual individual) {
+        return "";
     }
 
 

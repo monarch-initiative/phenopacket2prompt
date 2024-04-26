@@ -12,6 +12,11 @@ public class AgeNotSpecified implements  PhenopacketAge {
     }
 
     @Override
+    public boolean isJuvenile() {
+        return false;
+    }
+
+    @Override
     public boolean isChild() {
         return false;
     }

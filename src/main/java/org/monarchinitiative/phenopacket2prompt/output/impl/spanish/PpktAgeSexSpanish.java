@@ -158,7 +158,7 @@ public class PpktAgeSexSpanish implements PhenopacketAgeSexGenerator {
     }
 
 
-    @Override
+   /* @Override
     public String individualWithAge(PhenopacketAge ppktAge) {
         if (ppktAge.ageType().equals(PhenopacketAgeType.ISO8601_AGE_TYPE)) {
             return  ppktAge.age() + " old";
@@ -176,7 +176,7 @@ public class PpktAgeSexSpanish implements PhenopacketAgeSexGenerator {
             return ""; // should never get here
         }
     }
-
+*/
 
     private String atIsoAgeExact(PhenopacketAge ppktAge) {
         Iso8601Age iso8601Age = (Iso8601Age) ppktAge;
@@ -202,6 +202,19 @@ public class PpktAgeSexSpanish implements PhenopacketAgeSexGenerator {
      }
 
 
+    @Override
+    public String getIndividualDescription(PpktIndividual individual) {
+        return "";
+    }
+
+    @Override
+    public String heSheIndividual(PhenopacketSex psex) {
+        return switch (psex) {
+            case FEMALE -> "el";
+            case MALE -> "ella";
+            default -> "la persona";
+        };
+    }
 
     @Override
     public String atAge(PhenopacketAge ppktAge) {
@@ -270,8 +283,5 @@ public class PpktAgeSexSpanish implements PhenopacketAgeSexGenerator {
         }
     }
 
-    @Override
-    public String ppktSex() {
-        return "";
-    }
+
 }

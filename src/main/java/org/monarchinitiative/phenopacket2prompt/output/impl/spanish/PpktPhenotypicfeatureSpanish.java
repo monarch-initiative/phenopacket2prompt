@@ -34,19 +34,23 @@ public class PpktPhenotypicfeatureSpanish implements PpktPhenotypicFeatureGenera
 
 
 
-    @Override
     public String featureList(List<OntologyTerm> ontologyTerms) {
         List<OntologyTerm> terms = ontologyTerms.stream()
                 .filter(Predicate.not(OntologyTerm::isExcluded)).toList();
         List<String> labels = getTranslations(terms);
-        return getOxfordCommaList(labels, "y");
+        return ""; //;//getOxfordCommaList(labels, "y");
     }
 
-    @Override
+
     public String excludedFeatureList(List<OntologyTerm> ontologyTerms) {
         List<OntologyTerm> terms = ontologyTerms.stream()
                 .filter(OntologyTerm::isExcluded).toList();
         List<String> labels = getTranslations(terms);
-        return getOxfordCommaList(labels, "y");
+        return ""; //;//getOxfordCommaList(labels, "y");
+    }
+
+    @Override
+    public String formatFeatures(List<OntologyTerm> ontologyTerms) {
+        return "";
     }
 }

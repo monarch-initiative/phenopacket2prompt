@@ -2,9 +2,15 @@ package org.monarchinitiative.phenopacket2prompt.output;
 
 import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenopacket2prompt.international.HpInternational;
+import org.monarchinitiative.phenopacket2prompt.model.OntologyTerm;
+import org.monarchinitiative.phenopacket2prompt.model.PhenopacketAge;
+import org.monarchinitiative.phenopacket2prompt.model.PhenopacketSex;
 import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
 import org.monarchinitiative.phenopacket2prompt.output.impl.english.EnglishPromptGenerator;
 import org.monarchinitiative.phenopacket2prompt.output.impl.spanish.*;
+
+import java.util.List;
+import java.util.Map;
 
 public interface PromptGenerator {
 
@@ -13,12 +19,12 @@ public interface PromptGenerator {
 
     String queryHeader();
     String getIndividualInformation(PpktIndividual ppktIndividual);
-    String getPhenotypicFeatures(PpktIndividual ppktIndividual);
 
+    String formatFeatures( List<OntologyTerm> ontologyTerms);
 
+    String getVignetteAtAge(PhenopacketAge page, PhenopacketSex psex, List<OntologyTerm> terms);
 
     public static PromptGenerator english(Ontology ontology){
-
         return new EnglishPromptGenerator(ontology);
     }
 
@@ -27,12 +33,32 @@ public interface PromptGenerator {
         return new SpanishPromptGenerator(hpo, pfgen);
     }
 
+    /**
+     * The following structure should work for most other languages, but the function
+     * can be overridden if necessary.
+     * @param individual The individual for whom we are creating the prompt
+     * @return the prompt text
+     */
     default String createPrompt(PpktIndividual individual) {
-        String sb = queryHeader() +
-                getIndividualInformation(individual) +
-                getPhenotypicFeatures(individual);
-        return sb;
+        String individualInfo = getIndividualInformation(individual);
+        List<OntologyTerm> onsetTerms = individual.getPhenotypicFeaturesAtOnset();
+        List<OntologyTerm> unspecifiedAgeTerms = individual.getPhenotypicFeaturesWithNoSpecifiedAge();
+        Map<PhenopacketAge, List<OntologyTerm>> pfMap = individual.getSpecifiedAgePhenotypicFeatures();
+        // For creating the prompt, we first report the onset and the unspecified terms together, and then
+        // report the rest
+        onsetTerms.addAll(unspecifiedAgeTerms);
+        String onsetFeatures = formatFeatures(onsetTerms);
+        StringBuilder sb = new StringBuilder();
+        sb.append(queryHeader());
+        sb.append(individualInfo).append(" ").append(onsetFeatures);
+        for (var entry: pfMap.entrySet()) {
+            String vignette = getVignetteAtAge(entry.getKey(), individual.getSex(), entry.getValue());
+            sb.append(vignette).append(" ");
+        }
+        return sb.toString();
     }
+
+
 
 
 
