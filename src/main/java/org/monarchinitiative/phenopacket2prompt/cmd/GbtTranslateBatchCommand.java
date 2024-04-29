@@ -8,6 +8,7 @@ import org.monarchinitiative.phenopacket2prompt.international.HpInternational;
 import org.monarchinitiative.phenopacket2prompt.international.HpInternationalOboParser;
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketDisease;
 import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
+import org.monarchinitiative.phenopacket2prompt.output.CorrectResult;
 import org.monarchinitiative.phenopacket2prompt.output.PromptGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,12 +61,26 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
         LOGGER.info("Got {} translations", internationalMap.size());
         List<File> ppktFiles = getAllPhenopacketJsonFiles();
         createDir("prompts");
-        outputPromptsEnglish(ppktFiles, hpo);
+        List<CorrectResult>  correctResultList = outputPromptsEnglish(ppktFiles, hpo);
+        // output all non-English languages here
         PromptGenerator spanish = PromptGenerator.spanish(hpo, internationalMap.get("es"));
         outputPromptsInternational(ppktFiles, hpo, "es", spanish);
+        // output file with correct diagnosis list
+        outputCorrectResults(correctResultList);
         return 0;
     }
 
+    private void outputCorrectResults(List<CorrectResult> correctResultList) {
+        File outfile = new File("prompts" + File.separator + "correct_results.tsv");
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(outfile))) {
+            for (var cres : correctResultList) {
+                bw.write(String.format("%s\t%s\t%s\n", cres.diseaseLabel(), cres.diseaseId().getValue(), cres.promptFileName()));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.printf("[INFO] Output a total of %d prompts in en and es.\n", correctResultList.size());
+    }
 
 
     private String getFileName(String phenopacketID) {
@@ -99,10 +114,11 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
     }
 
 
-    private void outputPromptsEnglish(List<File> ppktFiles, Ontology hpo) {
+    private List<CorrectResult> outputPromptsEnglish(List<File> ppktFiles, Ontology hpo) {
         createDir("prompts/en");
+        List<CorrectResult> correctResultList = new ArrayList<>();
         PromptGenerator generator = PromptGenerator.english(hpo);
-        List<String> diagnosisList = new ArrayList<>();
+
         for (var f: ppktFiles) {
             PpktIndividual individual = new PpktIndividual(f);
             List<PhenopacketDisease> diseaseList = individual.getDiseases();
@@ -114,13 +130,15 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
             String promptFileName = getFileName( individual.getPhenopacketId());
             String diagnosisLine = String.format("%s\t%s\t%s\t%s", pdisease.getDiseaseId(), pdisease.getLabel(), promptFileName, f.getAbsolutePath());
             try {
-                diagnosisList.add(diagnosisLine);
                 String prompt = generator.createPrompt(individual);
                 outputPrompt(prompt, promptFileName, "prompts/en");
+                var cres = new CorrectResult(promptFileName, pdisease.getDiseaseId(), pdisease.getLabel());
+                correctResultList.add(cres);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        return correctResultList;
     }
 
 

@@ -343,7 +343,7 @@ public class PpktIndividualSpanish implements PhenopacketIndividualInformationGe
             // should never happen
             throw new PhenolRuntimeException("Did not recognize last exam age type " + lastExamAge.ageType());
         }
-        return String.format("The proband was a %s who presented with", individualDescription);
+        return String.format("El paciente era %s quien se presentó con", individualDescription);
     }
 
     /**
@@ -370,9 +370,9 @@ public class PpktIndividualSpanish implements PhenopacketIndividualInformationGe
 
     private String ageNotAvailable(PhenopacketSex psex) {
         return switch (psex) {
-            case FEMALE -> "The proband was a female who presented with";
-            case MALE -> "The proband was a male who presented with";
-            default -> "The proband presented with";
+            case FEMALE -> "La paciente se presentó con";
+            case MALE -> "El paciente se presentó con";
+            default -> "El paciente se presentó con";
         };
     }
 
