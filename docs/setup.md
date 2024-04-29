@@ -1,6 +1,6 @@
 # Set-up
 
-TODO -- how to setup Java etc.
+phenopacket2prompt requires at least Java 17. To build it from scratch, maven is also required.
 
 ## Download command
 Before running the batch command, run the download command to get the necessary files
@@ -9,19 +9,34 @@ Before running the batch command, run the download command to get the necessary 
 java -jar target/phenopacket2prompt.jar download
 ```
 
-## Batch command
-To run the batch command, first download the latest release from the 
-[releases](https://github.com/monarch-initiative/phenopacket-store/releases) section of the phenopacket-store
-repository. Unpack either all_phenopackets.tgz or all_phenopackets.zip (the files are identical except for the
-method of compression).
 
+
+## Installation
+
+
+Most users should download the prebuilt executable file from the
+[Releases](https://github.com/monarch-initiative/phenopacket2prompt/releases) page of the GutHub repository.
+
+It is also possible to build the application from source using standard Maven and Java tools.
+
+```shell title="building the app"
+git clone https://github.com/monarch-initiative/phenopacket2prompt.git
+cd phenopacket2prompt
+maven package
+java -jar target/phenopacket2prompt.jar
 ```
-java -jar target/phenopacket2prompt.jar batch -d <all_phenopackets>
+
+## Setup
+
+
+First download the latest copy of the [Human Phenotype Ontology](https://hpo.jax.org/app/) hp.json file. This file is
+used for text mining of clinical signs and symptoms. For more information about the HPO, see
+[Koehler et al. (2021)](https://pubmed.ncbi.nlm.nih.gov/33264411/). Adjust the path to the `phenopacket2prompt.jar`
+file as necessary.
+
+
+
+```shell title="download"
+java -jar phenopacket2prompt.jar download
 ```
-Replasce `<all_phenopackets>` with the actual path on your system.
 
-The app should create a folder "prompts", with two subdirectories, "en" and "es" with English and Spanish prompts. 
-There are some errors that still need to be fixed, but several thousand prompts should appear.
-
-## Todo
-also output a file with expected diagnosis
