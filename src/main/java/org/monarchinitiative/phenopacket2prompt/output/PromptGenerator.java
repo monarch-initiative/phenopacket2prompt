@@ -8,6 +8,7 @@ import org.monarchinitiative.phenopacket2prompt.model.PhenopacketSex;
 import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
 import org.monarchinitiative.phenopacket2prompt.output.impl.english.EnglishPromptGenerator;
 import org.monarchinitiative.phenopacket2prompt.output.impl.spanish.*;
+import org.monarchinitiative.phenopacket2prompt.output.impl.dutch.*;
 
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,10 @@ public interface PromptGenerator {
         return new SpanishPromptGenerator(hpo, pfgen);
     }
 
+    static PromptGenerator dutch(Ontology hpo, HpInternational international) {
+        PpktPhenotypicFeatureGenerator pfgen = new PpktPhenotypicfeatureDutch(international);
+        return new DutchPromptGenerator(hpo, pfgen);
+    }
     /**
      * The following structure should work for most other languages, but the function
      * can be overridden if necessary.

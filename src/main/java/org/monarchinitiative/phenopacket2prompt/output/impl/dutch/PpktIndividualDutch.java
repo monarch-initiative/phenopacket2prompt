@@ -32,9 +32,9 @@ public class PpktIndividualDutch implements PhenopacketIndividualInformationGene
         }
         String sex;
         switch (psex) {
-            case FEMALE -> sex = "una paciente femenina";
-            case MALE -> sex = "un paciente masculino";
-            default -> sex = "una persona";
+            case FEMALE -> sex = "a dutch female";
+            case MALE -> sex = "a dutch male";
+            default -> sex = "a dutch person";
         };
 
         if (ageOpt.isEmpty()) {
