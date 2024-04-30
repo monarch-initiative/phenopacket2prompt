@@ -20,7 +20,7 @@ import java.util.concurrent.Callable;
         mixinStandardHelpOptions = true,
         description = "Translate phenopackets and output prompts")
 public class GptTranslateCommand implements Callable<Integer> {
-    Logger LOGGER = LoggerFactory.getLogger(GptTranslateCommand.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(GptTranslateCommand.class);
 
 
     @CommandLine.Option(names = {"--hp"},

@@ -20,6 +20,9 @@ jobs:
           key: ${{ github.ref }}
           path: .cache
 
-      - run: python3 -m pip install mkdocs-material[imaging],mkdocs-material-extensions,mkdocstrings[python],pillow,cairosvg
-
+      - run: pip install mkdocs-material
+      - run: pip install mkdocs-material[imaging]
+      - run: pip install mkdocs-material-extensions
+      - run: pip install pillow cairosvg
+      - run: pip install mkdocstrings[python]
       - run: mkdocs gh-deploy --force

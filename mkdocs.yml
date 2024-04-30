@@ -34,6 +34,8 @@ nav:
   - Languages: 
     - "Template": 'languages.md'
     - "English": "english.md"
+  - Setup: "setup.md"
+  - Batch: "batch.md"
 
 plugins:
   - search
