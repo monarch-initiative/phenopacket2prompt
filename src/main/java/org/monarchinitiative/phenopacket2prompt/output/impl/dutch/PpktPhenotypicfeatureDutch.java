@@ -43,7 +43,7 @@ public class PpktPhenotypicfeatureDutch implements PpktPhenotypicFeatureGenerato
         if (items.size() == 2) {
             // no comma if we just have two items.
             // one item will work with the below code
-            return String.join(" and ", items);
+            return String.join(" en ", items);
         }
         String symList = String.join(", ", items);
         int jj = symList.lastIndexOf(", ");
@@ -73,16 +73,16 @@ public class PpktPhenotypicfeatureDutch implements PpktPhenotypicFeatureGenerato
             return getOxfordCommaList(observedLabels) + ". ";
         } else if (observedLabels.isEmpty()) {
             if (excludedLabels.size() > 1) {
-                return String.format("por lo que se excluyeron %s.", getOxfordCommaList(excludedLabels));
+                return String.format("dus %s zijn uitgesloten.", getOxfordCommaList(excludedLabels));
             } else {
-                return String.format("por lo que %s fue excluido.",excludedLabels.get(0));
+                return String.format("Dus %s werd uitgesloten.",excludedLabels.get(0));
             }
         } else {
             String exclusion;
             if (excludedLabels.size() == 1) {
-                exclusion = String.format(" y se excluyó %s.", getOxfordCommaList(excludedLabels));
+                exclusion = String.format("en %s werd uitgesloten.", getOxfordCommaList(excludedLabels));
             } else {
-                exclusion =  String.format(" y se excluyeron %s.", getOxfordCommaList(excludedLabels));
+                exclusion =  String.format("en %s zijn uitgesloten.", getOxfordCommaList(excludedLabels));
             }
             return getOxfordCommaList(observedLabels) +  exclusion;
         }

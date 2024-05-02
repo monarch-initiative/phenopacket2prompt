@@ -53,7 +53,7 @@ public class DutchPromptGenerator implements PromptGenerator {
     public String getVignetteAtAge(PhenopacketAge page, PhenopacketSex psex, List<OntologyTerm> terms) {
         String ageString = this.ppktAgeSexGenerator.atAge(page);
         String features = formatFeatures(terms);
-        return String.format("%s, %s dutch words here %s", ageString, ppktAgeSexGenerator.heSheIndividual(psex), features);
+        return String.format("%s, %s presenteerde met %s", ageString, ppktAgeSexGenerator.heSheIndividual(psex), features);
     }
 
 
