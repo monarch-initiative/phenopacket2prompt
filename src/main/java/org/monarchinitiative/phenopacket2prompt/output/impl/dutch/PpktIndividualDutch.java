@@ -235,19 +235,19 @@ public class PpktIndividualDutch implements PhenopacketIndividualInformationGene
         List<String> components = new ArrayList<>();
 
         if (isoAge.getYears()>1) {
-            components.add(String.format("%d jaren oud", isoAge.getYears()));
+            components.add(String.format("%d jaar", isoAge.getYears()));
         } else if (isoAge.getYears() == 1) {
             components.add("één jaar oud");
         }
         if (isoAge.getMonths() > 1) {
-            components.add(String.format("%d maanden oud", isoAge.getMonths()));
+            components.add(String.format("%d maanden", isoAge.getMonths()));
         } else if (isoAge.getMonths() == 1) {
             components.add("één maand oud");
         }
         if (isoAge.getDays()>1) {
-            components.add(String.format("%d dagen oud", isoAge.getDays()));
+            components.add(String.format("%d dagen", isoAge.getDays()));
         } else if (isoAge.getDays()==1) {
-            components.add("één dag oud");
+            components.add("één dag");
         }
         if (components.isEmpty()) {
             return "als pasgeborene";
@@ -256,7 +256,7 @@ public class PpktIndividualDutch implements PhenopacketIndividualInformationGene
         } else if (components.size() == 2) {
             return "op de leeftijd van " + components.get(0) + " en " + components.get(1);
         } else {
-            return "op de leeftijd van " + components.get(0) + " " + components.get(1) +
+            return "op de leeftijd van " + components.get(0) + ". " + components.get(1) +
                     ", en " + components.get(2);
         }
     }
@@ -388,7 +388,7 @@ public class PpktIndividualDutch implements PhenopacketIndividualInformationGene
             // should never happen
             throw new PhenolRuntimeException("Did not recognize onset age type " + onsetAge.ageType());
         }
-        return String.format("De proband was een %s die presenteerde met %s ", individualDescription, onsetDescription);
+        return String.format("De proband was een %s die %s presenteerde met", individualDescription, onsetDescription);
     }
 
 
@@ -410,7 +410,7 @@ public class PpktIndividualDutch implements PhenopacketIndividualInformationGene
             // should never happen
             throw new PhenolRuntimeException("Did not recognize last exam age type " + lastExamAge.ageType());
         }
-        return String.format("De proband was een %s die presenteerde met ", individualDescription);
+        return String.format("De proband was een %s die presenteerde met", individualDescription);
     }
 
     /**
@@ -432,7 +432,7 @@ public class PpktIndividualDutch implements PhenopacketIndividualInformationGene
             // should never happen
             throw new PhenolRuntimeException("Did not recognize onset age type " + onsetAge.ageType());
         }
-        return String.format("De proband presenteerde met %s", onsetDescription, onsetDescription);
+        return String.format("De proband presenteerde %s met", onsetDescription, onsetDescription);
     }
 
     private String ageNotAvailable(PhenopacketSex psex) {

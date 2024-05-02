@@ -50,9 +50,9 @@ public class PpktPhenotypicfeatureDutch implements PpktPhenotypicFeatureGenerato
         if (jj > 0) {
             String end = symList.substring(jj+2);
             if (vowels.contains(end.charAt(0))) {
-                symList = symList.substring(0, jj) + " i " + end;
+                symList = symList.substring(0, jj) + " en " + end;
             } else {
-                symList = symList.substring(0, jj) + " y " + end;
+                symList = symList.substring(0, jj) + " en " + end;
             }
         }
         return symList;
@@ -80,9 +80,9 @@ public class PpktPhenotypicfeatureDutch implements PpktPhenotypicFeatureGenerato
         } else {
             String exclusion;
             if (excludedLabels.size() == 1) {
-                exclusion = String.format("en %s werd uitgesloten.", getOxfordCommaList(excludedLabels));
+                exclusion = String.format(". %s werd uitgesloten.", getOxfordCommaList(excludedLabels));
             } else {
-                exclusion =  String.format("en %s zijn uitgesloten.", getOxfordCommaList(excludedLabels));
+                exclusion =  String.format(". %s zijn uitgesloten.", getOxfordCommaList(excludedLabels));
             }
             return getOxfordCommaList(observedLabels) +  exclusion;
         }
