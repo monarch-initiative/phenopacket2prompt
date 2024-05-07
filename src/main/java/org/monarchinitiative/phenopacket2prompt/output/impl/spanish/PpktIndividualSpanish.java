@@ -54,7 +54,7 @@ public class PpktIndividualSpanish implements PhenopacketIndividualInformationGe
 
                 } else if (y > 0) {
                     return String.format("una niña de %d años", y);
-                } else if (m>0) {
+                } else if (m > 0) {
                     return String.format("una bebe niña de %d meses", m);
                 } else  {
                     return String.format("una recien nacida %d meses", d);
