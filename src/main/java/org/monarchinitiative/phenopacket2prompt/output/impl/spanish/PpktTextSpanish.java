@@ -15,6 +15,7 @@ Estoy realizando un experimento con el informe de un caso clínico para comparar
 Esta lista debe proporcionar tantos diagnósticos como considere razonables.
 
 No es necesario que explique su razonamiento, simplemente enumere los diagnósticos.
+Te estoy dando estas instrucciones en Español pero quiero que proveas todas tus respuestas en Inglés.
 Este es el caso:
              
 """;
