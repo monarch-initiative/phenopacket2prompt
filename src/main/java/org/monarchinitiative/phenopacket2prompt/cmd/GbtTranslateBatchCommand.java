@@ -60,6 +60,7 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
         Map<String, HpInternational> internationalMap = oboParser.getLanguageToInternationalMap();
         LOGGER.info("Got {} translations", internationalMap.size());
         List<File> ppktFiles = getAllPhenopacketJsonFiles();
+        //System.out.print(ppktFiles);
         createDir("prompts");
         List<CorrectResult>  correctResultList = outputPromptsEnglish(ppktFiles, hpo);
         // output all non-English languages here
@@ -83,8 +84,12 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
     }
 
 
-    private String getFileName(String phenopacketID) {
-        return phenopacketID.replaceAll("[^\\w]", phenopacketID).replaceAll("/","_") + "-prompt.txt";
+    private String getFileName(String phenopacketID, String languageCode) {
+        //String leo_test_output = phenopacketID.replaceAll("[\\W]", phenopacketID).replaceAll("/","_") + "-prompt.txt";
+        //System.out.println(phenopacketID);
+        //System.out.println(leo_test_output);
+        //return phenopacketID.replaceAll("[^\\w]", phenopacketID).replaceAll("/","_") + "-prompt.txt";
+        return phenopacketID+".json" + "_" + languageCode+ "-prompt.txt";
     }
 
 
@@ -101,7 +106,7 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
                 continue;
             }
             PhenopacketDisease pdisease = diseaseList.get(0);
-            String promptFileName = getFileName( individual.getPhenopacketId());
+            String promptFileName = getFileName( individual.getPhenopacketId(), languageCode);
             String diagnosisLine = String.format("%s\t%s\t%s\t%s", pdisease.getDiseaseId(), pdisease.getLabel(), promptFileName, f.getAbsolutePath());
             try {
                 diagnosisList.add(diagnosisLine);
@@ -127,7 +132,7 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
                 continue;
             }
             PhenopacketDisease pdisease = diseaseList.get(0);
-            String promptFileName = getFileName( individual.getPhenopacketId());
+            String promptFileName = getFileName( individual.getPhenopacketId(), "en");
             String diagnosisLine = String.format("%s\t%s\t%s\t%s", pdisease.getDiseaseId(), pdisease.getLabel(), promptFileName, f.getAbsolutePath());
             try {
                 String prompt = generator.createPrompt(individual);

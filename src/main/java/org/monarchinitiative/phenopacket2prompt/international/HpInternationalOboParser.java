@@ -68,7 +68,7 @@ public class HpInternationalOboParser {
                 if (matcher.find()) {
                     currentHpoTermId = TermId.of(matcher.group(1));
                     inHpTerm = true;
-                    //System.out.println(currentHpoTermId.getValue());
+                    //LC//System.out.println(currentHpoTermId.getValue());
                 } else if (inHpTerm) {
                     if (line.isEmpty()) {
                         inHpTerm = false;
@@ -86,7 +86,7 @@ public class HpInternationalOboParser {
                                 String language = opt.get();
                                 languageToInternationalMap.get(language).addTerm(currentHpoTermId, hpoLabel);
                             } else {
-                                System.err.printf("[ERROR] Could not extract language for %s.", line);
+                                //LC//System.err.printf("[ERROR] Could not extract language for %s.", line);
                             }
                         }
 
@@ -102,7 +102,7 @@ public class HpInternationalOboParser {
             System.out.println(language);
             HpInternational international = languageToInternationalMap.get(language);
             for (var entry : international.getTermIdToLabelMap().entrySet()) {
-                System.out.printf("\t%s: %s\n", entry.getKey().getValue(), entry.getValue());
+                //LC//System.out.printf("\t%s: %s\n", entry.getKey().getValue(), entry.getValue());
             }
         }
     }
