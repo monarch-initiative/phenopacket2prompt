@@ -11,6 +11,10 @@ import java.util.Optional;
 public class PpktIndividualSpanish implements PhenopacketIndividualInformationGenerator {
 
 
+    private static final String FEMALE_INFANT = "un bebé femenino";
+
+
+
     /**
      * Equivalent of "The clinical
      * @param individual
@@ -83,7 +87,7 @@ public class PpktIndividualSpanish implements PhenopacketIndividualInformationGe
             };
         } else if (age.isInfant()) {
             return switch (psex) {
-                case FEMALE -> "un bebé femenino";
+                case FEMALE -> FEMALE_INFANT;
                 case MALE -> "un bebé masculino";
                 default -> "un bebé";
             };
@@ -183,9 +187,9 @@ public class PpktIndividualSpanish implements PhenopacketIndividualInformationGe
             components.add("1 dia");
         }
         if (components.isEmpty()) {
-            return "as a newborn";
+            return "en el período neonatal";
         } else if (components.size() == 1) {
-            return "at the age of " + components.get(0);
+            return "a la edad de " + components.get(0);
         } else if (components.size() == 2) {
             return "a la edad de " + components.get(0) + " y " + components.get(1);
         } else {
@@ -196,9 +200,9 @@ public class PpktIndividualSpanish implements PhenopacketIndividualInformationGe
 
     private String onsetTermAtAgeOf(HpoOnsetAge hpoOnsetTermAge) {
         if (hpoOnsetTermAge.isFetus()) {
-            return  "en el periodo fetal";
+            return  "en el período fetal";
         } else if (hpoOnsetTermAge.isCongenital()) {
-            return  "en el periodo neonatal";
+            return  "en el período neonatal";
         } else if (hpoOnsetTermAge.isInfant()) {
             return "como un bebe";
         } else if (hpoOnsetTermAge.isChild()) {
@@ -252,39 +256,39 @@ public class PpktIndividualSpanish implements PhenopacketIndividualInformationGe
     private String hpoOnsetIndividualDescription(PhenopacketSex psex, HpoOnsetAge hpoOnsetTermAge) {
         if (hpoOnsetTermAge.isFetus()) {
             return switch (psex) {
-                case FEMALE -> "female fetus";
-                case MALE -> "male fetus";
-                default -> "fetus";
+                case FEMALE -> FEMALE_INFANT;
+                case MALE -> "feto masculino";
+                default -> "feto";
             };
         } else if (hpoOnsetTermAge.isCongenital()) {
             return switch (psex) {
-                case FEMALE -> "female newborn";
-                case MALE -> "male newborn";
-                default -> "newborn";
+                case FEMALE -> "una niña recién nacida";
+                case MALE -> "un niño recién nacido";
+                default -> "un bebe recién nacido";
             };
         } else if (hpoOnsetTermAge.isInfant()) {
             return switch (psex) {
-                case FEMALE -> "female infant";
-                case MALE -> "male infant";
-                default -> "infant";
+                case FEMALE -> FEMALE_INFANT;
+                case MALE -> "un bebé masculino";
+                default -> "un bebé";
             };
         } else if (hpoOnsetTermAge.isChild()) {
             return switch (psex) {
-                case FEMALE -> "girl";
-                case MALE -> "boy";
-                default -> "child";
+                case FEMALE -> "niña";
+                case MALE -> "niño";
+                default -> "niño";
             };
         } else if (hpoOnsetTermAge.isJuvenile()) {
             return switch (psex) {
-                case FEMALE -> "female adolescent";
-                case MALE -> "male adolescent";
-                default -> "adolescent";
+                case FEMALE -> "una adolescente femenina";
+                case MALE -> "un adolescente masculino";
+                default -> "un adolescente";
             };
         }else {
             return switch (psex) {
-                case FEMALE -> "woman";
-                case MALE -> "man";
-                default -> "adult";
+                case FEMALE -> "una mujer";
+                case MALE -> "un hombre";
+                default -> "un adulto";
             };
         }
     }
@@ -365,7 +369,7 @@ public class PpktIndividualSpanish implements PhenopacketIndividualInformationGe
             // should never happen
             throw new PhenolRuntimeException("Did not recognize onset age type " + onsetAge.ageType());
         }
-        return String.format("The proband presented %s with", onsetDescription, onsetDescription);
+        return String.format("El paciente se presentó con %s", onsetDescription, onsetDescription);
     }
 
     private String ageNotAvailable(PhenopacketSex psex) {
@@ -413,9 +417,9 @@ public class PpktIndividualSpanish implements PhenopacketIndividualInformationGe
         }
         if (ageOpt.isEmpty()) {
             return switch (psex) {
-                case FEMALE -> "female";
-                case MALE -> "male";
-                default -> "individual";
+                case FEMALE -> "mujer";
+                case MALE -> "hombre";
+                default -> "individuo";
             };
         }
         PhenopacketAge age = ageOpt.get();;
@@ -439,15 +443,15 @@ public class PpktIndividualSpanish implements PhenopacketIndividualInformationGe
             };
         } else if (age.isInfant()) {
             return switch (psex) {
-                case FEMALE -> "female infant";
-                case MALE -> "male infant";
-                default -> "infant";
+                case FEMALE -> FEMALE_INFANT;
+                case MALE -> "un infante masculino";
+                default -> "un infante";
             };
         } else {
             return switch (psex) {
-                case FEMALE -> "woman";
-                case MALE -> "man";
-                default -> "individual";
+                case FEMALE -> "mujer";
+                case MALE -> "hombre";
+                default -> "adulto";
             };
         }
     }
