@@ -48,15 +48,15 @@ public class PpktIndividualDutch implements PhenopacketIndividualInformationGene
             int d = isoage.getDays();
             if (psex.equals(PhenopacketSex.FEMALE)) {
                 if (y > 17) {
-                    return String.format("een vrouw van %d jaar oud", y);
+                    return String.format("vrouw van %d jaar oud", y);
                 } else if (y > 9) {
-                    return String.format("een adolescente vrouw van %d jaar oud", y);
+                    return String.format("adolescente vrouw van %d jaar oud", y);
                 } else if (y > 0) {
-                    return String.format("een meisje van %d jaar oud", y);
+                    return String.format("meisje van %d jaar oud", y);
                 } else if (m>0) {
-                    return String.format("een baby van %d maanden oud", m);
+                    return String.format("baby van %d maanden oud", m);
                 } else  {
-                    return String.format("een pasgeboren vrouwelijke baby van %d dagen oud", d);
+                    return String.format("pasgeboren vrouwelijke baby van %d dagen oud", d);
                 }
             }
         } else {
@@ -64,33 +64,33 @@ public class PpktIndividualDutch implements PhenopacketIndividualInformationGene
         }
         if (age.isChild()) {
             return switch (psex) {
-                case FEMALE -> "een meisje";
-                case MALE -> "een jongetje";
-                default -> "een kind"; // difficult to be gender neutral
+                case FEMALE -> "meisje";
+                case MALE -> "jongetje";
+                default -> "kind"; // difficult to be gender neutral
             };
         } else if (age.isCongenital()) {
             return switch (psex) {
-                case FEMALE -> "een pasgeboren meisje";
-                case MALE -> "een pasgeboren jongetje";
-                default -> "een pasgeborene";
+                case FEMALE -> "pasgeboren meisje";
+                case MALE -> "pasgeboren jongetje";
+                default -> "pasgeborene";
             };
         } else if (age.isFetus()) {
             return switch (psex) {
-                case FEMALE -> "een vrouwelijke foetus";
-                case MALE -> "een mannelijke foetus";
-                default -> "een foetus";
+                case FEMALE -> "vrouwelijke foetus";
+                case MALE -> "mannelijke foetus";
+                default -> "foetus";
             };
         } else if (age.isInfant()) {
             return switch (psex) {
-                case FEMALE -> "een vrouwelijke baby";
-                case MALE -> "een mannelijke baby";
-                default -> "een baby";
+                case FEMALE -> "vrouwelijke baby";
+                case MALE -> "mannelijke baby";
+                default -> "baby";
             };
         } else {
             return switch (psex) {
-                case FEMALE -> "een vrouw";
-                case MALE -> "een man";
-                default -> "een volwassene";
+                case FEMALE -> "vrouw";
+                case MALE -> "man";
+                default -> "volwassene";
             };
         }
     }
@@ -285,15 +285,15 @@ public class PpktIndividualDutch implements PhenopacketIndividualInformationGene
         // if older
         if (y>17) {
             return switch (psex) {
-                case FEMALE -> String.format("een vrouw van %d jaar oud", y);
-                case MALE -> String.format("een man van %d jaar oud", y);
-                default -> String.format("een persoon van %d jaar oud", y);
+                case FEMALE -> String.format("vrouw van %d jaar oud", y);
+                case MALE -> String.format("man van %d jaar oud", y);
+                default -> String.format("persoon van %d jaar oud", y);
             };
         } else if (y>9) {
             return switch (psex) {
-                case FEMALE -> String.format("een vrouwelijke adolescent van %d jaar oud", y);
-                case MALE -> String.format("een mannelijke adolescent van %d jaar oud", y);
-                default -> String.format("een adolescent van %d jaar oud", y);
+                case FEMALE -> String.format("vrouwelijke adolescent van %d jaar oud", y);
+                case MALE -> String.format("mannelijke adolescent van %d jaar oud", y);
+                default -> String.format("adolescent van %d jaar oud", y);
             };
         } else if (y>0) {
             return switch (psex) {
@@ -303,15 +303,15 @@ public class PpktIndividualDutch implements PhenopacketIndividualInformationGene
             };
         } else if (m>0 || d> 0) {
             return switch (psex) {
-                case FEMALE -> String.format("een vrouwelijke baby %s", iso8601ToMonthDay(iso8601Age));
-                case MALE -> String.format("een mannelijke baby %s", iso8601ToMonthDay(iso8601Age));
-                default -> String.format("een baby %s", iso8601ToMonthDay(iso8601Age));
+                case FEMALE -> String.format("vrouwelijke baby %s", iso8601ToMonthDay(iso8601Age));
+                case MALE -> String.format("mannelijke baby %s", iso8601ToMonthDay(iso8601Age));
+                default -> String.format("baby %s", iso8601ToMonthDay(iso8601Age));
             };
         } else {
             return switch (psex) {
-                case FEMALE -> "een pasgeboren meisje";
-                case MALE -> "een pasgeboren jongetje";
-                default -> "een pasgeborene";
+                case FEMALE -> "pasgeboren meisje";
+                case MALE -> "pasgeboren jongetje";
+                default -> "pasgeborene";
             };
         }
     }
