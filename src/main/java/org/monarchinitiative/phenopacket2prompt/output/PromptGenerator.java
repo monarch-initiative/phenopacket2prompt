@@ -7,6 +7,8 @@ import org.monarchinitiative.phenopacket2prompt.model.PhenopacketAge;
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketSex;
 import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
 import org.monarchinitiative.phenopacket2prompt.output.impl.english.EnglishPromptGenerator;
+import org.monarchinitiative.phenopacket2prompt.output.impl.german.GermanPromptGenerator;
+import org.monarchinitiative.phenopacket2prompt.output.impl.german.PpktPhenotypicfeatureGerman;
 import org.monarchinitiative.phenopacket2prompt.output.impl.spanish.*;
 
 import java.util.List;
@@ -31,6 +33,11 @@ public interface PromptGenerator {
     static PromptGenerator spanish(Ontology hpo, HpInternational international) {
         PpktPhenotypicFeatureGenerator pfgen = new PpktPhenotypicfeatureSpanish(international);
         return new SpanishPromptGenerator(hpo, pfgen);
+    }
+
+    static PromptGenerator german(Ontology hpo, HpInternational international) {
+        PpktPhenotypicFeatureGenerator pfgen = new PpktPhenotypicfeatureGerman(international);
+        return new GermanPromptGenerator(hpo, pfgen);
     }
 
     /**
