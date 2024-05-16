@@ -85,8 +85,8 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
     }
 
 
-    private String getFileName(String phenopacketID) {
-        return phenopacketID.replaceAll("[^\\w]", phenopacketID).replaceAll("/","_") + "-prompt.txt";
+    private String getFileName(String phenopacketID, String languageCode) {
+        return phenopacketID.replaceAll("[^\\w]","_") + "_" + languageCode + "-prompt.txt";
     }
 
 
@@ -103,7 +103,7 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
                 continue;
             }
             PhenopacketDisease pdisease = diseaseList.get(0);
-            String promptFileName = getFileName( individual.getPhenopacketId());
+            String promptFileName = getFileName( individual.getPhenopacketId(), languageCode);
             String diagnosisLine = String.format("%s\t%s\t%s\t%s", pdisease.getDiseaseId(), pdisease.getLabel(), promptFileName, f.getAbsolutePath());
             try {
                 diagnosisList.add(diagnosisLine);
@@ -129,7 +129,7 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
                 continue;
             }
             PhenopacketDisease pdisease = diseaseList.get(0);
-            String promptFileName = getFileName( individual.getPhenopacketId());
+            String promptFileName = getFileName( individual.getPhenopacketId(), "en");
             String diagnosisLine = String.format("%s\t%s\t%s\t%s", pdisease.getDiseaseId(), pdisease.getLabel(), promptFileName, f.getAbsolutePath());
             try {
                 String prompt = generator.createPrompt(individual);
