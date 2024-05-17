@@ -12,9 +12,10 @@ Ich führe ein Experiment mit einem klinischen Fallbericht durch, um zu sehen, w
 1. Branchiooculofacial syndrome
 2. Cystic fibrosis
 
-Diese Liste sollte so viele Diagnosen enthalten, wie Sie für sinnvoll halten. Bitte übersetzen Sie diese Liste ins Englische.
+Diese Liste sollte so viele Diagnosen enthalten, wie Sie für sinnvoll halten.
 
-Sie müssen Ihre Argumentation nicht erläutern, sondern nur die Diagnosen auflisten.
+Sie müssen Ihre Argumentation nicht erläutern, sondern nur die Diagnosen auflisten. 
+Ich habe Ihnen diese Anleitung auf English gegeben, aber ich bitte Sie, ihre Antwort ausschließlich auf English zu liefern.
 Hier ist der Fall:
              
 """;
