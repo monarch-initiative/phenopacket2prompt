@@ -65,8 +65,13 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
         // output all non-English languages here
         PromptGenerator spanish = PromptGenerator.spanish(hpo, internationalMap.get("es"));
         outputPromptsInternational(ppktFiles, hpo, "es", spanish);
+
         PromptGenerator dutch = PromptGenerator.dutch(hpo, internationalMap.get("nl"));
         outputPromptsInternational(ppktFiles, hpo, "nl", dutch);
+
+        PromptGenerator german = PromptGenerator.german(hpo, internationalMap.get("de"));
+        outputPromptsInternational(ppktFiles, hpo, "de", german);
+
         // output file with correct diagnosis list
         outputCorrectResults(correctResultList);
         return 0;
@@ -85,8 +90,8 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
     }
 
 
-    private String getFileName(String phenopacketID) {
-        return phenopacketID.replaceAll("[^\\w]", phenopacketID).replaceAll("/","_") + "-prompt.txt";
+    private String getFileName(String phenopacketID, String languageCode) {
+        return phenopacketID.replaceAll("[^\\w]","_") + "_" + languageCode + "-prompt.txt";
     }
 
 
@@ -99,11 +104,11 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
             PpktIndividual individual = new PpktIndividual(f);
             List<PhenopacketDisease> diseaseList = individual.getDiseases();
             if (diseaseList.size() != 1) {
-                System.err.println(String.format("[ERROR] Got %d diseases for %s.\n", diseaseList.size(), individual.getPhenopacketId()));
+                System.err.printf("[ERROR] Got %d diseases for %s.\n", diseaseList.size(), individual.getPhenopacketId());
                 continue;
             }
             PhenopacketDisease pdisease = diseaseList.get(0);
-            String promptFileName = getFileName( individual.getPhenopacketId());
+            String promptFileName = getFileName( individual.getPhenopacketId(), languageCode);
             String diagnosisLine = String.format("%s\t%s\t%s\t%s", pdisease.getDiseaseId(), pdisease.getLabel(), promptFileName, f.getAbsolutePath());
             try {
                 diagnosisList.add(diagnosisLine);
@@ -125,11 +130,11 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
             PpktIndividual individual = new PpktIndividual(f);
             List<PhenopacketDisease> diseaseList = individual.getDiseases();
             if (diseaseList.size() != 1) {
-                System.err.println(String.format("[ERROR] Got %d diseases for %s.\n", diseaseList.size(), individual.getPhenopacketId()));
+                System.err.printf("[ERROR] Got %d diseases for %s.\n", diseaseList.size(), individual.getPhenopacketId());
                 continue;
             }
             PhenopacketDisease pdisease = diseaseList.get(0);
-            String promptFileName = getFileName( individual.getPhenopacketId());
+            String promptFileName = getFileName( individual.getPhenopacketId(), "en");
             String diagnosisLine = String.format("%s\t%s\t%s\t%s", pdisease.getDiseaseId(), pdisease.getLabel(), promptFileName, f.getAbsolutePath());
             try {
                 String prompt = generator.createPrompt(individual);
