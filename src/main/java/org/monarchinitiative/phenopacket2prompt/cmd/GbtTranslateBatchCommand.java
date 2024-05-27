@@ -63,14 +63,19 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
         createDir("prompts");
         List<CorrectResult>  correctResultList = outputPromptsEnglish(ppktFiles, hpo);
         // output all non-English languages here
+
+        // SPANISH
         PromptGenerator spanish = PromptGenerator.spanish(hpo, internationalMap.get("es"));
         outputPromptsInternational(ppktFiles, hpo, "es", spanish);
-
+        // DUTCH
         PromptGenerator dutch = PromptGenerator.dutch(hpo, internationalMap.get("nl"));
         outputPromptsInternational(ppktFiles, hpo, "nl", dutch);
-
+        // GERMAN
         PromptGenerator german = PromptGenerator.german(hpo, internationalMap.get("de"));
         outputPromptsInternational(ppktFiles, hpo, "de", german);
+        // ITALIAN
+        PromptGenerator italian = PromptGenerator.italian(hpo, internationalMap.get("it"));
+        outputPromptsInternational(ppktFiles, hpo, "it", italian);
 
         // output file with correct diagnosis list
         outputCorrectResults(correctResultList);
@@ -86,7 +91,7 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.printf("[INFO] Output a total of %d prompts in en and es.\n", correctResultList.size());
+        System.out.printf("[INFO] Output a total of %d prompts in en, es, nl, de, and it.\n", correctResultList.size());
     }
 
 
