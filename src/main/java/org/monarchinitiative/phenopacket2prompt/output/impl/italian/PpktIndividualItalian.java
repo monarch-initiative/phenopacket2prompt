@@ -11,7 +11,6 @@ import java.util.Optional;
 public class PpktIndividualItalian implements PhenopacketIndividualInformationGenerator {
 
 
-
     private static final String FEMALE_FETUS = "un feto femmina";
     private static final String MALE_FETUS = "un feto maschio";
     private static final String FETUS = "un feto";
@@ -27,6 +26,10 @@ public class PpktIndividualItalian implements PhenopacketIndividualInformationGe
     private static final String FEMALE_CHILD = "una bambina";
     private static final String MALE_CHILD = "un bambino";
     private static final String CHILD = "un bambino";
+
+    private static final String FEMALE_ADOLESCENT = "un'adolescente femmina";
+    private static final String MALE_ADOLESCENT = "un adolescente maschio";
+    private static final String ADOLESCENT = "un adolescente";
 
     private static final String FEMALE_ADULT = "una donna";
     private static final String MALE_ADULT = "un uomo";
@@ -264,9 +267,9 @@ public class PpktIndividualItalian implements PhenopacketIndividualInformationGe
             };
         } else {
             return switch (psex) {
-                case FEMALE -> "neonata";
-                case MALE -> "neonato";
-                default -> "neonato";
+                case FEMALE -> FEMALE_NEWBORN;
+                case MALE -> MALE_NEWBORN;
+                default -> NEWBORN;
             };
         }
     }
@@ -274,39 +277,39 @@ public class PpktIndividualItalian implements PhenopacketIndividualInformationGe
     private String hpoOnsetIndividualDescription(PhenopacketSex psex, HpoOnsetAge hpoOnsetTermAge) {
         if (hpoOnsetTermAge.isFetus()) {
             return switch (psex) {
-                case FEMALE -> "feto femmina";
-                case MALE -> "feto maschio";
-                default -> "feto";
+                case FEMALE -> FEMALE_FETUS;
+                case MALE -> MALE_FETUS;
+                default -> FETUS;
             };
         } else if (hpoOnsetTermAge.isCongenital()) {
             return switch (psex) {
-                case FEMALE -> "una neonata";
-                case MALE -> "un neonato";
-                default -> "un neonato";
+                case FEMALE -> FEMALE_NEWBORN;
+                case MALE -> MALE_NEWBORN;
+                default -> NEWBORN;
             };
         } else if (hpoOnsetTermAge.isInfant()) {
             return switch (psex) {
                 case FEMALE -> FEMALE_INFANT;
-                case MALE -> "un infante maschio";
-                default -> "un infante";
+                case MALE -> MALE_INFANT;
+                default -> INFANT;
             };
         } else if (hpoOnsetTermAge.isChild()) {
             return switch (psex) {
-                case FEMALE -> "bambina";
-                case MALE -> "bambino";
-                default -> "bambino";
+                case FEMALE -> FEMALE_CHILD;
+                case MALE -> MALE_CHILD;
+                default -> CHILD;
             };
         } else if (hpoOnsetTermAge.isJuvenile()) {
             return switch (psex) {
-                case FEMALE -> "un'adolescente femmina";
-                case MALE -> "un adolescente maschio";
-                default -> "un adolescente";
+                case FEMALE -> FEMALE_ADOLESCENT;
+                case MALE -> MALE_ADOLESCENT;
+                default -> ADOLESCENT;
             };
         }else {
             return switch (psex) {
-                case FEMALE -> "una donna";
-                case MALE -> "un uomo";
-                default -> "un adulto";
+                case FEMALE -> FEMALE_ADULT;
+                case MALE -> MALE_ADULT;
+                default -> ADULT;
             };
         }
     }
@@ -365,7 +368,7 @@ public class PpktIndividualItalian implements PhenopacketIndividualInformationGe
             // should never happen
             throw new PhenolRuntimeException("Did not recognize last exam age type " + lastExamAge.ageType());
         }
-        return String.format("Il paziente era %s che si è presentato con", individualDescription);
+        return String.format("Il paziente era %s che si è presentato ", individualDescription);
     }
 
     /**
@@ -387,7 +390,7 @@ public class PpktIndividualItalian implements PhenopacketIndividualInformationGe
             // should never happen
             throw new PhenolRuntimeException("Did not recognize onset age type " + onsetAge.ageType());
         }
-        return String.format("Il paziente si è presentato con %s", onsetDescription);
+        return String.format("Il paziente si è presentato %s con", onsetDescription);
     }
 
     private String ageNotAvailable(PhenopacketSex psex) {

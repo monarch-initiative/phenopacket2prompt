@@ -10,9 +10,30 @@ import java.util.Optional;
 
 public class PpktIndividualSpanish implements PhenopacketIndividualInformationGenerator {
 
+    //TODO translate from ita to spanish and edit this file in order to actually use these
+    private static final String FEMALE_FETUS = "un feto femenino";
+    private static final String MALE_FETUS = "un feto masculino";
+    private static final String FETUS = "un feto";
+
+    private static final String FEMALE_NEWBORN = "una niña recién nacida"; // CHECK
+    private static final String MALE_NEWBORN = "un neonato maschio";
+    private static final String NEWBORN = "un neonato";
 
     private static final String FEMALE_INFANT = "un bebé femenino";
+    private static final String MALE_INFANT = "un bebé masculino";
+    private static final String INFANT = "un bebé";
 
+    private static final String FEMALE_CHILD = "una bambina";
+    private static final String MALE_CHILD = "un bambino";
+    private static final String CHILD = "un bambino";
+
+    private static final String FEMALE_ADOLESCENT = "un'adolescente femmina";
+    private static final String MALE_ADOLESCENT = "un adolescente maschio";
+    private static final String ADOLESCENT = "un adolescente";
+
+    private static final String FEMALE_ADULT = "una donna";
+    private static final String MALE_ADULT = "un uomo";
+    private static final String ADULT = "una persona adulta";
 
 
     /**
@@ -81,19 +102,19 @@ public class PpktIndividualSpanish implements PhenopacketIndividualInformationGe
             };
         } else if (age.isFetus()) {
             return switch (psex) {
-                case FEMALE -> "un feto femenino";
-                case MALE -> "un feto masculino";
-                default -> "un feto";
+                case FEMALE -> FEMALE_FETUS;
+                case MALE -> MALE_FETUS;
+                default -> FETUS;
             };
         } else if (age.isInfant()) {
             return switch (psex) {
                 case FEMALE -> FEMALE_INFANT;
-                case MALE -> "un bebé masculino";
-                default -> "un bebé";
+                case MALE -> MALE_INFANT;
+                default -> INFANT;
             };
         } else {
             return switch (psex) {
-                case FEMALE -> "un mujer";
+                case FEMALE -> "una mujer";
                 case MALE -> "un hombre";
                 default -> "una persona adulta";
             };
@@ -256,21 +277,21 @@ public class PpktIndividualSpanish implements PhenopacketIndividualInformationGe
     private String hpoOnsetIndividualDescription(PhenopacketSex psex, HpoOnsetAge hpoOnsetTermAge) {
         if (hpoOnsetTermAge.isFetus()) {
             return switch (psex) {
-                case FEMALE -> FEMALE_INFANT;
-                case MALE -> "feto masculino";
-                default -> "feto";
+                case FEMALE -> FEMALE_FETUS;
+                case MALE -> MALE_FETUS;
+                default -> FETUS;
             };
         } else if (hpoOnsetTermAge.isCongenital()) {
             return switch (psex) {
-                case FEMALE -> "una niña recién nacida";
+                case FEMALE ->  "una niña recién nacida";
                 case MALE -> "un niño recién nacido";
                 default -> "un bebe recién nacido";
             };
         } else if (hpoOnsetTermAge.isInfant()) {
             return switch (psex) {
                 case FEMALE -> FEMALE_INFANT;
-                case MALE -> "un bebé masculino";
-                default -> "un bebé";
+                case MALE -> MALE_INFANT;
+                default -> INFANT;
             };
         } else if (hpoOnsetTermAge.isChild()) {
             return switch (psex) {
@@ -369,7 +390,7 @@ public class PpktIndividualSpanish implements PhenopacketIndividualInformationGe
             // should never happen
             throw new PhenolRuntimeException("Did not recognize onset age type " + onsetAge.ageType());
         }
-        return String.format("El paciente se presentó con %s", onsetDescription);
+        return String.format("El paciente se presentó %s con", onsetDescription);
     }
 
     private String ageNotAvailable(PhenopacketSex psex) {
