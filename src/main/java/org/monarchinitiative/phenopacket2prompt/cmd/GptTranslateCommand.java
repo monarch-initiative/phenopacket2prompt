@@ -55,7 +55,7 @@ public class GptTranslateCommand implements Callable<Integer> {
 
         System.out.println(hpo.version().orElse("n/a"));
         PromptGenerator generator = PromptGenerator.english(hpo);
-        PpktIndividual individual = new PpktIndividual(new File(ppkt));
+        PpktIndividual individual = PpktIndividual.fromFile(new File(ppkt));
         String prompt = generator.createPrompt(individual);
         System.out.println(prompt);
         // SPANISH

@@ -101,7 +101,7 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
         createDir(dirpath);
         List<String> diagnosisList = new ArrayList<>();
         for (var f: ppktFiles) {
-            PpktIndividual individual = new PpktIndividual(f);
+            PpktIndividual individual = PpktIndividual.fromFile(f);
             List<PhenopacketDisease> diseaseList = individual.getDiseases();
             if (diseaseList.size() != 1) {
                 System.err.printf("[ERROR] Got %d diseases for %s.\n", diseaseList.size(), individual.getPhenopacketId());
@@ -127,7 +127,7 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
         PromptGenerator generator = PromptGenerator.english(hpo);
 
         for (var f: ppktFiles) {
-            PpktIndividual individual = new PpktIndividual(f);
+            PpktIndividual individual =  PpktIndividual.fromFile(f);
             List<PhenopacketDisease> diseaseList = individual.getDiseases();
             if (diseaseList.size() != 1) {
                 System.err.printf("[ERROR] Got %d diseases for %s.\n", diseaseList.size(), individual.getPhenopacketId());

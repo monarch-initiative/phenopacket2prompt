@@ -104,7 +104,7 @@ public class PpktIndividualEnglish implements PhenopacketIndividualInformationGe
         if (hpoOnsetTermAge.isFetus()) {
             return  "in the fetal period";
         } else if (hpoOnsetTermAge.isCongenital()) {
-            return  "as a newborn";
+            return  "at birth";
         } else if (hpoOnsetTermAge.isInfant()) {
             return "as an infant";
         } else if (hpoOnsetTermAge.isChild()) {
@@ -142,9 +142,9 @@ public class PpktIndividualEnglish implements PhenopacketIndividualInformationGe
             };
         } else if (m>0 || d> 0) {
             return switch (psex) {
-                case FEMALE -> String.format("%s baby girl", iso8601ToMonthDay(iso8601Age));
-                case MALE -> String.format("\"%s baby boy", iso8601ToMonthDay(iso8601Age));
-                default -> String.format("%s baby", iso8601ToMonthDay(iso8601Age));
+                case FEMALE -> String.format("%s female infant", iso8601ToMonthDay(iso8601Age));
+                case MALE -> String.format("%s male infant", iso8601ToMonthDay(iso8601Age));
+                default -> String.format("%s infant", iso8601ToMonthDay(iso8601Age));
             };
         } else {
             return switch (psex) {
