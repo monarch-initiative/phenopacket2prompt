@@ -13,7 +13,7 @@ public class EnglishPromptGenerator implements PromptGenerator  {
 
     private final Ontology hpo;
 
-    private final PhenopacketIndividualInformationGenerator ppktAgeGenerator;
+    private final PPKtIndividualInfoGenerator ppktAgeGenerator;
 
     private final PhenopacketTextGenerator ppktTextGenerator;
 

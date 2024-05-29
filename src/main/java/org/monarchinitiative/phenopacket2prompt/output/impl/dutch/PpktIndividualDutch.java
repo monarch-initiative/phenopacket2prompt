@@ -2,13 +2,13 @@ package org.monarchinitiative.phenopacket2prompt.output.impl.dutch;
 
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenopacket2prompt.model.*;
-import org.monarchinitiative.phenopacket2prompt.output.PhenopacketIndividualInformationGenerator;
+import org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualInfoGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PpktIndividualDutch implements PhenopacketIndividualInformationGenerator {
+public class PpktIndividualDutch implements PPKtIndividualInfoGenerator {
 
 
     /**

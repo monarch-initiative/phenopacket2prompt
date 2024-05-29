@@ -5,12 +5,10 @@ import org.monarchinitiative.phenopacket2prompt.model.OntologyTerm;
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketAge;
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketSex;
 import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
-import org.monarchinitiative.phenopacket2prompt.output.PhenopacketIndividualInformationGenerator;
+import org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualInfoGenerator;
 import org.monarchinitiative.phenopacket2prompt.output.PhenopacketTextGenerator;
 import org.monarchinitiative.phenopacket2prompt.output.PpktPhenotypicFeatureGenerator;
 import org.monarchinitiative.phenopacket2prompt.output.PromptGenerator;
-import org.monarchinitiative.phenopacket2prompt.output.impl.dutch.PpktIndividualDutch;
-import org.monarchinitiative.phenopacket2prompt.output.impl.dutch.PpktTextDutch;
 
 import java.util.List;
 
@@ -19,7 +17,7 @@ public class DutchPromptGenerator implements PromptGenerator {
     private final Ontology hpo;
 
 
-    private final PhenopacketIndividualInformationGenerator ppktAgeSexGenerator;
+    private final PPKtIndividualInfoGenerator ppktAgeSexGenerator;
 
     private final PhenopacketTextGenerator ppktTextGenerator;
 

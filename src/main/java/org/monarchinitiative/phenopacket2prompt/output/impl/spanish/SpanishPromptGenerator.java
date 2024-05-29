@@ -14,7 +14,7 @@ public class SpanishPromptGenerator implements PromptGenerator {
     private final Ontology hpo;
 
 
-    private final PhenopacketIndividualInformationGenerator ppktAgeSexGenerator;
+    private final PPKtIndividualInfoGenerator ppktAgeSexGenerator;
 
     private final PhenopacketTextGenerator ppktTextGenerator;
 

@@ -5,8 +5,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.monarchinitiative.phenopacket2prompt.model.Iso8601Age;
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketAge;
+import org.monarchinitiative.phenopacket2prompt.model.PhenopacketSex;
 import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
-import org.monarchinitiative.phenopacket2prompt.output.PhenopacketIndividualInformationGenerator;
+import org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualInfoGenerator;
 import org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualBase;
 
 import java.util.function.Supplier;
@@ -19,22 +20,21 @@ public class PpktIndividualEnglishTest extends PPKtIndividualBase{
 
 
 
-    private static Stream<TestCase> provideExpressionsForEvaluate() {
+    private static Stream<TestIdvlDescription> testGetIndividualDescription() {
         return Stream.of(
-                new TestCase("46 year olf female, infantile onset",
+                new TestIdvlDescription("46 year olf female, infantile onset",
                         female46yearsInfantileOnset(), new TestOutcome.Success("The proband was a 46-year old woman who presented as an infant with")),
-                new TestCase("male 4 months, congenital onset",
+                new TestIdvlDescription("male 4 months, congenital onset",
                         male4monthsCongenitalOnset(), new TestOutcome.Success("The proband was a 4-month old male infant who presented at birth with"))
         );
     }
 
 
 
-
     @ParameterizedTest
-    @MethodSource("provideExpressionsForEvaluate")
-    void testEvaluateExpression(TestCase testCase) {
-        PhenopacketIndividualInformationGenerator generator = new PpktIndividualEnglish();
+    @MethodSource("testGetIndividualDescription")
+    void testEvaluateExpression(TestIdvlDescription testCase) {
+        PPKtIndividualInfoGenerator generator = new PpktIndividualEnglish();
         PpktIndividual ppkti = testCase.ppktIndividual();
         switch (testCase.expectedOutcome()) {
             case TestOutcome.Success(String expectedResult) ->
@@ -49,24 +49,71 @@ public class PpktIndividualEnglishTest extends PPKtIndividualBase{
 
 
 
-    @Test
-    public void test1() {
-        PpktIndividual ppkti = PPKtIndividualBase.female46yearsInfantileOnset();
-        PhenopacketIndividualInformationGenerator generator = new PpktIndividualEnglish();
-        String expected = "she";
-        assertEquals(expected, generator.heSheIndividual(ppkti.getSex()));
-        String expectedDescription = "The proband was a 46-year old woman who presented as an infant with";
-        assertEquals(expectedDescription, generator.getIndividualDescription(ppkti));
-        String expectedAtAge = "3";
+    private static Stream<TestIdvlHeShe> testGetPPKtSex() {
+        return Stream.of(
+                new TestIdvlHeShe("female",
+                        PhenopacketSex.FEMALE, new TestOutcome.Success("she")),
+                new TestIdvlHeShe("male",
+                        PhenopacketSex.MALE, new TestOutcome.Success("he")),
+                new TestIdvlHeShe("proband",
+                        PhenopacketSex.UNKNOWN, new TestOutcome.Success("the individual"))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("testGetPPKtSex")
+    void testPPKtSex(TestIdvlHeShe testCase) {
+        PPKtIndividualInfoGenerator generator = new PpktIndividualEnglish();
+        switch (testCase.expectedOutcome()) {
+            case TestOutcome.Success(String expectedResult) ->
+                assertEquals(expectedResult, generator.heSheIndividual(testCase.ppktSex()));
+            case TestOutcome.Failure(Supplier<? extends RuntimeException> exceptionSupplier) ->
+                    assertThrows(exceptionSupplier.get().getClass(),
+                            () -> generator.heSheIndividual(testCase.ppktSex()),
+                            "Incorrect error handling for: " + testCase.description());
+        }
+    }
+
+
+
+//public record TestIdvlAtAge(String description, PhenopacketAge ppktAge, TestOutcome expectedOutcome) {}
+
+
+
+
+    private static Stream<TestIdvlAtAge> testIndlAtAge() {
+        return Stream.of(
+                new TestIdvlAtAge("congenital",
+                        congenital, new TestOutcome.Success("At birth")),
+                new TestIdvlAtAge("infantile",
+                        infantile, new TestOutcome.Success("During the infantile period")),
+                new TestIdvlAtAge("childhood age",
+                        childhood, new TestOutcome.Success("During childhood")),
+                new TestIdvlAtAge("46 years old",
+                        p46y, new TestOutcome.Success("At an age of 46 years"))
+        );
+    }
+
+
+    @ParameterizedTest
+    @MethodSource("testIndlAtAge")
+    void testPPKtSex(TestIdvlAtAge testCase) {
+        PPKtIndividualInfoGenerator generator = new PpktIndividualEnglish();
+        switch (testCase.expectedOutcome()) {
+            case TestOutcome.Success(String expectedResult) ->
+                    assertEquals(expectedResult, generator.atAge(testCase.ppktAge()));
+            case TestOutcome.Failure(Supplier<? extends RuntimeException> exceptionSupplier) ->
+                    assertThrows(exceptionSupplier.get().getClass(),
+                            () -> generator.atAge(testCase.ppktAge()),
+                            "Incorrect error handling for: " + testCase.description());
+        }
+
 
     }
 
-    @Test
-    public void testIsoAge() {
-        PhenopacketAge age = new Iso8601Age("P46Y");
-        PhenopacketIndividualInformationGenerator generator = new PpktIndividualEnglish();
-        assertEquals("P46Y", generator.atAge(age));
-    }
+
+
+
 
 
 }

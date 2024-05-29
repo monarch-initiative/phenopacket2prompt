@@ -57,12 +57,14 @@ public class Iso8601Age implements PhenopacketAge {
     @Override
     public String age() {
         StringBuilder sb = new StringBuilder();
-        if (years > 0) {
-            return String.format("%d year-old", years);
+        if (years == 1) {
+            return "one year";
+        } else if (years > 1) {
+            return String.format("%d years", years);
         } else if (months > 0) {
-            return String.format("%d month-old", months);
+            return String.format("%d months", months);
         } else {
-            return String.format("%d day-old", days);
+            return String.format("%d days", days);
         }
     }
 

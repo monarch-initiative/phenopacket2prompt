@@ -2,13 +2,13 @@ package org.monarchinitiative.phenopacket2prompt.output.impl.english;
 
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenopacket2prompt.model.*;
-import org.monarchinitiative.phenopacket2prompt.output.PhenopacketIndividualInformationGenerator;
+import org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualInfoGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PpktIndividualEnglish implements PhenopacketIndividualInformationGenerator {
+public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
 
     public PpktIndividualEnglish() {
 
@@ -60,7 +60,7 @@ public class PpktIndividualEnglish implements PhenopacketIndividualInformationGe
         } else if (d>0){
             return String.format("%d-month, %d-day old", m, d);
         } else {
-            return String.format("%d-month old", m, d);
+            return String.format("%d-month old", m);
         }
     }
 
@@ -73,20 +73,17 @@ public class PpktIndividualEnglish implements PhenopacketIndividualInformationGe
     private String iso8601AtAgeOf(Iso8601Age isoAge) {
         List<String> components = new ArrayList<>();
 
-        if (isoAge.getYears()>1) {
-            components.add(String.format("%d years", isoAge.getYears()));
-        } else if (isoAge.getYears() == 1) {
-            components.add("1 year");
+        if (isoAge.getYears()>0) {
+            String ystring = isoAge.getYears() == 1 ? "year" : "years";
+            components.add(String.format("%d %s", isoAge.getYears(), ystring));
         }
-        if (isoAge.getMonths() > 1) {
-            components.add(String.format("%d months", isoAge.getMonths()));
-        } else if (isoAge.getMonths() == 1) {
-            components.add("1 month");
+        if (isoAge.getMonths() > 0) {
+            String mstring = isoAge.getMonths() == 1 ? "month" : "months";
+            components.add(String.format("%d %s", isoAge.getMonths(), mstring));
         }
-        if (isoAge.getDays()>1) {
-            components.add(String.format("%d days", isoAge.getDays()));
-        } else if (isoAge.getDays()==1) {
-            components.add("1 day");
+        if (isoAge.getDays()>0) {
+            String dstring = isoAge.getDays() == 1 ? "day" : "days";
+            components.add(String.format("%d %s", isoAge.getDays(), dstring));
         }
         if (components.isEmpty()) {
             return "as a newborn";
