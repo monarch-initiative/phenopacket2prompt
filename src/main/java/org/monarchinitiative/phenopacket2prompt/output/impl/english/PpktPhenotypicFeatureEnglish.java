@@ -41,7 +41,7 @@ public class PpktPhenotypicFeatureEnglish implements PpktPhenotypicFeatureGenera
         } else if (observed.isEmpty()) {
             return "the following manifestations that were excluded: " + getOxfordCommaList(excluded) + ". ";
         } else {
-            String exclusion = String.format("However,  %s %s excluded.", getOxfordCommaList(excluded), excluded.size() > 1 ? " were" : "was");
+            String exclusion = String.format("However, %s %s excluded.", getOxfordCommaList(excluded), excluded.size() > 1 ? " were" : "was");
             return getOxfordCommaList(observed) + ". " + exclusion;
         }
     }
