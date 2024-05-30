@@ -23,9 +23,9 @@ public class PpktIndividualSpanish implements PPKtIndividualInfoGenerator {
     private static final String MALE_INFANT = "un bebé masculino";
     private static final String INFANT = "un bebé";
 
-    private static final String FEMALE_CHILD = "una bambina";
-    private static final String MALE_CHILD = "un bambino";
-    private static final String CHILD = "un bambino";
+    private static final String FEMALE_CHILD = "una niña";
+    private static final String MALE_CHILD = "un niño";
+    private static final String CHILD = "un niño";
 
     private static final String FEMALE_ADOLESCENT = "un'adolescente femmina";
     private static final String MALE_ADOLESCENT = "un adolescente maschio";
@@ -219,13 +219,13 @@ public class PpktIndividualSpanish implements PPKtIndividualInfoGenerator {
         }
     }
 
-    private String onsetTermAtAgeOf(HpoOnsetAge hpoOnsetTermAge) {
+    private String onsetTermAtAgeOf(HpoOnsetAge hpoOnsetTermAge, PhenopacketSex psex) {
         if (hpoOnsetTermAge.isFetus()) {
             return  "en el período fetal";
         } else if (hpoOnsetTermAge.isCongenital()) {
-            return  "en el período neonatal";
+            return  "al nacer";
         } else if (hpoOnsetTermAge.isInfant()) {
-            return "como un bebe";
+            return "en el primer año de vida";
         } else if (hpoOnsetTermAge.isChild()) {
             return "en la niñez";
         } else if (hpoOnsetTermAge.isJuvenile()) {
@@ -261,9 +261,10 @@ public class PpktIndividualSpanish implements PPKtIndividualInfoGenerator {
             };
         } else if (m>0 || d> 0) {
             return switch (psex) {
-                case FEMALE -> String.format("una infante %s", iso8601ToMonthDay(iso8601Age));
-                case MALE -> String.format("un infante %s", iso8601ToMonthDay(iso8601Age));
-                default -> String.format("un infante %s", iso8601ToMonthDay(iso8601Age));
+                // note that in Spanishm infante is up to 5 years
+                case FEMALE -> String.format("una bebé %s", iso8601ToMonthDay(iso8601Age));
+                case MALE -> String.format("un bebé %s", iso8601ToMonthDay(iso8601Age));
+                default -> String.format("un bebé %s", iso8601ToMonthDay(iso8601Age));
             };
         } else {
             return switch (psex) {
@@ -317,7 +318,7 @@ public class PpktIndividualSpanish implements PPKtIndividualInfoGenerator {
     /**
      * A sentence such as The proband was a 39-year old woman who presented at the age of 12 years with
      * HPO1, HPO2, and HPO3. HPO4 and HPO5 were excluded. This method returns the phrase that ends with "with"
-     * El sujeto era un niño de 1 año y 10 meses que se presentó como recién nacido con un filtrum largo.
+     * El sujeto era un niño de 1 año y 10 meses que se presentaba como recién nacido con un filtrum largo.
      * @param psex
      * @param lastExamAge
      * @param onsetAge
@@ -341,13 +342,20 @@ public class PpktIndividualSpanish implements PPKtIndividualInfoGenerator {
             onsetDescription = iso8601AtAgeOf(isoAge);
         } else if (onsetAge.ageType().equals(PhenopacketAgeType.HPO_ONSET_AGE_TYPE)) {
             HpoOnsetAge hpoOnsetTermAge = (HpoOnsetAge) onsetAge;
-            onsetDescription = onsetTermAtAgeOf(hpoOnsetTermAge);
+            onsetDescription = onsetTermAtAgeOf(hpoOnsetTermAge, psex);
         } else {
             // should never happen
             throw new PhenolRuntimeException("Did not recognize onset age type " + onsetAge.ageType());
         }
-        return String.format("El sujeto era %s que se presentó %s con", individualDescription, onsetDescription);
+        return switch (psex){
+            case FEMALE ->  String.format("La paciente era %s que se presentaba %s con", individualDescription, onsetDescription);
+            case MALE -> String.format("El paciente era %s que se presentaba %s con", individualDescription, onsetDescription);
+            default -> String.format("El paciente era %s que se presentaba %s con", individualDescription, onsetDescription);
+        };
     }
+
+
+
 
 
     /**
@@ -385,7 +393,7 @@ public class PpktIndividualSpanish implements PPKtIndividualInfoGenerator {
             onsetDescription = iso8601AtAgeOf(isoAge);
         } else if (onsetAge.ageType().equals(PhenopacketAgeType.HPO_ONSET_AGE_TYPE)) {
             HpoOnsetAge hpoOnsetTermAge = (HpoOnsetAge) onsetAge;
-            onsetDescription = onsetTermAtAgeOf(hpoOnsetTermAge);
+            onsetDescription = onsetTermAtAgeOf(hpoOnsetTermAge, psex);
         } else {
             // should never happen
             throw new PhenolRuntimeException("Did not recognize onset age type " + onsetAge.ageType());
