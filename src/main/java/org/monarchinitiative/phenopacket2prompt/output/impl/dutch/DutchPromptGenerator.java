@@ -11,6 +11,7 @@ import org.monarchinitiative.phenopacket2prompt.output.PpktPhenotypicFeatureGene
 import org.monarchinitiative.phenopacket2prompt.output.PromptGenerator;
 
 import java.util.List;
+import java.util.Set;
 
 public class DutchPromptGenerator implements PromptGenerator {
 
@@ -54,4 +55,9 @@ public class DutchPromptGenerator implements PromptGenerator {
         return String.format("%s, %s presenteerde met %s", ageString, ppktAgeSexGenerator.heSheIndividual(psex), features);
     }
 
+
+    @Override
+    public Set<String> getMissingTranslations() {
+        return this.ppktPhenotypicFeatureGenerator.getMissingTranslations();
+    }
 }

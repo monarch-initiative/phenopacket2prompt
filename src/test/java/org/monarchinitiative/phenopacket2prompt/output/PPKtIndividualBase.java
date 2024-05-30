@@ -6,25 +6,32 @@ import org.monarchinitiative.phenopacket2prompt.model.PhenopacketAge;
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketSex;
 import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
 import org.phenopackets.phenopackettools.builder.PhenopacketBuilder;
-import org.phenopackets.phenopackettools.builder.builders.DiseaseBuilder;
-import org.phenopackets.phenopackettools.builder.builders.IndividualBuilder;
-import org.phenopackets.phenopackettools.builder.builders.MetaDataBuilder;
-import org.phenopackets.phenopackettools.builder.builders.TimeElements;
+import org.phenopackets.phenopackettools.builder.builders.*;
 import org.phenopackets.schema.v2.core.Disease;
 import org.phenopackets.schema.v2.core.Individual;
 import org.phenopackets.schema.v2.core.MetaData;
+import org.phenopackets.schema.v2.core.PhenotypicFeature;
 
 import java.util.function.Supplier;
 
 public class PPKtIndividualBase {
     private final static MetaData metadata = MetaDataBuilder.builder("curator").build();
 
+
+    private final static PhenotypicFeature atrophy = PhenotypicFeatureBuilder.builder("HP:0001272", "Cerebellar atrophy" ).infantileOnset().build();
+    private final static PhenotypicFeature  ataxia = PhenotypicFeatureBuilder.builder("HP:0001251", "Ataxia").infantileOnset().build();
+    private final static PhenotypicFeature bradyphrenExcluded = PhenotypicFeatureBuilder.builder("HP:0031843", "Bradyphrenia").excluded().build();
+    private final static PhenotypicFeature polydactyly = PhenotypicFeatureBuilder.builder("HP:0100259", "Postaxial polydactyly").congenitalOnset().build();
+
+
+
+
     public sealed interface TestOutcome {
         record Ok(String value) implements TestOutcome {}
         record Error(Supplier<? extends RuntimeException> exceptionSupplier) implements TestOutcome {}
     }
 
-    public record TestIdvlDescription(String description, PpktIndividual ppktIndividual, TestOutcome expectedOutcome) {}
+    public record TestIndividual(String description, PpktIndividual ppktIndividual, TestOutcome expectedOutcome) {}
 
     public record TestIdvlHeShe(String description, PhenopacketSex ppktSex, TestOutcome expectedOutcome) {}
 
@@ -38,7 +45,7 @@ public class PPKtIndividualBase {
         PhenopacketBuilder builder = PhenopacketBuilder.create("id1", metadata);
         Disease d = DiseaseBuilder.builder("OMIM:100123", "test").onset(TimeElements.infantileOnset()).build();
         Individual subject = IndividualBuilder.builder("individual.1").female().ageAtLastEncounter("P46Y").build();
-        builder.individual(subject).addDisease(d);
+        builder.individual(subject).addDisease(d).addPhenotypicFeature(atrophy).addPhenotypicFeature(ataxia).addPhenotypicFeature(bradyphrenExcluded);
         return new PpktIndividual(builder.build());
     }
 
@@ -46,7 +53,7 @@ public class PPKtIndividualBase {
         PhenopacketBuilder builder = PhenopacketBuilder.create("id2", metadata);
         Disease d = DiseaseBuilder.builder("OMIM:100123", "test").onset(TimeElements.congenitalOnset()).build();
         Individual subject = IndividualBuilder.builder("individual.2").male().ageAtLastEncounter("P4M").build();
-        builder.individual(subject).addDisease(d);
+        builder.individual(subject).addDisease(d).addPhenotypicFeature(polydactyly);
         return new PpktIndividual(builder.build());
     }
 

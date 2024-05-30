@@ -53,7 +53,10 @@ public class SpanishPromptGenerator implements PromptGenerator {
 
 
 
-
+    @Override
+    public Set<String> getMissingTranslations() {
+        return this.ppktPhenotypicFeatureGenerator.getMissingTranslations();
+    }
 
 
 

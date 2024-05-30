@@ -11,6 +11,7 @@ import org.monarchinitiative.phenopacket2prompt.output.PpktPhenotypicFeatureGene
 import org.monarchinitiative.phenopacket2prompt.output.PromptGenerator;
 
 import java.util.List;
+import java.util.Set;
 
 public class GermanPromptGenerator implements PromptGenerator {
 
@@ -55,7 +56,10 @@ public class GermanPromptGenerator implements PromptGenerator {
     }
 
 
-
+    @Override
+    public Set<String> getMissingTranslations() {
+        return this.ppktPhenotypicFeatureGenerator.getMissingTranslations();
+    }
 
 
 

@@ -17,11 +17,11 @@ public class PpktIndividualEnglishTest extends PPKtIndividualBase{
 
 
 
-    private static Stream<TestIdvlDescription> testGetIndividualDescription() {
+    private static Stream<TestIndividual> testGetIndividualDescription() {
         return Stream.of(
-                new TestIdvlDescription("46 year olf female, infantile onset",
+                new TestIndividual("46 year olf female, infantile onset",
                         female46yearsInfantileOnset(), new TestOutcome.Ok("The proband was a 46-year old woman who presented as an infant with")),
-                new TestIdvlDescription("male 4 months, congenital onset",
+                new TestIndividual("male 4 months, congenital onset",
                         male4monthsCongenitalOnset(), new TestOutcome.Ok("The proband was a 4-month old male infant who presented at birth with"))
         );
     }
@@ -30,7 +30,7 @@ public class PpktIndividualEnglishTest extends PPKtIndividualBase{
 
     @ParameterizedTest
     @MethodSource("testGetIndividualDescription")
-    void testEvaluateExpression(TestIdvlDescription testCase) {
+    void testEvaluateExpression(TestIndividual testCase) {
         PPKtIndividualInfoGenerator generator = new PpktIndividualEnglish();
         PpktIndividual ppkti = testCase.ppktIndividual();
         switch (testCase.expectedOutcome()) {

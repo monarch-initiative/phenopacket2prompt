@@ -5,10 +5,7 @@ import org.monarchinitiative.phenopacket2prompt.international.HpInternational;
 import org.monarchinitiative.phenopacket2prompt.model.OntologyTerm;
 import org.monarchinitiative.phenopacket2prompt.output.PpktPhenotypicFeatureGenerator;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Predicate;
 
 public class PpktPhenotypicfeatureSpanish implements PpktPhenotypicFeatureGenerator {
@@ -17,9 +14,10 @@ public class PpktPhenotypicfeatureSpanish implements PpktPhenotypicFeatureGenera
 
     public PpktPhenotypicfeatureSpanish(HpInternational international) {
         spanish = international;
+        missingTranslations = new HashSet<>();
     }
 
-
+    private Set<String> missingTranslations;
 
     private List<String> getTranslations(List<OntologyTerm> ontologyTerms) {
         List<String> labels = new ArrayList<>();
@@ -28,7 +26,8 @@ public class PpktPhenotypicfeatureSpanish implements PpktPhenotypicFeatureGenera
             if (opt.isPresent()) {
                 labels.add(opt.get());
             } else {
-                System.err.printf("[ERROR] Could not find %s translation for %s (%s).\n", spanish.getLanguageAcronym(), term.getLabel(), term.getTid().getValue());
+                String missing = String.format(" %s (%s)", term.getLabel(), term.getTid().getValue());
+                missingTranslations.add(missing);
             }
         }
         return labels;
@@ -39,7 +38,7 @@ public class PpktPhenotypicfeatureSpanish implements PpktPhenotypicFeatureGenera
 
     private String getOxfordCommaList(List<String> items) {
         if (items.size() == 1) {
-            return items.get(0);
+            return items.getFirst();
         }
         if (items.size() == 2) {
             // no comma if we just have two items.
@@ -76,7 +75,7 @@ public class PpktPhenotypicfeatureSpanish implements PpktPhenotypicFeatureGenera
             if (excludedLabels.size() > 1) {
                 return String.format("por lo que se excluyeron %s.", getOxfordCommaList(excludedLabels));
             } else {
-                return String.format("por lo que %s fue excluido.",excludedLabels.get(0));
+                return String.format("por lo que %s fue excluido.",excludedLabels.getFirst());
             }
         } else {
             String exclusion;
@@ -88,4 +87,9 @@ public class PpktPhenotypicfeatureSpanish implements PpktPhenotypicFeatureGenera
             return getOxfordCommaList(observedLabels) +  exclusion;
         }
     }
+
+    public Set<String> getMissingTranslations() {
+        return missingTranslations;
+    }
+
 }

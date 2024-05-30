@@ -23,6 +23,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Callable;
 
 @CommandLine.Command(name = "batch", aliases = {"B"},
@@ -42,6 +43,9 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
 
     @CommandLine.Option(names = {"-d", "--dir"}, description = "Path to directory with JSON phenopacket files", required = true)
     private String ppktDir;
+
+    private String currentLanguageCode = null;
+    private int currentCount;
 
     @Override
     public Integer call() throws Exception {
@@ -64,17 +68,26 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
         List<CorrectResult>  correctResultList = outputPromptsEnglish(ppktFiles, hpo);
         // output all non-English languages here
         PromptGenerator spanish = PromptGenerator.spanish(hpo, internationalMap.get("es"));
+        resetOutput("es");
         outputPromptsInternational(ppktFiles, hpo, "es", spanish);
-
+        resetOutput("nl");
         PromptGenerator dutch = PromptGenerator.dutch(hpo, internationalMap.get("nl"));
         outputPromptsInternational(ppktFiles, hpo, "nl", dutch);
-
+        resetOutput("de");
         PromptGenerator german = PromptGenerator.german(hpo, internationalMap.get("de"));
         outputPromptsInternational(ppktFiles, hpo, "de", german);
-
+        resetOutput("finished");
         // output file with correct diagnosis list
         outputCorrectResults(correctResultList);
         return 0;
+    }
+
+    private void resetOutput(String es) {
+        if (currentLanguageCode != null) {
+            System.out.printf("Finished writing %d phenopackets in %s\n", currentCount, currentLanguageCode);
+        }
+        currentLanguageCode = es;
+        currentCount = 0;
     }
 
     private void outputCorrectResults(List<CorrectResult> correctResultList) {
@@ -115,7 +128,14 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
                 String prompt = generator.createPrompt(individual);
                 outputPrompt(prompt, promptFileName, dirpath);
             } catch (Exception e) {
-                e.printStackTrace();
+                System.err.printf("[ERROR] Could not process %s: %s\n", promptFileName, e.getMessage());
+                //e.printStackTrace();
+            }
+        }
+        Set<String> missing = generator.getMissingTranslations();
+        if (! missing.isEmpty()) {
+            for (var m : missing) {
+                System.out.printf("[%s] Missing: %s\n", languageCode, m);
             }
         }
     }
@@ -124,7 +144,7 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
     private List<CorrectResult> outputPromptsEnglish(List<File> ppktFiles, Ontology hpo) {
         createDir("prompts/en");
         List<CorrectResult> correctResultList = new ArrayList<>();
-        PromptGenerator generator = PromptGenerator.english(hpo);
+        PromptGenerator generator = PromptGenerator.english();
 
         for (var f: ppktFiles) {
             PpktIndividual individual =  PpktIndividual.fromFile(f);
@@ -157,7 +177,8 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.print(".");
+        System.out.printf("%s      %d.\r", currentLanguageCode, currentCount);
+        currentCount++;
     }
 
 
