@@ -49,4 +49,19 @@ public class PpktPhenotypicfeatureEnglish implements PpktPhenotypicFeatureGenera
             return getOxfordCommaList(observed) + ", whereby " + exclusion;
         }
     }
+
+
+    @Override
+    public String formatObservedFeatures(List<OntologyTerm> oterms) {
+        List<String> observed = oterms.stream()
+                .filter(Predicate.not(OntologyTerm::isExcluded))
+                .map(OntologyTerm::getLabel).toList();
+        return getOxfordCommaList(observed);
+
+    }
+
+    @Override
+    public String formatExcludedFeatures(List<OntologyTerm> oterms) {
+        return PpktPhenotypicFeatureGenerator.super.formatExcludedFeatures(oterms);
+    }
 }

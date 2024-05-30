@@ -3,10 +3,11 @@ package org.monarchinitiative.phenopacket2prompt.model;
 import org.monarchinitiative.phenol.annotations.formats.hpo.HpoOnset;
 import org.monarchinitiative.phenol.ontology.data.TermId;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-public class HpoOnsetAge implements PhenopacketAge {
+public final class HpoOnsetAge implements PhenopacketAge {
 
     private final TermId tid;
     private final String label;
@@ -115,6 +116,18 @@ public class HpoOnsetAge implements PhenopacketAge {
 
     public static HpoOnsetAge congenital() {
         return new HpoOnsetAge(congenitalOnset.getValue(), "Congenital onset");
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(totalDays());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (! (obj instanceof PhenopacketAge)) return false;
+        PhenopacketAge iso = (PhenopacketAge) obj;
+        return iso.totalDays() == totalDays();
     }
 
 }

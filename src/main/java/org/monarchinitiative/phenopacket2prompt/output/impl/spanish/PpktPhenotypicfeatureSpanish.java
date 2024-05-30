@@ -1,5 +1,6 @@
 package org.monarchinitiative.phenopacket2prompt.output.impl.spanish;
 
+import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenopacket2prompt.international.HpInternational;
 import org.monarchinitiative.phenopacket2prompt.model.OntologyTerm;
 import org.monarchinitiative.phenopacket2prompt.output.PpktPhenotypicFeatureGenerator;
@@ -68,7 +69,7 @@ public class PpktPhenotypicfeatureSpanish implements PpktPhenotypicFeatureGenera
                 .filter(OntologyTerm::isExcluded).toList();
         List<String> excludedLabels = getTranslations(excludedTerms);
         if (observedLabels.isEmpty() && excludedLabels.isEmpty()) {
-            return "no phenotypic abnormalities"; // should never happen, actually!
+            throw new PhenolRuntimeException("No phenotypic abnormalities"); // should never happen, actually!
         } else if (excludedLabels.isEmpty()) {
             return getOxfordCommaList(observedLabels) + ". ";
         } else if (observedLabels.isEmpty()) {

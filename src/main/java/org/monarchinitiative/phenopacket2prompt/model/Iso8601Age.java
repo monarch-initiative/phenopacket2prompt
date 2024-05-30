@@ -2,7 +2,9 @@ package org.monarchinitiative.phenopacket2prompt.model;
 
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 
-public class Iso8601Age implements PhenopacketAge {
+import java.util.Objects;
+
+public final class Iso8601Age implements PhenopacketAge {
 
     private final String iso8601;
 
@@ -104,5 +106,18 @@ public class Iso8601Age implements PhenopacketAge {
     @Override
     public int totalDays() {
         return totalDays;
+    }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(totalDays());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (! (obj instanceof PhenopacketAge)) return false;
+        PhenopacketAge iso = (PhenopacketAge) obj;
+        return iso.totalDays() == totalDays();
     }
 }

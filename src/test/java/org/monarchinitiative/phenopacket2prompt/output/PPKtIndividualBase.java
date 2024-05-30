@@ -20,8 +20,8 @@ public class PPKtIndividualBase {
     private final static MetaData metadata = MetaDataBuilder.builder("curator").build();
 
     public sealed interface TestOutcome {
-        record Success(String value) implements TestOutcome {}
-        record Failure(Supplier<? extends RuntimeException> exceptionSupplier) implements TestOutcome {}
+        record Ok(String value) implements TestOutcome {}
+        record Error(Supplier<? extends RuntimeException> exceptionSupplier) implements TestOutcome {}
     }
 
     public record TestIdvlDescription(String description, PpktIndividual ppktIndividual, TestOutcome expectedOutcome) {}
