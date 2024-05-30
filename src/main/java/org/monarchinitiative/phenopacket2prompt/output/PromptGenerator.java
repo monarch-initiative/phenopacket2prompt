@@ -16,6 +16,7 @@ import org.monarchinitiative.phenopacket2prompt.output.impl.italian.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface PromptGenerator {
 
@@ -29,8 +30,8 @@ public interface PromptGenerator {
 
     String getVignetteAtAge(PhenopacketAge page, PhenopacketSex psex, List<OntologyTerm> terms);
 
-    public static PromptGenerator english(Ontology ontology){
-        return new EnglishPromptGenerator(ontology);
+    static PromptGenerator english(){
+        return new EnglishPromptGenerator();
     }
 
     static PromptGenerator spanish(Ontology hpo, HpInternational international) {
@@ -80,7 +81,9 @@ public interface PromptGenerator {
     }
 
 
-
+    default Set<String> getMissingTranslations() {
+        return Set.of();
+    }
 
 
 

@@ -1,6 +1,8 @@
 package org.monarchinitiative.phenopacket2prompt.model;
 
-public class AgeNotSpecified implements  PhenopacketAge {
+import java.util.Objects;
+
+public final class AgeNotSpecified implements  PhenopacketAge {
     @Override
     public String age() {
         return "";
@@ -43,4 +45,18 @@ public class AgeNotSpecified implements  PhenopacketAge {
 
     @Override
     public boolean specified() {return  false; }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(totalDays());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (! (obj instanceof PhenopacketAge)) return false;
+        PhenopacketAge iso = (PhenopacketAge) obj;
+        return iso.totalDays() == totalDays();
+    }
+
+
 }

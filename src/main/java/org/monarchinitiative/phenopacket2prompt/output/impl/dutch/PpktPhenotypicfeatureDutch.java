@@ -4,18 +4,17 @@ import org.monarchinitiative.phenopacket2prompt.international.HpInternational;
 import org.monarchinitiative.phenopacket2prompt.model.OntologyTerm;
 import org.monarchinitiative.phenopacket2prompt.output.PpktPhenotypicFeatureGenerator;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Predicate;
 
 public class PpktPhenotypicfeatureDutch implements PpktPhenotypicFeatureGenerator {
 
     private final HpInternational dutch;
+    private Set<String> missingTranslations;
 
     public PpktPhenotypicfeatureDutch(HpInternational international) {
         dutch = international;
+        missingTranslations = new HashSet<>();
     }
 
 
@@ -27,7 +26,8 @@ public class PpktPhenotypicfeatureDutch implements PpktPhenotypicFeatureGenerato
             if (opt.isPresent()) {
                 labels.add(opt.get());
             } else {
-                System.err.printf("[ERROR] Could not find %s translation for %s (%s).\n", dutch.getLanguageAcronym(), term.getLabel(), term.getTid().getValue());
+                String missing = String.format(" %s (%s)", term.getLabel(), term.getTid().getValue());
+                missingTranslations.add(missing);
             }
         }
         return labels;
@@ -75,7 +75,7 @@ public class PpktPhenotypicfeatureDutch implements PpktPhenotypicFeatureGenerato
             if (excludedLabels.size() > 1) {
                 return String.format("dus %s zijn uitgesloten.", getOxfordCommaList(excludedLabels));
             } else {
-                return String.format("Dus %s werd uitgesloten.",excludedLabels.get(0));
+                return String.format("Dus %s werd uitgesloten.",excludedLabels.getFirst());
             }
         } else {
             String exclusion;
@@ -86,5 +86,8 @@ public class PpktPhenotypicfeatureDutch implements PpktPhenotypicFeatureGenerato
             }
             return getOxfordCommaList(observedLabels) +  exclusion;
         }
+    }
+    public Set<String> getMissingTranslations() {
+        return missingTranslations;
     }
 }

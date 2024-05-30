@@ -4,29 +4,30 @@ import org.monarchinitiative.phenopacket2prompt.international.HpInternational;
 import org.monarchinitiative.phenopacket2prompt.model.OntologyTerm;
 import org.monarchinitiative.phenopacket2prompt.output.PpktPhenotypicFeatureGenerator;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Predicate;
 
 public class PpktPhenotypicfeatureGerman implements PpktPhenotypicFeatureGenerator {
 
-    private final HpInternational spanish;
+    private final HpInternational german;
+    private Set<String> missingTranslations;
+
 
     public PpktPhenotypicfeatureGerman(HpInternational international) {
-        spanish = international;
+        german = international;
+        missingTranslations = new HashSet<>();
     }
-
 
 
     private List<String> getTranslations(List<OntologyTerm> ontologyTerms) {
         List<String> labels = new ArrayList<>();
         for (var term: ontologyTerms) {
-            Optional<String> opt = spanish.getLabel(term.getTid());
+            Optional<String> opt = german.getLabel(term.getTid());
             if (opt.isPresent()) {
                 labels.add(opt.get());
             } else {
-                System.err.printf("[ERROR] Could not find %s translation for %s (%s).\n", spanish.getLanguageAcronym(), term.getLabel(), term.getTid().getValue());
+                String missing = String.format(" %s (%s)", term.getLabel(), term.getTid().getValue());
+                missingTranslations.add(missing);
             }
         }
         return labels;
@@ -36,7 +37,7 @@ public class PpktPhenotypicfeatureGerman implements PpktPhenotypicFeatureGenerat
 
     private String getOxfordCommaList(List<String> items) {
         if (items.size() == 1) {
-            return items.get(0);
+            return items.getFirst();
         }
         if (items.size() == 2) {
             // no comma if we just have two items.
@@ -78,5 +79,9 @@ public class PpktPhenotypicfeatureGerman implements PpktPhenotypicFeatureGenerat
             }
             return getOxfordCommaList(observedLabels) +  exclusion;
         }
+    }
+
+    public Set<String> getMissingTranslations() {
+        return missingTranslations;
     }
 }

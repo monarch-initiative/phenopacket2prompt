@@ -2,13 +2,13 @@ package org.monarchinitiative.phenopacket2prompt.output.impl.spanish;
 
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenopacket2prompt.model.*;
-import org.monarchinitiative.phenopacket2prompt.output.PhenopacketIndividualInformationGenerator;
+import org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualInfoGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PpktIndividualSpanish implements PhenopacketIndividualInformationGenerator {
+public class PpktIndividualSpanish implements PPKtIndividualInfoGenerator {
 
     //TODO translate from ita to spanish and edit this file in order to actually use these
     private static final String FEMALE_FETUS = "un feto femenino";

@@ -4,14 +4,13 @@ import org.monarchinitiative.phenopacket2prompt.model.OntologyTerm;
 import org.monarchinitiative.phenopacket2prompt.output.PpktPhenotypicFeatureGenerator;
 
 import java.util.List;
-import java.util.function.Predicate;
 
-public class PpktPhenotypicfeatureEnglish implements PpktPhenotypicFeatureGenerator  {
+public class PpktPhenotypicFeatureEnglish implements PpktPhenotypicFeatureGenerator  {
 
 
     private String getOxfordCommaList(List<String> items) {
         if (items.size() == 1) {
-            return items.get(0);
+            return items.getFirst();
         }
         if (items.size() == 2) {
             // no comma if we just have two items.
@@ -29,24 +28,23 @@ public class PpktPhenotypicfeatureEnglish implements PpktPhenotypicFeatureGenera
     /**
      * format features
      * The proband was a 39-year old woman who presented at the age of 12 years with HPO1, HPO2, and HPO3. HPO4 and HPO5 were excluded.
+     * The patient presented with [list of symptoms]. However, [excluded symptoms] were not observed."
      */
     @Override
     public String formatFeatures(List<OntologyTerm> ontologyTerms) {
-        List<String> observed = ontologyTerms.stream()
-                .filter(Predicate.not(OntologyTerm::isExcluded))
-                .map(OntologyTerm::getLabel).toList();
-        List<String> excluded = ontologyTerms.stream()
-                .filter(OntologyTerm::isExcluded)
-                .map(OntologyTerm::getLabel).toList();
+        List<String> observed = getObservedFeaturesAsStr(ontologyTerms);
+        List<String> excluded = getExcludedFeaturesAsStr(ontologyTerms);
         if (observed.isEmpty() && excluded.isEmpty()) {
-            return "no phenotypic abnormalities"; // should never happen, actually!
+            return "no phenotypic abnormalities."; // should never happen, actually!
         } else if (excluded.isEmpty()) {
             return getOxfordCommaList(observed) + ". ";
         } else if (observed.isEmpty()) {
-            return "exclusion of " + getOxfordCommaList(excluded) + ".";
+            return "the following manifestations that were excluded: " + getOxfordCommaList(excluded) + ". ";
         } else {
-            String exclusion = String.format("%s %s excluded.", getOxfordCommaList(excluded), excluded.size() > 1 ? " were" : "was");
-            return getOxfordCommaList(observed) + ", whereby " + exclusion;
+            String exclusion = String.format("However, %s %s excluded.", getOxfordCommaList(excluded), excluded.size() > 1 ? " were" : "was");
+            return getOxfordCommaList(observed) + ". " + exclusion;
         }
     }
+
+
 }

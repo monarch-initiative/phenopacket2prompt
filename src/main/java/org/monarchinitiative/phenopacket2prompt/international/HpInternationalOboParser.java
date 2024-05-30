@@ -86,7 +86,7 @@ public class HpInternationalOboParser {
                                 String language = opt.get();
                                 languageToInternationalMap.get(language).addTerm(currentHpoTermId, hpoLabel);
                             } else {
-                                System.err.printf("[ERROR] Could not extract language for %s.", line);
+                                System.err.printf("[ERROR] Could not extract language for %s.\n", line);
                             }
                         }
 
@@ -98,13 +98,13 @@ public class HpInternationalOboParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for (String language : languageToInternationalMap.keySet()) {
+        /*for (String language : languageToInternationalMap.keySet()) {
             System.out.println(language);
             HpInternational international = languageToInternationalMap.get(language);
             for (var entry : international.getTermIdToLabelMap().entrySet()) {
                 System.out.printf("\t%s: %s\n", entry.getKey().getValue(), entry.getValue());
             }
-        }
+        }*/
     }
 
     public Map<String, HpInternational> getLanguageToInternationalMap() {

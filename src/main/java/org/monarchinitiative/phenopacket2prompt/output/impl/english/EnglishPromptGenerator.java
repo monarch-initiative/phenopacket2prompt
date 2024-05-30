@@ -1,6 +1,5 @@
 package org.monarchinitiative.phenopacket2prompt.output.impl.english;
 
-import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenopacket2prompt.model.OntologyTerm;
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketAge;
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketSex;
@@ -11,20 +10,18 @@ import java.util.*;
 
 public class EnglishPromptGenerator implements PromptGenerator  {
 
-    private final Ontology hpo;
 
-    private final PhenopacketIndividualInformationGenerator ppktAgeGenerator;
+    private final PPKtIndividualInfoGenerator ppktAgeGenerator;
 
     private final PhenopacketTextGenerator ppktTextGenerator;
 
     private final PpktPhenotypicFeatureGenerator ppktPhenotypicFeatureGenerator;
 
 
-    public EnglishPromptGenerator(Ontology hpo){
-        this.hpo = hpo;
+    public EnglishPromptGenerator(){
         ppktAgeGenerator = new PpktIndividualEnglish();
         ppktTextGenerator = new PpktTextEnglish();
-        this.ppktPhenotypicFeatureGenerator = new PpktPhenotypicfeatureEnglish();
+        this.ppktPhenotypicFeatureGenerator = new PpktPhenotypicFeatureEnglish();
     }
 
 

@@ -14,7 +14,7 @@ public class SpanishPromptGenerator implements PromptGenerator {
     private final Ontology hpo;
 
 
-    private final PhenopacketIndividualInformationGenerator ppktAgeSexGenerator;
+    private final PPKtIndividualInfoGenerator ppktAgeSexGenerator;
 
     private final PhenopacketTextGenerator ppktTextGenerator;
 
@@ -53,7 +53,10 @@ public class SpanishPromptGenerator implements PromptGenerator {
 
 
 
-
+    @Override
+    public Set<String> getMissingTranslations() {
+        return this.ppktPhenotypicFeatureGenerator.getMissingTranslations();
+    }
 
 
 

@@ -2,7 +2,9 @@ package org.monarchinitiative.phenopacket2prompt.model;
 
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 
-public class Iso8601Age implements PhenopacketAge {
+import java.util.Objects;
+
+public final class Iso8601Age implements PhenopacketAge {
 
     private final String iso8601;
 
@@ -57,12 +59,14 @@ public class Iso8601Age implements PhenopacketAge {
     @Override
     public String age() {
         StringBuilder sb = new StringBuilder();
-        if (years > 0) {
-            return String.format("%d year-old", years);
+        if (years == 1) {
+            return "one year";
+        } else if (years > 1) {
+            return String.format("%d years", years);
         } else if (months > 0) {
-            return String.format("%d month-old", months);
+            return String.format("%d months", months);
         } else {
-            return String.format("%d day-old", days);
+            return String.format("%d days", days);
         }
     }
 
@@ -102,5 +106,18 @@ public class Iso8601Age implements PhenopacketAge {
     @Override
     public int totalDays() {
         return totalDays;
+    }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(totalDays());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (! (obj instanceof PhenopacketAge)) return false;
+        PhenopacketAge iso = (PhenopacketAge) obj;
+        return iso.totalDays() == totalDays();
     }
 }
