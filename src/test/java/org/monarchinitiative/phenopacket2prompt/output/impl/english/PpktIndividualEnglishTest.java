@@ -2,6 +2,7 @@ package org.monarchinitiative.phenopacket2prompt.output.impl.english;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketSex;
 import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
 import org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualInfoGenerator;
@@ -22,7 +23,13 @@ public class PpktIndividualEnglishTest extends PPKtIndividualBase{
                 new TestIndividual("46 year olf female, infantile onset",
                         female46yearsInfantileOnset(), new TestOutcome.Ok("The proband was a 46-year old woman who presented as an infant with")),
                 new TestIndividual("male 4 months, congenital onset",
-                        male4monthsCongenitalOnset(), new TestOutcome.Ok("The proband was a 4-month old male infant who presented at birth with"))
+                        male4monthsCongenitalOnset(), new TestOutcome.Ok("The proband was a 4-month old male infant who presented at birth with")),
+                new TestIndividual("female, no onset",
+                        femaleNoAge(), new TestOutcome.Ok("The proband was a female who presented with")),
+                new TestIndividual("female, no HPOs",
+                        femaleNoHPOs(), new TestOutcome.Error(() -> new PhenolRuntimeException("No HPO annotations"))),
+                new TestIndividual("unknown sex, no 4mo",
+                        unknownSex4MonthOnset(),  new TestOutcome.Ok("The proband presented in childhood with"))
         );
     }
 

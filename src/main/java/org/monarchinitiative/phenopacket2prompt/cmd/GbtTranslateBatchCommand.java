@@ -127,8 +127,8 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
             PpktIndividual individual = PpktIndividual.fromFile(f);
             List<PhenopacketDisease> diseaseList = individual.getDiseases();
             if (diseaseList.size() != 1) {
-                System.err.printf("[ERROR] Got %d diseases for %s.\n", diseaseList.size(), individual.getPhenopacketId());
-                continue;
+                String errmsg = String.format("[ERROR] Got %d diseases for %s.\n", diseaseList.size(), individual.getPhenopacketId());
+                throw new PhenolRuntimeException(errmsg);
             }
             PhenopacketDisease pdisease = diseaseList.get(0);
             String promptFileName = getFileName( individual.getPhenopacketId(), languageCode);

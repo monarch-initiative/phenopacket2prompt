@@ -396,8 +396,8 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
     @Override
     public String heSheIndividual(PhenopacketSex psex) {
         return switch (psex) {
-            case FEMALE -> "er";
-            case MALE -> "sie";
+            case FEMALE -> "sie";
+            case MALE -> "er";
             default -> "die Person";
         };
     }

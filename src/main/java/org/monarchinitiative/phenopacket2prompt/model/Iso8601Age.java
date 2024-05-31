@@ -78,12 +78,12 @@ public final class Iso8601Age implements PhenopacketAge {
 
     @Override
     public boolean isJuvenile() {
-        return years >= 10 && years < 18;
+        return years >= 6 && years < 18;
     }
 
     @Override
     public boolean isChild() {
-        return years >= 1 && years < 10;
+        return years >= 1 && years < 6;
     }
 
     @Override

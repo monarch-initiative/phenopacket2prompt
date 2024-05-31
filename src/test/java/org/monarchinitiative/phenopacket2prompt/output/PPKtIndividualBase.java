@@ -19,10 +19,10 @@ public class PPKtIndividualBase {
 
 
     private final static PhenotypicFeature atrophy = PhenotypicFeatureBuilder.builder("HP:0001272", "Cerebellar atrophy" ).infantileOnset().build();
-    private final static PhenotypicFeature  ataxia = PhenotypicFeatureBuilder.builder("HP:0001251", "Ataxia").infantileOnset().build();
+    private final static PhenotypicFeature ataxia = PhenotypicFeatureBuilder.builder("HP:0001251", "Ataxia").infantileOnset().build();
     private final static PhenotypicFeature bradyphrenExcluded = PhenotypicFeatureBuilder.builder("HP:0031843", "Bradyphrenia").excluded().build();
     private final static PhenotypicFeature polydactyly = PhenotypicFeatureBuilder.builder("HP:0100259", "Postaxial polydactyly").congenitalOnset().build();
-
+    private final static PhenotypicFeature hepatomegalyNoOnset = PhenotypicFeatureBuilder.builder("HP:0002240","Hepatomegaly").build();
 
 
 
@@ -56,6 +56,34 @@ public class PPKtIndividualBase {
         builder.individual(subject).addDisease(d).addPhenotypicFeature(polydactyly);
         return new PpktIndividual(builder.build());
     }
+
+    public static PpktIndividual femaleNoAge() {
+        PhenopacketBuilder builder = PhenopacketBuilder.create("id3", metadata);
+        Disease d = DiseaseBuilder.builder("OMIM:100123", "test").build();
+        Individual subject = IndividualBuilder.builder("individual.3").female().build();
+        builder.individual(subject).addDisease(d).addPhenotypicFeature(hepatomegalyNoOnset);
+        return new PpktIndividual(builder.build());
+    }
+
+    /**
+     * Invalid phenopacket because no HPO annotationsa
+     * @return
+     */
+    public static PpktIndividual femaleNoHPOs() {
+        PhenopacketBuilder builder = PhenopacketBuilder.create("id4", metadata);
+        Disease d = DiseaseBuilder.builder("OMIM:100123", "test").build();
+        Individual subject = IndividualBuilder.builder("individual.4").female().build();
+        return new PpktIndividual(builder.build());
+    }
+
+    public static PpktIndividual unknownSex4MonthOnset() {
+        PhenopacketBuilder builder = PhenopacketBuilder.create("id5", metadata);
+        Disease d = DiseaseBuilder.builder("OMIM:100123", "test").onset(TimeElements.childhoodOnset()).build();
+        Individual subject = IndividualBuilder.builder("individual.5").unknownSex().build();
+        builder.individual(subject).addDisease(d).addPhenotypicFeature(hepatomegalyNoOnset);
+        return new PpktIndividual(builder.build());
+    }
+
 
 
 

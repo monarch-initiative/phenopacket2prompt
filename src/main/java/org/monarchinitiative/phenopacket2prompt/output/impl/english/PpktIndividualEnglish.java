@@ -16,6 +16,9 @@ public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
 
 
     public String getIndividualDescription(PpktIndividual individual) {
+        if (individual.annotationCount() == 0) {
+            throw new PhenolRuntimeException("No HPO annotations");
+        }
         Optional<PhenopacketAge> lastExamOpt = individual.getAgeAtLastExamination();
         Optional<PhenopacketAge> onsetOpt = individual.getAgeAtOnset();
         PhenopacketSex psex = individual.getSex();

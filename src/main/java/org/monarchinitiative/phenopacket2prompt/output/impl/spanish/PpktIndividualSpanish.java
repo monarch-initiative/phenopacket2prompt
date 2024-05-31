@@ -148,6 +148,9 @@ public class PpktIndividualSpanish implements PPKtIndividualInfoGenerator {
 
     @Override
     public String getIndividualDescription(PpktIndividual individual) {
+        if (individual.annotationCount() == 0) {
+            throw new PhenolRuntimeException("No HPO annotations");
+        }
         Optional<PhenopacketAge> lastExamOpt = individual.getAgeAtLastExamination();
         Optional<PhenopacketAge> onsetOpt = individual.getAgeAtOnset();
         PhenopacketSex psex = individual.getSex();
@@ -376,7 +379,7 @@ public class PpktIndividualSpanish implements PPKtIndividualInfoGenerator {
             // should never happen
             throw new PhenolRuntimeException("Did not recognize last exam age type " + lastExamAge.ageType());
         }
-        return String.format("El paciente era %s quien se presentó con", individualDescription);
+        return String.format("El paciente era %s quien se presentaba con", individualDescription);
     }
 
     /**
@@ -398,14 +401,14 @@ public class PpktIndividualSpanish implements PPKtIndividualInfoGenerator {
             // should never happen
             throw new PhenolRuntimeException("Did not recognize onset age type " + onsetAge.ageType());
         }
-        return String.format("El paciente se presentó %s con", onsetDescription);
+        return String.format("El paciente se presentaba %s con", onsetDescription);
     }
 
     private String ageNotAvailable(PhenopacketSex psex) {
         return switch (psex) {
-            case FEMALE -> "La paciente se presentó con";
-            case MALE -> "El paciente se presentó con";
-            default -> "El paciente se presentó con";
+            case FEMALE -> "La paciente se presentaba con";
+            case MALE -> "El paciente se presentaba con";
+            default -> "El paciente se presentaba con";
         };
     }
 

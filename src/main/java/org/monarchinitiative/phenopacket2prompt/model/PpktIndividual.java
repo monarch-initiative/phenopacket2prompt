@@ -213,4 +213,8 @@ public class PpktIndividual {
         }
         return ageToFeatureMap;
     }
+
+    public int annotationCount() {
+        return ppkt.getPhenotypicFeaturesCount();
+    }
 }
