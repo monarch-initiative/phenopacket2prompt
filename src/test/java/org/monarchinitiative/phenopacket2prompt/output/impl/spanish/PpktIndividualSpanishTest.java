@@ -1,12 +1,12 @@
-package org.monarchinitiative.phenopacket2prompt.output.impl.english;
+package org.monarchinitiative.phenopacket2prompt.output.impl.spanish;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketSex;
 import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
-import org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualInfoGenerator;
 import org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualBase;
+import org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualInfoGenerator;
 
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -14,22 +14,22 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class PpktIndividualEnglishTest extends PPKtIndividualBase{
+public class PpktIndividualSpanishTest extends PPKtIndividualBase{
 
 
 
     private static Stream<TestIndividual> testGetIndividualDescription() {
         return Stream.of(
                 new TestIndividual("46 year olf female, infantile onset",
-                        female46yearsInfantileOnset(), new TestOutcome.Ok("The proband was a 46-year old woman who presented as an infant with")),
+                        female46yearsInfantileOnset(), new TestOutcome.Ok("La paciente era mujer de 46 años que se presentaba en el primer año de vida con")),
                 new TestIndividual("male 4 months, congenital onset",
-                        male4monthsCongenitalOnset(), new TestOutcome.Ok("The proband was a 4-month old male infant who presented at birth with")),
+                       male4monthsCongenitalOnset(), new TestOutcome.Ok("El paciente era un bebé de 4 meses que se presentaba al nacer con")),
                 new TestIndividual("female, no onset",
-                        femaleNoAge(), new TestOutcome.Ok("The proband was a female who presented with")),
+                        femaleNoAge(), new TestOutcome.Ok("La paciente se presentaba con")),
                 new TestIndividual("female, no HPOs",
                         femaleNoHPOs(), new TestOutcome.Error(() -> new PhenolRuntimeException("No HPO annotations"))),
                 new TestIndividual("unknown sex, no 4mo",
-                        unknownSex4MonthOnset(),  new TestOutcome.Ok("The proband presented in childhood with"))
+                        unknownSex4MonthOnset(),  new TestOutcome.Ok("El paciente se presentaba en la niñez con"))
         );
     }
 
@@ -38,7 +38,7 @@ public class PpktIndividualEnglishTest extends PPKtIndividualBase{
     @ParameterizedTest
     @MethodSource("testGetIndividualDescription")
     void testEvaluateExpression(TestIndividual testCase) {
-        PPKtIndividualInfoGenerator generator = new PpktIndividualEnglish();
+        PPKtIndividualInfoGenerator generator = new PpktIndividualSpanish();
         PpktIndividual ppkti = testCase.ppktIndividual();
         switch (testCase.expectedOutcome()) {
             case TestOutcome.Ok(String expectedResult) ->
@@ -67,7 +67,7 @@ public class PpktIndividualEnglishTest extends PPKtIndividualBase{
     @ParameterizedTest
     @MethodSource("testGetPPKtSex")
     void testPPKtSex(TestIdvlHeShe testCase) {
-        PPKtIndividualInfoGenerator generator = new PpktIndividualEnglish();
+        PPKtIndividualInfoGenerator generator = new PpktIndividualSpanish();
         switch (testCase.expectedOutcome()) {
             case TestOutcome.Ok(String expectedResult) ->
                 assertEquals(expectedResult, generator.heSheIndividual(testCase.ppktSex()));
@@ -77,10 +77,6 @@ public class PpktIndividualEnglishTest extends PPKtIndividualBase{
                             "Incorrect error handling for: " + testCase.description());
         }
     }
-
-
-
-//public record TestIdvlAtAge(String description, PhenopacketAge ppktAge, TestOutcome expectedOutcome) {}
 
 
 
@@ -102,7 +98,7 @@ public class PpktIndividualEnglishTest extends PPKtIndividualBase{
     @ParameterizedTest
     @MethodSource("testIndlAtAge")
     void testPPKtSex(TestIdvlAtAge testCase) {
-        PPKtIndividualInfoGenerator generator = new PpktIndividualEnglish();
+        PPKtIndividualInfoGenerator generator = new PpktIndividualSpanish();
         switch (testCase.expectedOutcome()) {
             case TestOutcome.Ok(String expectedResult) ->
                     assertEquals(expectedResult, generator.atAge(testCase.ppktAge()));

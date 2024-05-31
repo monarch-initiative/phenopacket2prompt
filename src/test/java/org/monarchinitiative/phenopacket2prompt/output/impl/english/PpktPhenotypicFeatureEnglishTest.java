@@ -28,7 +28,6 @@ public class PpktPhenotypicFeatureEnglishTest {
         );
     }
 
-//  builder.individual(subject).addDisease(d).addPhenotypicFeature(atrophy).addPhenotypicFeature(ataxia).addPhenotypicFeature(bradyphrenExcluded);
     @ParameterizedTest
     @MethodSource("testGetIndividualPhenotypicFeatures")
     void testEvaluateExpression(PPKtIndividualBase.TestIndividual testCase) {

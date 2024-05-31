@@ -8,7 +8,6 @@ import java.util.function.Predicate;
 
 public interface PpktPhenotypicFeatureGenerator {
 
-   // Please let's use the two functions below instead!
     String formatFeatures(List<OntologyTerm> ontologyTerms);
 
 
