@@ -118,10 +118,10 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
         int d = iso8601Age.getDays();
 
         if (y > 10) {
-            return String.format("Im Alter von %d %s", y, y>1?"Jahren" : "Jahr");
+            return String.format("Im Alter von %d Jahren", y);
         } else if (y > 0) {
             if (m > 0) {
-                return String.format("Im Alter von %d %s und %d S", y,
+                return String.format("Im Alter von %d %s und %d %s", y,
                         y>1?"Jahren" : "Jahr",
                         m,  m>1?"Monaten" : "Monat");
             } else {
@@ -129,7 +129,7 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
             }
         }
         if (m>0) {
-            return String.format("Im Alter von %d %s y %d %s", m,  m,  m>1?"Monaten" : "Monat",
+            return String.format("Im Alter von %d %s y %d %s", m,  m>1?"Monaten" : "Monat",
                     d,  d>1?"Tagen" : "Tag");
         } else {
             return String.format("%d Tage",  d);
@@ -388,7 +388,12 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
             // should never happen
             throw new PhenolRuntimeException("Did not recognize last exam age type " + lastExamAge.ageType());
         }
-        return String.format("%s", individualDescription);
+        if (psex.equals(PhenopacketSex.FEMALE)) {
+            return String.format("%s, die sich mit den folgenden Symptomen vorgestellt hat: ", individualDescription);
+        } else {
+            return String.format("%s, der sich mit den folgenden Symptomen vorgestellt hat: ", individualDescription);
+        }
+
     }
 
     /**

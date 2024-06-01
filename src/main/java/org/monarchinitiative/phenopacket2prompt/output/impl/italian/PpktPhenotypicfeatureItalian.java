@@ -4,18 +4,20 @@ import org.monarchinitiative.phenopacket2prompt.international.HpInternational;
 import org.monarchinitiative.phenopacket2prompt.model.OntologyTerm;
 import org.monarchinitiative.phenopacket2prompt.output.PpktPhenotypicFeatureGenerator;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Predicate;
 
 public class PpktPhenotypicfeatureItalian implements PpktPhenotypicFeatureGenerator {
 
     private final HpInternational italian;
 
+    private Set<String> missingTranslations;
+
+
+
     public PpktPhenotypicfeatureItalian(HpInternational international) {
         italian = international;
+        missingTranslations = new HashSet<>();
     }
 
 
@@ -27,7 +29,8 @@ public class PpktPhenotypicfeatureItalian implements PpktPhenotypicFeatureGenera
             if (opt.isPresent()) {
                 labels.add(opt.get());
             } else {
-                System.err.printf("[ERROR] Could not find %s translation for %s (%s).\n", italian.getLanguageAcronym(), term.getLabel(), term.getTid().getValue());
+                String missing = String.format(" %s (%s)", term.getLabel(), term.getTid().getValue());
+                missingTranslations.add(missing);
             }
         }
         return labels;
@@ -86,5 +89,8 @@ public class PpktPhenotypicfeatureItalian implements PpktPhenotypicFeatureGenera
             }
             return getOxfordCommaList(observedLabels) +  exclusion;
         }
+    }
+    public Set<String> getMissingTranslations() {
+        return missingTranslations;
     }
 }

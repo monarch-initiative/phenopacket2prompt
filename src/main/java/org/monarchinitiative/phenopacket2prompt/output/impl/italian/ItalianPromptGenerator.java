@@ -11,11 +11,9 @@ import org.monarchinitiative.phenopacket2prompt.output.PpktPhenotypicFeatureGene
 import org.monarchinitiative.phenopacket2prompt.output.PromptGenerator;
 
 import java.util.List;
+import java.util.Set;
 
 public class ItalianPromptGenerator implements PromptGenerator {
-
-    private final Ontology hpo;
-
 
     private final PPKtIndividualInfoGenerator ppktAgeSexGenerator;
 
@@ -25,8 +23,7 @@ public class ItalianPromptGenerator implements PromptGenerator {
 
 
 
-    public ItalianPromptGenerator(Ontology hpo, PpktPhenotypicFeatureGenerator pfgen) {
-        this.hpo = hpo;
+    public ItalianPromptGenerator(PpktPhenotypicFeatureGenerator pfgen) {
         ppktAgeSexGenerator = new PpktIndividualItalian();
         ppktTextGenerator = new PpktTextItalian();
         this.ppktPhenotypicFeatureGenerator = pfgen;
@@ -54,10 +51,9 @@ public class ItalianPromptGenerator implements PromptGenerator {
         return String.format("%s, %s è presentato %s", ageString, ppktAgeSexGenerator.heSheIndividual(psex), features);
     }
 
-
-
-
-
-
+    @Override
+    public Set<String> getMissingTranslations() {
+        return this.ppktPhenotypicFeatureGenerator.getMissingTranslations();
+    }
 
 }
