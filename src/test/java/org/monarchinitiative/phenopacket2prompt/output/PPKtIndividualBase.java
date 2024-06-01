@@ -12,6 +12,7 @@ import org.phenopackets.schema.v2.core.Individual;
 import org.phenopackets.schema.v2.core.MetaData;
 import org.phenopackets.schema.v2.core.PhenotypicFeature;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 public class PPKtIndividualBase {
@@ -23,7 +24,10 @@ public class PPKtIndividualBase {
     private final static PhenotypicFeature bradyphrenExcluded = PhenotypicFeatureBuilder.builder("HP:0031843", "Bradyphrenia").excluded().build();
     private final static PhenotypicFeature polydactyly = PhenotypicFeatureBuilder.builder("HP:0100259", "Postaxial polydactyly").congenitalOnset().build();
     private final static PhenotypicFeature hepatomegalyNoOnset = PhenotypicFeatureBuilder.builder("HP:0002240","Hepatomegaly").build();
-
+    private final static PhenotypicFeature lymphopenia = PhenotypicFeatureBuilder.builder("HP:0001888","Lymphopenia").iso8601onset("P3D").build();
+    private final static PhenotypicFeature pneumonia = PhenotypicFeatureBuilder.builder("HP:0002090","Pneumonia").iso8601onset("P3D").build();
+    private final static PhenotypicFeature igA = PhenotypicFeatureBuilder.builder("HP:0002720","Decreased circulating IgA level").iso8601onset("P3D").build();
+    private final static PhenotypicFeature igM = PhenotypicFeatureBuilder.builder("HP:0002850","Decreased circulating total IgM").iso8601onset("P2Y").build();
 
 
     public sealed interface TestOutcome {
@@ -85,9 +89,21 @@ public class PPKtIndividualBase {
     }
 
 
+/*
 
 
+Der Proband war niño de 2 años, der sich im Alter von 3 Tagen mit den folgenden Symptomen vorgestellt hat:
+Lymphopenia, Pneumonia und Severe combined immunodeficiency. im Alter von 1 Monate y 0 Tage, er presentó Decreased lymphocyte proliferation in response to mitogen, Decreased circulating IgA level und Decreased circulating total IgM.
+ */
 
+    public static PpktIndividual twoYears() {
+        PhenopacketBuilder builder = PhenopacketBuilder.create("id6", metadata);
+        Disease d = DiseaseBuilder.builder("OMIM:100123", "test").onset(TimeElements.age("P3D")).build();
+        Individual subject = IndividualBuilder.builder("individual.6").male().ageAtLastEncounter("P2Y").build();
+        var features = List.of(lymphopenia, pneumonia, igA, igM);
+        builder.individual(subject).addDisease(d).addPhenotypicFeatures(features);
+        return new PpktIndividual(builder.build());
+    }
 
 
 

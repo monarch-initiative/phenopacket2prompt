@@ -76,6 +76,7 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
         resetOutput("nl");
         PromptGenerator dutch = PromptGenerator.dutch(hpo, internationalMap.get("nl"));
         outputPromptsInternational(ppktFiles, hpo, "nl", dutch);
+        // GERMAN
         resetOutput("de");
         PromptGenerator german = PromptGenerator.german(hpo, internationalMap.get("de"));
         outputPromptsInternational(ppktFiles, hpo, "de", german);

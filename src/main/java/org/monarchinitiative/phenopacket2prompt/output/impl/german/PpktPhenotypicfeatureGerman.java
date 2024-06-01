@@ -5,7 +5,6 @@ import org.monarchinitiative.phenopacket2prompt.model.OntologyTerm;
 import org.monarchinitiative.phenopacket2prompt.output.PpktPhenotypicFeatureGenerator;
 
 import java.util.*;
-import java.util.function.Predicate;
 
 public class PpktPhenotypicfeatureGerman implements PpktPhenotypicFeatureGenerator {
 
@@ -35,7 +34,7 @@ public class PpktPhenotypicfeatureGerman implements PpktPhenotypicFeatureGenerat
 
 
 
-    private String getOxfordCommaList(List<String> items) {
+    private String getCommaList(List<String> items) {
         if (items.size() == 1) {
             return items.getFirst();
         }
@@ -53,31 +52,23 @@ public class PpktPhenotypicfeatureGerman implements PpktPhenotypicFeatureGenerat
 
     @Override
     public String formatFeatures(List<OntologyTerm> ontologyTerms) {
-        List<OntologyTerm> observedTerms = ontologyTerms.stream()
-                .filter(Predicate.not(OntologyTerm::isExcluded))
-                .toList();
+        List<OntologyTerm> observedTerms = getObservedFeatures(ontologyTerms);
+        List<OntologyTerm> excludedTerms = getExcludedFeatures(ontologyTerms);
         List<String> observedLabels = getTranslations(observedTerms);
-        List<OntologyTerm> excludedTerms = ontologyTerms.stream()
-                .filter(OntologyTerm::isExcluded).toList();
         List<String> excludedLabels = getTranslations(excludedTerms);
         if (observedLabels.isEmpty() && excludedLabels.isEmpty()) {
             return "keine phänotypischen Abnormalitäten"; // should never happen, actually!
         } else if (excludedLabels.isEmpty()) {
-            return getOxfordCommaList(observedLabels) + ". ";
+            return getCommaList(observedLabels) + ". ";
         } else if (observedLabels.isEmpty()) {
             if (excludedLabels.size() > 1) {
-                return String.format("Die folgenden Symptome wurden ausgeschlossen %s.", getOxfordCommaList(excludedLabels));
+                return String.format("%s wurden ausgeschlossen.", getCommaList(excludedLabels));
             } else {
-                return String.format("%s wurde ausgeschlossen.",excludedLabels.get(0));
+                return String.format("%s wurde ausgeschlossen.",excludedLabels.getFirst());
             }
         } else {
-            String exclusion;
-            if (excludedLabels.size() == 1) {
-                exclusion = String.format(", und %s wurde ausgeschlossen.", getOxfordCommaList(excludedLabels));
-            } else {
-                exclusion =  String.format(", und %s wurden ausgeschlossen.", getOxfordCommaList(excludedLabels));
-            }
-            return getOxfordCommaList(observedLabels) +  exclusion;
+            String exclusion = String.format("Dagegen %s %s ausgeschlossen.", excludedLabels.size()>1? "wurden":"wurde", getCommaList(excludedLabels));
+            return getCommaList(observedLabels) + ". " +  exclusion;
         }
     }
 

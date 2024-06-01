@@ -7,7 +7,6 @@ import org.monarchinitiative.phenopacket2prompt.model.PhenopacketSex;
 import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
 import org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualBase;
 import org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualInfoGenerator;
-import org.monarchinitiative.phenopacket2prompt.output.impl.spanish.PpktIndividualSpanish;
 
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -22,16 +21,16 @@ public class PpktIndividualGermanTest extends PPKtIndividualBase{
     private static Stream<TestIndividual> testGetIndividualDescription() {
         return Stream.of(
                 new TestIndividual("46 year olf female, infantile onset",
-                        female46yearsInfantileOnset(), new TestOutcome.Ok("Die Patientin war eine 46jährige Frau, die sich im Säuglingsalter mit den folgenden Symptomen vorgestellt hat:")),
-                new TestIndividual("male 4 months, congenital onset",
-                       male4monthsCongenitalOnset(), new TestOutcome.Ok("Der Patient war ein 4 Monate alter Säugling, der sich zum Zeitpunt der Geburt mit den folgenden Symptomen vorgestellt hart paciente era un bebé de 4 meses que se presentaba al nacer con")),
-                new TestIndividual("female, no onset",
-                        femaleNoAge(), new TestOutcome.Ok("La paciente se presentaba con")),
-                new TestIndividual("female, no HPOs",
+                        female46yearsInfantileOnset(), new TestOutcome.Ok("Die Probandin war eine 46-jährige Frau, die sich im Säuglingsalter mit den folgenden Symptomen vorgestellt hat: ")),
+              new TestIndividual("male 4 months, congenital onset",
+                       male4monthsCongenitalOnset(), new TestOutcome.Ok("Der Proband war ein 4 Monate alter Säugling, der sich bei der Geburt mit den folgenden Symptomen vorgestellt hat: ")),
+                  new TestIndividual("female, no onset",
+                        femaleNoAge(), new TestOutcome.Ok("Die Patientin stellte sich mit den folgenden Symptomen vor: ")),
+              new TestIndividual("female, no HPOs",
                         femaleNoHPOs(), new TestOutcome.Error(() -> new PhenolRuntimeException("No HPO annotations"))),
                 new TestIndividual("unknown sex, no 4mo",
-                        unknownSex4MonthOnset(),  new TestOutcome.Ok("El paciente se presentaba en la niñez con"))
-        );
+                        unknownSex4MonthOnset(),  new TestOutcome.Ok("Der Patient stellte sich in der Kindheit mit den folgenden Symptomen vor: "))
+                         );
     }
 
 
@@ -85,13 +84,13 @@ public class PpktIndividualGermanTest extends PPKtIndividualBase{
     private static Stream<TestIdvlAtAge> testIndlAtAge() {
         return Stream.of(
                 new TestIdvlAtAge("congenital",
-                        congenital, new TestOutcome.Ok("zum Zeitpunkt der Geburt")),
+                        congenital, new TestOutcome.Ok("Zum Zeitpunkt der Geburt")),
                 new TestIdvlAtAge("infantile",
-                        infantile, new TestOutcome.Ok("als Säugling")),
+                        infantile, new TestOutcome.Ok("Als Säugling")),
                 new TestIdvlAtAge("childhood age",
-                        childhood, new TestOutcome.Ok("in der Kindheit")),
+                        childhood, new TestOutcome.Ok("In der Kindheit")),
                 new TestIdvlAtAge("46 years old",
-                        p46y, new TestOutcome.Ok("im Alter von 46 Jahren"))
+                        p46y, new TestOutcome.Ok("Im Alter von 46 Jahren"))
         );
     }
 
@@ -108,11 +107,7 @@ public class PpktIndividualGermanTest extends PPKtIndividualBase{
                             () -> generator.atAge(testCase.ppktAge()),
                             "Incorrect error handling for: " + testCase.description());
         }
-
-
     }
-
-
 
 
 

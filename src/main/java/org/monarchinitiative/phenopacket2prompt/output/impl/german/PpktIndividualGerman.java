@@ -111,24 +111,26 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
     }
 
 
-    private String atIsoAgeExact(PhenopacketAge ppktAge) {
+    private String imAlterVonIsoAgeExact(PhenopacketAge ppktAge) {
         Iso8601Age iso8601Age = (Iso8601Age) ppktAge;
         int y = iso8601Age.getYears();
         int m = iso8601Age.getMonths();
         int d = iso8601Age.getDays();
 
         if (y > 10) {
-            return String.format("%d Jahre", y);
+            return String.format("Im Alter von %d %s", y, y>1?"Jahren" : "Jahr");
         } else if (y > 0) {
-            if (m > 1) {
-                return String.format("%d Jahre und %d Monate", y, m);
-            } else if (m == 1) {
-                return String.format("%d Jahre und ein Monat", y);
+            if (m > 0) {
+                return String.format("Im Alter von %d %s und %d S", y,
+                        y>1?"Jahren" : "Jahr",
+                        m,  m>1?"Monaten" : "Monat");
             } else {
-                return String.format("%d Jahre", y);
+                return String.format("Im Alter von %d %s", y, y>1?"Jahren" : "Jahr");
             }
-        } else if (m>0) {
-            return String.format("%d Monate y %d Tage", m, d);
+        }
+        if (m>0) {
+            return String.format("Im Alter von %d %s y %d %s", m,  m,  m>1?"Monaten" : "Monat",
+                    d,  d>1?"Tagen" : "Tag");
         } else {
             return String.format("%d Tage",  d);
         }
@@ -137,6 +139,9 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
 
     @Override
     public String getIndividualDescription(PpktIndividual individual) {
+        if (individual.annotationCount() == 0) {
+            throw new PhenolRuntimeException("No HPO annotations");
+        }
         Optional<PhenopacketAge> lastExamOpt = individual.getAgeAtLastExamination();
         Optional<PhenopacketAge> onsetOpt = individual.getAgeAtOnset();
         PhenopacketSex psex = individual.getSex();
@@ -152,12 +157,35 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
     }
 
 
-    private String iso8601ToYearMonth(Iso8601Age iso8601Age) {
-        if (iso8601Age.getMonths() == 0) {
-            return String.format("de %d años", iso8601Age.getYears());
-        } else {
-            return String.format("de %d años y %d meses", iso8601Age.getYears(), iso8601Age.getMonths());
+    private String iso8601ToYearMonth(Iso8601Age iso8601Age, PhenopacketSex psex) {
+        int y = iso8601Age.getYears();
+        int m = iso8601Age.getMonths();
+        int d = iso8601Age.getDays();
+        if (psex.equals(PhenopacketSex.MALE)) {
+            if (iso8601Age.getMonths() == 0) {
+                return String.format("ein %djähriger Junge", y);
+            } else {
+                return String.format("ein %d %s, %d %s alter Junge", y, y>1?"Jahre":"Jahr", m, m>1?"Monate":"Monat");
+            }
+        } else if (psex.equals(PhenopacketSex.FEMALE)) {
+            if (iso8601Age.getMonths() == 0) {
+                return String.format("ein %djähriges Mädchen", y);
+            } else {
+                return String.format("ein %d %s, %d %s altes Mädchen", y, y>1?"Jahre":"Jahr", m, m>1?"Monate":"Monat");
+            }
         }
+        if (iso8601Age.getMonths() == 0) {
+            return String.format("ein %djähriges Kind", y);
+        } else {
+            return String.format("ein %d %s, %d %s altes Kind", y, y>1?"Jahre":"Jahr", m, m>1?"Monate":"Monat");        }
+    }
+
+    private String monthString(int m) {
+        return m>1 ? "Monate": "Monat";
+    }
+
+    private String dayString(int d) {
+        return d>1 ? "Tage": "Tag";
     }
 
     private String iso8601ToMonthDay(Iso8601Age iso8601Age) {
@@ -166,9 +194,9 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
         if (m == 0) {
             return String.format("de %d dias", d);
         } else if (d>0){
-            return String.format("de %d meses y %d dias", m, d);
+            return String.format("%d %s und %d %s", m, monthString(m), d, dayString(d));
         } else {
-            return String.format("de %d meses", m);
+            return String.format("%d %s", m, m>1 ? "Monate": "Monat");
         }
     }
 
@@ -197,9 +225,9 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
             components.add("einem Tag");
         }
         if (components.isEmpty()) {
-            return "im Neugeborenen Alter";
+            return "bei der Geburt";
         } else if (components.size() == 1) {
-            return "im Alter von " + components.get(0);
+            return "im Alter von " + components.getFirst();
         } else if (components.size() == 2) {
             return "im Alter von  " + components.get(0) + " und " + components.get(1);
         } else {
@@ -212,13 +240,13 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
         if (hpoOnsetTermAge.isFetus()) {
             return  "in der Fetalperiode";
         } else if (hpoOnsetTermAge.isCongenital()) {
-            return  "im Neugeborenenalter";
+            return  "bei der Geburt";
         } else if (hpoOnsetTermAge.isInfant()) {
             return "im Säuglingsalter";
         } else if (hpoOnsetTermAge.isChild()) {
             return "in der Kindheit";
         } else if (hpoOnsetTermAge.isJuvenile()) {
-            return "como adolescente";
+            return "als Jugendlich adolescente";
         } else {
             return "im Erwachsenenalter";
         }
@@ -232,9 +260,9 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
         // if older
         if (y>17) {
             return switch (psex) {
-                case FEMALE -> String.format("eine %djährige Frau", y);
-                case MALE -> String.format("ein %djähriger Mann", y);
-                default -> String.format("eine %djährige Person", y);
+                case FEMALE -> String.format("eine %d-jährige Frau", y);
+                case MALE -> String.format("ein %d-jähriger Mann", y);
+                default -> String.format("eine %d-jährige Person", y);
             };
         } else if (y>9) {
             return switch (psex) {
@@ -244,15 +272,15 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
             };
         } else if (y>0) {
             return switch (psex) {
-                case FEMALE -> String.format("niña %s", iso8601ToYearMonth(iso8601Age));
-                case MALE -> String.format("niño %s", iso8601ToYearMonth(iso8601Age));
-                default -> String.format("niño %s", iso8601ToYearMonth(iso8601Age));
+                case FEMALE -> iso8601ToYearMonth(iso8601Age, psex);
+                case MALE -> iso8601ToYearMonth(iso8601Age, psex);
+                default -> iso8601ToYearMonth(iso8601Age, psex);
             };
         } else if (m>0 || d> 0) {
             return switch (psex) {
-                case FEMALE -> String.format("una infante %s", iso8601ToMonthDay(iso8601Age));
-                case MALE -> String.format("un infante %s", iso8601ToMonthDay(iso8601Age));
-                default -> String.format("un infante %s", iso8601ToMonthDay(iso8601Age));
+                case FEMALE -> String.format("ein %s alter weiblicher Säugling", iso8601ToMonthDay(iso8601Age));
+                case MALE -> String.format("ein %s alter Säugling", iso8601ToMonthDay(iso8601Age));
+                default -> String.format("ein %s alter Säugling", iso8601ToMonthDay(iso8601Age));
             };
         } else {
             return switch (psex) {
@@ -272,9 +300,9 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
             };
         } else if (hpoOnsetTermAge.isCongenital()) {
             return switch (psex) {
-                case FEMALE -> "una niña recién nacida";
-                case MALE -> "un niño recién nacido";
-                default -> "un bebe recién nacido";
+                case FEMALE -> "Die Patientin war ein weibliches Neugeborenes, das sich";
+                case MALE -> "Der Patient war ein männliches Neugeborenes, das sich";
+                default -> "Der Patient war ein Neugeborenes, das sich";
             };
         } else if (hpoOnsetTermAge.isInfant()) {
             return switch (psex) {
@@ -336,7 +364,7 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
             throw new PhenolRuntimeException("Did not recognize onset age type " + onsetAge.ageType());
         }
         return switch (psex) {
-            case FEMALE -> String.format("Die Probandin war %s, der sich %s mit den folgenden Symptomen vorgestellt hat: ", individualDescription, onsetDescription);
+            case FEMALE -> String.format("Die Probandin war %s, die sich %s mit den folgenden Symptomen vorgestellt hat: ", individualDescription, onsetDescription);
             default -> String.format("Der Proband war %s, der sich %s mit den folgenden Symptomen vorgestellt hat: ", individualDescription, onsetDescription);
         };
     }
@@ -405,15 +433,15 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
     @Override
     public String atAge(PhenopacketAge ppktAge) {
         if (ppktAge.ageType().equals(PhenopacketAgeType.ISO8601_AGE_TYPE)) {
-            return "im Alter von " + atIsoAgeExact(ppktAge);
+            return imAlterVonIsoAgeExact(ppktAge);
         } else if (ppktAge.ageType().equals(PhenopacketAgeType.HPO_ONSET_AGE_TYPE)) {
             String label = ppktAge.age(); // something like "Infantile onset"
             return switch (label) {
-                case "Infantile onset" -> "als Säugling";
-                case "Childhood onset" -> "in der Kindheit";
-                case "Neonatal onset"  -> "in der neugeborenen Zeit";
-                case "Congenital onset" -> "zum Zeitpunkt der Geburt";
-                case "Adult onset" -> "im Erwachsenenalter";
+                case "Infantile onset" -> "Als Säugling";
+                case "Childhood onset" -> "In der Kindheit";
+                case "Neonatal onset"  -> "In der neugeborenen Zeit";
+                case "Congenital onset" -> "Zum Zeitpunkt der Geburt";
+                case "Adult onset" -> "Im Erwachsenenalter";
                 default-> String.format("TODO TODO el %s período", label.replace(" onset", ""));
             };
         } else {

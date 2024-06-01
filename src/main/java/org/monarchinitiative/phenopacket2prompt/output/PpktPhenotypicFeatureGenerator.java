@@ -25,6 +25,19 @@ public interface PpktPhenotypicFeatureGenerator {
                 .toList();
     }
 
+    default List<OntologyTerm> getObservedFeatures(List<OntologyTerm> oterms) {
+        return   oterms.stream()
+                .filter(Predicate.not(OntologyTerm::isExcluded))
+                .toList();
+    }
+
+    default List<OntologyTerm> getExcludedFeatures(List<OntologyTerm> oterms) {
+        return   oterms.stream()
+                .filter(OntologyTerm::isExcluded)
+
+                .toList();
+    }
+
     default Set<String> getMissingTranslations() {
         return Set.of();
     }
