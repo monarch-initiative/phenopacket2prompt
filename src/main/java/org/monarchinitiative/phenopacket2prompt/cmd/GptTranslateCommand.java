@@ -34,6 +34,9 @@ public class GptTranslateCommand implements Callable<Integer> {
     @CommandLine.Option(names = {"-p", "--ppkt"}, description = "Path to JSON phenopacket file", required = true)
     private String ppkt;
 
+    @CommandLine.Option(names = {"-l", "--language"}, description = "Language code", defaultValue = "de")
+    private String languageCode;
+
 
     @Override
     public Integer call() throws Exception {
@@ -58,21 +61,22 @@ public class GptTranslateCommand implements Callable<Integer> {
         PpktIndividual individual = PpktIndividual.fromFile(new File(ppkt));
         String prompt = generator.createPrompt(individual);
         System.out.println(prompt);
-        // SPANISH
-        System.out.println("SPANISH");
-        PromptGenerator spanish = PromptGenerator.spanish(hpo, internationalMap.get("es"));
-        prompt = spanish.createPrompt(individual);
-        System.out.println(prompt);
+        switch (languageCode) {
+            case "de" -> {
+                PromptGenerator german = PromptGenerator.german(hpo, internationalMap.get("de"));
+                prompt = german.createPrompt(individual);
+            }
+            case "es" -> {
+                PromptGenerator spanish = PromptGenerator.spanish(hpo, internationalMap.get("es"));
+                prompt = spanish.createPrompt(individual);
+            }
+            case "nl" -> {
+                PromptGenerator dutch = PromptGenerator.dutch(hpo, internationalMap.get("nl"));
+                prompt = dutch.createPrompt(individual);
+            }
+            default -> prompt = "did not recognize language code " + languageCode;
+        }
 
-        // DUTCH
-        System.out.println("DUTCH");
-        PromptGenerator dutch = PromptGenerator.dutch(hpo, internationalMap.get("nl"));
-        prompt = dutch.createPrompt(individual);
-
-        // GERMAN
-        System.out.println("GERMAN");
-        PromptGenerator german = PromptGenerator.spanish(hpo, internationalMap.get("de"));
-        prompt = german.createPrompt(individual);
 
         System.out.println(prompt);
 
