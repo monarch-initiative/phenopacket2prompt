@@ -105,6 +105,22 @@ Lymphopenia, Pneumonia und Severe combined immunodeficiency. im Alter von 1 Mona
         return new PpktIndividual(builder.build());
     }
 
+    public static PpktIndividual PMID_9312167_A() {
+        PhenopacketBuilder builder = PhenopacketBuilder.create("PMID_9312167_A:I:2", metadata);
+        Disease d = DiseaseBuilder.builder("OMIM:179800", "Distal renal tubular acidosis 1").build();
+        Individual subject = IndividualBuilder.builder("A:I:2").female().ageAtLastEncounter("P40Y").build();
+        var pf1 = PhenotypicFeatureBuilder.builder("HP:0000121","Nephrocalcinosis").build();
+        var pf2 = PhenotypicFeatureBuilder.builder("HP:0002900","Hypokalemia").build();
+        var pf3 = PhenotypicFeatureBuilder.builder("HP:0032944","Alkaline urine").build();
+        var pf4 = PhenotypicFeatureBuilder.builder("HP:0012100","Abnormal circulating creatinine concentration").excluded().build();
+        var pf5 = PhenotypicFeatureBuilder.builder("HP:0008341","Distal renal tubular acidosis").excluded().build();
+        var lst = List.of(pf1, pf2, pf3, pf4, pf5);
+        builder.individual(subject).addDisease(d).addPhenotypicFeatures(lst);
+        return new PpktIndividual(builder.build());
+    }
+
+
+
 
 
     public static PhenopacketAge congenital = HpoOnsetAge.congenital();
