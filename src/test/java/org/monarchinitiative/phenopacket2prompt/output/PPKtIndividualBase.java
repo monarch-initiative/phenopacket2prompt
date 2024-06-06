@@ -119,7 +119,23 @@ Lymphopenia, Pneumonia und Severe combined immunodeficiency. im Alter von 1 Mona
         return new PpktIndividual(builder.build());
     }
 
-
+    /*
+    El paciente era un hombre de 30 años qui se presentó con se descartaron Máculas hipomelanóticas, Rabdomioma cardíaco y Bradicardia.A la edad de 30 años, el presentó Fositas o muescas (pits) del esmalte dental y Fibromatosis gingival.
+     */
+    public static PpktIndividual onlyExcludedAtPresentation() {
+        PhenopacketBuilder builder = PhenopacketBuilder.create("id8", metadata);
+        Disease d = DiseaseBuilder.builder("OMIM:100123", "test").onset(TimeElements.age("P3D")).build();
+        Individual subject = IndividualBuilder.builder("individual.6").male().ageAtLastEncounter("P30Y").build();
+        //  HP:Gingival fibromatosis HP:
+        var pf1  = PhenotypicFeatureBuilder.builder("HP:0001662","Bradycardia").excluded().build();
+        var pf2  = PhenotypicFeatureBuilder.builder("HP:0009729","Cardiac rhabdomyoma").excluded().build();
+        var pf3  = PhenotypicFeatureBuilder.builder("HP:0009719","Hypomelanotic macule").excluded().build();
+        var pf4 =PhenotypicFeatureBuilder.builder("HP:0009722","Dental enamel pits").onset(TimeElements.age("P30Y")).build();
+        var pf5 =PhenotypicFeatureBuilder.builder("HP:0000169","Gingival fibromatosis").onset(TimeElements.age("P30Y")).build();
+        var features = List.of(pf1,pf2,pf3,pf4,pf5);
+        builder.individual(subject).addDisease(d).addPhenotypicFeatures(features);
+        return new PpktIndividual(builder.build());
+    }
 
 
 

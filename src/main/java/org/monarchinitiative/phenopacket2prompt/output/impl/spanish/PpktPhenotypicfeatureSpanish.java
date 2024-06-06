@@ -36,6 +36,23 @@ public class PpktPhenotypicfeatureSpanish implements PpktPhenotypicFeatureGenera
 
     private final Set<Character> vowels = Set.of('A', 'E', 'I', 'O', 'U', 'Y');
 
+    String getConnector(String nextWord) {
+        if (nextWord.length() < 2) {
+            return "y"; // should never happen but do not want to crash
+        }
+        Character letter = nextWord.charAt(0);
+        if (vowels.contains(letter)) {
+            return " i ";
+        }
+        Character letter2 = nextWord.charAt(1);
+        if (letter == 'H' && vowels.contains(letter2)) {
+            return " i ";
+        }
+        return " y ";
+
+    }
+
+
     private String getOxfordCommaList(List<String> items) {
         if (items.size() == 1) {
             return items.getFirst();
@@ -43,17 +60,15 @@ public class PpktPhenotypicfeatureSpanish implements PpktPhenotypicFeatureGenera
         if (items.size() == 2) {
             // no comma if we just have two items.
             // one item will work with the below code
-            return String.join(" and ", items);
+            String connector = getConnector(items.get(1));
+            return String.join(connector, items);
         }
         String symList = String.join(", ", items);
         int jj = symList.lastIndexOf(", ");
         if (jj > 0) {
             String end = symList.substring(jj+2);
-            if (vowels.contains(end.charAt(0))) {
-                symList = symList.substring(0, jj) + " i " + end;
-            } else {
-                symList = symList.substring(0, jj) + " y " + end;
-            }
+            String connector = getConnector(end);
+            symList = symList.substring(0, jj) + connector + end;
         }
         return symList;
     }
@@ -73,16 +88,16 @@ public class PpktPhenotypicfeatureSpanish implements PpktPhenotypicFeatureGenera
             return getOxfordCommaList(observedLabels) + ". ";
         } else if (observedLabels.isEmpty()) {
             if (excludedLabels.size() > 1) {
-                return String.format("por lo que se excluyeron %s.", getOxfordCommaList(excludedLabels));
+                return String.format("se descartaron %s.", getOxfordCommaList(excludedLabels));
             } else {
-                return String.format("por lo que %s fue excluido.",excludedLabels.getFirst());
+                return String.format("se descartó %s.",excludedLabels.getFirst());
             }
         } else {
             String exclusion;
             if (excludedLabels.size() == 1) {
-                exclusion = String.format(" y se excluyó %s.", getOxfordCommaList(excludedLabels));
+                exclusion = String.format(" En cambio, se descartó %s.", getOxfordCommaList(excludedLabels));
             } else {
-                exclusion =  String.format(" y se excluyeron %s.", getOxfordCommaList(excludedLabels));
+                exclusion =  String.format(" En cambio, se descartaron %s.", getOxfordCommaList(excludedLabels));
             }
             return getOxfordCommaList(observedLabels) +  exclusion;
         }

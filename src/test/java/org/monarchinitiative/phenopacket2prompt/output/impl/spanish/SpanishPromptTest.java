@@ -13,8 +13,7 @@ import java.io.File;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualBase.PMID_9312167_A;
-import static org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualBase.twoYears;
+import static org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualBase.*;
 
 /**
  * Test only works with local hpo-international.obo
@@ -55,4 +54,26 @@ El paciente era un niño de 2 años que se presentó a la edad de 3 dias con Lin
         String prompt = german.createPrompt(twoYears());
         assertEquals(case_vignette, prompt.trim());
     }
+
+
+    @Test
+    public void testNoObservedAtOnset() {
+        File hpJsonFile = new File("data/hp.json");
+        if (! hpJsonFile.isFile()) {
+            throw new PhenolRuntimeException("Could not find hp.json at " + hpJsonFile.getAbsolutePath());
+        }
+        Ontology hpo = OntologyLoader.loadOntology(hpJsonFile);
+        File translationsFile = new File("data/hp-international.obo");
+        if (! translationsFile.isFile()) {
+            System.err.printf("Could not find translations file at %s. Try download command", translationsFile.getAbsolutePath());
+            return ;
+        }
+        HpInternationalOboParser oboParser = new HpInternationalOboParser(translationsFile);
+        Map<String, HpInternational> internationalMap = oboParser.getLanguageToInternationalMap();
+        PromptGenerator spanish = PromptGenerator.spanish(internationalMap.get("es"));
+        String prompt = spanish.createPrompt(onlyExcludedAtPresentation());
+        assertEquals(case_vignette, prompt.trim());
+    }
+
+
 }
