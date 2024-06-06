@@ -20,16 +20,16 @@ public class PpktIndividualSpanishTest extends PPKtIndividualBase{
 
     private static Stream<TestIndividual> testGetIndividualDescription() {
         return Stream.of(
-                new TestIndividual("46 year olf female, infantile onset",
-                        female46yearsInfantileOnset(), new TestOutcome.Ok("La paciente era mujer de 46 años que se presentaba en el primer año de vida con")),
+                new TestIndividual("46 year old female, infantile onset",
+                        female46yearsInfantileOnset(), new TestOutcome.Ok("La paciente era mujer de 46 años que se presentó en el primer año de vida con")),
                 new TestIndividual("male 4 months, congenital onset",
-                       male4monthsCongenitalOnset(), new TestOutcome.Ok("El paciente era un bebé de 4 meses que se presentaba al nacer con")),
+                       male4monthsCongenitalOnset(), new TestOutcome.Ok("El paciente era un bebé de 4 meses que se presentó al nacer con")),
                 new TestIndividual("female, no onset",
-                        femaleNoAge(), new TestOutcome.Ok("La paciente se presentaba con")),
+                        femaleNoAge(), new TestOutcome.Ok("La paciente se presentó con")),
                 new TestIndividual("female, no HPOs",
                         femaleNoHPOs(), new TestOutcome.Error(() -> new PhenolRuntimeException("No HPO annotations"))),
                 new TestIndividual("unknown sex, no 4mo",
-                        unknownSex4MonthOnset(),  new TestOutcome.Ok("El paciente se presentaba en la niñez con"))
+                        unknownSex4MonthOnset(),  new TestOutcome.Ok("El paciente se presentó en la niñez con"))
         );
     }
 
@@ -56,11 +56,11 @@ public class PpktIndividualSpanishTest extends PPKtIndividualBase{
     private static Stream<TestIdvlHeShe> testGetPPKtSex() {
         return Stream.of(
                 new TestIdvlHeShe("female",
-                        PhenopacketSex.FEMALE, new TestOutcome.Ok("she")),
+                        PhenopacketSex.FEMALE, new TestOutcome.Ok("ella")),
                 new TestIdvlHeShe("male",
-                        PhenopacketSex.MALE, new TestOutcome.Ok("he")),
+                        PhenopacketSex.MALE, new TestOutcome.Ok("el")),
                 new TestIdvlHeShe("proband",
-                        PhenopacketSex.UNKNOWN, new TestOutcome.Ok("the individual"))
+                        PhenopacketSex.UNKNOWN, new TestOutcome.Ok("la persona"))
         );
     }
 
@@ -84,13 +84,13 @@ public class PpktIndividualSpanishTest extends PPKtIndividualBase{
     private static Stream<TestIdvlAtAge> testIndlAtAge() {
         return Stream.of(
                 new TestIdvlAtAge("congenital",
-                        congenital, new TestOutcome.Ok("At birth")),
+                        congenital, new TestOutcome.Ok("Al nacer")),
                 new TestIdvlAtAge("infantile",
-                        infantile, new TestOutcome.Ok("During the infantile period")),
+                        infantile, new TestOutcome.Ok("Durante el período infantil")),
                 new TestIdvlAtAge("childhood age",
-                        childhood, new TestOutcome.Ok("During childhood")),
+                        childhood, new TestOutcome.Ok("Durante la infancia")),
                 new TestIdvlAtAge("46 years old",
-                        p46y, new TestOutcome.Ok("At an age of 46 years"))
+                        p46y, new TestOutcome.Ok("A la edad de 46 años"))
         );
     }
 
