@@ -28,6 +28,9 @@ public class GermanPromptGenerator implements PromptGenerator {
         this.ppktPhenotypicFeatureGenerator = pfgen;
     }
 
+
+
+
     @Override
     public String queryHeader() {
         return ppktTextGenerator.QUERY_HEADER();
@@ -47,7 +50,7 @@ public class GermanPromptGenerator implements PromptGenerator {
     public String getVignetteAtAge(PhenopacketAge page, PhenopacketSex psex, List<OntologyTerm> terms) {
         String ageString = this.ppktAgeSexGenerator.atAge(page);
         String features = formatFeatures(terms);
-        return String.format("%s, präsentierte %s mit mit den folgenden Symptomen: %s", ageString, ppktAgeSexGenerator.heSheIndividual(psex), features);
+        return String.format("%s, präsentierte %s mit den folgenden Symptomen: %s", ageString, ppktAgeSexGenerator.heSheIndividual(psex), features);
     }
 
 

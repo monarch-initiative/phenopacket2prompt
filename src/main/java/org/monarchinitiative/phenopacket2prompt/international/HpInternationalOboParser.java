@@ -27,7 +27,7 @@ public class HpInternationalOboParser {
      * @return in this case "tr"
      */
     public Optional<String> getLanguage(String annots) {
-        final String translation = "translation:language=\"(\\w{2,2})\"";
+        final String translation = "translation:language=\"(\\w{2,3})\"";
         final Pattern pattern = Pattern.compile(translation);
         Matcher matcher = pattern.matcher(annots);
         if (matcher.find()) {
@@ -53,7 +53,7 @@ public class HpInternationalOboParser {
     public HpInternationalOboParser(File file) {
         languageToInternationalMap = new HashMap<>();
         String pattern = "id: (HP:\\d{7,7})";
-        Set<String> acronyms = Set.of("cs", "en", "de", "it", "es", "fr", "ja", "nl", "nna", "tr", "tw", "zh");
+        Set<String> acronyms = Set.of("cs", "en", "de", "dtp", "it", "es", "fr", "ja", "nl", "nna", "tr", "tw", "zh");
         for (String acronym : acronyms) {
             languageToInternationalMap.put(acronym, new HpInternational(acronym));
         }
@@ -84,6 +84,10 @@ public class HpInternationalOboParser {
                             Optional<String> opt = getLanguage(annots);
                             if (opt.isPresent()) {
                                 String language = opt.get();
+                                if (! languageToInternationalMap.containsKey(language)) {
+                                    System.err.println("[ERROR] Could not find language \"" + language + "\"");
+                                    continue;
+                                }
                                 languageToInternationalMap.get(language).addTerm(currentHpoTermId, hpoLabel);
                             } else {
                                 System.err.printf("[ERROR] Could not extract language for %s.\n", line);

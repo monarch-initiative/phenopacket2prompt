@@ -1,5 +1,6 @@
 package org.monarchinitiative.phenopacket2prompt.output.impl.german;
 
+import com.sun.source.tree.BreakTree;
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenopacket2prompt.model.*;
 import org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualInfoGenerator;
@@ -272,9 +273,10 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
             };
         } else if (y>0) {
             return switch (psex) {
-                case FEMALE -> iso8601ToYearMonth(iso8601Age, psex);
-                case MALE -> iso8601ToYearMonth(iso8601Age, psex);
-                default -> iso8601ToYearMonth(iso8601Age, psex);
+                case FEMALE -> String.format("Die Patientin war %s",   iso8601ToYearMonth(iso8601Age, psex));
+                case MALE ->
+                   String.format("Der Patient war %s",  iso8601ToYearMonth(iso8601Age, psex));
+                default ->  String.format("Der Patient war %s",  iso8601ToYearMonth(iso8601Age, psex));
             };
         } else if (m>0 || d> 0) {
             return switch (psex) {
