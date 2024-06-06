@@ -321,7 +321,7 @@ public class PpktIndividualSpanish implements PPKtIndividualInfoGenerator {
     /**
      * A sentence such as The proband was a 39-year old woman who presented at the age of 12 years with
      * HPO1, HPO2, and HPO3. HPO4 and HPO5 were excluded. This method returns the phrase that ends with "with"
-     * El sujeto era un niño de 1 año y 10 meses que se presentaba como recién nacido con un filtrum largo.
+     * El sujeto era un niño de 1 año y 10 meses que se presentó como recién nacido con un filtrum largo.
      * @param psex
      * @param lastExamAge
      * @param onsetAge
@@ -351,9 +351,9 @@ public class PpktIndividualSpanish implements PPKtIndividualInfoGenerator {
             throw new PhenolRuntimeException("Did not recognize onset age type " + onsetAge.ageType());
         }
         return switch (psex){
-            case FEMALE ->  String.format("La paciente era %s que se presentaba %s con", individualDescription, onsetDescription);
-            case MALE -> String.format("El paciente era %s que se presentaba %s con", individualDescription, onsetDescription);
-            default -> String.format("El paciente era %s que se presentaba %s con", individualDescription, onsetDescription);
+            case FEMALE ->  String.format("La paciente era %s que se presentó %s con", individualDescription, onsetDescription);
+            case MALE -> String.format("El paciente era %s que se presentó %s con", individualDescription, onsetDescription);
+            default -> String.format("El paciente era %s que se presentó %s con", individualDescription, onsetDescription);
         };
     }
 
@@ -379,7 +379,11 @@ public class PpktIndividualSpanish implements PPKtIndividualInfoGenerator {
             // should never happen
             throw new PhenolRuntimeException("Did not recognize last exam age type " + lastExamAge.ageType());
         }
-        return String.format("El paciente era %s quien se presentaba con", individualDescription);
+        if (psex.equals(PhenopacketSex.FEMALE)) {
+            return String.format("La paciente era %s que se presentó con", individualDescription);
+        } else {
+            return String.format("El paciente era %s qui se presentó con", individualDescription);
+        }
     }
 
     /**
@@ -401,14 +405,14 @@ public class PpktIndividualSpanish implements PPKtIndividualInfoGenerator {
             // should never happen
             throw new PhenolRuntimeException("Did not recognize onset age type " + onsetAge.ageType());
         }
-        return String.format("El paciente se presentaba %s con", onsetDescription);
+        return String.format("El paciente se presentó %s con", onsetDescription);
     }
 
     private String ageNotAvailable(PhenopacketSex psex) {
         return switch (psex) {
-            case FEMALE -> "La paciente se presentaba con";
-            case MALE -> "El paciente se presentaba con";
-            default -> "El paciente se presentaba con";
+            case FEMALE -> "La paciente se presentó con";
+            case MALE -> "El paciente se presentó con";
+            default -> "El paciente se presentó con";
         };
     }
 

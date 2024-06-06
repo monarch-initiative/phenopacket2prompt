@@ -33,7 +33,7 @@ public class GermanPromptGeneratorTest {
         }
         HpInternationalOboParser oboParser = new HpInternationalOboParser(translationsFile);
         Map<String, HpInternational> internationalMap = oboParser.getLanguageToInternationalMap();
-        PromptGenerator german = PromptGenerator.german(hpo, internationalMap.get("de"));
+        PromptGenerator german = PromptGenerator.german(internationalMap.get("de"));
         String prompt = german.createPrompt(twoYears());
 
 
