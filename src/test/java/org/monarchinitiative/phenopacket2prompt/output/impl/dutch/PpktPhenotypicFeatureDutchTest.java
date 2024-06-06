@@ -24,9 +24,9 @@ public class PpktPhenotypicFeatureDutchTest {
     private static Stream<PPKtIndividualBase.TestIndividual> testGetIndividualPhenotypicFeatures() {
         return Stream.of(
                 new PPKtIndividualBase.TestIndividual("46 year old female, infantile onset",
-                        female46yearsInfantileOnset(), new PPKtIndividualBase.TestOutcome.Ok("Cerebellar atrophy and Ataxia")),
+                        female46yearsInfantileOnset(), new PPKtIndividualBase.TestOutcome.Ok("Cerebellar atrophy and Ataxia. ")),
                 new PPKtIndividualBase.TestIndividual("male 4 months, congenital onset",
-                        male4monthsCongenitalOnset(), new PPKtIndividualBase.TestOutcome.Ok("Postaxial polydactyly"))
+                        male4monthsCongenitalOnset(), new PPKtIndividualBase.TestOutcome.Ok("Postaxial polydactyly. "))
         );
     }
 
