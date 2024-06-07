@@ -11,8 +11,6 @@ import java.util.*;
 
 public class SpanishPromptGenerator implements PromptGenerator {
 
-    private final Ontology hpo;
-
 
     private final PPKtIndividualInfoGenerator ppktAgeSexGenerator;
 
@@ -22,8 +20,7 @@ public class SpanishPromptGenerator implements PromptGenerator {
 
 
 
-    public SpanishPromptGenerator(Ontology hpo, PpktPhenotypicFeatureGenerator pfgen) {
-        this.hpo = hpo;
+    public SpanishPromptGenerator(PpktPhenotypicFeatureGenerator pfgen) {
         ppktAgeSexGenerator = new PpktIndividualSpanish();
         ppktTextGenerator = new PpktTextSpanish();
         this.ppktPhenotypicFeatureGenerator = pfgen;

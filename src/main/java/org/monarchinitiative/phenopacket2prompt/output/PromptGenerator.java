@@ -1,6 +1,5 @@
 package org.monarchinitiative.phenopacket2prompt.output;
 
-import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenopacket2prompt.international.HpInternational;
 import org.monarchinitiative.phenopacket2prompt.model.OntologyTerm;
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketAge;
@@ -34,24 +33,24 @@ public interface PromptGenerator {
         return new EnglishPromptGenerator();
     }
 
-    static PromptGenerator spanish(Ontology hpo, HpInternational international) {
+    static PromptGenerator spanish(HpInternational international) {
         PpktPhenotypicFeatureGenerator pfgen = new PpktPhenotypicfeatureSpanish(international);
-        return new SpanishPromptGenerator(hpo, pfgen);
+        return new SpanishPromptGenerator(pfgen);
     }
 
 
-    static PromptGenerator dutch(Ontology hpo, HpInternational international) {
+    static PromptGenerator dutch(HpInternational international) {
         PpktPhenotypicFeatureGenerator pfgen = new PpktPhenotypicfeatureDutch(international);
-        return new DutchPromptGenerator(hpo, pfgen);
+        return new DutchPromptGenerator(pfgen);
     }
 
-    static PromptGenerator german(Ontology hpo, HpInternational international) {
+    static PromptGenerator german(HpInternational international) {
         PpktPhenotypicFeatureGenerator pfgen = new PpktPhenotypicfeatureGerman(international);
-        return new GermanPromptGenerator(hpo, pfgen);
+        return new GermanPromptGenerator(pfgen);
     }
-    static PromptGenerator italian(Ontology hpo, HpInternational international) {
+    static PromptGenerator italian(HpInternational international) {
         PpktPhenotypicFeatureGenerator pfgen = new PpktPhenotypicfeatureItalian(international);
-        return new ItalianPromptGenerator(hpo, pfgen);
+        return new ItalianPromptGenerator(pfgen);
     }
 
 

@@ -28,7 +28,7 @@ public class PpktIndividualItalianTest extends PPKtIndividualBase{
                         femaleNoAge(), new TestOutcome.Ok("Il soggetto era una femmina che si è presentata con")),
                 new TestIndividual("female, no HPOs",
                         femaleNoHPOs(), new TestOutcome.Error(() -> new PhenolRuntimeException("Nessuna anomalia fenotipica"))),
-                new TestIndividual("unknown sex, no 4mo",
+                new TestIndividual("unknown sex, no 4yo",
                         unknownSex4YearsOnset(),  new TestOutcome.Ok("Il soggetto si è presentato da bambino con"))
         );
     }
