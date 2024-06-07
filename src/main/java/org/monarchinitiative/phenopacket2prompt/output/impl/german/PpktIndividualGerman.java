@@ -1,6 +1,5 @@
 package org.monarchinitiative.phenopacket2prompt.output.impl.german;
 
-import com.sun.source.tree.BreakTree;
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenopacket2prompt.model.*;
 import org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualInfoGenerator;
@@ -449,7 +448,10 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
                 case "Neonatal onset"  -> "In der neugeborenen Zeit";
                 case "Congenital onset" -> "Zum Zeitpunkt der Geburt";
                 case "Adult onset" -> "Im Erwachsenenalter";
-                default-> String.format("TODO TODO el %s período", label.replace(" onset", ""));
+                case "Juvenile onset" -> "Im Jugendlichenalter";
+                default-> {
+                    throw new PhenolRuntimeException("No German translation for " + label);
+                }
             };
         } else {
             return ""; // should never get here

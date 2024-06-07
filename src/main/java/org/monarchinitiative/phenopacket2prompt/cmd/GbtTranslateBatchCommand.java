@@ -9,6 +9,7 @@ import org.monarchinitiative.phenopacket2prompt.international.HpInternationalObo
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketDisease;
 import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
 import org.monarchinitiative.phenopacket2prompt.output.CorrectResult;
+import org.monarchinitiative.phenopacket2prompt.output.PpktCopy;
 import org.monarchinitiative.phenopacket2prompt.output.PromptGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +42,10 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
             description = "path to translations file")
     private String translationsPath = "data/hp-international.obo";
 
+    @CommandLine.Option(names = {"-o", "--outdir"},
+            description = "path to outdir")
+    private String outdirname = "prompts";
+
     @CommandLine.Option(names = {"-d", "--dir"}, description = "Path to directory with JSON phenopacket files", required = true)
     private String ppktDir;
 
@@ -61,10 +66,11 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
             return 1;
         }
         HpInternationalOboParser oboParser = new HpInternationalOboParser(translationsFile);
+
         Map<String, HpInternational> internationalMap = oboParser.getLanguageToInternationalMap();
         LOGGER.info("Got {} translations", internationalMap.size());
         List<File> ppktFiles = getAllPhenopacketJsonFiles();
-        createDir("prompts");
+        createDir(outdirname);
         List<CorrectResult>  correctResultList = outputPromptsEnglish(ppktFiles, hpo);
         // output all non-English languages here
 
@@ -86,7 +92,11 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
         PromptGenerator italian = PromptGenerator.italian(internationalMap.get("it"));
         outputPromptsInternational(ppktFiles, hpo, "it", italian);
         resetOutput("finished");
-
+        // output original phenopackets
+        PpktCopy pcopy = new PpktCopy(new File(outdirname));
+        for (var file : ppktFiles) {
+            pcopy.copyFile(file);
+        }
 
         // output file with correct diagnosis list
         outputCorrectResults(correctResultList);

@@ -95,9 +95,9 @@ public class PpktPhenotypicfeatureSpanish implements PpktPhenotypicFeatureGenera
         } else {
             String exclusion;
             if (excludedLabels.size() == 1) {
-                exclusion = String.format(" En cambio, se descartó %s.", getOxfordCommaList(excludedLabels));
+                exclusion = String.format(". En cambio, se descartó %s.", getOxfordCommaList(excludedLabels));
             } else {
-                exclusion =  String.format(" En cambio, se descartaron %s.", getOxfordCommaList(excludedLabels));
+                exclusion =  String.format(". En cambio, se descartaron %s.", getOxfordCommaList(excludedLabels));
             }
             return getOxfordCommaList(observedLabels) +  exclusion;
         }
