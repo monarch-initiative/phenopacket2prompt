@@ -34,9 +34,9 @@ public interface PromptGenerator {
         return new EnglishPromptGenerator();
     }
 
-    static PromptGenerator spanish(Ontology hpo, HpInternational international) {
+    static PromptGenerator spanish(HpInternational international) {
         PpktPhenotypicFeatureGenerator pfgen = new PpktPhenotypicfeatureSpanish(international);
-        return new SpanishPromptGenerator(hpo, pfgen);
+        return new SpanishPromptGenerator(pfgen);
     }
 
 

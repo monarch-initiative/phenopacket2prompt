@@ -69,7 +69,7 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
         // output all non-English languages here
 
         // SPANISH
-        PromptGenerator spanish = PromptGenerator.spanish(hpo, internationalMap.get("es"));
+        PromptGenerator spanish = PromptGenerator.spanish(internationalMap.get("es"));
         resetOutput("es");
         outputPromptsInternational(ppktFiles, hpo, "es", spanish);
 
@@ -216,6 +216,9 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
         for (File item : items) {
             if (item.isDirectory())
                 ppktDirectories.add(ppktDir+item.getName());
+            else if (item.isFile() && item.getName().endsWith(".json")) {
+                ppktFiles.add(item);
+            }
         }
         for (var f: ppktDirectories) {
             File subdir = new File(f);
