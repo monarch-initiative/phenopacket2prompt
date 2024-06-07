@@ -28,8 +28,8 @@ public class PpktIndividualEnglishTest extends PPKtIndividualBase{
                         femaleNoAge(), new TestOutcome.Ok("The proband was a female who presented with")),
                 new TestIndividual("female, no HPOs",
                         femaleNoHPOs(), new TestOutcome.Error(() -> new PhenolRuntimeException("No HPO annotations"))),
-                new TestIndividual("unknown sex, no 4mo",
-                        unknownSex4MonthOnset(),  new TestOutcome.Ok("The proband presented in childhood with"))
+                new TestIndividual("unknown sex, no 4yo",
+                        unknownSex4YearsOnset(),  new TestOutcome.Ok("The proband presented in childhood with"))
         );
     }
 

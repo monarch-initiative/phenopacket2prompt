@@ -71,8 +71,12 @@ public class GptTranslateCommand implements Callable<Integer> {
                 prompt = spanish.createPrompt(individual);
             }
             case "nl" -> {
-                PromptGenerator dutch = PromptGenerator.dutch(hpo, internationalMap.get("nl"));
+                PromptGenerator dutch = PromptGenerator.dutch(internationalMap.get("nl"));
                 prompt = dutch.createPrompt(individual);
+            }
+            case "it" -> {
+                PromptGenerator italian = PromptGenerator.italian(internationalMap.get("it"));
+                prompt = italian.createPrompt(individual);
             }
             default -> prompt = "did not recognize language code " + languageCode;
         }

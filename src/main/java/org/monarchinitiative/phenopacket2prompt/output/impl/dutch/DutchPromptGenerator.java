@@ -26,7 +26,7 @@ public class DutchPromptGenerator implements PromptGenerator {
 
 
 
-    public DutchPromptGenerator(Ontology hpo, PpktPhenotypicFeatureGenerator pfgen) {
+    public DutchPromptGenerator(PpktPhenotypicFeatureGenerator pfgen) {
         this.hpo = hpo;
         ppktAgeSexGenerator = new PpktIndividualDutch();
         ppktTextGenerator = new PpktTextDutch();

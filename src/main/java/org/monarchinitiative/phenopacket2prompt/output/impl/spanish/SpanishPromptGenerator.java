@@ -11,6 +11,7 @@ import java.util.*;
 
 public class SpanishPromptGenerator implements PromptGenerator {
 
+
     private final PPKtIndividualInfoGenerator ppktAgeSexGenerator;
 
     private final PhenopacketTextGenerator ppktTextGenerator;

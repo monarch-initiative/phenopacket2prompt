@@ -1,6 +1,5 @@
 package org.monarchinitiative.phenopacket2prompt.output;
 
-import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenopacket2prompt.international.HpInternational;
 import org.monarchinitiative.phenopacket2prompt.model.OntologyTerm;
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketAge;
@@ -40,9 +39,9 @@ public interface PromptGenerator {
     }
 
 
-    static PromptGenerator dutch(Ontology hpo, HpInternational international) {
+    static PromptGenerator dutch(HpInternational international) {
         PpktPhenotypicFeatureGenerator pfgen = new PpktPhenotypicfeatureDutch(international);
-        return new DutchPromptGenerator(hpo, pfgen);
+        return new DutchPromptGenerator(pfgen);
     }
 
     static PromptGenerator german(HpInternational international) {
