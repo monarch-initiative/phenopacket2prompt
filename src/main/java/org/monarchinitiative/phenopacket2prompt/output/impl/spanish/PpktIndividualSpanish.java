@@ -246,9 +246,9 @@ public class PpktIndividualSpanish implements PPKtIndividualInfoGenerator {
         // if older
         if (y>17) {
             return switch (psex) {
-                case FEMALE -> String.format("mujer de %d años", y);
-                case MALE -> String.format("hombre de %d años", y);
-                default -> String.format("persona de %d años", y);
+                case FEMALE -> String.format("una mujer de %d años", y);
+                case MALE -> String.format("un hombre de %d años", y);
+                default -> String.format("una persona de %d años", y);
             };
         } else if (y>9) {
             return switch (psex) {
@@ -258,9 +258,9 @@ public class PpktIndividualSpanish implements PPKtIndividualInfoGenerator {
             };
         } else if (y>0) {
             return switch (psex) {
-                case FEMALE -> String.format("niña %s", iso8601ToYearMonth(iso8601Age));
-                case MALE -> String.format("niño %s", iso8601ToYearMonth(iso8601Age));
-                default -> String.format("niño %s", iso8601ToYearMonth(iso8601Age));
+                case FEMALE -> String.format("una niña %s", iso8601ToYearMonth(iso8601Age));
+                case MALE -> String.format("un niño %s", iso8601ToYearMonth(iso8601Age));
+                default -> String.format("un niño %s", iso8601ToYearMonth(iso8601Age));
             };
         } else if (m>0 || d> 0) {
             return switch (psex) {
@@ -421,7 +421,7 @@ public class PpktIndividualSpanish implements PPKtIndividualInfoGenerator {
         return switch (psex) {
             case FEMALE -> "ella";
             case MALE -> "el";
-            default -> "la persona";
+            default -> "el individuo";
         };
     }
 

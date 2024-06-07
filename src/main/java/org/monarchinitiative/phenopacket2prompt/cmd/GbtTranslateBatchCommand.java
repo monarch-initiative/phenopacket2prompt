@@ -216,6 +216,9 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
         for (File item : items) {
             if (item.isDirectory())
                 ppktDirectories.add(ppktDir+item.getName());
+            else if (item.isFile() && item.getName().endsWith(".json")) {
+                ppktFiles.add(item);
+            }
         }
         for (var f: ppktDirectories) {
             File subdir = new File(f);

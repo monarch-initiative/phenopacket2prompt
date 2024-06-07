@@ -20,8 +20,8 @@ public class PpktIndividualSpanishTest extends PPKtIndividualBase{
 
     private static Stream<TestIndividual> testGetIndividualDescription() {
         return Stream.of(
-                new TestIndividual("46 year old female, infantile onset",
-                        female46yearsInfantileOnset(), new TestOutcome.Ok("La paciente era mujer de 46 años que se presentó en el primer año de vida con")),
+                new TestIndividual("46 year olf female, infantile onset",
+                        female46yearsInfantileOnset(), new TestOutcome.Ok("La paciente era una mujer de 46 años que se presentó en el primer año de vida con")),
                 new TestIndividual("male 4 months, congenital onset",
                        male4monthsCongenitalOnset(), new TestOutcome.Ok("El paciente era un bebé de 4 meses que se presentó al nacer con")),
                 new TestIndividual("female, no onset",
@@ -60,7 +60,7 @@ public class PpktIndividualSpanishTest extends PPKtIndividualBase{
                 new TestIdvlHeShe("male",
                         PhenopacketSex.MALE, new TestOutcome.Ok("el")),
                 new TestIdvlHeShe("proband",
-                        PhenopacketSex.UNKNOWN, new TestOutcome.Ok("la persona"))
+                        PhenopacketSex.UNKNOWN, new TestOutcome.Ok("el individuo"))
         );
     }
 

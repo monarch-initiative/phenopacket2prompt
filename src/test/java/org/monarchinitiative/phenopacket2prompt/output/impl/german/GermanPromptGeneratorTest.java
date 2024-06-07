@@ -1,5 +1,6 @@
 package org.monarchinitiative.phenopacket2prompt.output.impl.german;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenol.io.OntologyLoader;
@@ -15,6 +16,11 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualBase.twoYears;
 
+
+/**
+ * Test only works with local hpo-international.obo
+ */
+@Disabled
 public class GermanPromptGeneratorTest {
 
     private final static String case_vignette = """

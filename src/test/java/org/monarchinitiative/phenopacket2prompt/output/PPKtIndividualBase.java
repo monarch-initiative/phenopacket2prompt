@@ -105,6 +105,38 @@ Lymphopenia, Pneumonia und Severe combined immunodeficiency. im Alter von 1 Mona
         return new PpktIndividual(builder.build());
     }
 
+    public static PpktIndividual PMID_9312167_A() {
+        PhenopacketBuilder builder = PhenopacketBuilder.create("PMID_9312167_A:I:2", metadata);
+        Disease d = DiseaseBuilder.builder("OMIM:179800", "Distal renal tubular acidosis 1").build();
+        Individual subject = IndividualBuilder.builder("A:I:2").female().ageAtLastEncounter("P40Y").build();
+        var pf1 = PhenotypicFeatureBuilder.builder("HP:0000121","Nephrocalcinosis").build();
+        var pf2 = PhenotypicFeatureBuilder.builder("HP:0002900","Hypokalemia").build();
+        var pf3 = PhenotypicFeatureBuilder.builder("HP:0032944","Alkaline urine").build();
+        var pf4 = PhenotypicFeatureBuilder.builder("HP:0012100","Abnormal circulating creatinine concentration").excluded().build();
+        var pf5 = PhenotypicFeatureBuilder.builder("HP:0008341","Distal renal tubular acidosis").excluded().build();
+        var lst = List.of(pf1, pf2, pf3, pf4, pf5);
+        builder.individual(subject).addDisease(d).addPhenotypicFeatures(lst);
+        return new PpktIndividual(builder.build());
+    }
+
+    /*
+    El paciente era un hombre de 30 años qui se presentó con se descartaron Máculas hipomelanóticas, Rabdomioma cardíaco y Bradicardia.A la edad de 30 años, el presentó Fositas o muescas (pits) del esmalte dental y Fibromatosis gingival.
+     */
+    public static PpktIndividual onlyExcludedAtPresentation() {
+        PhenopacketBuilder builder = PhenopacketBuilder.create("id8", metadata);
+        Disease d = DiseaseBuilder.builder("OMIM:100123", "test").onset(TimeElements.age("P3D")).build();
+        Individual subject = IndividualBuilder.builder("individual.6").male().ageAtLastEncounter("P30Y").build();
+        //  HP:Gingival fibromatosis HP:
+        var pf1  = PhenotypicFeatureBuilder.builder("HP:0001662","Bradycardia").excluded().build();
+        var pf2  = PhenotypicFeatureBuilder.builder("HP:0009729","Cardiac rhabdomyoma").excluded().build();
+        var pf3  = PhenotypicFeatureBuilder.builder("HP:0009719","Hypomelanotic macule").excluded().build();
+        var pf4 =PhenotypicFeatureBuilder.builder("HP:0009722","Dental enamel pits").onset(TimeElements.age("P30Y")).build();
+        var pf5 =PhenotypicFeatureBuilder.builder("HP:0000169","Gingival fibromatosis").onset(TimeElements.age("P30Y")).build();
+        var features = List.of(pf1,pf2,pf3,pf4,pf5);
+        builder.individual(subject).addDisease(d).addPhenotypicFeatures(features);
+        return new PpktIndividual(builder.build());
+    }
+
 
 
     public static PhenopacketAge congenital = HpoOnsetAge.congenital();
