@@ -7,7 +7,6 @@ import org.monarchinitiative.phenopacket2prompt.model.PhenopacketSex;
 import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
 import org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualBase;
 import org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualInfoGenerator;
-import org.monarchinitiative.phenopacket2prompt.output.impl.english.PpktIndividualEnglish;
 
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -21,16 +20,16 @@ public class PpktIndividualItalianTest extends PPKtIndividualBase{
 
     private static Stream<TestIndividual> testGetIndividualDescription() {
         return Stream.of(
-                new TestIndividual("46 year olf female, infantile onset",
-                        female46yearsInfantileOnset(), new TestOutcome.Ok("The proband was a 46-year old woman who presented as an infant with")),
+                new TestIndividual("46 year old female, infantile onset",
+                        female46yearsInfantileOnset(), new TestOutcome.Ok("Il soggetto era una donna di 46 anni che si è presentato nel periodo infantile con")),
                 new TestIndividual("male 4 months, congenital onset",
-                        male4monthsCongenitalOnset(), new TestOutcome.Ok("The proband was a 4-month old male infant who presented at birth with")),
+                        male4monthsCongenitalOnset(), new TestOutcome.Ok("Il soggetto era un infante maschio di 4 mesi che si è presentato alla nascita con")),
                 new TestIndividual("female, no onset",
-                        femaleNoAge(), new TestOutcome.Ok("The proband was a female who presented with")),
+                        femaleNoAge(), new TestOutcome.Ok("Il soggetto era una femmina che si è presentata con")),
                 new TestIndividual("female, no HPOs",
-                        femaleNoHPOs(), new TestOutcome.Error(() -> new PhenolRuntimeException("No HPO annotations"))),
+                        femaleNoHPOs(), new TestOutcome.Error(() -> new PhenolRuntimeException("Nessuna anomalia fenotipica"))),
                 new TestIndividual("unknown sex, no 4mo",
-                        unknownSex4MonthOnset(),  new TestOutcome.Ok("The proband presented in childhood with"))
+                        unknownSex4YearsOnset(),  new TestOutcome.Ok("Il soggetto si è presentato da bambino con"))
         );
     }
 
@@ -39,7 +38,7 @@ public class PpktIndividualItalianTest extends PPKtIndividualBase{
     @ParameterizedTest
     @MethodSource("testGetIndividualDescription")
     void testEvaluateExpression(TestIndividual testCase) {
-        PPKtIndividualInfoGenerator generator = new PpktIndividualEnglish();
+        PPKtIndividualInfoGenerator generator = new PpktIndividualItalian();
         PpktIndividual ppkti = testCase.ppktIndividual();
         switch (testCase.expectedOutcome()) {
             case TestOutcome.Ok(String expectedResult) ->
@@ -57,18 +56,18 @@ public class PpktIndividualItalianTest extends PPKtIndividualBase{
     private static Stream<TestIdvlHeShe> testGetPPKtSex() {
         return Stream.of(
                 new TestIdvlHeShe("female",
-                        PhenopacketSex.FEMALE, new TestOutcome.Ok("she")),
+                        PhenopacketSex.FEMALE, new TestOutcome.Ok("lei")),
                 new TestIdvlHeShe("male",
-                        PhenopacketSex.MALE, new TestOutcome.Ok("he")),
+                        PhenopacketSex.MALE, new TestOutcome.Ok("lui")),
                 new TestIdvlHeShe("proband",
-                        PhenopacketSex.UNKNOWN, new TestOutcome.Ok("the individual"))
+                        PhenopacketSex.UNKNOWN, new TestOutcome.Ok("il soggetto"))
         );
     }
 
     @ParameterizedTest
     @MethodSource("testGetPPKtSex")
     void testPPKtSex(TestIdvlHeShe testCase) {
-        PPKtIndividualInfoGenerator generator = new PpktIndividualEnglish();
+        PPKtIndividualInfoGenerator generator = new PpktIndividualItalian();
         switch (testCase.expectedOutcome()) {
             case TestOutcome.Ok(String expectedResult) ->
                 assertEquals(expectedResult, generator.heSheIndividual(testCase.ppktSex()));
@@ -89,13 +88,13 @@ public class PpktIndividualItalianTest extends PPKtIndividualBase{
     private static Stream<TestIdvlAtAge> testIndlAtAge() {
         return Stream.of(
                 new TestIdvlAtAge("congenital",
-                        congenital, new TestOutcome.Ok("At birth")),
+                        congenital, new TestOutcome.Ok("Alla nascita")),
                 new TestIdvlAtAge("infantile",
-                        infantile, new TestOutcome.Ok("During the infantile period")),
+                        infantile, new TestOutcome.Ok("Durante il periodo infantile")),
                 new TestIdvlAtAge("childhood age",
-                        childhood, new TestOutcome.Ok("During childhood")),
+                        childhood, new TestOutcome.Ok("Durante l'infanzia")),
                 new TestIdvlAtAge("46 years old",
-                        p46y, new TestOutcome.Ok("At an age of 46 years"))
+                        p46y, new TestOutcome.Ok("All'età di 46 anni"))
         );
     }
 
@@ -103,7 +102,7 @@ public class PpktIndividualItalianTest extends PPKtIndividualBase{
     @ParameterizedTest
     @MethodSource("testIndlAtAge")
     void testPPKtSex(TestIdvlAtAge testCase) {
-        PPKtIndividualInfoGenerator generator = new PpktIndividualEnglish();
+        PPKtIndividualInfoGenerator generator = new PpktIndividualItalian();
         switch (testCase.expectedOutcome()) {
             case TestOutcome.Ok(String expectedResult) ->
                     assertEquals(expectedResult, generator.atAge(testCase.ppktAge()));

@@ -29,7 +29,7 @@ public class PpktIndividualGermanTest extends PPKtIndividualBase{
               new TestIndividual("female, no HPOs",
                         femaleNoHPOs(), new TestOutcome.Error(() -> new PhenolRuntimeException("No HPO annotations"))),
                 new TestIndividual("unknown sex, no 4mo",
-                        unknownSex4MonthOnset(),  new TestOutcome.Ok("Der Patient stellte sich in der Kindheit mit den folgenden Symptomen vor: "))
+                        unknownSex4YearsOnset(),  new TestOutcome.Ok("Der Patient stellte sich in der Kindheit mit den folgenden Symptomen vor: "))
                          );
     }
 

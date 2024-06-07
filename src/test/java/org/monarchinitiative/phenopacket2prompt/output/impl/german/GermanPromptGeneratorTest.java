@@ -45,7 +45,7 @@ Der Patient war ein 2jähriger Junge, der sich im Alter von 3 Tagen mit den folg
         }
         HpInternationalOboParser oboParser = new HpInternationalOboParser(translationsFile);
         Map<String, HpInternational> internationalMap = oboParser.getLanguageToInternationalMap();
-        PromptGenerator german = PromptGenerator.german(internationalMap.get("de"));
+        PromptGenerator german = PromptGenerator.german(hpo, internationalMap.get("de"));
         String prompt = german.createPrompt(twoYears());
         assertEquals(case_vignette, prompt.trim());
     }

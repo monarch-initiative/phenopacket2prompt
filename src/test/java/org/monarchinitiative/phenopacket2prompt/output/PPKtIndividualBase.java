@@ -80,7 +80,7 @@ public class PPKtIndividualBase {
         return new PpktIndividual(builder.build());
     }
 
-    public static PpktIndividual unknownSex4MonthOnset() {
+    public static PpktIndividual unknownSex4YearsOnset() {
         PhenopacketBuilder builder = PhenopacketBuilder.create("id5", metadata);
         Disease d = DiseaseBuilder.builder("OMIM:100123", "test").onset(TimeElements.childhoodOnset()).build();
         Individual subject = IndividualBuilder.builder("individual.5").unknownSex().build();
