@@ -63,7 +63,7 @@ public class GptTranslateCommand implements Callable<Integer> {
         System.out.println(prompt);
         switch (languageCode) {
             case "de" -> {
-                PromptGenerator german = PromptGenerator.german(internationalMap.get("de"));
+                PromptGenerator german = PromptGenerator.german(hpo, internationalMap.get("de"));
                 prompt = german.createPrompt(individual);
             }
             case "es" -> {
@@ -73,6 +73,10 @@ public class GptTranslateCommand implements Callable<Integer> {
             case "nl" -> {
                 PromptGenerator dutch = PromptGenerator.dutch(hpo, internationalMap.get("nl"));
                 prompt = dutch.createPrompt(individual);
+            }
+            case "it" -> {
+                PromptGenerator italian = PromptGenerator.italian(hpo, internationalMap.get("it"));
+                prompt = italian.createPrompt(individual);
             }
             default -> prompt = "did not recognize language code " + languageCode;
         }

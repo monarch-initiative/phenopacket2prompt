@@ -75,7 +75,7 @@ public class PpktIndividualItalian implements PPKtIndividualInfoGenerator {
                 if (y > 17) {
                     return String.format("una donna di %d anni", y);
                 } else if (y > 9) {
-                    return String.format("una adolescente di %d anni", y);
+                    return String.format("un'adolescente femmina di %d anni", y);
 
                 } else if (y > 0) {
                     return String.format("una bambina di %d anni", y);
@@ -148,6 +148,9 @@ public class PpktIndividualItalian implements PPKtIndividualInfoGenerator {
 
     @Override
     public String getIndividualDescription(PpktIndividual individual) {
+        if (individual.annotationCount() == 0) {
+            throw new PhenolRuntimeException("No HPO annotations");
+        }
         Optional<PhenopacketAge> lastExamOpt = individual.getAgeAtLastExamination();
         Optional<PhenopacketAge> onsetOpt = individual.getAgeAtOnset();
         PhenopacketSex psex = individual.getSex();
@@ -223,7 +226,7 @@ public class PpktIndividualItalian implements PPKtIndividualInfoGenerator {
         if (hpoOnsetTermAge.isFetus()) {
             return  "nel periodo fetale";
         } else if (hpoOnsetTermAge.isCongenital()) {
-            return  "nel periodo neonatale";
+            return  "alla nascita";
         } else if (hpoOnsetTermAge.isInfant()) {
             return "nel periodo infantile"; // unsure, to be checked
         } else if (hpoOnsetTermAge.isChild()) {
@@ -249,8 +252,8 @@ public class PpktIndividualItalian implements PPKtIndividualInfoGenerator {
             };
         } else if (y>9) {
             return switch (psex) {
-                case FEMALE -> String.format("un'adolescente di %d anni", y);
-                case MALE -> String.format("un adolescente di %d anni", y);
+                case FEMALE -> String.format("un'adolescente femmina di %d anni", y);
+                case MALE -> String.format("un adolescente maschio di %d anni", y);
                 default -> String.format("un adolescente di %d anni", y);
             };
         } else if (y>0) {
@@ -261,9 +264,9 @@ public class PpktIndividualItalian implements PPKtIndividualInfoGenerator {
             };
         } else if (m>0 || d> 0) {
             return switch (psex) {
-                case FEMALE -> String.format("una infante %s", iso8601ToMonthDay(iso8601Age));
-                case MALE -> String.format("un infante %s", iso8601ToMonthDay(iso8601Age));
-                default -> String.format("un infante %s", iso8601ToMonthDay(iso8601Age));
+                case FEMALE -> String.format("%s %s", FEMALE_INFANT, iso8601ToMonthDay(iso8601Age));
+                case MALE -> String.format("%s %s", MALE_INFANT, iso8601ToMonthDay(iso8601Age));
+                default -> String.format("%s %s", INFANT, iso8601ToMonthDay(iso8601Age));
             };
         } else {
             return switch (psex) {
@@ -368,7 +371,7 @@ public class PpktIndividualItalian implements PPKtIndividualInfoGenerator {
             // should never happen
             throw new PhenolRuntimeException("Did not recognize last exam age type " + lastExamAge.ageType());
         }
-        return String.format("Il paziente era %s che si è presentato ", individualDescription);
+        return String.format("Il soggetto era %s che si è presentato ", individualDescription);
     }
 
     /**
@@ -390,23 +393,23 @@ public class PpktIndividualItalian implements PPKtIndividualInfoGenerator {
             // should never happen
             throw new PhenolRuntimeException("Did not recognize onset age type " + onsetAge.ageType());
         }
-        return String.format("Il paziente si è presentato %s con", onsetDescription);
+        return String.format("Il soggetto si è presentato %s con", onsetDescription);
     }
 
     private String ageNotAvailable(PhenopacketSex psex) {
         return switch (psex) {
-            case FEMALE -> "La paziente si è presentata con";
-            case MALE -> "Il paziente si è presentato con";
-            default -> "Il paziente si è presentato con";
+            case FEMALE -> "Il soggetto era una femmina che si è presentata con";
+            case MALE -> "Il soggetto era un maschio si è presentato con";
+            default -> "Il soggetto si è presentato con";
         };
     }
 
     @Override
     public String heSheIndividual(PhenopacketSex psex) {
         return switch (psex) {
-            case FEMALE -> "lui";
-            case MALE -> "lei";
-            default -> "la persona";
+            case FEMALE -> "lei";
+            case MALE -> "lui";
+            default -> "il soggetto";
         };
     }
 

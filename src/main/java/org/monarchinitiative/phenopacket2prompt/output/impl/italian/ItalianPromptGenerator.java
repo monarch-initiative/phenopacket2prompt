@@ -15,6 +15,8 @@ import java.util.Set;
 
 public class ItalianPromptGenerator implements PromptGenerator {
 
+    private final Ontology hpo;
+
     private final PPKtIndividualInfoGenerator ppktAgeSexGenerator;
 
     private final PhenopacketTextGenerator ppktTextGenerator;
@@ -23,7 +25,8 @@ public class ItalianPromptGenerator implements PromptGenerator {
 
 
 
-    public ItalianPromptGenerator(PpktPhenotypicFeatureGenerator pfgen) {
+    public ItalianPromptGenerator(Ontology hpo, PpktPhenotypicFeatureGenerator pfgen) {
+        this.hpo = hpo;
         ppktAgeSexGenerator = new PpktIndividualItalian();
         ppktTextGenerator = new PpktTextItalian();
         this.ppktPhenotypicFeatureGenerator = pfgen;

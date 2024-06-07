@@ -45,13 +45,13 @@ public interface PromptGenerator {
         return new DutchPromptGenerator(hpo, pfgen);
     }
 
-    static PromptGenerator german(HpInternational international) {
+    static PromptGenerator german(Ontology hpo, HpInternational international) {
         PpktPhenotypicFeatureGenerator pfgen = new PpktPhenotypicfeatureGerman(international);
-        return new GermanPromptGenerator(pfgen);
+        return new GermanPromptGenerator(hpo, pfgen);
     }
-    static PromptGenerator italian(HpInternational international) {
+    static PromptGenerator italian(Ontology hpo, HpInternational international) {
         PpktPhenotypicFeatureGenerator pfgen = new PpktPhenotypicfeatureItalian(international);
-        return new ItalianPromptGenerator(pfgen);
+        return new ItalianPromptGenerator(hpo, pfgen);
     }
 
 
