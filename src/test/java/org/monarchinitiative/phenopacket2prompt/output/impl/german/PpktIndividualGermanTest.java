@@ -20,10 +20,10 @@ public class PpktIndividualGermanTest extends PPKtIndividualBase{
 
     private static Stream<TestIndividual> testGetIndividualDescription() {
         return Stream.of(
-                new TestIndividual("46 year olf female, infantile onset",
-                        female46yearsInfantileOnset(), new TestOutcome.Ok("Die Probandin war eine 46-jährige Frau, die sich im Säuglingsalter mit den folgenden Symptomen vorgestellt hat: ")),
+                new TestIndividual("46 year old female, infantile onset",
+                        female46yearsInfantileOnset(), new TestOutcome.Ok("Die Patientin war eine 46-jährige Frau, die sich im Säuglingsalter mit den folgenden Symptomen vorgestellt hat: ")),
               new TestIndividual("male 4 months, congenital onset",
-                       male4monthsCongenitalOnset(), new TestOutcome.Ok("Der Proband war ein 4 Monate alter Säugling, der sich bei der Geburt mit den folgenden Symptomen vorgestellt hat: ")),
+                       male4monthsCongenitalOnset(), new TestOutcome.Ok("Der Patient war ein 4 Monate alter Säugling, der sich bei der Geburt mit den folgenden Symptomen vorgestellt hat: ")),
                   new TestIndividual("female, no onset",
                         femaleNoAge(), new TestOutcome.Ok("Die Patientin stellte sich mit den folgenden Symptomen vor: ")),
               new TestIndividual("female, no HPOs",
