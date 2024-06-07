@@ -22,7 +22,7 @@ public class PpktIndividualTest {
     private static final ClassLoader classLoader = PpktIndividualTest.class.getClassLoader();
     private static final URL resource = (classLoader.getResource(ppktPath));
     private static final File file = new File(resource.getFile());
-    private static final PpktIndividual ppktIndividual = new PpktIndividual(file);
+    private static final PpktIndividual ppktIndividual =  PpktIndividual.fromFile(file);
 
 
     @Test

@@ -1,16 +1,19 @@
-package org.monarchinitiative.phenopacket2prompt.output.impl.spanish;
+package org.monarchinitiative.phenopacket2prompt.output.impl.german;
 
 import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenopacket2prompt.model.OntologyTerm;
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketAge;
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketSex;
 import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
-import org.monarchinitiative.phenopacket2prompt.output.*;
+import org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualInfoGenerator;
+import org.monarchinitiative.phenopacket2prompt.output.PhenopacketTextGenerator;
+import org.monarchinitiative.phenopacket2prompt.output.PpktPhenotypicFeatureGenerator;
+import org.monarchinitiative.phenopacket2prompt.output.PromptGenerator;
 
-import java.util.*;
+import java.util.List;
+import java.util.Set;
 
-public class SpanishPromptGenerator implements PromptGenerator {
-
+public class GermanPromptGenerator implements PromptGenerator {
 
     private final PPKtIndividualInfoGenerator ppktAgeSexGenerator;
 
@@ -20,11 +23,14 @@ public class SpanishPromptGenerator implements PromptGenerator {
 
 
 
-    public SpanishPromptGenerator(PpktPhenotypicFeatureGenerator pfgen) {
-        ppktAgeSexGenerator = new PpktIndividualSpanish();
-        ppktTextGenerator = new PpktTextSpanish();
+    public GermanPromptGenerator(PpktPhenotypicFeatureGenerator pfgen) {
+        ppktAgeSexGenerator = new PpktIndividualGerman();
+        ppktTextGenerator = new PpktTextGerman();
         this.ppktPhenotypicFeatureGenerator = pfgen;
     }
+
+
+
 
     @Override
     public String queryHeader() {
@@ -45,15 +51,15 @@ public class SpanishPromptGenerator implements PromptGenerator {
     public String getVignetteAtAge(PhenopacketAge page, PhenopacketSex psex, List<OntologyTerm> terms) {
         String ageString = this.ppktAgeSexGenerator.atAge(page);
         String features = formatFeatures(terms);
-        return String.format("%s, %s presentó %s", ageString, ppktAgeSexGenerator.heSheIndividual(psex), features);
+        return String.format("%s, präsentierte %s mit den folgenden Symptomen: %s", ageString, ppktAgeSexGenerator.heSheIndividual(psex), features);
     }
-
 
 
     @Override
     public Set<String> getMissingTranslations() {
         return this.ppktPhenotypicFeatureGenerator.getMissingTranslations();
     }
+
 
 
 

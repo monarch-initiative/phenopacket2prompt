@@ -4,7 +4,7 @@ import org.monarchinitiative.phenopacket2prompt.model.PhenopacketAge;
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketSex;
 import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
 
-public interface PhenopacketIndividualInformationGenerator {
+public interface PPKtIndividualInfoGenerator {
 
     String getIndividualDescription(PpktIndividual individual);
 

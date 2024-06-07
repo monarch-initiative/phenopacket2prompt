@@ -17,14 +17,19 @@ import java.io.IOException;
 import java.util.*;
 
 public class PpktIndividual {
-    final Logger LOGGER = LoggerFactory.getLogger(PpktIndividual.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PpktIndividual.class);
 
     private final Phenopacket ppkt;
 
     private final String phenopacketId;
 
 
-    public PpktIndividual(File ppktJsonFile) {
+    public PpktIndividual(Phenopacket ppkt) {
+        this.ppkt = ppkt;
+        this.phenopacketId = ppkt.getId();
+    }
+
+    public static PpktIndividual fromFile(File ppktJsonFile) {
         JSONParser parser = new JSONParser();
         try {
             Object obj = parser.parse(new FileReader(ppktJsonFile));
@@ -32,13 +37,19 @@ public class PpktIndividual {
             String phenopacketJsonString = jsonObject.toJSONString();
             Phenopacket.Builder phenoPacketBuilder = Phenopacket.newBuilder();
             JsonFormat.parser().merge(phenopacketJsonString, phenoPacketBuilder);
-            this.ppkt = phenoPacketBuilder.build();
+            Phenopacket ppkt = phenoPacketBuilder.build();
+            return new PpktIndividual(ppkt);
         } catch (IOException | ParseException e1) {
             LOGGER.error("Could not ingest phenopacket: {}", e1.getMessage());
             throw new PhenolRuntimeException("Could not load phenopacket at " + ppktJsonFile);
         }
-        this.phenopacketId = ppkt.getId();
     }
+
+    public static PpktIndividual fromPhenopacket(Phenopacket ppkt) {
+        return new PpktIndividual(ppkt);
+    }
+
+
 
     public String getPhenopacketId() {
         return phenopacketId;
@@ -201,5 +212,9 @@ public class PpktIndividual {
             }
         }
         return ageToFeatureMap;
+    }
+
+    public int annotationCount() {
+        return ppkt.getPhenotypicFeaturesCount();
     }
 }

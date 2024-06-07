@@ -1,6 +1,6 @@
 package org.monarchinitiative.phenopacket2prompt.model;
 
-public interface PhenopacketAge {
+public sealed interface PhenopacketAge permits AgeNotSpecified, HpoOnsetAge, Iso8601Age {
 
     String age();
     PhenopacketAgeType ageType();
@@ -18,4 +18,5 @@ public interface PhenopacketAge {
     int totalDays();
 
     default boolean specified() {return true; }
+
 }

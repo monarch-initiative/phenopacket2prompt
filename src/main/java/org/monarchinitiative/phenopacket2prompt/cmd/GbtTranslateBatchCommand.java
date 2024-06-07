@@ -9,6 +9,7 @@ import org.monarchinitiative.phenopacket2prompt.international.HpInternationalObo
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketDisease;
 import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
 import org.monarchinitiative.phenopacket2prompt.output.CorrectResult;
+import org.monarchinitiative.phenopacket2prompt.output.PpktCopy;
 import org.monarchinitiative.phenopacket2prompt.output.PromptGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Callable;
 
 @CommandLine.Command(name = "batch", aliases = {"B"},
@@ -40,8 +42,15 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
             description = "path to translations file")
     private String translationsPath = "data/hp-international.obo";
 
+    @CommandLine.Option(names = {"-o", "--outdir"},
+            description = "path to outdir")
+    private String outdirname = "prompts";
+
     @CommandLine.Option(names = {"-d", "--dir"}, description = "Path to directory with JSON phenopacket files", required = true)
     private String ppktDir;
+
+    private String currentLanguageCode = null;
+    private int currentCount;
 
     @Override
     public Integer call() throws Exception {
@@ -57,17 +66,49 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
             return 1;
         }
         HpInternationalOboParser oboParser = new HpInternationalOboParser(translationsFile);
+
         Map<String, HpInternational> internationalMap = oboParser.getLanguageToInternationalMap();
         LOGGER.info("Got {} translations", internationalMap.size());
         List<File> ppktFiles = getAllPhenopacketJsonFiles();
-        createDir("prompts");
+        createDir(outdirname);
         List<CorrectResult>  correctResultList = outputPromptsEnglish(ppktFiles, hpo);
         // output all non-English languages here
-        PromptGenerator spanish = PromptGenerator.spanish(hpo, internationalMap.get("es"));
+
+        // SPANISH
+        PromptGenerator spanish = PromptGenerator.spanish(internationalMap.get("es"));
+        resetOutput("es");
         outputPromptsInternational(ppktFiles, hpo, "es", spanish);
+
+        resetOutput("nl");
+        PromptGenerator dutch = PromptGenerator.dutch(internationalMap.get("nl"));
+        outputPromptsInternational(ppktFiles, hpo, "nl", dutch);
+        // GERMAN
+        resetOutput("de");
+        PromptGenerator german = PromptGenerator.german(internationalMap.get("de"));
+        outputPromptsInternational(ppktFiles, hpo, "de", german);
+       
+        // ITALIAN
+        resetOutput("it");
+        PromptGenerator italian = PromptGenerator.italian(internationalMap.get("it"));
+        outputPromptsInternational(ppktFiles, hpo, "it", italian);
+        resetOutput("finished");
+        // output original phenopackets
+        PpktCopy pcopy = new PpktCopy(new File(outdirname));
+        for (var file : ppktFiles) {
+            pcopy.copyFile(file);
+        }
+
         // output file with correct diagnosis list
         outputCorrectResults(correctResultList);
         return 0;
+    }
+
+    private void resetOutput(String es) {
+        if (currentLanguageCode != null) {
+            System.out.printf("Finished writing %d phenopackets in %s\n", currentCount, currentLanguageCode);
+        }
+        currentLanguageCode = es;
+        currentCount = 0;
     }
 
     private void outputCorrectResults(List<CorrectResult> correctResultList) {
@@ -79,12 +120,12 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.printf("[INFO] Output a total of %d prompts in en and es.\n", correctResultList.size());
+        System.out.printf("[INFO] Output a total of %d prompts in en, es, nl, de, and it.\n", correctResultList.size());
     }
 
 
-    private String getFileName(String phenopacketID) {
-        return phenopacketID.replaceAll("[^\\w]", phenopacketID).replaceAll("/","_") + "-prompt.txt";
+    private String getFileName(String phenopacketID, String languageCode) {
+        return phenopacketID.replaceAll("[^\\w]","_") + "_" + languageCode + "-prompt.txt";
     }
 
 
@@ -94,21 +135,28 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
         createDir(dirpath);
         List<String> diagnosisList = new ArrayList<>();
         for (var f: ppktFiles) {
-            PpktIndividual individual = new PpktIndividual(f);
+            PpktIndividual individual = PpktIndividual.fromFile(f);
             List<PhenopacketDisease> diseaseList = individual.getDiseases();
             if (diseaseList.size() != 1) {
-                System.err.println(String.format("[ERROR] Got %d diseases for %s.\n", diseaseList.size(), individual.getPhenopacketId()));
-                continue;
+                String errmsg = String.format("[ERROR] Got %d diseases for %s.\n", diseaseList.size(), individual.getPhenopacketId());
+                throw new PhenolRuntimeException(errmsg);
             }
             PhenopacketDisease pdisease = diseaseList.get(0);
-            String promptFileName = getFileName( individual.getPhenopacketId());
+            String promptFileName = getFileName( individual.getPhenopacketId(), languageCode);
             String diagnosisLine = String.format("%s\t%s\t%s\t%s", pdisease.getDiseaseId(), pdisease.getLabel(), promptFileName, f.getAbsolutePath());
             try {
                 diagnosisList.add(diagnosisLine);
                 String prompt = generator.createPrompt(individual);
                 outputPrompt(prompt, promptFileName, dirpath);
             } catch (Exception e) {
-                e.printStackTrace();
+                System.err.printf("[ERROR] Could not process %s: %s\n", promptFileName, e.getMessage());
+                //e.printStackTrace();
+            }
+        }
+        Set<String> missing = generator.getMissingTranslations();
+        if (! missing.isEmpty()) {
+            for (var m : missing) {
+                System.out.printf("[%s] Missing: %s\n", languageCode, m);
             }
         }
     }
@@ -117,17 +165,17 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
     private List<CorrectResult> outputPromptsEnglish(List<File> ppktFiles, Ontology hpo) {
         createDir("prompts/en");
         List<CorrectResult> correctResultList = new ArrayList<>();
-        PromptGenerator generator = PromptGenerator.english(hpo);
+        PromptGenerator generator = PromptGenerator.english();
 
         for (var f: ppktFiles) {
-            PpktIndividual individual = new PpktIndividual(f);
+            PpktIndividual individual =  PpktIndividual.fromFile(f);
             List<PhenopacketDisease> diseaseList = individual.getDiseases();
             if (diseaseList.size() != 1) {
-                System.err.println(String.format("[ERROR] Got %d diseases for %s.\n", diseaseList.size(), individual.getPhenopacketId()));
+                System.err.printf("[ERROR] Got %d diseases for %s.\n", diseaseList.size(), individual.getPhenopacketId());
                 continue;
             }
             PhenopacketDisease pdisease = diseaseList.get(0);
-            String promptFileName = getFileName( individual.getPhenopacketId());
+            String promptFileName = getFileName( individual.getPhenopacketId(), "en");
             String diagnosisLine = String.format("%s\t%s\t%s\t%s", pdisease.getDiseaseId(), pdisease.getLabel(), promptFileName, f.getAbsolutePath());
             try {
                 String prompt = generator.createPrompt(individual);
@@ -150,7 +198,8 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.print(".");
+        System.out.printf("%s      %d.\r", currentLanguageCode, currentCount);
+        currentCount++;
     }
 
 
@@ -177,6 +226,9 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
         for (File item : items) {
             if (item.isDirectory())
                 ppktDirectories.add(ppktDir+item.getName());
+            else if (item.isFile() && item.getName().endsWith(".json")) {
+                ppktFiles.add(item);
+            }
         }
         for (var f: ppktDirectories) {
             File subdir = new File(f);
