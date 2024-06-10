@@ -46,7 +46,7 @@ public class PpktPhenotypicfeatureItalian implements PpktPhenotypicFeatureGenera
         if (items.size() == 2) {
             // no comma if we just have two items.
             // one item will work with the below code
-            return String.join(" and ", items);
+            return String.join(" e ", items);
         }
         String symList = String.join(", ", items);
         int jj = symList.lastIndexOf(", ");
