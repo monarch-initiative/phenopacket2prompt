@@ -1,0 +1,43 @@
+[source]
+pmid = PMID:17661815
+title = Familial CHARGE syndrome because of CHD7 mutation: clinical intra- and interfamilial variability
+[diagnosis]
+disease_id = OMIM:214800
+disease_label = CHARGE syndrome
+[text]
+Patient A III-2 Patient A III-2 is the second boy of non-consanguineous French parents, respectively, aged 30 and 29 years, at the time of conception.
+The pregnancy was characterized by polyhydramnios from the 26th week of gestation.
+Delivery took place after 38 weeks by caesarean section with normal birth weight (BW) (3025 g, 50th centile), birth length (BL)
+(48 cm, 25th centile) and head circumference (OFC) (34.5 cm, 50th centile). MCA noted at birth included esophageal atresia with tracheoesophageal fistula,
+bilateral cleft lip and palate, large ventricular septal defect, dextroposition of aorta, atresia of the brachiocephalic trunk,
+malacia of the right main bronchus, costovertebral abnormalities (bifid fourth dorsal vertebrae, duplication of the fourth right rib,
+and spina bifida occulta from the seventh to the ninth dorsal vertebrae) and left cryptorchidism.
+Axial control acquisition was delayed as he sat at the age of 11 months, walked at 22 months.
+Balance problems persisted for several years. Recurrent otitis media, responsible for conductive hearing loss,
+required bilateral tympanostomy tubes. First words were delayed till 30 months. Learning disabilities and writing difficulties
+were confirmed when he was 8 year. When referred to the genetic department at the age of 15 years,
+he was 151 cm tall (−2 SD ), weighted 40 kg (−2 SD), and had an OFC of 52 cm (−2 SD).
+At that time, he had a long face with prominent chin, small mouth, high nasal bridge and triangular shape of right concha
+(Fig. 1). He had postural instability. Vestibular testing showed absence of response on canal function test with residual otolith
+function and residual left vestibulospinal responses on vestibular evoked myogenic potential test.
+Magnetic resonance imaging (MRI) examination showed hypoplastic superior and lateral semicircular canals (SCC) in the right ear
+and aplastic superior and hypoplastic lateral SCC in the left ear (Fig. 2). The vestibulae and the cochleae were normal.
+Facial and vestibulo-cochlear nerves were present on both sides. Brain MRI revealed a hypoplastic internal left carotid artery.
+There was no evidence for arhinencephaly. He had mild convergent strabismus, discrete myopia and posterior embryotoxon.
+Funduscopic examination revealed hypoplastic papillae. Using WISC IV scale at age 15 years his verbal conceptual index (VCI) was 78,
+perceptual reasoning index (PRI) 58, working memory index (WMI) 62 and processing speed index (PSI) 81.
+[text]
+Patient B III-1 Patient B III-1 is the first child from healthy unrelated Caucasian parents. Mother and father were both 26 years old at time of conception.
+Cerebral ventricular dilatation was suspected on pre-natal ultrasound but not confirmed by fetal cerebral MRI.
+Fetal karyotype was normal (46, XY). Premature labor occurred and delivery took place at a gestational age of 35 weeks.
+BW was 2050 g (third centile); BL 46.5 cm (50th centile) and OFC 34 cm (90th centile). He had cup-shaped ears with missing earlobes,
+right facial palsy, bifid uvula and mild retrognathism (Fig. 4) with associated cryptorchidism and global hypotonia.
+Swallowing difficulties with poor feeding were noted. Laryngoscopy revealed left vocal cord palsy.
+An atrial septal defect was diagnosed by echocardiography. Fundoscopy showed right retinal coloboma.
+Brainstem electric response audiometry identified a sensorineural deafness, visual evoked potentials were in the normal range.
+Metabolic work-up did not show any anomaly. This boy died on day 19 after refractory convulsive episodes starting on day 4.
+Encephalopathy and hydrocephaly were subsequently noted, as post-natal cerebral MRI (day 7) showed quadriventricular enlargement
+because of bloody effusion in occipital horns without any underlying vascular malformation. On autopsy,
+brain external examination revealed the absence of olfactory bulbs with a thin corpus callosum.
+On microscopic exam, cranial nerve roots were normal. Deep cerebellar heterotopia was present.
+Complete macroscopic and microscopic examinations were otherwise normal except for the presence of testis in the inguinal canals.

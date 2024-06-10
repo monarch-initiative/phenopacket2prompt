@@ -1,0 +1,28 @@
+[source]
+pmid = PMID:28446873
+title = Novel VPS13A Gene Mutations Identified in Patients Diagnosed with Chorea-acanthocytosis (ChAc): Case Presentation and Literature Review
+[diagnosis]
+disease_id = OMIM:200150
+disease_label = Choreoacanthocytosis
+[text]
+Case 1
+A 37-year-old man, a warehouse keeper, presented with perioral chorea, dysphagia, dysarthria, vocalization, and involuntary upper limb movements for 5 months.
+His symptoms had been gradually progressing, aggravated recently by involuntary self-mutilation behaviors: tongue and lip biting.
+The past history revealed that he was diagnosed with generalized tonic–clonic seizure (GTCS) at age 30, but maintaining continuous remission
+with regular sodium valproate administration. On neurological examination, the patient showed perioral chorea, reduced muscle tone and tendon reflex and sporadic mouth ulcers,
+especially accompany frequent suck-mimicking activity. Upon admission screening stage, the laboratory biomedical tests revealed a considerable elevation in serum creatine kinase (CK),
+ l-lactate dehydrogenase (LDH) and alpha hydroxybutyrate dehydrogenase (HBDH), especially for CK reaching up to seven-fold (see Table 1).
+ The subsequent brain magnetic resonance imaging (MRI) scanning indicated moderate anterior horn dilation of lateral ventricles and mild caudate nucleus head atrophy
+ (see Figure 1A-left column).
+ Then four repeated and independent blood smears were performed, revealing that acanthocytes ratio averaged to 18% of the complete blood count (CBC).
+[text]
+Case 2
+A 45-year-old housewife gradually developed involuntary bruxism (teeth grinding), dysphagia, dysarthria, vocalization, and frequent self-mutilation behaviors (tongue and lip biting)
+after a recovery from a severe mouth ulcer 1 month ago. Her orofacial chorea was characterized by clumsy, non-coordinated mandibular movement and occasional grimacing activities.
+A further family history inquiry revealed no similar symptom presenters. On neurological examination, she showed frequent teeth clenching, reduced limb muscle tone and tendon reflex and
+multiple lip ulcers. To prevent the risk of self-mutilation, she had to continuously hold a roll of cloth in her mouth. The serum CK, LDH, and HBDH levels are all within normal ranges
+(see Table 1). On the basis of clinical features and serum biomchemical indicators, the patient was temporarily diagnosed with oromandibular dystonia.
+But a routine blood smear test accidentally detected acanthocytes.
+Subsequently, three repeated and independent peripheral blood smears conformably detected acanthocytes, with acanthocytes ratio averaged to 17% of CBC (see Figure 1B-right column).
+Besides, brain MRI scanning demonstrated mild atrophy in the caudate head and putamen bilaterally, accompanying moderate anterior horn dilation of lateral ventricles
+(see Figure 1A-right column).
