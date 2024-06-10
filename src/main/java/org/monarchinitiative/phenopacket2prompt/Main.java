@@ -2,18 +2,22 @@ package org.monarchinitiative.phenopacket2prompt;
 
 
 import org.monarchinitiative.phenopacket2prompt.cmd.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
 
 import java.util.concurrent.Callable;
 @CommandLine.Command(name = "phenopacket2promot", mixinStandardHelpOptions = true, version = "0.2.0",
         description = "Convert phenopacket to prompt for GPT")
 public class Main implements Callable<Integer> {
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args){
         if (args.length == 0) {
             // if the user doesn't pass any command or option, add -h to show help
             args = new String[]{"-h"};
         }
+
         CommandLine cline = new CommandLine(new Main())
                 .addSubcommand("batch", new GbtTranslateBatchCommand())
                 .addSubcommand("download", new DownloadCommand())
