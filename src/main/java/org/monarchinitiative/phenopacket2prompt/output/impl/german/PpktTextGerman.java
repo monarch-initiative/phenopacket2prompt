@@ -15,7 +15,7 @@ Ich führe ein Experiment mit einem klinischen Fallbericht durch, um zu sehen, w
 Diese Liste sollte so viele Diagnosen enthalten, wie Sie für sinnvoll halten.
 
 Sie müssen Ihre Argumentation nicht erläutern, sondern nur die Diagnosen auflisten. 
-Ich habe Ihnen diese Anleitung auf English gegeben, aber ich bitte Sie, ihre Antwort ausschließlich auf English zu liefern.
+Ich habe Ihnen diese Anleitung auf Deutsch gegeben, aber ich bitte Sie, Ihre Antwort ausschließlich auf English zu liefern.
 Hier ist der Fall:
              
 """;
