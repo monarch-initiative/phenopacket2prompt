@@ -4,21 +4,27 @@ import org.monarchinitiative.fenominal.core.FenominalRunTimeException;
 import org.monarchinitiative.fenominal.core.TermMiner;
 import org.monarchinitiative.fenominal.model.MinedSentence;
 import org.monarchinitiative.fenominal.model.MinedTermWithMetadata;
+import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenol.io.OntologyLoader;
 
 
 import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenol.ontology.data.TermId;
+import org.phenopackets.phenopackettools.builder.PhenopacketBuilder;
+import org.phenopackets.phenopackettools.builder.builders.IndividualBuilder;
+import org.phenopackets.phenopackettools.builder.builders.MetaDataBuilder;
+import org.phenopackets.phenopackettools.builder.builders.PhenotypicFeatureBuilder;
+import org.phenopackets.schema.v2.Phenopacket;
+import org.phenopackets.schema.v2.core.Individual;
+import org.phenopackets.schema.v2.core.MetaData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Collection;
+import java.util.*;
 
 public class FenominalParser {
     private static final Logger LOGGER = LoggerFactory.getLogger(FenominalParser.class);
@@ -27,6 +33,11 @@ public class FenominalParser {
 
     private final String input;
     protected final String output;
+
+    private final String pmid = "PMID:123";
+    private final String title = "title";
+
+
 
     public FenominalParser(File hpoJsonFile, String input, String output, boolean exact) {
         this.input = input;
@@ -39,12 +50,84 @@ public class FenominalParser {
         }
     }
 
+    private final static MetaData metadata = MetaDataBuilder.builder("curator").build();
+
+
     private Collection<MinedSentence> getMappedSentences (String content) {
         return miner.mineSentences(content);
     }
 
 
-    public void parse(boolean verbose) {
+
+    private List<SimpleTerm> parseHpoTerms(String text) {
+        List<SimpleTerm> simpleTermList = new ArrayList<>();
+
+        Collection<MinedSentence> mappedSentences = getMappedSentences(text);
+
+        for (var mp : mappedSentences) {
+            Collection<? extends MinedTermWithMetadata> minedTerms = mp.getMinedTerms();
+            for (var mt : minedTerms) {
+                TermId tid = mt.getTermId();
+
+                var opt = ontology.getTermLabel(tid);
+                if (opt.isEmpty()) {
+                    // should never happen
+                    System.err.println("[ERROR] Could not find label for " + tid.getValue());
+                    continue;
+                }
+                String label = opt.get();
+               simpleTermList.add(new SimpleTerm(tid.getValue(), label, (! mt.isPresent())));
+            }
+        }
+        return simpleTermList;
+    }
+
+
+    private static final Set<String> MALE = Set.of("male", "man", "boy");
+    private static final Set<String> FEMALE = Set.of("female", "woman", "girl");
+
+
+
+    private String getSex(String content) {
+        String[] sentences = content.split("\\.");
+        for (var s: sentences) {
+            String ls = s.toLowerCase();
+            if (ls.contains("patient")||ls.contains("proband") ||ls.contains("individual")) {
+                if (MALE.stream().anyMatch(ls::contains)) {
+                    return "male";
+                } else if (FEMALE.stream().anyMatch(ls::contains)) {
+                    return "female";
+                }
+            }
+        }
+        return null;
+    }
+
+
+    private Phenopacket generatePhenopacket(List<SimpleTerm> simpleTermList , String sex) {
+        PhenopacketBuilder builder = PhenopacketBuilder.create(this.pmid, metadata);
+        Individual subject;
+        if (sex != null && sex.equals("male")) {
+            subject = IndividualBuilder.builder("individual").male().build();
+        } else if (sex != null && sex.equals("female")) {
+            subject = IndividualBuilder.builder("individual").female().build();
+        } else {
+            subject = IndividualBuilder.builder("individual").build();
+        }
+        builder.individual(subject);
+        for (var st : simpleTermList) {
+            PhenotypicFeatureBuilder pfb = PhenotypicFeatureBuilder.builder(st.tid(), st.label());
+            if (st.excluded()) {
+                pfb.excluded();
+            }
+            builder.addPhenotypicFeature(pfb.build());
+        }
+        return builder.build();
+
+    }
+
+
+    public Phenopacket parse(boolean verbose) {
         LOGGER.info("Parsing {} and writing results to {}", input, output);
         File f = new File(input);
         if (!f.isFile()) {
@@ -52,35 +135,11 @@ public class FenominalParser {
         }
         try {
             String content = new String(Files.readAllBytes(Paths.get(input)));
-            Collection<MinedSentence> mappedSentences = getMappedSentences(content);
-            BufferedWriter writer = new BufferedWriter(new FileWriter(this.output));
-            for (var mp : mappedSentences) {
-                String sentence = mp.getText();
-                Collection<? extends MinedTermWithMetadata> minedTerms = mp.getMinedTerms();
-                for (var mt : minedTerms) {
-                    TermId tid = mt.getTermId();
-                    var opt = ontology.getTermLabel(tid);
-                    if (opt.isEmpty()) {
-                        // should never happen
-                        System.err.println("[ERROR] Could not find label for " + tid.getValue());
-                        continue;
-                    }
-                    String label = opt.get();
-                    String matching = mt.getMatchingString();
-                    int start = mt.getBegin();
-                    int end = mt.getEnd();
-                    String observed = mt.isPresent() ? "observed" : "excluded";
-                    String [] fields = {label, tid.getValue(), matching, observed, String.valueOf(start),
-                            String.valueOf(end), sentence};
-                    writer.write(String.join("\t", fields) +  "\n");
-                    if (verbose) {
-                        System.out.println(String.join("\t", fields));
-                    }
-                }
-            }
-            writer.close();
+            List<SimpleTerm> simpleTermList = parseHpoTerms(content);
+            String optSex = getSex(content);
+            return generatePhenopacket(simpleTermList, optSex);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new PhenolRuntimeException("Could not generate phenopacket");
         }
     }
 

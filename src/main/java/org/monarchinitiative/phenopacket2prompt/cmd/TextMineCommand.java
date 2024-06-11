@@ -1,6 +1,7 @@
 package org.monarchinitiative.phenopacket2prompt.cmd;
 
 import org.monarchinitiative.phenopacket2prompt.mining.FenominalParser;
+import org.phenopackets.schema.v2.Phenopacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
@@ -42,7 +43,8 @@ public class TextMineCommand implements Callable<Integer> {
             System.out.printf("[ERROR] Could not find hp.json file at %s\nRun download command first\n", hpoJsonFile.getAbsolutePath());
         }
         FenominalParser parser = new FenominalParser(hpoJsonFile, input, output, useExactMatching);
-        parser.parse(verbose);
+        Phenopacket ppkt = parser.parse(verbose);
+        System.out.println(ppkt);
         return 0;
 
 

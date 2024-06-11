@@ -5,7 +5,7 @@ title = Familial CHARGE syndrome because of CHD7 mutation: clinical intra- and i
 disease_id = OMIM:214800
 disease_label = CHARGE syndrome
 [text]
-Patient A III-2 Patient A III-2 is the second boy of non-consanguineous French parents, respectively, aged 30 and 29 years, at the time of conception.
+Patient A III-2 is the second boy of non-consanguineous French parents, respectively, aged 30 and 29 years, at the time of conception.
 The pregnancy was characterized by polyhydramnios from the 26th week of gestation.
 Delivery took place after 38 weeks by caesarean section with normal birth weight (BW) (3025 g, 50th centile), birth length (BL)
 (48 cm, 25th centile) and head circumference (OFC) (34.5 cm, 50th centile). MCA noted at birth included esophageal atresia with tracheoesophageal fistula,
@@ -27,7 +27,7 @@ There was no evidence for arhinencephaly. He had mild convergent strabismus, dis
 Funduscopic examination revealed hypoplastic papillae. Using WISC IV scale at age 15 years his verbal conceptual index (VCI) was 78,
 perceptual reasoning index (PRI) 58, working memory index (WMI) 62 and processing speed index (PSI) 81.
 [text]
-Patient B III-1 Patient B III-1 is the first child from healthy unrelated Caucasian parents. Mother and father were both 26 years old at time of conception.
+Patient B III-1 is the first child from healthy unrelated Caucasian parents. Mother and father were both 26 years old at time of conception.
 Cerebral ventricular dilatation was suspected on pre-natal ultrasound but not confirmed by fetal cerebral MRI.
 Fetal karyotype was normal (46, XY). Premature labor occurred and delivery took place at a gestational age of 35 weeks.
 BW was 2050 g (third centile); BL 46.5 cm (50th centile) and OFC 34 cm (90th centile). He had cup-shaped ears with missing earlobes,
