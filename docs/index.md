@@ -13,12 +13,22 @@ GA4GH phenopackets.
 ## Running phenopacket2prompt
 
 
-Assuming the hp.json file has been downloaded as described above and all of the case report text files
+There are currently two use cases: 
+1. The creation of prompts (in several languages!), starting from phenopackets, intended for use with some Large Language Model (LLM) which is asked for a differential diagnosis.  
+2. The creation of phenopackets from case reports and ... TODO
+
+### Running with Phenopackets
+
+For this use case, follow the instructions in [Set-up](setup.md) and [Batch](batch.md).
+
+### Running with case reports
+
+Assuming the hp.json file has been downloaded as described in [Set-up](setup.md) and all of the case report text files
 are available in a directory at ``some/path/gptdocs``, run
 
 
 ```shell title="running the app"
-java -jar phenopacket2prompt.jar gpt -g some/path/gptdocs
+java -jar target/phenopacket2prompt.jar gpt -g some/path/gptdocs
 ```
 
    
