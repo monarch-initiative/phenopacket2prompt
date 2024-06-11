@@ -91,7 +91,7 @@ public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
         if (components.isEmpty()) {
             return "as a newborn";
         } else if (components.size() == 1) {
-            return "at the age of " + components.get(0);
+            return "at the age of " + components.getFirst();
         } else if (components.size() == 2) {
             return "at the age of " + components.get(0) + " and " + components.get(1);
         } else {

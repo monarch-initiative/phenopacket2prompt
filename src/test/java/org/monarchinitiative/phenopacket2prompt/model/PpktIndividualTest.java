@@ -68,7 +68,7 @@ public class PpktIndividualTest {
     public void testPhenopacketDisease() {
         List<PhenopacketDisease> diseases = ppktIndividual.getDiseases();
         assertEquals(1, diseases.size());
-        PhenopacketDisease disease = diseases.get(0);
+        PhenopacketDisease disease = diseases.getFirst();
         TermId expectedId = TermId.of("OMIM:231670");
         String expectedLabel =  "Glutaricaciduria, type I";
         assertEquals(expectedId, disease.getDiseaseId());

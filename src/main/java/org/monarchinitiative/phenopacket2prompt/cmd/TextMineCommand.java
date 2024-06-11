@@ -1,18 +1,19 @@
 package org.monarchinitiative.phenopacket2prompt.cmd;
 
+import org.monarchinitiative.phenopacket2prompt.mining.CaseBundle;
 import org.monarchinitiative.phenopacket2prompt.mining.FenominalParser;
-import org.phenopackets.schema.v2.Phenopacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
 
 import java.io.File;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 @CommandLine.Command(name = "mine", aliases = {"M"},
         mixinStandardHelpOptions = true,
         description = "Text mine and output phenopacket and prompt")
-public class TextMineCommand implements Callable<Integer> {
+public class TextMineCommand extends AbstractMineCommand implements Callable<Integer> {
     private final static Logger LOGGER = LoggerFactory.getLogger(TextMineCommand.class);
 
     @CommandLine.Option(names={"-d","--data"}, description ="directory to download data (default: ${DEFAULT-VALUE})" )
@@ -42,9 +43,14 @@ public class TextMineCommand implements Callable<Integer> {
         if (! hpoJsonFile.isFile()) {
             System.out.printf("[ERROR] Could not find hp.json file at %s\nRun download command first\n", hpoJsonFile.getAbsolutePath());
         }
-        FenominalParser parser = new FenominalParser(hpoJsonFile, input, output, useExactMatching);
-        Phenopacket ppkt = parser.parse(verbose);
-        System.out.println(ppkt);
+        FenominalParser parser = new FenominalParser(hpoJsonFile, useExactMatching);
+        List<CaseBundle> caseBundleList = getCaseBundleList(input, parser);
+        if (caseBundleList.isEmpty()) {
+            System.err.println("Could not extract cases from " + input);
+        }
+        // for now, just output one case
+        outputPrompt(caseBundleList.getFirst(), output);
+
         return 0;
 
 

@@ -116,8 +116,7 @@ public final class Iso8601Age implements PhenopacketAge {
 
     @Override
     public boolean equals(Object obj) {
-        if (! (obj instanceof PhenopacketAge)) return false;
-        PhenopacketAge iso = (PhenopacketAge) obj;
+        if (! (obj instanceof PhenopacketAge iso)) return false;
         return iso.totalDays() == totalDays();
     }
 }

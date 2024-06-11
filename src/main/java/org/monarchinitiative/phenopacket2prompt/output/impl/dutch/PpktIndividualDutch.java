@@ -252,7 +252,7 @@ public class PpktIndividualDutch implements PPKtIndividualInfoGenerator {
         if (components.isEmpty()) {
             return "als pasgeborene";
         } else if (components.size() == 1) {
-            return "op de leeftijd van " + components.get(0);
+            return "op de leeftijd van " + components.getFirst();
         } else if (components.size() == 2) {
             return "op de leeftijd van " + components.get(0) + " en " + components.get(1);
         } else {

@@ -141,7 +141,7 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
                 String errmsg = String.format("[ERROR] Got %d diseases for %s.\n", diseaseList.size(), individual.getPhenopacketId());
                 throw new PhenolRuntimeException(errmsg);
             }
-            PhenopacketDisease pdisease = diseaseList.get(0);
+            PhenopacketDisease pdisease = diseaseList.getFirst();
             String promptFileName = getFileName( individual.getPhenopacketId(), languageCode);
             String diagnosisLine = String.format("%s\t%s\t%s\t%s", pdisease.getDiseaseId(), pdisease.getLabel(), promptFileName, f.getAbsolutePath());
             try {
@@ -174,7 +174,7 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
                 System.err.printf("[ERROR] Got %d diseases for %s.\n", diseaseList.size(), individual.getPhenopacketId());
                 continue;
             }
-            PhenopacketDisease pdisease = diseaseList.get(0);
+            PhenopacketDisease pdisease = diseaseList.getFirst();
             String promptFileName = getFileName( individual.getPhenopacketId(), "en");
             String diagnosisLine = String.format("%s\t%s\t%s\t%s", pdisease.getDiseaseId(), pdisease.getLabel(), promptFileName, f.getAbsolutePath());
             try {

@@ -1,10 +1,8 @@
 package org.monarchinitiative.phenopacket2prompt.mining;
 
-import org.monarchinitiative.fenominal.core.FenominalRunTimeException;
 import org.monarchinitiative.fenominal.core.TermMiner;
 import org.monarchinitiative.fenominal.model.MinedSentence;
 import org.monarchinitiative.fenominal.model.MinedTermWithMetadata;
-import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenol.io.OntologyLoader;
 
 
@@ -21,9 +19,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 
 public class FenominalParser {
@@ -31,17 +26,13 @@ public class FenominalParser {
     private final TermMiner miner;
     protected final Ontology ontology;
 
-    private final String input;
-    protected final String output;
 
     private final String pmid = "PMID:123";
     private final String title = "title";
 
 
 
-    public FenominalParser(File hpoJsonFile, String input, String output, boolean exact) {
-        this.input = input;
-        this.output = output;
+    public FenominalParser(File hpoJsonFile,  boolean exact) {
         this.ontology = OntologyLoader.loadOntology(hpoJsonFile);
         if (exact) {
             this.miner = TermMiner.defaultNonFuzzyMapper(this.ontology);
@@ -127,20 +118,10 @@ public class FenominalParser {
     }
 
 
-    public Phenopacket parse(boolean verbose) {
-        LOGGER.info("Parsing {} and writing results to {}", input, output);
-        File f = new File(input);
-        if (!f.isFile()) {
-            throw new FenominalRunTimeException("Could not find input file at \"" + input + "\"");
-        }
-        try {
-            String content = new String(Files.readAllBytes(Paths.get(input)));
+    public Phenopacket parse(String content) {
             List<SimpleTerm> simpleTermList = parseHpoTerms(content);
             String optSex = getSex(content);
             return generatePhenopacket(simpleTermList, optSex);
-        } catch (IOException e) {
-            throw new PhenolRuntimeException("Could not generate phenopacket");
-        }
     }
 
 
