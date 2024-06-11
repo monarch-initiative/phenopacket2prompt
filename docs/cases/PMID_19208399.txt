@@ -1,0 +1,39 @@
+[source]
+pmid = PMID:19208399
+title = A novel mutation in the VCP gene (G157R) in a German family with inclusion-body myopathy with Paget disease of bone and frontotemporal dementia
+[diagnosis]
+disease_id = OMIM:167320
+disease_label = Inclusion body myopathy with early-onset Paget disease and frontotemporal dementia 1
+[text]
+Patient II-3. At the age of 41 years, the
+male index patient developed slowly progressive symmetric muscle weakness, which started in the proximal upper limb muscles
+but is now most pronounced in the proximal leg muscles. Three years
+after onset he noticed increasing hearing impairment and bone pain. Elevated plasma levels of the
+bone-specific alkaline phosphatase isoenzyme (168 g/L, normal 8 –17) in combination with typical
+changes on a 99mTc total body bone scan suggested
+a diagnosis of PDB. Biphosphonate treatment was
+initiated and led to improvement of bone pain and a
+marked reduction of alkaline phosphatase.
+The muscle weakness, however, continued to increase, and
+eventually the patient became unable to walk more
+than 30 meters unaided. On examination, there was
+proximal weakness and atrophy of the limb muscles
+with bilateral scapular winging and a positive Trendelenburg sign. He had a waddling gait and required
+the support of two crutches. The patient’s wife had
+recently noticed an impaired capability of her husband to recognize faces of persons known to him. In
+addition, he had become apathetic and had lost
+interest in previous hobbies. Plasma creatine kinase
+(CK) levels were mildly elevated. Nerve conduction
+studies were normal, but electromyographic studies
+showed moderate myopathic changes with fibrillation potentials and polyphasic small-amplitude,
+short-duration motor unit potentials. Neuropsychological evaluation (DemTect, frontal assessment battery)
+ did not show significant cognitive impairment. Audiometry revealed moderate left-sided
+perceptive deafness of 50 dB HL. Cranial magnetic
+resonance imaging (MRI) showed bony changes typical of Paget disease, but no evidence of auditory
+nerve compression due to Paget disease. Intracranial
+findings were normal without signs of frontal lobe
+atrophy. A muscle biopsy from the quadriceps muscle revealed moderate histopathological changes
+consisting of angulated and atrophic fibers with a
+few inclusion bodies, but no rimmed vacuoles. The
+inclusions were ubiquitin-positive, but they were negative for beta-amyloid. Ubiquitin-positive inclusions
+could also be demonstrated in the nucleus of myocytes, endothelial cells, and fibroblasts.
