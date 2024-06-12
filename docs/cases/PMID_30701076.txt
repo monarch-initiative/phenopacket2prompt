@@ -1,0 +1,19 @@
+[source]
+pmid = PMID:30701076
+title = Activation of TGF-β signaling in an aortic aneurysm in a patient with Loeys-Dietz syndrome caused by a novel loss-of-function variant of TGFBR1
+[diagnosis]
+disease_id = OMIM:609192
+disease_label = Loeys-Dietz syndrome 1
+[text]
+The patient was a Japanese man with  his tall stature, thin body habitus (height, 182cm; weight, 43.6 kg),
+and scoliosis at the age of 15 years. Echocardiography revealed an enlargement of the sinus of Valsalva
+(36 mm; aortic root Z-score4, 5.87), for which he had been followed up at a local hospital.
+ At the age of 27 years, his aortic root diameter was 41 mm (188 cm; 50 kg; Z-score, 5.17).
+ He had a positive wrist and thumb sign and presented with pectus excavatum, a hindfoot deformity,
+ lumbosacral dural ectasia, protrusio acetabuli, kyphoscoliosis, facial features (dolichocephaly,
+ downslanting palpebral fissures, and malar hypoplasia), skin striae, high myopia, and mitral valve prolapse
+ (15 points, according to the 2010 revised Ghent nosology5). Furthermore, he had a bifid uvula, hypertelorism,
+ tortuous cerebral arteries, and cervical spine instability. At the age of 31, his aortic root diameter was 48 mm (Z-score, 8.08),
+ and his aneurysm was treated using the David valve-sparing root replacement procedure. Extended histological examinations
+ revealed elastin degradation, cystic medial necrosis, and increased SMAD2 phosphorylation, indicating active TGF-β signaling
+ in the aortic wall (Fig. 1a, b).
