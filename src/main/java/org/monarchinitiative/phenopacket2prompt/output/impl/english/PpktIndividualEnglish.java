@@ -2,6 +2,7 @@ package org.monarchinitiative.phenopacket2prompt.output.impl.english;
 
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenopacket2prompt.model.*;
+import org.monarchinitiative.phenopacket2prompt.output.PPKtBuildingBlockGenerator;
 import org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualInfoGenerator;
 
 import java.util.ArrayList;
@@ -10,8 +11,10 @@ import java.util.Optional;
 
 public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
 
-    public PpktIndividualEnglish() {
+    private final PPKtBuildingBlockGenerator buildBlocks;
 
+    public PpktIndividualEnglish() {
+        buildBlocks = new PPKtEnglishBuildingBlocks();
     }
 
 
@@ -44,27 +47,19 @@ public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
 
 
     private String iso8601ToYear(Iso8601Age iso8601Age) {
-        return String.format("%d-year old", iso8601Age.getYears());
+        return buildBlocks.yearsOld(iso8601Age.getYears());
     }
 
     private String iso8601ToYearMonth(Iso8601Age iso8601Age) {
         if (iso8601Age.getMonths() == 0) {
-            return String.format("%d-year old", iso8601Age.getYears());
+            return buildBlocks.yearsOld(iso8601Age.getYears());
         } else {
-            return String.format("%d-year, %d-month old", iso8601Age.getYears(), iso8601Age.getMonths());
+            return buildBlocks.yearsMonthsDaysOld(iso8601Age.getYears(), iso8601Age.getMonths(), 0);
         }
     }
 
     private String iso8601ToMonthDay(Iso8601Age iso8601Age) {
-        int m = iso8601Age.getMonths();
-        int d = iso8601Age.getDays();
-        if (m == 0) {
-            return String.format("%d-day old", d);
-        } else if (d>0){
-            return String.format("%d-month, %d-day old", m, d);
-        } else {
-            return String.format("%d-month old", m);
-        }
+        return buildBlocks.montDayOld(iso8601Age.getMonths(), iso8601Age.getDays());
     }
 
     /**
@@ -77,42 +72,39 @@ public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
         List<String> components = new ArrayList<>();
 
         if (isoAge.getYears()>0) {
-            String ystring = isoAge.getYears() == 1 ? "year" : "years";
-            components.add(String.format("%d %s", isoAge.getYears(), ystring));
+            components.add(buildBlocks.years(isoAge.getYears()));
         }
         if (isoAge.getMonths() > 0) {
-            String mstring = isoAge.getMonths() == 1 ? "month" : "months";
-            components.add(String.format("%d %s", isoAge.getMonths(), mstring));
+            components.add(buildBlocks.months(isoAge.getMonths()));
         }
         if (isoAge.getDays()>0) {
-            String dstring = isoAge.getDays() == 1 ? "day" : "days";
-            components.add(String.format("%d %s", isoAge.getDays(), dstring));
+            components.add(buildBlocks.months(isoAge.getDays()));
         }
         if (components.isEmpty()) {
-            return "as a newborn";
+            return buildBlocks.asNewborn();
         } else if (components.size() == 1) {
-            return "at the age of " + components.getFirst();
+            return buildBlocks.atTheAgeOf() + " " + components.getFirst();
         } else if (components.size() == 2) {
-            return "at the age of " + components.get(0) + " and " + components.get(1);
+            return buildBlocks.atTheAgeOf() + " " + components.get(0) + " and " + components.get(1);
         } else {
-            return "at the age of " + components.get(0) + "m " + components.get(1) +
+            return buildBlocks.atTheAgeOf() + " " + components.get(0) + ", " + components.get(1) +
                     ", and " + components.get(2);
         }
     }
 
     private String onsetTermAtAgeOf(HpoOnsetAge hpoOnsetTermAge) {
         if (hpoOnsetTermAge.isFetus()) {
-            return  "in the fetal period";
+            return  buildBlocks.inFetalPeriod();
         } else if (hpoOnsetTermAge.isCongenital()) {
-            return  "at birth";
+            return  buildBlocks.isCongenital();
         } else if (hpoOnsetTermAge.isInfant()) {
-            return "as an infant";
+            return buildBlocks.asInfant();
         } else if (hpoOnsetTermAge.isChild()) {
-            return "in childhood";
+            return buildBlocks.inChildhood();
         } else if (hpoOnsetTermAge.isJuvenile()) {
-            return "as an adolescent";
+            return buildBlocks.asAdolescent();
         } else {
-            return "in adulthood";
+            return buildBlocks.inAdulthoold();
         }
     }
 
@@ -297,9 +289,9 @@ public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
         PhenopacketAge age = ageOpt.get();;
         if (age.isChild()) {
             return switch (psex) {
-                case FEMALE -> "girl";
-                case MALE -> "boy";
-                default -> "child";
+                case FEMALE -> buildBlocks.girl();
+                case MALE -> buildBlocks.boy();
+                default -> buildBlocks.child();
             };
         } else if (age.isCongenital()) {
             return switch (psex) {
@@ -321,33 +313,15 @@ public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
             };
         } else {
             return switch (psex) {
-                case FEMALE -> "woman";
-                case MALE -> "man";
-                default -> "individual";
+                case FEMALE -> buildBlocks.woman();
+                case MALE -> buildBlocks.man();
+                default -> buildBlocks.inAdulthoold();
             };
         }
     }
 
 
 
-  /*  @Override
-    public String individualWithAge(PhenopacketAge ppktAge) {
-        if (ppktAge.ageType().equals(PhenopacketAgeType.ISO8601_AGE_TYPE)) {
-            return  ppktAge.age() + " old";
-        } else if (ppktAge.ageType().equals(PhenopacketAgeType.HPO_ONSET_AGE_TYPE)) {
-            String label = ppktAge.age(); // something like "Infantile onset"
-            return switch (label) {
-                case "Infantile onset" -> "infant";
-                case "Childhood onset" -> "child";
-                case "Neonatal onset"  -> "neonate";
-                case "Congenital onset" -> "born";
-                case "Adult onset" -> "adult";
-                default-> String.format("During the %s", label.replace(" onset", ""));
-            };
-        } else {
-            return ""; // should never get here
-        }
-    }*/
 
     @Override
     public String atAge(PhenopacketAge ppktAge) {
