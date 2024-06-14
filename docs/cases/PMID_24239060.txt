@@ -1,0 +1,58 @@
+[source]
+pmid = PMID:24239060
+title = Novel TPM3 mutation in a family with cap myopathy and review of the literature
+[diagnosis]
+disease_id = OMIM:609284
+disease_label = Congenital myopathy 4B, autosomal recessive
+[text]
+The index patient (II.2; Fig. 1B and D) is a 45-year-old
+woman, who developed a mild proximal muscle weakness
+since early childhood. She never crawled and started to
+walk at the age of 2 years. She fell frequently and
+performed poorly at school sports. She suffered from mild
+progressive scoliosis since the age of 13 years (Fig. 1D).
+At the age of 45 years, she presented with a waddling gait
+and a mild proximal and distal lower limb weakness,
+resulting in problems to run and difficulties to climb the
+stairs. She walked unassisted without distance limitation.
+She had no myalgia, myoglobinuria, diplopia, dysarthria
+or dysphagia. Pulmonal infections or signs of respiratory
+insufficiency did not occur. The clinical neurological
+examination revealed generalized muscle hypotrophy and
+a body mass index (BMI) of 17.2. The index patient
+presented a long narrow face, high arched palate, discrete
+micrognathia (Fig. 1B), scoliosis and scapula alata
+(Fig. 1D). She did not present facial weakness,
+ophthalmoparesis, or ptosis. She could not walk on the
+heels, while toe walking was normal. The patient did not
+present a Gowers’ sign. Muscle strength was
+symmetrically decreased in the neck flexors (MRC 4/5),
+deltoid (4/5), biceps brachii (4/5), hamstrings (4/5), foot
+extensors (4/5) and foot supination and pronation (4/5)
+muscles. The index patient did not have foot deformities.
+Deep tendon reflexes were weak or absent. Touch and
+vibration sense were unremarkable.
+The muscle biopsy of the index patient (left quadriceps
+femoris muscle; 34 years; performed 11 years prior to her
+first presentation at our neurological department) showed
+cap-shaped, bluish subsarcolemmal inclusions in 6% of
+the fibres on mGT (Fig. 3A), that were slightly
+eosinophilic on HE (Fig. 3B). The caps comprised up to
+50% of the muscle fibre at transverse sections. Myosin
+ATPase reactivity was reduced in the cap areas (Fig. 3C
+and D). The cap structures were darkly stained on
+NADH-TR (Fig. 3E) and were not detectable on periodic
+acid-Schiff (PAS) staining. The myosin ATPase stains
+revealed type 1 fibre predominance. Numerous atrophic
+fibres and nuclear bags were observed. The endomysial
+connective tissue was not increased. Rare myophagic
+reactions in muscle fibres were present, while
+inflammatory infiltrates were absent.
+In the index
+patient, MRI revealed symmetrical fatty infiltration in
+paraspinal muscles (Fig. 2C), gluteus maximus and
+minimus (Fig. 2E), semimembranosus and biceps femoris
+muscles (Fig. 2G), and less pronounced in soleus and
+tibial anterior muscles (Fig. 2I). .
+Serum CK levels were examined in patients II.2 and III.1
+and were normal.
