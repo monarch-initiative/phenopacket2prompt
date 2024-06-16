@@ -46,20 +46,9 @@ public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
     }
 
 
-    private String iso8601ToYear(Iso8601Age iso8601Age) {
-        return buildBlocks.yearsOld(iso8601Age.getYears());
-    }
-
-    private String iso8601ToYearMonth(Iso8601Age iso8601Age) {
-        if (iso8601Age.getMonths() == 0) {
-            return buildBlocks.yearsOld(iso8601Age.getYears());
-        } else {
-            return buildBlocks.yearsMonthsDaysOld(iso8601Age.getYears(), iso8601Age.getMonths(), 0);
-        }
-    }
 
     private String iso8601ToMonthDay(Iso8601Age iso8601Age) {
-        return buildBlocks.montDayOld(iso8601Age.getMonths(), iso8601Age.getDays());
+        return buildBlocks.monthDayOld(iso8601Age.getMonths(), iso8601Age.getDays());
     }
 
     /**
@@ -115,34 +104,38 @@ public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
         int d = iso8601Age.getDays();
         // if older
         if (y>17) {
+            String age = buildBlocks.yearsOld(y);
             return switch (psex) {
-                case FEMALE -> String.format("%d-year old woman", y);
-                case MALE -> String.format("%d-year old man", y);
-                default -> String.format("%d-year old individual", y);
+                case FEMALE -> String.format("%s %s", age, buildBlocks.woman());
+                case MALE -> String.format("%s %s", age, buildBlocks.man());
+                default -> String.format("%s %s", age, buildBlocks.individual());
             };
         } else if (y>9) {
+            String age = buildBlocks.yearsOld(y);
             return switch (psex) {
-                case FEMALE -> String.format("%d-year old adolescent female", y);
-                case MALE -> String.format("%d-year old adolescent male", y);
-                default -> String.format("%d-year old adolescent", y);
+                case FEMALE -> String.format("%s %s", age, buildBlocks.adolescentGirl());
+                case MALE -> String.format("%s %s", age, buildBlocks.adolescentBoy());
+                default -> String.format("%s %s", age, buildBlocks.adolescentChild());
             };
         } else if (y>0) {
+            String age = buildBlocks.yearsMonthsDaysOld(y, m, d);
             return switch (psex) {
-                case FEMALE -> String.format("%s girl", iso8601ToYearMonth(iso8601Age));
-                case MALE -> String.format("%s boy", iso8601ToYearMonth(iso8601Age));
-                default -> String.format("%s child", iso8601ToYearMonth(iso8601Age));
+                case FEMALE -> String.format("%s %s", age, buildBlocks.girl());
+                case MALE -> String.format("%s %s", age, buildBlocks.boy());
+                default -> String.format("%s %s", age, buildBlocks.child());
             };
         } else if (m>0 || d> 0) {
+            String age = buildBlocks.monthDayOld(m, d);
             return switch (psex) {
-                case FEMALE -> String.format("%s female infant", iso8601ToMonthDay(iso8601Age));
-                case MALE -> String.format("%s male infant", iso8601ToMonthDay(iso8601Age));
-                default -> String.format("%s infant", iso8601ToMonthDay(iso8601Age));
+                case FEMALE -> String.format("%s %s", age, buildBlocks.femaleInfant());
+                case MALE -> String.format("%s %s", age, buildBlocks.maleInfant());
+                default -> String.format("%s %s", age, buildBlocks.infant());
             };
         } else {
             return switch (psex) {
-                case FEMALE -> "newborn girl";
-                case MALE -> "newborn boy";
-                default -> "newborn";
+                case FEMALE -> buildBlocks.newbornGirl();
+                case MALE -> buildBlocks.newbornBoy();
+                default -> buildBlocks.newborn();
             };
         }
     }
@@ -150,45 +143,45 @@ public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
     private String hpoOnsetIndividualDescription(PhenopacketSex psex, HpoOnsetAge hpoOnsetTermAge) {
         if (hpoOnsetTermAge.isFetus()) {
             return switch (psex) {
-                case FEMALE -> "female fetus";
-                case MALE -> "male fetus";
-                default -> "fetus";
+                case FEMALE -> buildBlocks.femaleFetus();
+                case MALE -> buildBlocks.maleFetus();
+                default -> buildBlocks.fetus();
             };
         } else if (hpoOnsetTermAge.isCongenital()) {
             return switch (psex) {
-                case FEMALE -> "female newborn";
-                case MALE -> "male newborn";
-                default -> "newborn";
+                case FEMALE -> buildBlocks.newbornGirl();
+                case MALE ->  buildBlocks.newbornBoy();
+                default ->  buildBlocks.newborn();
             };
         } else if (hpoOnsetTermAge.isInfant()) {
             return switch (psex) {
-                case FEMALE -> "female infant";
-                case MALE -> "male infant";
-                default -> "infant";
+                case FEMALE ->  buildBlocks.femaleInfant();
+                case MALE ->  buildBlocks.maleInfant();
+                default ->  buildBlocks.infant();
             };
         } else if (hpoOnsetTermAge.isChild()) {
             return switch (psex) {
-                case FEMALE -> "girl";
-                case MALE -> "boy";
-                default -> "child";
+                case FEMALE -> buildBlocks.girl();
+                case MALE -> buildBlocks.boy();
+                default -> buildBlocks.child();
             };
         } else if (hpoOnsetTermAge.isJuvenile()) {
             return switch (psex) {
-                case FEMALE -> "female adolescent";
-                case MALE -> "male adolescent";
-                default -> "adolescent";
+                case FEMALE -> buildBlocks.adolescentGirl();
+                case MALE ->  buildBlocks.adolescentBoy();
+                default ->  buildBlocks.adolescentChild();
             };
         }else {
             return switch (psex) {
-                case FEMALE -> "woman";
-                case MALE -> "man";
-                default -> "adult";
+                case FEMALE -> buildBlocks.woman();
+                case MALE -> buildBlocks.male();
+                default -> buildBlocks.adult();
             };
         }
     }
 
     /**
-     * A sentence such as The proband was a 39-year old woman who presented at the age of 12 years with
+     * A sentence such as The proband was a 39-year-old woman who presented at the age of 12 years with
      * HPO1, HPO2, and HPO3. HPO4 and HPO5 were excluded. This method returns the phrase that ends with "with"
      * @param psex
      * @param lastExamAge
@@ -218,13 +211,15 @@ public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
             // should never happen
             throw new PhenolRuntimeException("Did not recognize onset age type " + onsetAge.ageType());
         }
-        return String.format("The proband was a %s who presented %s with", individualDescription, onsetDescription);
+        return String.format("%s %s who presented %s with",
+                buildBlocks.probandWasA(),
+                individualDescription, onsetDescription);
     }
 
 
     /**
      * Age at last examination available but age of onset not available
-     * The proband was a 39-year old woman who presented with HPO1, HPO2, and HPO3. HPO4 and HPO5 were excluded.
+     * The proband was a 39-year-old woman who presented with HPO1, HPO2, and HPO3. HPO4 and HPO5 were excluded.
      * @param psex
      * @param lastExamAge
      */
@@ -240,7 +235,10 @@ public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
             // should never happen
             throw new PhenolRuntimeException("Did not recognize last exam age type " + lastExamAge.ageType());
         }
-        return String.format("The proband was a %s who presented with", individualDescription);
+        return String.format("%s %s %s",
+                buildBlocks.probandWasA(),
+                individualDescription,
+                buildBlocks.whoPresentedWith());
     }
 
     /**
@@ -262,14 +260,32 @@ public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
             // should never happen
             throw new PhenolRuntimeException("Did not recognize onset age type " + onsetAge.ageType());
         }
-        return String.format("The proband presented %s with", onsetDescription, onsetDescription);
+        String sex = switch (psex) {
+            case FEMALE -> buildBlocks.female();
+            case MALE -> buildBlocks.male();
+            default -> buildBlocks.individual();
+        };
+        if (sex.equals("individual")) {
+            return String.format("The proband presented %s with",
+                    buildBlocks.probandWasA(),
+                    onsetDescription, onsetDescription);
+        } else {
+            return String.format("%s a %s who presented with",
+                    buildBlocks.probandWasA(),
+                    onsetDescription, onsetDescription);
+        }
     }
 
+    /**
+     * This method is called if we have no information at all about the age of the proband
+     * @param psex Sex of the proband
+     * @return A string such as  "The proband was a female who presented with";
+     */
     private String ageNotAvailable(PhenopacketSex psex) {
         return switch (psex) {
-            case FEMALE -> "The proband was a female who presented with";
-            case MALE -> "The proband was a male who presented with";
-            default -> "The proband presented with";
+            case FEMALE -> buildBlocks.probandFemaleNoAgeePresentedWith();
+            case MALE -> buildBlocks.probandMaleNoAgePresentedWith();
+            default -> buildBlocks.probandNoAgePresentedWith();
         };
     }
 

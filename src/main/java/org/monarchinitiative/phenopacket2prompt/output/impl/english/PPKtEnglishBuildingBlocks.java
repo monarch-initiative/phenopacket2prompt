@@ -36,7 +36,7 @@ public class PPKtEnglishBuildingBlocks implements PPKtBuildingBlockGenerator {
     }
 
     @Override
-    public String montDayOld(int m, int d) {
+    public String monthDayOld(int m, int d) {
         if (m==0) {
             return daysOld(d);
         } else if (d==0) {
@@ -48,7 +48,7 @@ public class PPKtEnglishBuildingBlocks implements PPKtBuildingBlockGenerator {
     @Override
     public String yearsMonthsDaysOld(int y, int m, int d) {
         if (y==0) {
-            return montDayOld(m,d);
+            return monthDayOld(m,d);
         }
         if (d==0) {
             return String.format("%d-%s, %d-%s old", y, years(y), m, months(m));
@@ -125,6 +125,111 @@ public class PPKtEnglishBuildingBlocks implements PPKtBuildingBlockGenerator {
     @Override
     public String child() {
         return "child";
+    }
+
+    @Override
+    public String adolescentGirl() {
+        return "adolescent girl";
+    }
+
+    @Override
+    public String adolescentBoy() {
+        return "adolescent boy";
+    }
+
+    @Override
+    public String adolescentChild() {
+        return "adolescent child";
+    }
+
+    @Override
+    public String maleInfant() {
+        return "male infant";
+    }
+
+    @Override
+    public String femaleInfant() {
+        return "female infant";
+    }
+
+    @Override
+    public String infant() {
+        return "infant";
+    }
+
+    @Override
+    public String newbornBoy() {
+        return "newborn boy";
+    }
+
+    @Override
+    public String newbornGirl() {
+        return "newborn girl";
+    }
+
+    @Override
+    public String newborn() {
+        return "newborn";
+    }
+
+    @Override
+    public String maleFetus() {
+        return "male fetus";
+    }
+
+    @Override
+    public String femaleFetus() {
+        return "female fetus";
+    }
+
+    @Override
+    public String fetus() {
+        return "fetus";
+    }
+
+    @Override
+    public String female() {
+        return "female";
+    }
+
+    @Override
+    public String male() {
+        return "male";
+    }
+
+    @Override
+    public String adult() {
+        return "adult";
+    }
+
+    @Override
+    public String probandWasA() {
+        return "The proband was a";
+    }
+
+    @Override
+    public String whoPresented() {
+        return "who presented";
+    }
+
+    @Override
+    public String whoPresentedWith() {
+        return "who presented with";
+    }
+
+    @Override
+    public String probandNoAgePresentedWith() {
+        return "The proband presented with";
+    }
+
+    @Override
+    public String probandMaleNoAgePresentedWith() {
+        return "The proband was a male who presented with";
+    }
+
+    @Override
+    public String probandFemaleNoAgeePresentedWith() {
+        return "The proband was a female who presented with";
     }
 
 

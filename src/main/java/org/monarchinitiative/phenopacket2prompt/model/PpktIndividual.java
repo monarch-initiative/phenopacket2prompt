@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+import java.util.function.Predicate;
 
 public class PpktIndividual {
     private static final Logger LOGGER = LoggerFactory.getLogger(PpktIndividual.class);
@@ -23,10 +24,21 @@ public class PpktIndividual {
 
     private final String phenopacketId;
 
+    private final List<OntologyTerm> phenotypicFeaturesAtOnset;
+    /** features that were observed after the onset but at a specified age. We output a separate vignette for
+     * each of these ages.
+     */
+    private final Map<PhenopacketAge, List<OntologyTerm>> phenotypicFeaturesAtSpecifiedAge;
+
+    private final List<OntologyTerm> phenotypicFeaturesAtOnsetWithoutSpecifiedAge;
+
 
     public PpktIndividual(Phenopacket ppkt) {
         this.ppkt = ppkt;
         this.phenopacketId = ppkt.getId();
+        phenotypicFeaturesAtOnset = extractPhenotypicFeaturesAtOnset();
+        phenotypicFeaturesAtSpecifiedAge = extractSpecifiedAgePhenotypicFeatures();
+        phenotypicFeaturesAtOnsetWithoutSpecifiedAge = extractPhenotypicFeaturesWithNoSpecifiedAge();
     }
 
     public static PpktIndividual fromFile(File ppktJsonFile) {
@@ -74,7 +86,6 @@ public class PpktIndividual {
         } else {
             return Optional.empty();
         }
-
     }
 
     public Optional<PhenopacketAge> getAgeAtLastExamination() {
@@ -109,7 +120,7 @@ public class PpktIndividual {
 
 
 
-    public List<OntologyTerm> getPhenotypicFeaturesWithNoSpecifiedAge() {
+    private List<OntologyTerm> extractPhenotypicFeaturesWithNoSpecifiedAge() {
         List<OntologyTerm> unspecifiedFeatures = new ArrayList<>();
         for (var pf : ppkt.getPhenotypicFeaturesList()) {
             OntologyClass clz = pf.getType();
@@ -147,8 +158,10 @@ public class PpktIndividual {
         return false;
     }
 
-
-    public List<OntologyTerm> getPhenotypicFeaturesAtOnset() {
+    /**
+     * @return List of Phenotypic features that were observed at the age of onset.
+     */
+    private List<OntologyTerm> extractPhenotypicFeaturesAtOnset() {
         Optional<PhenopacketAge> opt = getAgeAtOnset();
         if (opt.isEmpty()) {
             return new ArrayList<>(); //
@@ -178,11 +191,13 @@ public class PpktIndividual {
         return onsetFeatures;
     }
 
+
+
     /**
      * This code does not include features with unspecified onset (for that, use {@code getPhenotypicFeaturesWithNoSpecifiedAge}) or terms at the age of onset
      * @return map of phenotypic features with specified onset after the age of onset
      */
-    public Map<PhenopacketAge, List<OntologyTerm>> getSpecifiedAgePhenotypicFeatures() {
+    public Map<PhenopacketAge, List<OntologyTerm>> extractSpecifiedAgePhenotypicFeatures() {
         Map<PhenopacketAge, List<OntologyTerm>> ageToFeatureMap = new HashMap<>();
         Optional<PhenopacketAge> onsetOpt = getAgeAtOnset();
         for (var pf : ppkt.getPhenotypicFeaturesList()) {
@@ -216,5 +231,33 @@ public class PpktIndividual {
 
     public int annotationCount() {
         return ppkt.getPhenotypicFeaturesCount();
+    }
+
+    public List<OntologyTerm> getPhenotypicFeaturesAtOnset() {
+        return phenotypicFeaturesAtOnset;
+    }
+
+    public List<OntologyTerm> getObservedPhenotypicFeaturesAtOnset() {
+        return phenotypicFeaturesAtOnset.stream().filter(Predicate.not(OntologyTerm::isExcluded)).toList();
+    }
+
+    public List<OntologyTerm> getExcludedPhenotypicFeaturesAtOnset() {
+        return phenotypicFeaturesAtOnset.stream().filter(OntologyTerm::isExcluded).toList();
+    }
+
+    public boolean hasObservedPhenotypeFeatureAtOnset() {
+        return phenotypicFeaturesAtOnset.stream().anyMatch(Predicate.not(OntologyTerm::isExcluded));
+    }
+
+    public boolean hasExcludedPhenotypeFeatureAtOnset() {
+        return phenotypicFeaturesAtOnset.stream().anyMatch(OntologyTerm::isExcluded);
+    }
+
+    public Map<PhenopacketAge, List<OntologyTerm>> getPhenotypicFeaturesAtSpecifiedAge() {
+        return phenotypicFeaturesAtSpecifiedAge;
+    }
+
+    public List<OntologyTerm> getPhenotypicFeaturesAtOnsetWithoutSpecifiedAge() {
+        return phenotypicFeaturesAtOnsetWithoutSpecifiedAge;
     }
 }

@@ -104,6 +104,21 @@ public final class Iso8601Age implements PhenopacketAge {
     }
 
     @Override
+    public boolean isYoungAdult() {
+        return years >15 && years < 40;
+    }
+
+    @Override
+    public boolean isMiddleAge() {
+        return years > 39 && years < 60;
+    }
+
+    @Override
+    public boolean isLateAdultAge() {
+        return years >= 60;
+    }
+
+    @Override
     public int totalDays() {
         return totalDays;
     }

@@ -77,7 +77,7 @@ public class PpktIndividualTest {
 
     @Test
     public void testPhenotypicFeatures() {
-        Map<PhenopacketAge, List<OntologyTerm>> ppktFeatureMap = ppktIndividual.getSpecifiedAgePhenotypicFeatures();
+        Map<PhenopacketAge, List<OntologyTerm>> ppktFeatureMap = ppktIndividual.extractSpecifiedAgePhenotypicFeatures();
         assertFalse(ppktFeatureMap.isEmpty());
         Predicate<OntologyTerm> termPredicate = term -> term.getLabel().equals("Cerebral atrophy");
         List<OntologyTerm> otlist = new ArrayList<>();

@@ -17,7 +17,7 @@ public interface PPKtBuildingBlockGenerator {
     String yearsOld(int y);
     String monthsOld(int m);
     String daysOld(int d);
-    String montDayOld(int m, int d);
+    String monthDayOld(int m, int d);
     String yearsMonthsDaysOld(int y, int m, int d);
 
     // Phrases
@@ -40,5 +40,28 @@ public interface PPKtBuildingBlockGenerator {
     String girl();
     String boy();
     String child();
+    String adolescentGirl();
+    String adolescentBoy();
+    String adolescentChild();
+    String maleInfant();
+    String femaleInfant();
+    String infant();
+    String newbornBoy();
+    String newbornGirl();
+    String newborn();
+    String maleFetus();
+    String femaleFetus();
+    String fetus();
+    String female();
+    String male();
+    String adult();
+    // general
+    String probandWasA();
+    String whoPresented();
+    String whoPresentedWith();
+    String probandNoAgePresentedWith();
+    String probandMaleNoAgePresentedWith();
+    String probandFemaleNoAgeePresentedWith();
+
 
 }

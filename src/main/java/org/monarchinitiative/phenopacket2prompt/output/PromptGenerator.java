@@ -63,8 +63,8 @@ public interface PromptGenerator {
     default String createPrompt(PpktIndividual individual) {
         String individualInfo = getIndividualInformation(individual);
         List<OntologyTerm> onsetTerms = individual.getPhenotypicFeaturesAtOnset();
-        List<OntologyTerm> unspecifiedAgeTerms = individual.getPhenotypicFeaturesWithNoSpecifiedAge();
-        Map<PhenopacketAge, List<OntologyTerm>> pfMap = individual.getSpecifiedAgePhenotypicFeatures();
+        List<OntologyTerm> unspecifiedAgeTerms = individual.getPhenotypicFeaturesAtOnsetWithoutSpecifiedAge();
+        Map<PhenopacketAge, List<OntologyTerm>> pfMap = individual.extractSpecifiedAgePhenotypicFeatures();
         // For creating the prompt, we first report the onset and the unspecified terms together, and then
         // report the rest
         onsetTerms.addAll(unspecifiedAgeTerms);
