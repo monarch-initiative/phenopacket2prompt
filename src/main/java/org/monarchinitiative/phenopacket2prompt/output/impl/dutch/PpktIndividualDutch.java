@@ -432,7 +432,7 @@ public class PpktIndividualDutch implements PPKtIndividualInfoGenerator {
             // should never happen
             throw new PhenolRuntimeException("Did not recognize onset age type " + onsetAge.ageType());
         }
-        return String.format("De proband presenteerde %s met", onsetDescription, onsetDescription);
+        return String.format("De proband presenteerde %s met", onsetDescription);
     }
 
     private String ageNotAvailable(PhenopacketSex psex) {

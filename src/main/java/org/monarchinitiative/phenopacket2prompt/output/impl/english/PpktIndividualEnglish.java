@@ -8,7 +8,24 @@ import org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualInfoGenerat
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
+
+/**
+ * This class produces the very first sentence of the prompt, e.g.,
+ * <pre>
+ * "The proband was a 22-year-old woman who presented at the age of 13 years with ..."
+ * </pre>
+ * <p>
+ * There are eight possible cases to take into account, depending on whether we have the age of onset and
+ * the age at last presentation (this makes 2^2=4 cases), and whether there are observed HPO terms at onset,
+ * which influences whether we can write "who presented with" or
+ * "in whom the "following clinical manifestations were excluded".
+ * </p>
+ * <p>
+ * The entry point to the generation of this sentence is the function {@code #getIndividualDescription}.
+ * </p>
+ */
 public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
 
     private final PPKtBuildingBlockGenerator buildBlocks;
@@ -22,34 +39,42 @@ public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
         if (individual.annotationCount() == 0) {
             throw new PhenolRuntimeException("No HPO annotations");
         }
+        boolean hasObservedHPO = individual.hasObservedPhenotypeFeatureAtOnset();
         Optional<PhenopacketAge> lastExamOpt = individual.getAgeAtLastExamination();
         Optional<PhenopacketAge> onsetOpt = individual.getAgeAtOnset();
         PhenopacketSex psex = individual.getSex();
         if (lastExamOpt.isPresent() && onsetOpt.isPresent()) {
-            return onsetAndLastEncounterAvailable(psex, lastExamOpt.get(), onsetOpt.get());
+            return onsetAndLastEncounterAvailable(psex, lastExamOpt.get(), onsetOpt.get(), hasObservedHPO);
         } else if (lastExamOpt.isPresent()) {
-            return lastEncounterAvailable(psex, lastExamOpt.get());
+            return lastEncounterAvailable(psex, lastExamOpt.get(), hasObservedHPO);
         } else if (onsetOpt.isPresent()) {
-            return onsetAvailable(psex, onsetOpt.get());
+            return onsetAvailable(psex, onsetOpt.get(), hasObservedHPO);
         } else {
-            return ageNotAvailable(psex);
+            return ageNotAvailable(psex, hasObservedHPO);
         }
     }
 
+
+    /**
+     * NOTE THIS SHOULD BE REMOVED
+     * @param psex
+     * @return
+     */
     @Override
     public String heSheIndividual(PhenopacketSex psex) {
         return switch (psex) {
-            case FEMALE -> "she";
-            case MALE -> "he";
-            default -> "the individual";
+            case FEMALE -> buildBlocks.she();
+            case MALE -> buildBlocks.he();
+            default -> buildBlocks.theIndividual();
         };
     }
 
 
-
+/*
     private String iso8601ToMonthDay(Iso8601Age iso8601Age) {
         return buildBlocks.monthDayOld(iso8601Age.getMonths(), iso8601Age.getDays());
     }
+ */
 
     /**
      * Create a phrase such as "at the age of 7 years, 4 months, and 2 days"
@@ -140,6 +165,22 @@ public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
         }
     }
 
+
+    private String iso8601individualDescriptionAsA(PhenopacketSex psex, Iso8601Age iAge){
+        String onsetWithSex = iso8601individualDescription(psex, iAge);
+        return String.format("as a %s", onsetWithSex);
+    }
+
+    private String hpoOnsetAsA(PhenopacketSex psex, HpoOnsetAge hpoOnsetTermAge){
+        String onsetWithSex = hpoOnsetIndividualDescription(psex, hpoOnsetTermAge);
+        final Set<Character> vowels = Set.of('A', 'E', 'I', 'O', 'U');
+        if (vowels.contains(onsetWithSex.charAt(0))) {
+            return String.format("as an %s", onsetWithSex);
+        } else {
+            return String.format("as a %s", onsetWithSex);
+        }
+    }
+
     private String hpoOnsetIndividualDescription(PhenopacketSex psex, HpoOnsetAge hpoOnsetTermAge) {
         if (hpoOnsetTermAge.isFetus()) {
             return switch (psex) {
@@ -188,7 +229,10 @@ public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
      * @param onsetAge
      * @return
      */
-    private String onsetAndLastEncounterAvailable(PhenopacketSex psex, PhenopacketAge lastExamAge, PhenopacketAge onsetAge) {
+    private String onsetAndLastEncounterAvailable(PhenopacketSex psex,
+                                                  PhenopacketAge lastExamAge,
+                                                  PhenopacketAge onsetAge,
+                                                  boolean hasObservedHPO) {
         String individualDescription;
         String onsetDescription;
         if (lastExamAge.ageType().equals(PhenopacketAgeType.ISO8601_AGE_TYPE)) {
@@ -196,7 +240,7 @@ public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
             individualDescription = iso8601individualDescription(psex, isoAge);
         } else if (lastExamAge.ageType().equals(PhenopacketAgeType.HPO_ONSET_AGE_TYPE)) {
             HpoOnsetAge hpoOnsetTermAge = (HpoOnsetAge) lastExamAge;
-            individualDescription = hpoOnsetIndividualDescription(psex,hpoOnsetTermAge);
+            individualDescription = hpoOnsetAsA(psex,hpoOnsetTermAge);
         } else {
             // should never happen
             throw new PhenolRuntimeException("Did not recognize last exam age type " + lastExamAge.ageType());
@@ -211,9 +255,19 @@ public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
             // should never happen
             throw new PhenolRuntimeException("Did not recognize onset age type " + onsetAge.ageType());
         }
-        return String.format("%s %s who presented %s with",
-                buildBlocks.probandWasA(),
-                individualDescription, onsetDescription);
+        if (hasObservedHPO) {
+            return String.format("%s %s who presented %s with",
+                    buildBlocks.probandWasA(),
+                    individualDescription,
+                    onsetDescription);
+        } else {
+            // i.e., we only have excluded HPO terms at onset
+            return String.format("%s %s %s %s:",
+                    buildBlocks.probandWasA(),
+                    individualDescription,
+                    buildBlocks.inWhomManifestationsWereExcluded(),
+                    onsetDescription);
+        }
     }
 
 
@@ -223,7 +277,9 @@ public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
      * @param psex
      * @param lastExamAge
      */
-    private String lastEncounterAvailable(PhenopacketSex psex, PhenopacketAge lastExamAge) {
+    private String lastEncounterAvailable(PhenopacketSex psex,
+                                          PhenopacketAge lastExamAge,
+                                          boolean hasObservedHPO) {
         String individualDescription;
         if (lastExamAge.ageType().equals(PhenopacketAgeType.ISO8601_AGE_TYPE)) {
             Iso8601Age isoAge = (Iso8601Age) lastExamAge;
@@ -235,45 +291,55 @@ public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
             // should never happen
             throw new PhenolRuntimeException("Did not recognize last exam age type " + lastExamAge.ageType());
         }
-        return String.format("%s %s %s",
-                buildBlocks.probandWasA(),
-                individualDescription,
-                buildBlocks.whoPresentedWith());
+        if (hasObservedHPO) {
+            return String.format("%s %s %s",
+                    buildBlocks.probandWasA(),
+                    individualDescription,
+                    buildBlocks.whoPresented());
+        } else {
+            return String.format("%s %s %s",
+                    buildBlocks.probandWasA(),
+                    individualDescription,
+                    buildBlocks.inWhomManifestationsWereExcluded());
+        }
     }
 
     /**
      * Age at last examination not available but age of onset available
      * The proband  presented  at the age of 12 years with HPO1, HPO2, and HPO3. HPO4 and HPO5 were excluded.
-     * @param psex
-     * @param onsetAge
+     * @param psex sex of the proband
+     * @param onsetAge age at onset of disease
+     * @param hasObservedHPO whether the proband has HPO annotations for the onset of disease
      * @return
      */
-    private String onsetAvailable(PhenopacketSex psex, PhenopacketAge onsetAge) {
+    private String onsetAvailable(PhenopacketSex psex,
+                                  PhenopacketAge onsetAge,
+                                  boolean hasObservedHPO) {
         String onsetDescription;
+        String individualDescription;
         if (onsetAge.ageType().equals(PhenopacketAgeType.ISO8601_AGE_TYPE)) {
             Iso8601Age isoAge = (Iso8601Age) onsetAge;
-            onsetDescription = iso8601AtAgeOf(isoAge);
+            individualDescription = iso8601individualDescriptionAsA(psex, isoAge);
         } else if (onsetAge.ageType().equals(PhenopacketAgeType.HPO_ONSET_AGE_TYPE)) {
             HpoOnsetAge hpoOnsetTermAge = (HpoOnsetAge) onsetAge;
-            onsetDescription = onsetTermAtAgeOf(hpoOnsetTermAge);
+            individualDescription = hpoOnsetAsA(psex,hpoOnsetTermAge);
         } else {
             // should never happen
             throw new PhenolRuntimeException("Did not recognize onset age type " + onsetAge.ageType());
         }
-        String sex = switch (psex) {
-            case FEMALE -> buildBlocks.female();
-            case MALE -> buildBlocks.male();
-            default -> buildBlocks.individual();
-        };
-        if (sex.equals("individual")) {
-            return String.format("The proband presented %s with",
-                    buildBlocks.probandWasA(),
-                    onsetDescription, onsetDescription);
+        if (hasObservedHPO) {
+            // e.g., "The proband presented in childhood with"
+            return String.format("%s %s %s",
+                    buildBlocks.probandNoAgePresented(),
+                    individualDescription,
+                    buildBlocks.with());
         } else {
-            return String.format("%s a %s who presented with",
-                    buildBlocks.probandWasA(),
-                    onsetDescription, onsetDescription);
+            return String.format("%s %s %s",
+                    buildBlocks.probandNoAgePresented(),
+                    individualDescription,
+                    buildBlocks.inWhomManifestationsWereExcluded());
         }
+
     }
 
     /**
@@ -281,14 +347,24 @@ public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
      * @param psex Sex of the proband
      * @return A string such as  "The proband was a female who presented with";
      */
-    private String ageNotAvailable(PhenopacketSex psex) {
-        return switch (psex) {
-            case FEMALE -> buildBlocks.probandFemaleNoAgeePresentedWith();
-            case MALE -> buildBlocks.probandMaleNoAgePresentedWith();
-            default -> buildBlocks.probandNoAgePresentedWith();
-        };
+    private String ageNotAvailable(PhenopacketSex psex,
+                                   boolean hasObservedHPO) {
+        if (hasObservedHPO) {
+            return switch (psex) {
+                case FEMALE -> buildBlocks.probandFemaleNoAgePresentedWith();
+                case MALE -> buildBlocks.probandMaleNoAgePresentedWith();
+                default -> buildBlocks.probandNoAgePresentedWith();
+            };
+        } else {
+            return switch (psex) {
+                case FEMALE -> buildBlocks.probandFemaleNoAgeExcludedOnly();
+                case MALE -> buildBlocks.probandMaleNoAgeExcludedOnly();
+                default -> buildBlocks.probandNoAgeExcludedOnly();
+            };
+        }
     }
 
+    /*
     private String individualName(PpktIndividual individual) {
         PhenopacketSex psex = individual.getSex();
         Optional<PhenopacketAge> ageOpt = individual.getAgeAtLastExamination();
@@ -335,7 +411,7 @@ public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
             };
         }
     }
-
+*/
 
 
 

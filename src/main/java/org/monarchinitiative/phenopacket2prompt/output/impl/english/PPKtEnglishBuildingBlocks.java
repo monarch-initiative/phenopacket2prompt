@@ -22,12 +22,12 @@ public class PPKtEnglishBuildingBlocks implements PPKtBuildingBlockGenerator {
 
     @Override
     public String yearsOld(int y) {
-        return String.format("%d-%s old", y, years(y));
+        return String.format("%d-year-old", y);
     }
 
     @Override
     public String monthsOld(int m) {
-        return String.format("%d-%s old", m, months(m));
+        return String.format("%d-month-old", m);
     }
 
     @Override
@@ -98,6 +98,21 @@ public class PPKtEnglishBuildingBlocks implements PPKtBuildingBlockGenerator {
     }
 
     @Override
+    public String she() {
+        return "she";
+    }
+
+    @Override
+    public String he() {
+        return "he";
+    }
+
+    @Override
+    public String theProband() {
+        return "the proband";
+    }
+
+    @Override
     public String woman() {
         return "woman";
     }
@@ -110,6 +125,11 @@ public class PPKtEnglishBuildingBlocks implements PPKtBuildingBlockGenerator {
     @Override
     public String individual() {
         return "individual";
+    }
+
+    @Override
+    public String theIndividual() {
+        return "the individual";
     }
 
     @Override
@@ -213,8 +233,13 @@ public class PPKtEnglishBuildingBlocks implements PPKtBuildingBlockGenerator {
     }
 
     @Override
-    public String whoPresentedWith() {
-        return "who presented with";
+    public String presented() {
+        return "presented";
+    }
+
+    @Override
+    public String probandNoAgePresented() {
+        return "The proband presented";
     }
 
     @Override
@@ -228,8 +253,38 @@ public class PPKtEnglishBuildingBlocks implements PPKtBuildingBlockGenerator {
     }
 
     @Override
-    public String probandFemaleNoAgeePresentedWith() {
+    public String probandFemaleNoAgePresentedWith() {
         return "The proband was a female who presented with";
+    }
+
+    @Override
+    public String presentedWith() {
+        return "presented with";
+    }
+
+    @Override
+    public String with() {
+        return "with";
+    }
+
+    @Override
+    public String probandFemaleNoAgeExcludedOnly() {
+        return "The proband was a female in whom the following clinical manifestations were excluded";
+    }
+
+    @Override
+    public String probandMaleNoAgeExcludedOnly() {
+        return "The proband was a male in whom the following clinical manifestations were excluded";
+    }
+
+    @Override
+    public String probandNoAgeExcludedOnly() {
+        return "The proband was a person in whom the following clinical manifestations were excluded";
+    }
+
+    @Override
+    public String inWhomManifestationsWereExcluded() {
+        return "in whom the following clinical manifestations were excluded";
     }
 
 

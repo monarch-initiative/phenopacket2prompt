@@ -34,9 +34,13 @@ public interface PPKtBuildingBlockGenerator {
     String inAdulthoold();
 
     // sexxage
+    String she();
+    String he();
+    String theProband();
     String woman();
     String man();
     String individual();
+    String theIndividual();
     String girl();
     String boy();
     String child();
@@ -58,10 +62,18 @@ public interface PPKtBuildingBlockGenerator {
     // general
     String probandWasA();
     String whoPresented();
-    String whoPresentedWith();
+    String presented();
+    String probandNoAgePresented();
     String probandNoAgePresentedWith();
     String probandMaleNoAgePresentedWith();
-    String probandFemaleNoAgeePresentedWith();
+    String probandFemaleNoAgePresentedWith();
+    String presentedWith();
+    String with();
 
+    String probandFemaleNoAgeExcludedOnly();
+    String probandMaleNoAgeExcludedOnly();
+    String probandNoAgeExcludedOnly();
+
+    String inWhomManifestationsWereExcluded();
 
 }

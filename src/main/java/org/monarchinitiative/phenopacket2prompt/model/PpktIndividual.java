@@ -36,9 +36,20 @@ public class PpktIndividual {
     public PpktIndividual(Phenopacket ppkt) {
         this.ppkt = ppkt;
         this.phenopacketId = ppkt.getId();
-        phenotypicFeaturesAtOnset = extractPhenotypicFeaturesAtOnset();
         phenotypicFeaturesAtSpecifiedAge = extractSpecifiedAgePhenotypicFeatures();
-        phenotypicFeaturesAtOnsetWithoutSpecifiedAge = extractPhenotypicFeaturesWithNoSpecifiedAge();
+        List<OntologyTerm> onsetTerms = extractPhenotypicFeaturesAtOnset();
+        List<OntologyTerm> unspecifiedTerms = extractPhenotypicFeaturesWithNoSpecifiedAge();
+        if (onsetTerms.isEmpty()) {
+            phenotypicFeaturesAtOnset = List.copyOf(unspecifiedTerms);
+            phenotypicFeaturesAtOnsetWithoutSpecifiedAge = List.of();
+        } else {
+            // For now, we will put all unspecified terms at the onset
+            onsetTerms.addAll(unspecifiedTerms);
+            phenotypicFeaturesAtOnset = List.copyOf(onsetTerms);
+            phenotypicFeaturesAtOnsetWithoutSpecifiedAge = List.of();
+        }
+
+
     }
 
     public static PpktIndividual fromFile(File ppktJsonFile) {
