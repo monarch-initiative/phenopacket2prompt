@@ -1,14 +1,12 @@
 # Set-up
 
-phenopacket2prompt requires at least Java 17. To build it from scratch, maven is also required.
-
-
+*phenopacket2prompt* requires at least Java 17. To build it from scratch, [Apache Maven](https://maven.apache.org/){:target="_blank"} is also required.
 
 ## Installation
 
 
 Most users should download the prebuilt executable file from the
-[Releases](https://github.com/monarch-initiative/phenopacket2prompt/releases) page of the GutHub repository.
+[Releases](https://github.com/monarch-initiative/phenopacket2prompt/releases){:target="_blank"} page of the GutHub repository.
 
 It is also possible to build the application from source using standard Maven and Java tools.
 
