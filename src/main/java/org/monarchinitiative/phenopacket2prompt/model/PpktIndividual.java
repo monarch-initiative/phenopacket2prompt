@@ -268,7 +268,7 @@ public class PpktIndividual {
         return phenotypicFeaturesAtSpecifiedAge;
     }
 
-    public List<OntologyTerm> getPhenotypicFeaturesAtOnsetWithoutSpecifiedAge() {
+   /* public List<OntologyTerm> getPhenotypicFeaturesAtOnsetWithoutSpecifiedAge() {
         return phenotypicFeaturesAtOnsetWithoutSpecifiedAge;
-    }
+    }*/
 }

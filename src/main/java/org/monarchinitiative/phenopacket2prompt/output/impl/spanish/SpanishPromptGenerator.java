@@ -27,7 +27,7 @@ public class SpanishPromptGenerator implements PromptGenerator {
 
     @Override
     public String queryHeader() {
-        return ppktTextGenerator.QUERY_HEADER();
+        return ppktTextGenerator.GPT_PROMPT_HEADER();
     }
 
     @Override
@@ -42,7 +42,7 @@ public class SpanishPromptGenerator implements PromptGenerator {
 
     @Override
     public String getVignetteAtAge(PhenopacketAge page, PhenopacketSex psex, List<OntologyTerm> terms) {
-        String ageString = this.ppktAgeSexGenerator.atAge(page);
+        String ageString = this.ppktAgeSexGenerator.atAgeForVignette(page);
         String features = formatFeatures(terms);
         return String.format("%s, %s presentó %s", ageString, ppktAgeSexGenerator.heSheIndividual(psex), features);
     }

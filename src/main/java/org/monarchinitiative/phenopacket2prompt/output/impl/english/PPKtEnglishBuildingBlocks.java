@@ -68,36 +68,6 @@ public class PPKtEnglishBuildingBlocks implements PPKtBuildingBlockGenerator {
 
 
     @Override
-    public String inFetalPeriod() {
-        return "in the fetal period";
-    }
-
-    @Override
-    public String isCongenital() {
-        return  "at birth";
-    }
-
-    @Override
-    public String asInfant() {
-        return "as an infant";
-    }
-
-    @Override
-    public String inChildhood() {
-        return "in childhood";
-    }
-
-    @Override
-    public String asAdolescent() {
-        return "as an adolescent";
-    }
-
-    @Override
-    public String inAdulthoold() {
-        return "in adulthood";
-    }
-
-    @Override
     public String she() {
         return "she";
     }
@@ -247,15 +217,7 @@ public class PPKtEnglishBuildingBlocks implements PPKtBuildingBlockGenerator {
         return "The proband presented with";
     }
 
-    @Override
-    public String probandMaleNoAgePresentedWith() {
-        return "The proband was a male who presented with";
-    }
 
-    @Override
-    public String probandFemaleNoAgePresentedWith() {
-        return "The proband was a female who presented with";
-    }
 
     @Override
     public String presentedWith() {
@@ -267,19 +229,20 @@ public class PPKtEnglishBuildingBlocks implements PPKtBuildingBlockGenerator {
         return "with";
     }
 
+
     @Override
-    public String probandFemaleNoAgeExcludedOnly() {
-        return "The proband was a female in whom the following clinical manifestations were excluded";
+    public String probandWasAFemale() {
+        return "The proband was a female";
     }
 
     @Override
-    public String probandMaleNoAgeExcludedOnly() {
-        return "The proband was a male in whom the following clinical manifestations were excluded";
+    public String probandWasAMale() {
+        return "The proband was a male";
     }
 
     @Override
-    public String probandNoAgeExcludedOnly() {
-        return "The proband was a person in whom the following clinical manifestations were excluded";
+    public String probandWasAnIndividual() {
+        return "The proband was an individual";
     }
 
     @Override
@@ -287,5 +250,53 @@ public class PPKtEnglishBuildingBlocks implements PPKtBuildingBlockGenerator {
         return "in whom the following clinical manifestations were excluded";
     }
 
+    @Override
+    public String duringFetal() {
+        return "During the fetal period";
+    }
 
+    @Override
+    public String asNeonate() {
+        return "As a neonate";
+    }
+
+    @Override
+    public String atBirth() {
+        return  "At birth";
+    }
+
+    @Override
+    public String asInfant() {
+        return "As an infant";
+    }
+
+    @Override
+    public String inChildhood() {
+        return "As a child";
+    }
+
+    @Override
+    public String asAdolescent() {
+        return "As an adolescent";
+    }
+
+    @Override
+    public String asAdult() {
+        return "As an adult";
+    }
+
+    @Override
+    public String asYoungAdult() {
+        return "As a young adult";
+    }
+
+    @Override
+    public String asMiddleAge() {
+        return "During middle age";
+    }
+
+    @Override
+    public String asLateOnset() {
+        return "During old age";
+    }
 }

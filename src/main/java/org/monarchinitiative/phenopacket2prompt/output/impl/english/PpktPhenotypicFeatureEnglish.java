@@ -14,7 +14,7 @@ public class PpktPhenotypicFeatureEnglish implements PpktPhenotypicFeatureGenera
      * @param ontologyTerms
      * @return
      */
-    public String featuresAtPresentation(List<OntologyTerm> ontologyTerms) {
+    public String featuresAtPresentation(String person, List<OntologyTerm> ontologyTerms) {
         List<String>  observed = getObservedFeaturesAsStr(ontologyTerms);
         List<String>  excluded = getExcludedFeaturesAsStr(ontologyTerms);
         if (! observed.isEmpty() && ! excluded.isEmpty()) {
@@ -85,7 +85,7 @@ public class PpktPhenotypicFeatureEnglish implements PpktPhenotypicFeatureGenera
 
     /**
      * format features
-     * The proband was a 39-year old woman who presented at the age of 12 years with HPO1, HPO2, and HPO3. HPO4 and HPO5 were excluded.
+     * The proband was a 39-year-old woman who presented at the age of 12 years with HPO1, HPO2, and HPO3. HPO4 and HPO5 were excluded.
      * The patient presented with [list of symptoms]. However, [excluded symptoms] were not observed."
      */
     @Override
@@ -104,5 +104,21 @@ public class PpktPhenotypicFeatureEnglish implements PpktPhenotypicFeatureGenera
         }
     }
 
-
+    @Override
+    public String featuresAtOnset(String personString, List<OntologyTerm> ontologyTerms) {
+        List<String> observed = getObservedFeaturesAsStr(ontologyTerms);
+        List<String> excluded = getExcludedFeaturesAsStr(ontologyTerms);
+        var observedStr = getOxfordCommaList(observed);
+        var excludedStr = getOxfordCommaList(excluded);
+        if (!observed.isEmpty() && excluded.isEmpty()) {
+            return String.format("%s presented with %s. However, the following features were excluded: %s.",
+                    personString, observedStr, excludedStr);
+        } else if (!observed.isEmpty()) {
+            return String.format("%s presented with %s.", personString, observedStr);
+        } else if (!excluded.isEmpty()) {
+            return String.format("%s was found not to have the following features: %s.", personString, excludedStr);
+        } else {
+            return "No phenotypic features were specifically recorded at disease onset.";
+        }
+    }
 }

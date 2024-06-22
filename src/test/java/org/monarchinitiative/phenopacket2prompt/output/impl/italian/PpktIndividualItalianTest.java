@@ -105,10 +105,10 @@ public class PpktIndividualItalianTest extends PPKtIndividualBase{
         PPKtIndividualInfoGenerator generator = new PpktIndividualItalian();
         switch (testCase.expectedOutcome()) {
             case TestOutcome.Ok(String expectedResult) ->
-                    assertEquals(expectedResult, generator.atAge(testCase.ppktAge()));
+                    assertEquals(expectedResult, generator.atAgeForVignette(testCase.ppktAge()));
             case TestOutcome.Error(Supplier<? extends RuntimeException> exceptionSupplier) ->
                     assertThrows(exceptionSupplier.get().getClass(),
-                            () -> generator.atAge(testCase.ppktAge()),
+                            () -> generator.atAgeForVignette(testCase.ppktAge()),
                             "Incorrect error handling for: " + testCase.description());
         }
 

@@ -426,7 +426,7 @@ public class PpktIndividualSpanish implements PPKtIndividualInfoGenerator {
     }
 
     @Override
-    public String atAge(PhenopacketAge ppktAge) {
+    public String atAgeForVignette(PhenopacketAge ppktAge) {
         if (ppktAge.ageType().equals(PhenopacketAgeType.ISO8601_AGE_TYPE)) {
             return "A la edad de " + atIsoAgeExact(ppktAge);
         } else if (ppktAge.ageType().equals(PhenopacketAgeType.HPO_ONSET_AGE_TYPE)) {

@@ -437,7 +437,7 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
     }
 
     @Override
-    public String atAge(PhenopacketAge ppktAge) {
+    public String atAgeForVignette(PhenopacketAge ppktAge) {
         if (ppktAge.ageType().equals(PhenopacketAgeType.ISO8601_AGE_TYPE)) {
             return imAlterVonIsoAgeExact(ppktAge);
         } else if (ppktAge.ageType().equals(PhenopacketAgeType.HPO_ONSET_AGE_TYPE)) {
