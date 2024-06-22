@@ -1,6 +1,10 @@
 package org.monarchinitiative.phenopacket2prompt.output.impl.english;
 
+import org.monarchinitiative.phenopacket2prompt.model.Iso8601Age;
 import org.monarchinitiative.phenopacket2prompt.output.PPKtBuildingBlockGenerator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PPKtEnglishBuildingBlocks implements PPKtBuildingBlockGenerator {
 
@@ -18,6 +22,26 @@ public class PPKtEnglishBuildingBlocks implements PPKtBuildingBlockGenerator {
     @Override
     public String years(int y) {
         return y>1 ? "years" : "year";
+    }
+
+
+
+    @Override
+    public String fromIso(Iso8601Age ppktAge) {
+        List<String> components = new ArrayList<>();
+        int y = ppktAge.getYears();
+        int m = ppktAge.getMonths();
+        int d = ppktAge.getDays();
+        if (y > 0) {
+            components.add(String.format("%d %s", y, years(y)));
+        }
+        if (m > 0) {
+            components.add(String.format("%d %s", m, months(y)));
+        }
+        if (d > 0) {
+            components.add(String.format("%d %s", d, days(y)));
+        }
+        return String.join(" ", components);
     }
 
     @Override
@@ -42,7 +66,7 @@ public class PPKtEnglishBuildingBlocks implements PPKtBuildingBlockGenerator {
         } else if (d==0) {
             return monthsOld(m);
         }
-        return String.format("%d-%s, %d-%s old", m, months(m), d, days(d));
+        return String.format("%d-month, %d-day old", m,  d);
     }
 
     @Override
@@ -51,9 +75,9 @@ public class PPKtEnglishBuildingBlocks implements PPKtBuildingBlockGenerator {
             return monthDayOld(m,d);
         }
         if (d==0) {
-            return String.format("%d-%s, %d-%s old", y, years(y), m, months(m));
+            return String.format("%d-year, %d-month old", y,  m);
         }
-        return String.format("%d-%s, %d-%s, %d-%s old", y, years(y), m, months(m), d, days(d));
+        return String.format("%d-year, %d-month, %d-day old", y, m, d);
     }
 
     @Override
@@ -299,4 +323,6 @@ public class PPKtEnglishBuildingBlocks implements PPKtBuildingBlockGenerator {
     public String asLateOnset() {
         return "During old age";
     }
+
+
 }

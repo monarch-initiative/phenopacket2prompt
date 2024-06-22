@@ -110,7 +110,7 @@ public class PpktPhenotypicFeatureEnglish implements PpktPhenotypicFeatureGenera
         List<String> excluded = getExcludedFeaturesAsStr(ontologyTerms);
         var observedStr = getOxfordCommaList(observed);
         var excludedStr = getOxfordCommaList(excluded);
-        if (!observed.isEmpty() && excluded.isEmpty()) {
+        if (!observed.isEmpty() && ! excluded.isEmpty()) {
             return String.format("%s presented with %s. However, the following features were excluded: %s.",
                     personString, observedStr, excludedStr);
         } else if (!observed.isEmpty()) {

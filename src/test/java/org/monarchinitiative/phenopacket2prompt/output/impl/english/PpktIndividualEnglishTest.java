@@ -100,9 +100,9 @@ public class PpktIndividualEnglishTest extends PPKtIndividualBase{
                 new TestIdvlAtAge("congenital",
                         congenital, new TestOutcome.Ok("At birth")),
                 new TestIdvlAtAge("infantile",
-                        infantile, new TestOutcome.Ok("During the infantile period")),
+                        infantile, new TestOutcome.Ok("As an infant")),
                 new TestIdvlAtAge("childhood age",
-                        childhood, new TestOutcome.Ok("During childhood")),
+                        childhood, new TestOutcome.Ok("As a child")),
                 new TestIdvlAtAge("46 years old",
                         p46y, new TestOutcome.Ok("At an age of 46 years"))
         );
@@ -121,8 +121,6 @@ public class PpktIndividualEnglishTest extends PPKtIndividualBase{
                             () -> generator.atAgeForVignette(testCase.ppktAge()),
                             "Incorrect error handling for: " + testCase.description());
         }
-
-
     }
 
 

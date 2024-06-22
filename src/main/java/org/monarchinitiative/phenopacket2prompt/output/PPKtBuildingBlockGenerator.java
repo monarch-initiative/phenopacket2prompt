@@ -1,6 +1,8 @@
 package org.monarchinitiative.phenopacket2prompt.output;
 
 
+import org.monarchinitiative.phenopacket2prompt.model.Iso8601Age;
+
 /**
  * Provide the "building blocks" (i.e., text fragments) needed to generate the
  * texts in the various languages.
@@ -127,4 +129,6 @@ public interface PPKtBuildingBlockGenerator {
     String asMiddleAge();
 
     String asLateOnset();
+
+    String fromIso(Iso8601Age ppktAge);
 }
