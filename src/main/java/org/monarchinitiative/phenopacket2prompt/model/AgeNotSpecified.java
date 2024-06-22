@@ -29,6 +29,11 @@ public final class AgeNotSpecified implements  PhenopacketAge {
     }
 
     @Override
+    public boolean isNeonate() {
+        return false;
+    }
+
+    @Override
     public boolean isFetus() {
         return false;
     }
