@@ -213,7 +213,7 @@ public class PpktIndividualItalian implements PPKtIndividualInfoGenerator {
         if (components.isEmpty()) {
             return "nel periodo neonatale";
         } else if (components.size() == 1) {
-            return "all'età di " + components.get(0);
+            return "all'età di " + components.getFirst();
         } else if (components.size() == 2) {
             return "all'età di " + components.get(0) + " e " + components.get(1);
         } else {

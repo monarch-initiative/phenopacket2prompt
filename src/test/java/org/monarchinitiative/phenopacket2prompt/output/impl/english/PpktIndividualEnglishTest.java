@@ -21,15 +21,15 @@ public class PpktIndividualEnglishTest extends PPKtIndividualBase{
     private static Stream<TestIndividual> testGetIndividualDescription() {
         return Stream.of(
                 new TestIndividual("46 year olf female, infantile onset",
-                        female46yearsInfantileOnset(), new TestOutcome.Ok("The proband was a 46-year old woman who presented as an infant with")),
+                        female46yearsInfantileOnset(), new TestOutcome.Ok("The proband was a 46-year-old woman who presented as an infant with")),
                 new TestIndividual("male 4 months, congenital onset",
-                        male4monthsCongenitalOnset(), new TestOutcome.Ok("The proband was a 4-month old male infant who presented at birth with")),
+                        male4monthsCongenitalOnset(), new TestOutcome.Ok("The proband was a 4-month-old male infant who presented at birth with")),
                 new TestIndividual("female, no onset",
                         femaleNoAge(), new TestOutcome.Ok("The proband was a female who presented with")),
                 new TestIndividual("female, no HPOs",
                         femaleNoHPOs(), new TestOutcome.Error(() -> new PhenolRuntimeException("No HPO annotations"))),
                 new TestIndividual("unknown sex, no 4yo",
-                        unknownSex4YearsOnset(),  new TestOutcome.Ok("The proband presented in childhood with"))
+                        unknownSex4YearsOnset(),  new TestOutcome.Ok("The proband presented as a child with"))
         );
     }
 

@@ -5,7 +5,7 @@ import org.monarchinitiative.phenopacket2prompt.cmd.*;
 import picocli.CommandLine;
 
 import java.util.concurrent.Callable;
-@CommandLine.Command(name = "phenopacket2promot", mixinStandardHelpOptions = true, version = "0.2.0",
+@CommandLine.Command(name = "phenopacket2prompt", mixinStandardHelpOptions = true, version = "0.2.0",
         description = "Convert phenopacket to prompt for GPT")
 public class Main implements Callable<Integer> {
 
@@ -19,6 +19,7 @@ public class Main implements Callable<Integer> {
                 .addSubcommand("batch", new GbtTranslateBatchCommand())
                 .addSubcommand("download", new DownloadCommand())
                 .addSubcommand("prompt", new PromptCommand())
+                .addSubcommand("mine", new TextMineCommand())
                 .addSubcommand("translate", new GptTranslateCommand())
                 ;
         cline.setToggleBooleanFlags(false);

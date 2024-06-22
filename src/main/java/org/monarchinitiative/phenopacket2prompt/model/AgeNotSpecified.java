@@ -44,6 +44,21 @@ public final class AgeNotSpecified implements  PhenopacketAge {
     }
 
     @Override
+    public boolean isYoungAdult() {
+        return false;
+    }
+
+    @Override
+    public boolean isMiddleAge() {
+        return false;
+    }
+
+    @Override
+    public boolean isLateAdultAge() {
+        return false;
+    }
+
+    @Override
     public boolean isAdult() {
         return false;
     }

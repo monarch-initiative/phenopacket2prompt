@@ -15,6 +15,22 @@ public final class HpoOnsetAge implements PhenopacketAge {
     private final int totalDays;
 
 
+    /** Late onset Late onset HP:0003584 */
+    private final static TermId lateAgeOnset = TermId.of("HP:0003584");
+
+    /* Middle age onset HP:0003596 */
+    private final static TermId middleAgeOnset = TermId.of("HP:0003596");
+
+    /** Young adult onset; Early young adult onset HP:0025708; Intermediate young adult onset HP:0025709;
+     * Late young adult onset HP:0025710 */
+    private final static Set<TermId> youngAdultIds = Set.of(TermId.of("HP:0011462"),
+            TermId.of("HP:0025708"),
+            TermId.of("HP:0025709"),
+            TermId.of("HP:0025710"));
+    /** All other adult terms, e.g., Adult onset HP:0003581 */
+    public final static Set<TermId> otherAdult = Set.of(middleAgeOnset, lateAgeOnset,
+            TermId.of("HP:0003581"));
+
     /**
      * One of Antenatal onset HP:0030674; Fetal onset HP:0011461; Late first trimester onset HP:0034199;
      * Third trimester onset HP:0034197; Second trimester onset HP:0034198; Embryonal onset HP:0011460
@@ -106,6 +122,19 @@ public final class HpoOnsetAge implements PhenopacketAge {
     @Override
     public boolean isAdult() {
         return adultTermIds.contains(tid);
+
+    public boolean isYoungAdult() {
+        return youngAdultIds.contains(tid);
+    }
+
+    @Override
+    public boolean isMiddleAge() {
+        return tid.equals(middleAgeOnset);
+    }
+
+    @Override
+    public boolean isLateAdultAge() {
+        return tid.equals(lateAgeOnset);
     }
 
     @Override
