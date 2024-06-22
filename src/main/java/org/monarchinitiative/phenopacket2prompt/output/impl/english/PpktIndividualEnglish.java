@@ -111,8 +111,12 @@ public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
             return "in childhood";
         } else if (hpoOnsetTermAge.isJuvenile()) {
             return "as an adolescent";
-        } else {
+        } else if (hpoOnsetTermAge.isNeonate()){
+            return "as a neonate";
+        } else if (hpoOnsetTermAge.isAdult()){
             return "in adulthood";
+        } else {
+            throw new PhenolRuntimeException("Could not identify onset age for HpoOnsetAge " + hpoOnsetTermAge);
         }
     }
 

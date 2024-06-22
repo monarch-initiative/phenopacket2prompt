@@ -29,12 +29,22 @@ public final class AgeNotSpecified implements  PhenopacketAge {
     }
 
     @Override
+    public boolean isNeonate() {
+        return false;
+    }
+
+    @Override
     public boolean isFetus() {
         return false;
     }
 
     @Override
     public boolean isCongenital() {
+        return false;
+    }
+
+    @Override
+    public boolean isAdult() {
         return false;
     }
 
@@ -53,8 +63,7 @@ public final class AgeNotSpecified implements  PhenopacketAge {
 
     @Override
     public boolean equals(Object obj) {
-        if (! (obj instanceof PhenopacketAge)) return false;
-        PhenopacketAge iso = (PhenopacketAge) obj;
+        if (! (obj instanceof PhenopacketAge iso)) return false;
         return iso.totalDays() == totalDays();
     }
 

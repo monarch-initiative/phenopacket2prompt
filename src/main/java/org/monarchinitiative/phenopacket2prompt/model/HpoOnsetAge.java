@@ -22,23 +22,41 @@ public final class HpoOnsetAge implements PhenopacketAge {
     private final static Set<TermId> fetalIds = Set.of(TermId.of(" HP:0030674"), TermId.of("HP:0011461"), TermId.of("HP:0034199"),
             TermId.of("HP:0034197"), TermId.of("HP:0034198"), TermId.of("HP:0011460*"));
 
-    /**
-     * Childhood onset
-     */
-    private final static TermId childhoodOnset = TermId.of("HP:0011463");
+    public static HpoOnsetAge congenital() {
+        return new HpoOnsetAge(congenitalOnset.getValue(), "Congenital onset");
+    }
+    public static HpoOnsetAge infantile() {
+        return new HpoOnsetAge(infantileOnset.getValue(), "Infantile onset");
+    }
+    public static HpoOnsetAge childhood() {
+        return new HpoOnsetAge(childhoodOnset.getValue(), "Childhood onset");
+    }
+    public static HpoOnsetAge juvenile() {
+        return new HpoOnsetAge(juvenileOnset.getValue(), "Juvenile onset");
+    }
 
-    private final static TermId juvenileOnset = TermId.of("HP:0003621");
 
-    /**
-     * Infantile onset
-     */
-    private final static TermId infantileOnset = TermId.of("HP:0003593");
-
-    /**
-     * Congenital onset
-     */
+    private final static TermId neonatalOnset = TermId.of("HP:0003623");
     private final static TermId congenitalOnset = TermId.of("HP:0003577");
-
+    private final static TermId infantileOnset = TermId.of("HP:0003593");
+    private final static TermId childhoodOnset = TermId.of("HP:0011463");
+    private final static TermId juvenileOnset = TermId.of("HP:0003621");
+    /** Adult onset*/
+    private final static TermId adultOnset = TermId.of("HP:0003581");
+    /** Young adult onset HP:0011462 */
+    private final static TermId youngAdultOnset = TermId.of("HP:0011462");
+    /** Early young adult onset HP:0025708*/
+    private final static TermId earlyYoungAdultAnset = TermId.of("HP:0025708");
+    /** Intermediate young adult onset HP:0025709 */
+    private final static TermId intermediateYoungAdultOnset = TermId.of("HP:0025709");
+    /** Late young adult onset HP:0025710 */
+    private final static TermId lateYoungAdultOnset = TermId.of("HP:0025710");
+    /** Middle age onset HP:0003596 */
+    private final static TermId middleAgeOnset = TermId.of("HP:0003596");
+    /** Late onset HP:0003584 */
+    private final static TermId lateOnset = TermId.of("HP:0003584");
+    private final static Set<TermId> adultTermIds = Set.of(adultOnset, youngAdultOnset, earlyYoungAdultAnset,
+    intermediateYoungAdultOnset, lateYoungAdultOnset, middleAgeOnset, lateOnset);
 
     public HpoOnsetAge(String id, String label) {
         this.tid = TermId.of(id);
@@ -50,7 +68,6 @@ public final class HpoOnsetAge implements PhenopacketAge {
         } else {
             totalDays = Integer.MAX_VALUE;
         }
-
     }
 
     @Override
@@ -67,16 +84,18 @@ public final class HpoOnsetAge implements PhenopacketAge {
     public boolean isJuvenile() {
         return tid.equals(juvenileOnset);
     }
-
-
     @Override
     public boolean isChild() {
         return tid.equals(childhoodOnset);
     }
-
     @Override
     public boolean isInfant() {
         return tid.equals(infantileOnset);
+    }
+
+    @Override
+    public boolean isNeonate() {
+        return tid.equals(neonatalOnset);
     }
 
     @Override
@@ -85,11 +104,14 @@ public final class HpoOnsetAge implements PhenopacketAge {
     }
 
     @Override
+    public boolean isAdult() {
+        return adultTermIds.contains(tid);
+    }
+
+    @Override
     public boolean isFetus() {
         return fetalIds.contains(tid);
     }
-
-
     @Override
     public int totalDays() {
         return totalDays;
@@ -100,23 +122,6 @@ public final class HpoOnsetAge implements PhenopacketAge {
     }
 
 
-    public static HpoOnsetAge childhood() {
-        return new HpoOnsetAge(childhoodOnset.getValue(), "Childhood onset");
-    }
-
-    public static HpoOnsetAge juvenile() {
-        return new HpoOnsetAge(juvenileOnset.getValue(), "Juvenile onset");
-    }
-
-
-    public static HpoOnsetAge infantile() {
-        return new HpoOnsetAge(infantileOnset.getValue(), "Infantile onset");
-    }
-
-
-    public static HpoOnsetAge congenital() {
-        return new HpoOnsetAge(congenitalOnset.getValue(), "Congenital onset");
-    }
 
     @Override
     public int hashCode() {
@@ -125,8 +130,7 @@ public final class HpoOnsetAge implements PhenopacketAge {
 
     @Override
     public boolean equals(Object obj) {
-        if (! (obj instanceof PhenopacketAge)) return false;
-        PhenopacketAge iso = (PhenopacketAge) obj;
+        if (! (obj instanceof PhenopacketAge iso)) return false;
         return iso.totalDays() == totalDays();
     }
 
