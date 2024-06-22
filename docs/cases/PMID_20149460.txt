@@ -1,0 +1,18 @@
+[source]
+pmid = PMID:20149460
+title = A novel mutation in the signal transducer and activator of transcription 3 (STAT3) gene, in hyper-IgE syndrome
+[diagnosis]
+disease_id = OMIM:147060
+disease_label = Hyper-IgE syndrome 1, autosomal dominant, with recurrent infections
+[text]
+A 12-year-old Greek girl was admitted because of fever, and cough for a week. Her parents were not consanguineous.
+She had no remarkable perinatal problems and had been vaccinated as scheduled. She had a history of atopic dermatitis since 6 months of age.
+Past medical history also revealed recurrent infections, including multiple episodes of skin abscesses and pneumonia.
+She had a history of two hospitalizations for pneumonia with cyst formation in the right lung and numerous visits at the
+clinic for the treatment of skin abscesses caused by Staphyloccocus aureus. Family history revealed no members with relevant allergic or immunologic diseases.
+On physical examination, her height was 118 cm (under the 5th percentile), and her weight was 25.8 kg (under the 5th percentile).
+She had coarse facial features with facial asymmetry, and prominent forehead. She was also diagnosed with scoliosis with maximal curvature of 14°.
+Complete blood cell counts demonstrated a high total eosinophil count (max 4000 cells/μl).
+The serum IgE level was increased at 74.000 IU/ml. All other laboratory data examined, such as serum immunoglobulin level,
+the oxidative burst of granulocytes and complement components, were normal with the exception of slightly increased IgD titer (300 mg/l).
+Lymphocyte subset analyses revealed normal levels of both CD4+ and CD8+ T cells (883 and 850 cells/μl, respectively).

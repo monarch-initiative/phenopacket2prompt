@@ -68,7 +68,7 @@ public class PpktIndividualTest {
     public void testPhenopacketDisease() {
         List<PhenopacketDisease> diseases = ppktIndividual.getDiseases();
         assertEquals(1, diseases.size());
-        PhenopacketDisease disease = diseases.get(0);
+        PhenopacketDisease disease = diseases.getFirst();
         TermId expectedId = TermId.of("OMIM:231670");
         String expectedLabel =  "Glutaricaciduria, type I";
         assertEquals(expectedId, disease.getDiseaseId());
@@ -77,7 +77,7 @@ public class PpktIndividualTest {
 
     @Test
     public void testPhenotypicFeatures() {
-        Map<PhenopacketAge, List<OntologyTerm>> ppktFeatureMap = ppktIndividual.getSpecifiedAgePhenotypicFeatures();
+        Map<PhenopacketAge, List<OntologyTerm>> ppktFeatureMap = ppktIndividual.extractSpecifiedAgePhenotypicFeatures();
         assertFalse(ppktFeatureMap.isEmpty());
         Predicate<OntologyTerm> termPredicate = term -> term.getLabel().equals("Cerebral atrophy");
         List<OntologyTerm> otlist = new ArrayList<>();

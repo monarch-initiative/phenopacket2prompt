@@ -40,7 +40,7 @@ public class PpktPhenotypicfeatureSpanish implements PpktPhenotypicFeatureGenera
         if (nextWord.length() < 2) {
             return "y"; // should never happen but do not want to crash
         }
-        Character letter = nextWord.charAt(0);
+        char letter = nextWord.charAt(0);
         if (vowels.contains(letter)) {
             return " i ";
         }

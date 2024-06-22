@@ -1,0 +1,16 @@
+[source]
+pmid = PMID:8755636
+title = Defective cystathionine beta-synthase regulation by S-adenosylmethionine in a partially pyridoxine responsive homocystinuria patient
+[diagnosis]
+disease_id = OMIM:236200
+disease_label = Homocystinuria, B6-responsive and nonresponsive types
+[text]
+The patient is a woman, now 20 y of age, who had been admitted to the hospital at the
+age of nine years because of psychomotoric retardation and marfanoid features such as
+excessive height,
+dolichostenomelia, and arachnodactyly.  At present time, i.e., 11 y after diagnosing and start of therapy, she is in a
+very good physical condition and her intellectual development has reached an average level.
+Her length is 182 cm and weight 75 kg. She has not any physical complaint.
+Ectopia lentis, osteoporosis, and vascular complications did
+not occur until now.
+Hyperhomocysteinemia and hypermethioninemia were observed in our patient when compared to controls.

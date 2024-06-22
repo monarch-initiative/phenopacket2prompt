@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
 
 import java.util.concurrent.Callable;
-@CommandLine.Command(name = "phenopacket2promot", mixinStandardHelpOptions = true, version = "0.2.0",
+@CommandLine.Command(name = "phenopacket2prompt", mixinStandardHelpOptions = true, version = "0.2.0",
         description = "Convert phenopacket to prompt for GPT")
 public class Main implements Callable<Integer> {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
@@ -21,6 +21,7 @@ public class Main implements Callable<Integer> {
         CommandLine cline = new CommandLine(new Main())
                 .addSubcommand("batch", new GbtTranslateBatchCommand())
                 .addSubcommand("download", new DownloadCommand())
+                .addSubcommand("mine", new TextMineCommand())
                 .addSubcommand("translate", new GptTranslateCommand())
                 ;
         cline.setToggleBooleanFlags(false);
