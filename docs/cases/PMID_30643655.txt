@@ -1,0 +1,10 @@
+[source]
+pmid = PMID:30643655
+title = Exome Sequencing: Mutilating Sensory Neuropathy with Spastic Paraplegia due to a Mutation in FAM134B Gene
+[diagnosis]
+disease_id = OMIM:613115
+disease_label = Neuropathy, hereditary sensory and autonomic, type IIB
+[text]
+Family 2: A 15-year-old boy (F2: IV: 1) presented with a history of frequent falls, unsteadiness, and pain insensitivity from an early age of 4 years [Figure 1(a)]. During the 5-year follow-up, he was hospitalized multiple times due to skin ulcers and osteomyelitis affecting his feet and toes. There was mild spasticity in the lower limbs with minimal pyramidal weakness (MRC4). Tendon reflexes were exaggerated with negative extensor response.
+
+Touch, pinprick, temperature and vibration revealed mild impairment in the distal part of the lower extremities for all the affected’s from family 1 while it was normal for family 2. In both families, applying strong pressure to the Achilles tendon or touching the exposed bony areas was not followed by an adequate pain reflex. Neurophysiological findings were normal or mildly abnormal in family 1 in the early stages but follow-up studies revealed sensory axonal polyneuropathy predominantly in the lower limbs while it was normal for family 2. Sympathetic skin response and beat to beat variation were also found to be normal for family 2 but abnormal in family 1 indicating involvement of the autonomic nervous system. Cerebral MRI as well as other hematological and biochemical investigations was normal

@@ -2,13 +2,12 @@ package org.monarchinitiative.phenopacket2prompt.output.impl.english;
 
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenopacket2prompt.model.*;
-import org.monarchinitiative.phenopacket2prompt.output.PPKtBuildingBlockGenerator;
+import org.monarchinitiative.phenopacket2prompt.output.BuildingBlockGenerator;
 import org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualInfoGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 
 /**
@@ -32,17 +31,17 @@ import java.util.Set;
  */
 public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
 
-    private final PPKtBuildingBlockGenerator buildBlocks;
+    private final BuildingBlockGenerator buildBlocks;
 
     public PpktIndividualEnglish() {
-        buildBlocks = new PPKtEnglishBuildingBlocks();
+        buildBlocks = new EnglishBuildingBlocks();
     }
 
     /**
      * We begin our description with a sentence
      *
-     * @param individual
-     * @return
+     * @param individual the individual for whom we are creating a diagnostic prompt
+     * @return complete prompt for an LLM
      */
     public String getIndividualDescription(PpktIndividual individual) {
         if (individual.annotationCount() == 0) {
@@ -117,10 +116,12 @@ public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
             return "an " +buildBlocks.adolescentChild();
         } else if (hpoOnsetTermAge.isNeonate()) {
             return "a " +buildBlocks.newborn();
-        } else if (hpoOnsetTermAge.isAdult()) {
+        } else if (hpoOnsetTermAge.isYoungAdult()) {
+            return "a young adult"; // +buildBlocks.asYoungAdult();
+        }  else if (hpoOnsetTermAge.isAdult()) {
             return "an " +buildBlocks.adult();
         } else {
-            throw new PhenolRuntimeException("Could not identify life stage name for HpoOnsetAge " + hpoOnsetTermAge);
+            throw new PhenolRuntimeException("Could not identify life stage name for HpoOnsetAge " + hpoOnsetTermAge.toString());
         }
     }
 
@@ -293,6 +294,7 @@ public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
             throw new PhenolRuntimeException("Bad age type");
         }
     }
+
 
 
 }

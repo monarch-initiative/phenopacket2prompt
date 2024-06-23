@@ -15,12 +15,19 @@ public final class HpoOnsetAge implements PhenopacketAge {
     private final int totalDays;
 
 
-    /**
-     * One of Antenatal onset HP:0030674; Fetal onset HP:0011461; Late first trimester onset HP:0034199;
-     * Third trimester onset HP:0034197; Second trimester onset HP:0034198; Embryonal onset HP:0011460
+
+    private final static TermId antenatalOnset = TermId.of("HP:0030674");
+    private final static TermId fetalOnset = TermId.of("HP:0011461");
+    private final static TermId lateFirstTrimesterOnset = TermId.of("HP:0034199");
+    private final static TermId secondTrimesterOnset = TermId.of("HP:0034198");
+    private final static TermId thirdTrimesterOnset = TermId.of("HP:0034197");
+
+    private final static TermId embryonalOnset = TermId.of("HP:0011460");
+    /** Note we are including antenatal in fetal, because this is almost certainly what is meant if embryonal is not
+     * specifically indicated
      */
-    private final static Set<TermId> fetalIds = Set.of(TermId.of(" HP:0030674"), TermId.of("HP:0011461"), TermId.of("HP:0034199"),
-            TermId.of("HP:0034197"), TermId.of("HP:0034198"), TermId.of("HP:0011460*"));
+    private final static Set<TermId> fetalIds = Set.of(antenatalOnset, fetalOnset,
+            lateFirstTrimesterOnset, secondTrimesterOnset, thirdTrimesterOnset);
 
     public static HpoOnsetAge congenital() {
         return new HpoOnsetAge(congenitalOnset.getValue(), "Congenital onset");
@@ -148,6 +155,12 @@ public final class HpoOnsetAge implements PhenopacketAge {
     public boolean equals(Object obj) {
         if (! (obj instanceof PhenopacketAge iso)) return false;
         return iso.totalDays() == totalDays();
+    }
+
+
+    @Override
+    public String toString() {
+        return String.format("[HpoOnsetAge]: %s (%s)", this.label, this.tid.getValue());
     }
 
 }

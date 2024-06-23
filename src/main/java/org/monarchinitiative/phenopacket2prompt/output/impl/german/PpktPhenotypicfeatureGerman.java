@@ -5,6 +5,7 @@ import org.monarchinitiative.phenopacket2prompt.model.OntologyTerm;
 import org.monarchinitiative.phenopacket2prompt.output.PpktPhenotypicFeatureGenerator;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class PpktPhenotypicfeatureGerman implements PpktPhenotypicFeatureGenerator {
 
@@ -35,6 +36,9 @@ public class PpktPhenotypicfeatureGerman implements PpktPhenotypicFeatureGenerat
 
 
     private String getCommaList(List<String> items) {
+        if (items.isEmpty()) {
+            return ""; // this will be filtered out later
+        }
         if (items.size() == 1) {
             return items.getFirst();
         }
@@ -43,11 +47,12 @@ public class PpktPhenotypicfeatureGerman implements PpktPhenotypicFeatureGenerat
             // one item will work with the below code
             return String.join(" und ", items);
         }
-        String symList = String.join(", ", items);
-        int jj = symList.lastIndexOf(", ");
-        String end = symList.substring(jj+2);
-        symList = symList.substring(0, jj) + " und " + end;
-        return symList;
+        // if we have more than two, join all but the very last item with a comma
+        String penultimate = items.stream()
+                .limit(items.size() - 1)
+                .collect(Collectors.joining(","));
+        String ultimate = items.get(items.size() - 1);
+        return penultimate + " und " + ultimate;
     }
 
     @Override
@@ -75,4 +80,31 @@ public class PpktPhenotypicfeatureGerman implements PpktPhenotypicFeatureGenerat
     public Set<String> getMissingTranslations() {
         return missingTranslations;
     }
+
+
+
+    @Override
+    public String featuresAtOnset(String personString, List<OntologyTerm> ontologyTerms) {
+        List<String> observed = getObservedFeaturesAsStr(ontologyTerms);
+        List<String> excluded = getExcludedFeaturesAsStr(ontologyTerms);
+        var observedStr = getCommaList(observed);
+        var excludedStr = getCommaList(excluded);
+        if (!observed.isEmpty() && ! excluded.isEmpty()) {
+            return String.format("%s präsentierte mit den folgenden Symptomen: %s. Im Gegensatz %s die folgenden Symptome ausgeschlossen: %s.",
+                    personString,
+                    observedStr,
+                    excluded.size()>1? "wurden":"wurde",
+                    excludedStr);
+        } else if (!observed.isEmpty()) {
+            return String.format("%s präsentierte mit den folgenden Symptomen: %s.", personString, observedStr);
+        } else if (!excluded.isEmpty()) {
+            return String.format("Beim Krankheitsbeginn %s die folgenden Symptome ausgeschlossen: %s.",
+                    excluded.size()>1? "wurden":"wurde", excludedStr);
+        } else {
+            return "Keine phänotypischen Abnormalitäten wurden explizit zu Krankheitsbeginn beschrieben.";
+        }
+    }
+
+
+
 }

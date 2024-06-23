@@ -1,12 +1,12 @@
 package org.monarchinitiative.phenopacket2prompt.output.impl.english;
 
 import org.monarchinitiative.phenopacket2prompt.model.Iso8601Age;
-import org.monarchinitiative.phenopacket2prompt.output.PPKtBuildingBlockGenerator;
+import org.monarchinitiative.phenopacket2prompt.output.BuildingBlockGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PPKtEnglishBuildingBlocks implements PPKtBuildingBlockGenerator {
+public class EnglishBuildingBlocks implements BuildingBlockGenerator {
 
 
     @Override

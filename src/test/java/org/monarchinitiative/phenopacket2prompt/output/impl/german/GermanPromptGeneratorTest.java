@@ -35,7 +35,9 @@ Sie müssen Ihre Argumentation nicht erläutern, sondern nur die Diagnosen aufli
 Ich habe Ihnen diese Anleitung auf English gegeben, aber ich bitte Sie, ihre Antwort ausschließlich auf English zu liefern.
 Hier ist der Fall:
 
-Der Patient war ein 2jähriger Junge, der sich im Alter von 3 Tagen mit den folgenden Symptomen vorgestellt hat:  Lymphopenie, Lungenentzündung und Verminderter zirkulierender IgA-Spiegel. Im Alter von 2 Jahren, präsentierte er mit den folgenden Symptomen: Verringertes zirkulierendes Gesamt-IgM.""";
+Der Proband war 2 Jahre alter Junge. Der Krankheitsbeginn trat im Alter von 3 Tagen auf.
+Er präsentierte mit den folgenden Symptomen:  Lymphopenie, Lungenentzündung und Verminderter zirkulierender IgA-Spiegel. 
+Im Alter von 2 Jahren, präsentierte er mit den folgenden Symptomen: Verringertes zirkulierendes Gesamt-IgM.""";
     @Test
     public void testCase() {
         PpktIndividual i = twoYears();
