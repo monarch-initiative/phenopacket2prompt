@@ -1,0 +1,7 @@
+[source]
+pmid = PMID:25163805
+title = Further delineation of Loeys-Dietz syndrome type 4 in a family with mild vascular involvement and a TGFB2 splicing mutation
+[diagnosis]
+disease_id = OMIM:614816
+disease_label = Loeys-Dietz syndrome 4
+[text]
