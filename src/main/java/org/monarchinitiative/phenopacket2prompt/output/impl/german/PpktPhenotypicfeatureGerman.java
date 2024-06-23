@@ -1,5 +1,6 @@
 package org.monarchinitiative.phenopacket2prompt.output.impl.german;
 
+import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenopacket2prompt.international.HpInternational;
 import org.monarchinitiative.phenopacket2prompt.model.OntologyTerm;
 import org.monarchinitiative.phenopacket2prompt.output.PpktPhenotypicFeatureGenerator;
@@ -82,13 +83,41 @@ public class PpktPhenotypicfeatureGerman implements PpktPhenotypicFeatureGenerat
     }
 
 
+    @Override
+    public String featuresAtEncounter(String personString, String ageString, List<OntologyTerm> ontologyTerms) {
+        List<OntologyTerm> observed = getObservedFeatures(ontologyTerms);
+        List<OntologyTerm> excluded = getExcludedFeatures(ontologyTerms);
+        List<String> observedGerman = getTranslations(observed);
+        List<String> excludedGerman = getTranslations(excluded);
+        var observedStr = getCommaList(observedGerman);
+        var excludedStr = getCommaList(excludedGerman);
+        if (!observed.isEmpty() && ! excluded.isEmpty()) {
+            return String.format("%s präsentierte %s mit den folgenden Symptomen: %s. Im Gegensatz %s die folgenden Symptome ausgeschlossen: %s.",
+                    ageString,
+                    personString,
+                    observedStr,
+                    excluded.size()>1? "wurden":"wurde",
+                    excludedStr);
+        } else if (!observed.isEmpty()) {
+            return String.format("%s präsentierte %s mit den folgenden Symptomen: %s.", ageString, personString,  observedStr);
+        } else if (!excluded.isEmpty()) {
+            return String.format("%s %s die folgenden Symptome ausgeschlossen: %s.",
+                    ageString,
+                    excluded.size()>1? "wurden":"wurde", excludedStr);
+        } else {
+            throw new PhenolRuntimeException("No features found for time point " + ageString); // should never happen
+        }
+    }
 
     @Override
     public String featuresAtOnset(String personString, List<OntologyTerm> ontologyTerms) {
-        List<String> observed = getObservedFeaturesAsStr(ontologyTerms);
-        List<String> excluded = getExcludedFeaturesAsStr(ontologyTerms);
-        var observedStr = getCommaList(observed);
-        var excludedStr = getCommaList(excluded);
+        List<OntologyTerm> observed = getObservedFeatures(ontologyTerms);
+        List<OntologyTerm> excluded = getExcludedFeatures(ontologyTerms);
+        List<String> observedGerman = getTranslations(observed);
+        List<String> excludedGerman = getTranslations(excluded);
+        var observedStr = getCommaList(observedGerman);
+        var excludedStr = getCommaList(excludedGerman);
+
         if (!observed.isEmpty() && ! excluded.isEmpty()) {
             return String.format("%s präsentierte mit den folgenden Symptomen: %s. Im Gegensatz %s die folgenden Symptome ausgeschlossen: %s.",
                     personString,

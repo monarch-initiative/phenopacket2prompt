@@ -50,8 +50,12 @@ public class GermanPromptGenerator implements PromptGenerator {
     @Override
     public String getVignetteAtAge(PhenopacketAge page, PhenopacketSex psex, List<OntologyTerm> terms) {
         String ageString = this.ppktAgeSexGenerator.atAgeForVignette(page);
-        String features = formatFeatures(terms);
-        return String.format("%s, präsentierte %s mit den folgenden Symptomen: %s", ageString, ppktAgeSexGenerator.heSheIndividual(psex), features);
+        String person = switch (psex) {
+            case MALE -> "er";
+            case FEMALE -> "sie";
+            default -> "die betroffene Person";
+        };
+        return this.ppktPhenotypicFeatureGenerator.featuresAtEncounter(person, ageString, terms);
     }
 
     @Override
