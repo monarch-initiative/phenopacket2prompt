@@ -1,5 +1,6 @@
 package org.monarchinitiative.phenopacket2prompt.output.impl.german;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
@@ -7,6 +8,7 @@ import org.monarchinitiative.phenopacket2prompt.model.PhenopacketSex;
 import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
 import org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualBase;
 import org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualInfoGenerator;
+import org.monarchinitiative.phenopacket2prompt.output.impl.english.PpktIndividualEnglish;
 
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -21,17 +23,28 @@ public class PpktIndividualGermanTest extends PPKtIndividualBase{
     private static Stream<TestIndividual> testGetIndividualDescription() {
         return Stream.of(
                 new TestIndividual("46 year old female, infantile onset",
-                        female46yearsInfantileOnset(), new TestOutcome.Ok("Die Patientin war eine 46-jährige Frau, die sich im Säuglingsalter mit den folgenden Symptomen vorgestellt hat: ")),
+                        female46yearsInfantileOnset(), new TestOutcome.Ok("Die Probandin war eine 46 Jahre alte Frau. Der Krankheitsbeginn trat im Säuglingsalter auf.")),
               new TestIndividual("male 4 months, congenital onset",
-                       male4monthsCongenitalOnset(), new TestOutcome.Ok("Der Patient war ein 4 Monate alter Säugling, der sich bei der Geburt mit den folgenden Symptomen vorgestellt hat: ")),
+                       male4monthsCongenitalOnset(), new TestOutcome.Ok("Der Proband war ein 4 Monate alter männlicher Säugling. Der Krankheitsbeginn trat zum Zeitpunkt der Geburt auf.")),
                   new TestIndividual("female, no onset",
-                        femaleNoAge(), new TestOutcome.Ok("Die Patientin stellte sich mit den folgenden Symptomen vor: ")),
+                        femaleNoAge(), new TestOutcome.Ok("Die Probandin war eine Frau. Der Krankheitsbeginn wurde nicht angegeben.")),
               new TestIndividual("female, no HPOs",
                         femaleNoHPOs(), new TestOutcome.Error(() -> new PhenolRuntimeException("No HPO annotations"))),
                 new TestIndividual("unknown sex, no 4yo",
-                        unknownSex4YearsOnset(),  new TestOutcome.Ok("Der Patient stellte sich in der Kindheit mit den folgenden Symptomen vor: "))
+                        unknownSex4YearsOnset(),  new TestOutcome.Ok("Der Proband war ein Individuum ohne angegebenes Geschlecht. Der Krankheitsbeginn trat im Kindesalter auf."))
                          );
     }
+
+    @Test
+    public void t1() {
+        PPKtIndividualInfoGenerator generator = new PpktIndividualGerman();
+
+        String expected = "Die Probandin war eine 46 Jahre alte Frau. Der Krankheitsbeginn trat im Säuglingsalter auf.";
+        PpktIndividual ppkti = female46yearsInfantileOnset();
+        String desc = generator.getIndividualDescription(ppkti);
+        assertEquals(expected,desc);
+    }
+
 
 
 
@@ -101,10 +114,10 @@ public class PpktIndividualGermanTest extends PPKtIndividualBase{
         PPKtIndividualInfoGenerator generator = new PpktIndividualGerman();
         switch (testCase.expectedOutcome()) {
             case TestOutcome.Ok(String expectedResult) ->
-                    assertEquals(expectedResult, generator.atAge(testCase.ppktAge()));
+                    assertEquals(expectedResult, generator.atAgeForVignette(testCase.ppktAge()));
             case TestOutcome.Error(Supplier<? extends RuntimeException> exceptionSupplier) ->
                     assertThrows(exceptionSupplier.get().getClass(),
-                            () -> generator.atAge(testCase.ppktAge()),
+                            () -> generator.atAgeForVignette(testCase.ppktAge()),
                             "Incorrect error handling for: " + testCase.description());
         }
     }

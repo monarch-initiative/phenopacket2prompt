@@ -11,9 +11,19 @@ public sealed interface PhenopacketAge permits AgeNotSpecified, HpoOnsetAge, Iso
 
     boolean isInfant();
 
+    boolean isNeonate();
+
     boolean isFetus();
 
     boolean isCongenital();
+
+    boolean isYoungAdult();
+
+    boolean isMiddleAge();
+
+    boolean isLateAdultAge();
+
+    boolean isAdult();
 
     int totalDays();
 

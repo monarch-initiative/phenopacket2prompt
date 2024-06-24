@@ -38,7 +38,7 @@ public class PpktPhenotypicfeatureDutch implements PpktPhenotypicFeatureGenerato
 
     private String getOxfordCommaList(List<String> items) {
         if (items.size() == 1) {
-            return items.get(0);
+            return items.getFirst();
         }
         if (items.size() == 2) {
             // no comma if we just have two items.

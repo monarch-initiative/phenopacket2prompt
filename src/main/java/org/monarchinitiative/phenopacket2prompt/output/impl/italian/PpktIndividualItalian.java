@@ -213,7 +213,7 @@ public class PpktIndividualItalian implements PPKtIndividualInfoGenerator {
         if (components.isEmpty()) {
             return "nel periodo neonatale";
         } else if (components.size() == 1) {
-            return "all'età di " + components.get(0);
+            return "all'età di " + components.getFirst();
         } else if (components.size() == 2) {
             return "all'età di " + components.get(0) + " e " + components.get(1);
         } else {
@@ -414,7 +414,7 @@ public class PpktIndividualItalian implements PPKtIndividualInfoGenerator {
     }
 
     @Override
-    public String atAge(PhenopacketAge ppktAge) {
+    public String atAgeForVignette(PhenopacketAge ppktAge) {
         if (ppktAge.ageType().equals(PhenopacketAgeType.ISO8601_AGE_TYPE)) {
             return "All'età di " + atIsoAgeExact(ppktAge);
         } else if (ppktAge.ageType().equals(PhenopacketAgeType.HPO_ONSET_AGE_TYPE)) {

@@ -41,12 +41,12 @@ public class PpktPhenotypicfeatureItalian implements PpktPhenotypicFeatureGenera
 
     private String getOxfordCommaList(List<String> items) {
         if (items.size() == 1) {
-            return items.get(0);
+            return items.getFirst();
         }
         if (items.size() == 2) {
             // no comma if we just have two items.
             // one item will work with the below code
-            return String.join(" and ", items);
+            return String.join(" e ", items);
         }
         String symList = String.join(", ", items);
         int jj = symList.lastIndexOf(", ");
@@ -78,7 +78,7 @@ public class PpktPhenotypicfeatureItalian implements PpktPhenotypicFeatureGenera
             if (excludedLabels.size() > 1) {
                 return String.format("E' stata esclusa la presenza dei seguenti sintomi: %s.", getOxfordCommaList(excludedLabels));
             } else {
-                return String.format("E' stata esclusa la presenza del seguente sintomo: %s.",excludedLabels.get(0));
+                return String.format("E' stata esclusa la presenza del seguente sintomo: %s.",excludedLabels.getFirst());
             }
         } else {
             String exclusion;

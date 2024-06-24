@@ -1,0 +1,26 @@
+[source]
+pmid = PMID:20932317
+title = Frameshift mutation hotspot identified in Smith-Magenis syndrome: case report and review of literature
+[diagnosis]
+disease_id = OMIM:182290
+disease_label = Smith-Magenis syndrome
+[text]
+Case 1
+SMS324 is an 18-year-old male who was delivered at 38 weeks gestation following premature labor and antepartum haemorrhage.
+His birth weight was 2,750 g (10th-50th centile). While his neonatal period was complicated by gastroesophageal reflux
+and failure to thrive, he was admitted to the hospital at 1 year of age for being considerably overweight, with fat folds
+on his arms and legs. He spoke his first words at 6 months and walked at 12 months. His medical history includes two
+episodes of severe asthma, petit mal seizures between the ages of 5-10 y and three spontaneous pneumothoraces (SP).
+He had a square shaped face, upslanting palpebral fissures, down turned mouth, inverted upper lip, and synophrys (Fig. 1A).
+Other physical anomalies included brachydactyly, bilateral fifth finger clinodactyly with
+a small middle phalanx of his fifth fingers, and pes planus. At 16 years of age, height was 163 cm (< 3rd centile),
+head circumference was 54 cm, and he presented with relative truncal obesity.
+Behaviorally, SMS324 exhibited head-banging and rage attacks starting at age 3.
+At age 16, he continues to have recurrent episodes of rage attacks, anxiety, and obsessional behavior.
+He has never slept through the night, with recurrent 3 a.m. wakenings.
+Apart from finger chewing, he exhibits no self-injurious behaviors, self hugging, onychotillomania or polyembolokomania.
+He has had a persistent history of sleep disturbance.
+A formal developmental assessment indicated a mild global developmental delay.
+He was initially diagnosed with attention deficit disorder;
+however, a later assessment indicated this diagnosis was incorrect.
+He was initially mainstreamed in a regular classroom at school but at age 16 now functions in an OI classroom with supervision.

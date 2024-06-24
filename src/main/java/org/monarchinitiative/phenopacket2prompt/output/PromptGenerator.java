@@ -29,6 +29,13 @@ public interface PromptGenerator {
 
     String getVignetteAtAge(PhenopacketAge page, PhenopacketSex psex, List<OntologyTerm> terms);
 
+    default String getVignetteAtOnset(PpktIndividual individual){
+        return ""; // TODO  -- NON English need to implement, then remove "default"
+    }
+
+
+
+
     static PromptGenerator english(){
         return new EnglishPromptGenerator();
     }
@@ -62,12 +69,10 @@ public interface PromptGenerator {
      */
     default String createPrompt(PpktIndividual individual) {
         String individualInfo = getIndividualInformation(individual);
-        List<OntologyTerm> onsetTerms = individual.getPhenotypicFeaturesAtOnset();
-        List<OntologyTerm> unspecifiedAgeTerms = individual.getPhenotypicFeaturesWithNoSpecifiedAge();
-        Map<PhenopacketAge, List<OntologyTerm>> pfMap = individual.getSpecifiedAgePhenotypicFeatures();
         // For creating the prompt, we first report the onset and the unspecified terms together, and then
-        // report the rest
-        onsetTerms.addAll(unspecifiedAgeTerms);
+        List<OntologyTerm> onsetTerms = individual.getPhenotypicFeaturesAtOnset();
+        Map<PhenopacketAge, List<OntologyTerm>> pfMap = individual.extractSpecifiedAgePhenotypicFeatures();
+        // We then report the rest, one for each specified time
         String onsetFeatures = formatFeatures(onsetTerms);
         StringBuilder sb = new StringBuilder();
         sb.append(queryHeader());

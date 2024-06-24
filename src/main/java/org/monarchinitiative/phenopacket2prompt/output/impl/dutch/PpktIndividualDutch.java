@@ -252,7 +252,7 @@ public class PpktIndividualDutch implements PPKtIndividualInfoGenerator {
         if (components.isEmpty()) {
             return "als pasgeborene";
         } else if (components.size() == 1) {
-            return "op de leeftijd van " + components.get(0);
+            return "op de leeftijd van " + components.getFirst();
         } else if (components.size() == 2) {
             return "op de leeftijd van " + components.get(0) + " en " + components.get(1);
         } else {
@@ -432,7 +432,7 @@ public class PpktIndividualDutch implements PPKtIndividualInfoGenerator {
             // should never happen
             throw new PhenolRuntimeException("Did not recognize onset age type " + onsetAge.ageType());
         }
-        return String.format("De proband presenteerde %s met", onsetDescription, onsetDescription);
+        return String.format("De proband presenteerde %s met", onsetDescription);
     }
 
     private String ageNotAvailable(PhenopacketSex psex) {
@@ -453,7 +453,7 @@ public class PpktIndividualDutch implements PPKtIndividualInfoGenerator {
     }
 
     @Override
-    public String atAge(PhenopacketAge ppktAge) {
+    public String atAgeForVignette(PhenopacketAge ppktAge) {
         if (ppktAge.ageType().equals(PhenopacketAgeType.ISO8601_AGE_TYPE)) {
             return "Op de leeftijd van " + atIsoAgeExact(ppktAge);
         } else if (ppktAge.ageType().equals(PhenopacketAgeType.HPO_ONSET_AGE_TYPE)) {

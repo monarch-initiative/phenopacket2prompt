@@ -10,6 +10,13 @@ public interface PpktPhenotypicFeatureGenerator {
 
     String formatFeatures(List<OntologyTerm> ontologyTerms);
 
+    default String featuresAtEncounter(String personString, String ageString, List<OntologyTerm> ontologyTerms) {
+        return ""; //TODO - implement and make this not default
+    }
+
+    default String featuresAtOnset(String personString, List<OntologyTerm> ontologyTerms) {
+        return ""; //TODO - implement and make this not default
+    }
 
     default List<String> getObservedFeaturesAsStr(List<OntologyTerm> oterms) {
         return   oterms.stream()

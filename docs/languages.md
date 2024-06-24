@@ -1,7 +1,10 @@
 # Languages
 
-phenopacket2prompt creates phenopackets in various languages using a template system. 
-(TODO explain HPO translations).
+*phenopacket2prompt* creates prompts for Large Lanugage Models starting from HPO terms and other data contained in a
+GA4GH phenopacket. 
+
+Additionally, the HPO translation files (See [Gargano et al., 2024](https://pubmed.ncbi.nlm.nih.gov/37953324/){:template="_blank"})
+are leveraged to create prompts in several languages other than English.
 
 
 ## The template
