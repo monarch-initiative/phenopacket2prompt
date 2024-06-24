@@ -38,6 +38,12 @@ public class GptTranslateCommand implements Callable<Integer> {
     private String languageCode;
 
 
+    @CommandLine.Option(names = {"--testdrive"},
+            description = "Create a file with example translations in each of our languages")
+    private boolean testDrive = false;
+
+
+
     @Override
     public Integer call() throws Exception {
         File hpJsonFile = new File(hpoJsonPath);
@@ -77,6 +83,10 @@ public class GptTranslateCommand implements Callable<Integer> {
             case "it" -> {
                 PromptGenerator italian = PromptGenerator.italian(internationalMap.get("it"));
                 prompt = italian.createPrompt(individual);
+            }
+            case "tr" -> {
+                PromptGenerator turkish = PromptGenerator.turkish(internationalMap.get("tr"));
+                prompt = turkish.createPrompt(individual);
             }
             default -> prompt = "did not recognize language code " + languageCode;
         }

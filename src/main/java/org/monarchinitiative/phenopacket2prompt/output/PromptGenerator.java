@@ -11,6 +11,8 @@ import org.monarchinitiative.phenopacket2prompt.output.impl.german.PpktPhenotypi
 import org.monarchinitiative.phenopacket2prompt.output.impl.spanish.*;
 import org.monarchinitiative.phenopacket2prompt.output.impl.dutch.*;
 import org.monarchinitiative.phenopacket2prompt.output.impl.italian.*;
+import org.monarchinitiative.phenopacket2prompt.output.impl.turkish.PpktPhenotypicfeatureTurkish;
+import org.monarchinitiative.phenopacket2prompt.output.impl.turkish.TurkishPromptGenerator;
 
 
 import java.util.List;
@@ -60,6 +62,11 @@ public interface PromptGenerator {
         return new ItalianPromptGenerator(pfgen);
     }
 
+    static PromptGenerator turkish(HpInternational international) {
+        PpktPhenotypicFeatureGenerator pfgen = new PpktPhenotypicfeatureTurkish(international);
+        return new TurkishPromptGenerator(pfgen);
+    }
+
 
     /**
      * The following structure should work for most other languages, but the function
@@ -68,6 +75,12 @@ public interface PromptGenerator {
      * @return the prompt text
      */
     default String createPrompt(PpktIndividual individual) {
+       return String.format("%s%s",
+               getHeader(),
+               createPromptWithoutHeader(individual));
+    }
+    // TODO IMPLEMENT EVERYWHERE. WE ALSO NEED VERSIONS FOR EACH LLM, CONSIDER ADDING ENUM
+    default String createPromptWithoutHeader(PpktIndividual individual) {
         String individualInfo = getIndividualInformation(individual);
         // For creating the prompt, we first report the onset and the unspecified terms together, and then
         List<OntologyTerm> onsetTerms = individual.getPhenotypicFeaturesAtOnset();
@@ -75,13 +88,18 @@ public interface PromptGenerator {
         // We then report the rest, one for each specified time
         String onsetFeatures = formatFeatures(onsetTerms);
         StringBuilder sb = new StringBuilder();
-        sb.append(queryHeader());
+
         sb.append(individualInfo).append(" ").append(onsetFeatures);
         for (var entry: pfMap.entrySet()) {
             String vignette = getVignetteAtAge(entry.getKey(), individual.getSex(), entry.getValue());
             sb.append(vignette).append(" ");
         }
         return sb.toString();
+    }
+
+    // TODO IMPLEMENT EVERYWHERE. WE ALSO NEED VERSIONS FOR EACH LLM, CONSIDER ADDING ENUM
+    default String getHeader() {
+        return queryHeader();
     }
 
 

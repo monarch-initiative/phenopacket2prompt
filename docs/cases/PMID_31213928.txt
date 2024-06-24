@@ -2,8 +2,8 @@
 pmid = PMID:31213928
 title = A novel case report of spinal muscular atrophy with progressive myoclonic epilepsy from Iran
 [diagnosis]
-disease_id = OMIM:
-disease_label =
+disease_id = OMIM:159950
+disease_label = Spinal muscular atrophy with progressive myoclonic epilepsy
 [text]
 A 15-year old female patient was attended to neurology clinic for recent onset tremor, seizure, and
 weakness in limbs. She was the first offspring of a family with relative parents; she was born from

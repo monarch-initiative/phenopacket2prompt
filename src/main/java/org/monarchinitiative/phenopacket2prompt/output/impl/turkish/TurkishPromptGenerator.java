@@ -1,38 +1,45 @@
-package org.monarchinitiative.phenopacket2prompt.output.impl.english;
+package org.monarchinitiative.phenopacket2prompt.output.impl.turkish;
 
 import org.monarchinitiative.phenopacket2prompt.model.OntologyTerm;
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketAge;
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketSex;
 import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
-import org.monarchinitiative.phenopacket2prompt.output.*;
+import org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualInfoGenerator;
+import org.monarchinitiative.phenopacket2prompt.output.PhenopacketTextGenerator;
+import org.monarchinitiative.phenopacket2prompt.output.PpktPhenotypicFeatureGenerator;
+import org.monarchinitiative.phenopacket2prompt.output.PromptGenerator;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-public class EnglishPromptGenerator implements PromptGenerator  {
+public class TurkishPromptGenerator implements PromptGenerator {
 
+    private final PPKtIndividualInfoGenerator ppktAgeSexGenerator;
 
-    private final PPKtIndividualInfoGenerator individualInfoGenerator;
-
-    private final PhenopacketTextGenerator promptTextBlockGenerator;
+    private final PhenopacketTextGenerator ppktTextGenerator;
 
     private final PpktPhenotypicFeatureGenerator ppktPhenotypicFeatureGenerator;
 
 
-    public EnglishPromptGenerator(){
-        individualInfoGenerator = new PpktIndividualEnglish();
-        promptTextBlockGenerator = new PpktTextEnglish();
-        this.ppktPhenotypicFeatureGenerator = new PpktPhenotypicFeatureEnglish();
+
+    public TurkishPromptGenerator(PpktPhenotypicFeatureGenerator pfgen) {
+        ppktAgeSexGenerator = new PpktIndividualTurkish();
+        ppktTextGenerator = new PpktTextTurkish();
+        this.ppktPhenotypicFeatureGenerator = pfgen;
     }
+
+
 
 
     @Override
     public String queryHeader() {
-        return promptTextBlockGenerator.GPT_PROMPT_HEADER();
+        return ppktTextGenerator.GPT_PROMPT_HEADER();
     }
 
     @Override
     public String getIndividualInformation(PpktIndividual ppktIndividual) {
-        return this.individualInfoGenerator.getIndividualDescription(ppktIndividual);
+        return this.ppktAgeSexGenerator.getIndividualDescription(ppktIndividual);
     }
 
     @Override
@@ -42,30 +49,31 @@ public class EnglishPromptGenerator implements PromptGenerator  {
 
     @Override
     public String getVignetteAtAge(PhenopacketAge page, PhenopacketSex psex, List<OntologyTerm> terms) {
-        String ageString = this.individualInfoGenerator.atAgeForVignette(page);
-        String features = formatFeatures(terms);
-        return String.format("%s, %s presented with %s", ageString, individualInfoGenerator.heSheIndividual(psex), features);
-    }
-
-    /**
-     * Provide a listing of observed and excluded features at disease onset. In English, we have provided the
-     * age at disease onset in the individual description and will thus not repeat the age here. We
-     * keep the PhenopacketAge in the interface in case it is useful for another language.
-     * @param individual The subject of the phenopacket
-     * @return Sentences describing terms that were observed/excluded at onset
-     */
-    @Override
-    public String getVignetteAtOnset(PpktIndividual individual) {
-        List<OntologyTerm> terms = individual.getPhenotypicFeaturesAtOnset();
-        String person = switch (individual.getSex()) {
-            case MALE -> "He";
-            case FEMALE -> "She";
-            default -> "The individual";
+        String ageString = this.ppktAgeSexGenerator.atAgeForVignette(page);
+        String person = switch (psex) {
+            case MALE -> "er";
+            case FEMALE -> "sie";
+            default -> "die betroffene Person";
         };
-        return this.ppktPhenotypicFeatureGenerator.featuresAtOnset(person, terms);
-
+        return this.ppktPhenotypicFeatureGenerator.featuresAtEncounter(person, ageString, terms);
     }
 
+    @Override
+    public  String getVignetteAtOnset(PpktIndividual individual){
+        String person = switch (individual.getSex()) {
+            case MALE -> "Er";
+            case FEMALE -> "Sie";
+            default -> "Die betroffene Person";
+        };
+        return this.ppktPhenotypicFeatureGenerator.featuresAtOnset(person, individual.getPhenotypicFeaturesAtOnset());
+    }
+
+
+
+    @Override
+    public Set<String> getMissingTranslations() {
+        return this.ppktPhenotypicFeatureGenerator.getMissingTranslations();
+    }
 
     /**
      * The following structure should work for most other languages, but the function
@@ -74,7 +82,7 @@ public class EnglishPromptGenerator implements PromptGenerator  {
      * @return the prompt text
      */
     @Override
-    public  String createPromptWithoutHeader(PpktIndividual individual) {
+    public  String createPrompt(PpktIndividual individual) {
         String individualInfo = getIndividualInformation(individual);
         // For creating the prompt, we first report the onset and the unspecified terms together, and then
         String onsetDescription = getVignetteAtOnset(individual);
@@ -82,6 +90,7 @@ public class EnglishPromptGenerator implements PromptGenerator  {
         // We then report the rest, one for each specified time
         //String onsetFeatures = formatFeatures(onsetTerms);
         StringBuilder sb = new StringBuilder();
+        sb.append(queryHeader());
         sb.append(individualInfo).append("\n").append(onsetDescription).append("\n");
         for (var entry: pfMap.entrySet()) {
             String vignette = getVignetteAtAge(entry.getKey(), individual.getSex(), entry.getValue());
@@ -89,7 +98,6 @@ public class EnglishPromptGenerator implements PromptGenerator  {
         }
         return sb.toString();
     }
-
 
 
 
