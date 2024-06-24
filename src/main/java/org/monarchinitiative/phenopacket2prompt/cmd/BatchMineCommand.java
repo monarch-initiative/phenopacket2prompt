@@ -14,7 +14,7 @@ import java.io.File;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-@CommandLine.Command(name = "batchmine", aliases = {"B2"},
+@CommandLine.Command(name = "batchmine",
         mixinStandardHelpOptions = true,
         description = "Batch Text mine, Translate, and Output phenopacket and prompt")
 public class BatchMineCommand implements Callable<Integer> {

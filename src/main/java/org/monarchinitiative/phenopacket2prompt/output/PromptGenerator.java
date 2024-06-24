@@ -11,6 +11,8 @@ import org.monarchinitiative.phenopacket2prompt.output.impl.german.PpktPhenotypi
 import org.monarchinitiative.phenopacket2prompt.output.impl.spanish.*;
 import org.monarchinitiative.phenopacket2prompt.output.impl.dutch.*;
 import org.monarchinitiative.phenopacket2prompt.output.impl.italian.*;
+import org.monarchinitiative.phenopacket2prompt.output.impl.turkish.PpktPhenotypicfeatureTurkish;
+import org.monarchinitiative.phenopacket2prompt.output.impl.turkish.TurkishPromptGenerator;
 
 
 import java.util.List;
@@ -58,6 +60,11 @@ public interface PromptGenerator {
     static PromptGenerator italian(HpInternational international) {
         PpktPhenotypicFeatureGenerator pfgen = new PpktPhenotypicfeatureItalian(international);
         return new ItalianPromptGenerator(pfgen);
+    }
+
+    static PromptGenerator turkish(HpInternational international) {
+        PpktPhenotypicFeatureGenerator pfgen = new PpktPhenotypicfeatureTurkish(international);
+        return new TurkishPromptGenerator(pfgen);
     }
 
 

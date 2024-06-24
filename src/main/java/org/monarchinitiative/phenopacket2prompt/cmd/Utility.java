@@ -48,15 +48,19 @@ public class Utility {
     }
 
     public PromptGenerator spanish() {
-        return PromptGenerator.german(internationalMap.get("es"));
+        return PromptGenerator.spanish(internationalMap.get("es"));
     }
 
     public PromptGenerator dutch() {
-        return PromptGenerator.german(internationalMap.get("nl"));
+        return PromptGenerator.dutch(internationalMap.get("nl"));
+    }
+
+    public PromptGenerator turkish() {
+        return PromptGenerator.turkish(internationalMap.get("tr"));
     }
 
     public PromptGenerator italian() {
-        return PromptGenerator.german(internationalMap.get("it"));
+        return PromptGenerator.italian(internationalMap.get("it"));
     }
 
 
@@ -171,8 +175,8 @@ public class Utility {
             individualList.add(individual);
         }
         outputPromptsInternationalFromIndividualList(individualList,
-                PROMPT_DIR,
                 languageCode,
+                PROMPT_DIR,
                 generator);
     }
 
