@@ -5,8 +5,6 @@ title = A novel SLC6A8 mutation associated with intellectual disabilities in a C
 disease_id = OMIM:300352
 disease_label = Cerebral creatine deficiency syndrome 1
 [text]
-
-[text]
 The proband was the second boy of healthy nonconsanguineous parents (pedigree in Fig. 1a). He was born at 39 weeks of
  gestation from an uneventful pregnancy and delivered by Caesarean section (weight, 3600 g; length, 50 cm; head circumference, 36 cm).
  He showed head control at 12 months, ability to sit by himself at 15 months, and walking with aid at 20 months. His verbal

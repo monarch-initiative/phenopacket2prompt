@@ -15,6 +15,13 @@ public class CaseParser {
 
     private final List<Case> caseList;
 
+
+    private void dumpLines(List<String> lines) {
+        for (var l : lines) {
+            System.err.println(l);
+        }
+    }
+
     public CaseParser(Path path) {
         try {
             List<String> lines = Files.readAllLines(path);
@@ -26,12 +33,14 @@ public class CaseParser {
                 throw new PhenolRuntimeException("Malformed first case line:" + line);
             }
             if (lines.size() < 8) {
+                dumpLines(lines);
                 throw new PhenolRuntimeException("Case report too short");
             }
             String pmid = getPMID(lines.get(1));
             String title = getTitle(lines.get(2));
             line = lines.get(3).trim();
             if (! line.equals("[diagnosis]")) {
+                dumpLines(lines);
                 throw new PhenolRuntimeException("Malformed [diagnosis] line:" + line);
             }
             String disease_id = getDiseaseId (lines.get(4));

@@ -58,6 +58,7 @@ public class PpktPhenotypicfeatureSpanish implements PpktPhenotypicFeatureGenera
 
 
     private String getCommaList(List<String> items) {
+        if (items.isEmpty()) return ""; // will be filtered out
         if (items.size() == 1) {
             return items.getFirst();
         }

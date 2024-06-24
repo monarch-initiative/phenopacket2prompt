@@ -9,6 +9,7 @@ import org.monarchinitiative.phenol.io.OntologyLoader;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenol.ontology.data.TermId;
 import org.phenopackets.phenopackettools.builder.PhenopacketBuilder;
+import org.phenopackets.phenopackettools.builder.builders.DiseaseBuilder;
 import org.phenopackets.phenopackettools.builder.builders.IndividualBuilder;
 import org.phenopackets.phenopackettools.builder.builders.MetaDataBuilder;
 import org.phenopackets.phenopackettools.builder.builders.PhenotypicFeatureBuilder;
@@ -95,8 +96,11 @@ public class FenominalParser {
     }
 
 
-    private Phenopacket generatePhenopacket(List<SimpleTerm> simpleTermList , String sex) {
-        PhenopacketBuilder builder = PhenopacketBuilder.create(this.pmid, metadata);
+
+    public Phenopacket parse(Case cs) {
+            List<SimpleTerm> simpleTermList = parseHpoTerms(cs.caseText());
+            String sex = getSex(cs.caseText());
+        PhenopacketBuilder builder = PhenopacketBuilder.create(cs.pmid(), metadata);
         Individual subject;
         if (sex != null && sex.equals("male")) {
             subject = IndividualBuilder.builder("individual").male().build();
@@ -113,15 +117,9 @@ public class FenominalParser {
             }
             builder.addPhenotypicFeature(pfb.build());
         }
+        DiseaseBuilder dbuilder = DiseaseBuilder.builder(cs.disease_id(), cs.disease_label());
+        builder.addDisease(dbuilder.build());
         return builder.build();
-
-    }
-
-
-    public Phenopacket parse(String content) {
-            List<SimpleTerm> simpleTermList = parseHpoTerms(content);
-            String optSex = getSex(content);
-            return generatePhenopacket(simpleTermList, optSex);
     }
 
 

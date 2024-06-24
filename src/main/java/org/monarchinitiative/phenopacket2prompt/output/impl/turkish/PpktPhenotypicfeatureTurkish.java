@@ -1,4 +1,4 @@
-package org.monarchinitiative.phenopacket2prompt.output.impl.german;
+package org.monarchinitiative.phenopacket2prompt.output.impl.turkish;
 
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenopacket2prompt.international.HpInternational;
@@ -8,14 +8,14 @@ import org.monarchinitiative.phenopacket2prompt.output.PpktPhenotypicFeatureGene
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class PpktPhenotypicfeatureGerman implements PpktPhenotypicFeatureGenerator {
+public class PpktPhenotypicfeatureTurkish implements PpktPhenotypicFeatureGenerator {
 
-    private final HpInternational german;
+    private final HpInternational turkish;
     private Set<String> missingTranslations;
 
 
-    public PpktPhenotypicfeatureGerman(HpInternational international) {
-        german = international;
+    public PpktPhenotypicfeatureTurkish(HpInternational international) {
+        turkish = international;
         missingTranslations = new HashSet<>();
     }
 
@@ -23,7 +23,7 @@ public class PpktPhenotypicfeatureGerman implements PpktPhenotypicFeatureGenerat
     private List<String> getTranslations(List<OntologyTerm> ontologyTerms) {
         List<String> labels = new ArrayList<>();
         for (var term: ontologyTerms) {
-            Optional<String> opt = german.getLabel(term.getTid());
+            Optional<String> opt = turkish.getLabel(term.getTid());
             if (opt.isPresent()) {
                 labels.add(opt.get());
             } else {

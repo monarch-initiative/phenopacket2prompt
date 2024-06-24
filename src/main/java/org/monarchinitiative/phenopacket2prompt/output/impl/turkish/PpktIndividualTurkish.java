@@ -1,4 +1,4 @@
-package org.monarchinitiative.phenopacket2prompt.output.impl.german;
+package org.monarchinitiative.phenopacket2prompt.output.impl.turkish;
 
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenopacket2prompt.model.*;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
+public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
 
     private final BuildingBlockGenerator bbGenerator;
     /** grammatical sex */
@@ -17,8 +17,8 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
         MAENNLICH, WEIBLICH, NEUTRUM
     }
 
-    public PpktIndividualGerman() {
-        bbGenerator = new GermanBuildingBlocks();
+    public PpktIndividualTurkish() {
+        bbGenerator = new TurkishBuildingBlocks();
     }
 
     @Override
@@ -237,14 +237,13 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
                         dAlter(iso8601Age, GrammatikalischesGeschlecht.NEUTRUM),  bbGenerator.adolescentChild());
             };
         } else if (y > 0) {
+            String age = String.format("Olgu %d yaş %d aylık", y, m);
             return switch (psex) {
                 case FEMALE -> String.format("%s %s %s", bbGenerator.probandWasA(),
                         dAlter(iso8601Age, GrammatikalischesGeschlecht.NEUTRUM), // "das Mädchen"
                         bbGenerator.girl());
-                case MALE -> String.format("%s ein %s %s", bbGenerator.probandWasA(),
-                        dAlter(iso8601Age, GrammatikalischesGeschlecht.MAENNLICH),
-                        bbGenerator.boy());
-                default -> String.format("%s %s %s", bbGenerator.probandWasA(),
+                case MALE -> String.format("%s bir erkek çocuktu.", age);
+                default -> String.format("Bu Pat. bir yil on ay kacindik%s %s %s", bbGenerator.probandWasA(),
                         dAlter(iso8601Age, GrammatikalischesGeschlecht.NEUTRUM), // Das Individuum
                         bbGenerator.child());
             };
@@ -256,13 +255,13 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
                 case MALE -> String.format("%s ein %s %s", bbGenerator.probandWasA(),
                         dAlter(iso8601Age, GrammatikalischesGeschlecht.MAENNLICH),
                         bbGenerator.maleInfant());
-                default -> String.format("%s ein %s %s", bbGenerator.probandWasA(),
+                default -> String.format("%s %s %s", bbGenerator.probandWasA(),
                         dAlter(iso8601Age, GrammatikalischesGeschlecht.MAENNLICH), // "der Säugling
                         bbGenerator.infant());
             };
         } else {
             return switch (psex) {
-                case FEMALE -> String.format("Die Probandin war ein %s", bbGenerator.probandWasA(), bbGenerator.newbornGirl()); // das
+                case FEMALE -> String.format("Die Probandin war ein %s", bbGenerator.probandWasA(), bbGenerator.newbornGirl());
                 case MALE -> String.format("Der Proband war ein %s", bbGenerator.probandWasA(), bbGenerator.newbornBoy());
                 default -> String.format("Der Proband war ein Neugeborenes ohne angegebenes Geschlecht");
             };
