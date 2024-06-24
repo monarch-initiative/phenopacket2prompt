@@ -1,20 +1,52 @@
 package org.monarchinitiative.phenopacket2prompt.cmd;
 
 
+import org.monarchinitiative.phenol.base.PhenolRuntimeException;
+import org.monarchinitiative.phenol.io.OntologyLoader;
+import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenol.ontology.data.TermId;
+import org.monarchinitiative.phenopacket2prompt.mining.FenominalParser;
 import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
+import org.monarchinitiative.phenopacket2prompt.output.PromptGenerator;
 import org.phenopackets.phenopackettools.builder.PhenopacketBuilder;
 import org.phenopackets.phenopackettools.builder.builders.*;
 import org.phenopackets.schema.v2.Phenopacket;
 import org.phenopackets.schema.v2.core.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import picocli.CommandLine;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.concurrent.Callable;
 
 /**
  * This class creates simulated phenopackets using a number of variants so that we can see the effects on
  * our translations.
  */
-public class TestDrive {
+
+@CommandLine.Command(name = "testdrive",
+        mixinStandardHelpOptions = true,
+        description = "Create varied prompts from simulated data and create a file for manual review")
+public class TestDriveCommand implements Callable<Integer> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestDriveCommand.class);
+
+    @CommandLine.Option(names = {"--hp"},
+            description = "path to HP json file")
+    private String hpoJsonPath = "data/hp.json";
+
+    @CommandLine.Option(names = {"--translations"},
+            description = "path to translations file")
+    private String translationsPath = "data/hp-international.obo";
+
+    @CommandLine.Option(names = {"-o", "--outfile"},
+            description = "outfile name (default {DEFAULT-VALUE})")
+    private String outfileName = "p2p_test.txt";
+
+
+
 
 
     private final static Map<TermId, String> observedMap;
@@ -117,7 +149,7 @@ public class TestDrive {
 
 
 
-    public TestDrive() {
+    public TestDriveCommand() {
         ppktIndividuals = new ArrayList<>();
         for (Disease d : diseaseList) {
             for (Individual i: individualList) {
@@ -174,9 +206,89 @@ public class TestDrive {
     }
 
 
+    public List<PpktIndividual> getPpktIndividuals() {
+        return ppktIndividuals;
+    }
+
+    @Override
+    public Integer call() throws Exception {
+        java.io.File hpJsonFile = new java.io.File(hpoJsonPath);
+        boolean useExactMatching = true;
+        if (! hpJsonFile.isFile()) {
+            throw new PhenolRuntimeException("Could not find hp.json at " + hpJsonFile.getAbsolutePath());
+        }
+        Ontology hpo = OntologyLoader.loadOntology(hpJsonFile);
+        LOGGER.info("HPO version {}", hpo.version().orElse("n/a"));
+        FenominalParser parser = new FenominalParser(hpJsonFile, useExactMatching);
+        java.io.File translationsFile = new java.io.File(translationsPath);
+        if (! translationsFile.isFile()) {
+            System.err.printf("Could not find translations file at %s. Try download command", translationsPath);
+            return 1;
+        }
+
+        List<PpktIndividual> individualList = getPpktIndividuals();
+        final String HEADER_LINE = "*******************************************\n\n";
+        StringBuilder sb = new StringBuilder();
+
+        String engText = createPrompts(individualList, PromptGenerator.english());
+        sb.append("English\n");
+        sb.append(HEADER_LINE);
+        sb.append(engText);
+
+        Utility utility = new Utility(translationsFile);
+        PromptGenerator spanish = utility.spanish();
+        String spText = createPrompts(individualList, spanish);
+        sb.append("Spanish\n");
+        sb.append(HEADER_LINE);
+        sb.append(spText);
+        String nlText = createPrompts(individualList, utility.dutch());
+        sb.append("Dutch\n");
+        sb.append(HEADER_LINE);
+        sb.append(nlText);
+        // GERMAN
+        PromptGenerator german = utility.german();
+        String deText = createPrompts(individualList, german);
+        sb.append("German\n");
+        sb.append(HEADER_LINE);
+        sb.append(deText);
+        String itText = createPrompts(individualList, utility.italian());
+        sb.append("Italian\n");
+        sb.append(HEADER_LINE);
+        sb.append(itText);
+        // ITALIAN
+        String trText = createPrompts(individualList, utility.turkish());
+        sb.append("Turkish\n");
+        sb.append(HEADER_LINE);
+        sb.append(trText);
+        System.out.println(sb.toString());
+        System.out.println("Wrote to " + outfileName);
+        try {
+            Files.write(Paths.get(outfileName), sb.toString().getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
 
+
+        return 0;
+    }
+
+
+    private String createPrompts(List<PpktIndividual> individualList, PromptGenerator generator) {
+        StringBuilder sb = new StringBuilder();
+        for (PpktIndividual individual : individualList) {
+            if (individual.hasExcludedPhenotypeFeatureAtOnset() ||individual.hasObservedPhenotypeFeatureAtOnset()) {
+                String prompt = generator.createPrompt(individual);
+                sb.append(prompt).append("\n\n");
+            } else {
+                System.err.println("[WARN] No HPO terms found for " + individual.getPhenopacketId());
+            }
+        }
+
+
+        return sb.toString();
+    }
 
 
 

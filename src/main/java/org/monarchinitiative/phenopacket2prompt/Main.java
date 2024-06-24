@@ -21,6 +21,7 @@ public class Main implements Callable<Integer> {
                 .addSubcommand("prompt", new PromptCommand())
                 .addSubcommand("mine", new TextMineCommand())
                 .addSubcommand("batchmine", new BatchMineCommand())
+                .addSubcommand("testdrive", new TestDriveCommand())
                 .addSubcommand("translate", new GptTranslateCommand())
                 ;
         cline.setToggleBooleanFlags(false);

@@ -74,7 +74,7 @@ public class EnglishPromptGenerator implements PromptGenerator  {
      * @return the prompt text
      */
     @Override
-    public  String createPrompt(PpktIndividual individual) {
+    public  String createPromptWithoutHeader(PpktIndividual individual) {
         String individualInfo = getIndividualInformation(individual);
         // For creating the prompt, we first report the onset and the unspecified terms together, and then
         String onsetDescription = getVignetteAtOnset(individual);
@@ -82,7 +82,6 @@ public class EnglishPromptGenerator implements PromptGenerator  {
         // We then report the rest, one for each specified time
         //String onsetFeatures = formatFeatures(onsetTerms);
         StringBuilder sb = new StringBuilder();
-        sb.append(queryHeader());
         sb.append(individualInfo).append("\n").append(onsetDescription).append("\n");
         for (var entry: pfMap.entrySet()) {
             String vignette = getVignetteAtAge(entry.getKey(), individual.getSex(), entry.getValue());

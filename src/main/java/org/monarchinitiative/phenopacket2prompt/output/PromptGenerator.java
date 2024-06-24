@@ -75,6 +75,12 @@ public interface PromptGenerator {
      * @return the prompt text
      */
     default String createPrompt(PpktIndividual individual) {
+       return String.format("%s%s",
+               getHeader(),
+               createPromptWithoutHeader(individual));
+    }
+    // TODO IMPLEMENT EVERYWHERE. WE ALSO NEED VERSIONS FOR EACH LLM, CONSIDER ADDING ENUM
+    default String createPromptWithoutHeader(PpktIndividual individual) {
         String individualInfo = getIndividualInformation(individual);
         // For creating the prompt, we first report the onset and the unspecified terms together, and then
         List<OntologyTerm> onsetTerms = individual.getPhenotypicFeaturesAtOnset();
@@ -82,13 +88,18 @@ public interface PromptGenerator {
         // We then report the rest, one for each specified time
         String onsetFeatures = formatFeatures(onsetTerms);
         StringBuilder sb = new StringBuilder();
-        sb.append(queryHeader());
+
         sb.append(individualInfo).append(" ").append(onsetFeatures);
         for (var entry: pfMap.entrySet()) {
             String vignette = getVignetteAtAge(entry.getKey(), individual.getSex(), entry.getValue());
             sb.append(vignette).append(" ");
         }
         return sb.toString();
+    }
+
+    // TODO IMPLEMENT EVERYWHERE. WE ALSO NEED VERSIONS FOR EACH LLM, CONSIDER ADDING ENUM
+    default String getHeader() {
+        return queryHeader();
     }
 
 
