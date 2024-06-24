@@ -38,6 +38,12 @@ public class GptTranslateCommand implements Callable<Integer> {
     private String languageCode;
 
 
+    @CommandLine.Option(names = {"--testdrive"},
+            description = "Create a file with example translations in each of our languages")
+    private boolean testDrive = false;
+
+
+
     @Override
     public Integer call() throws Exception {
         File hpJsonFile = new File(hpoJsonPath);

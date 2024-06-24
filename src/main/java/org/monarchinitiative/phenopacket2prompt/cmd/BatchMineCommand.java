@@ -6,8 +6,6 @@ import org.monarchinitiative.phenopacket2prompt.mining.CaseBundle;
 import org.monarchinitiative.phenopacket2prompt.mining.FenominalParser;
 import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
 import org.monarchinitiative.phenopacket2prompt.output.CorrectResult;
-import org.monarchinitiative.phenopacket2prompt.output.PpktCopy;
-import org.monarchinitiative.phenopacket2prompt.output.PromptGenerator;
 import picocli.CommandLine;
 
 import java.io.File;
@@ -25,7 +23,7 @@ public class BatchMineCommand implements Callable<Integer> {
     public String input = "docs/cases/"; // provide path for testing
 
     @CommandLine.Option(names = { "-o", "--output"}, description = "Path to output file dir(default: ${DEFAULT-VALUE})")
-    private String output = "mined_out";
+    private String output = Utility.TEXT_MINED_DIR;
 
     @CommandLine.Option(names = {"-e", "--exact"}, description = "Use exact matching algorithm")
     private boolean useExactMatching = false;
@@ -49,27 +47,11 @@ public class BatchMineCommand implements Callable<Integer> {
         if (! hpoJsonFile.isFile()) {
             System.out.printf("[ERROR] Could not find hp.json file at %s\nRun download command first\n", hpoJsonFile.getAbsolutePath());
         }
-        File translationsFile = new File(translationsPath);
-        if (! translationsFile.isFile()) {
-            System.err.printf("Could not find translations file at %s. Try download command", translationsPath);
-            return 1;
-        }
-        Utility utility = new Utility(translationsFile);
         List<PpktIndividual> individualList =  getIndividualsFromTextMining(inDirectory,hpoJsonFile);
-        PromptGenerator spanish = utility.spanish();
-        Utility.outputPromptsInternationalMining(individualList,"es", spanish);
-        // Dutch
-        PromptGenerator dutch = utility.dutch();
-        Utility.outputPromptsInternationalMining(individualList,"nl", dutch);
-        // GERMAN
-        PromptGenerator german = utility.german();
-        Utility.outputPromptsInternationalMining(individualList,"de", german);
-        // ITALIAN
-        PromptGenerator italian = utility.italian();
-        Utility.outputPromptsInternationalMining(individualList,"it", italian);
 
+        Utility.createDir(output);
+        List<CorrectResult>  correctResultList = Utility.outputPromptsEnglishFromIndividuals(individualList, output);
         // output file with correct diagnosis list
-        List<CorrectResult>  correctResultList =Utility.outputPromptsEnglishFromIndividuals(individualList);
         Utility.outputCorrectTextmined(correctResultList);
         return 0;
     }
@@ -83,7 +65,9 @@ public class BatchMineCommand implements Callable<Integer> {
     protected List<PpktIndividual> getIndividualsFromTextMining(File inDirectory, File hpoJsonFile) {
         FenominalParser parser = new FenominalParser(hpoJsonFile, useExactMatching);
         List<CaseBundle> caseBundleList = Utility.getAllCaseBundlesFromDirectory(inDirectory, parser);
-        return caseBundleList.stream().map(CaseBundle::individual).toList();
+        return caseBundleList.stream().
+                map(CaseBundle::individual).
+                toList();
     }
 
 

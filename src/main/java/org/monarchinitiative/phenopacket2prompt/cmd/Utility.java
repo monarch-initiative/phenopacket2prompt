@@ -1,7 +1,6 @@
 package org.monarchinitiative.phenopacket2prompt.cmd;
 
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
-import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenopacket2prompt.international.HpInternational;
 import org.monarchinitiative.phenopacket2prompt.international.HpInternationalOboParser;
 import org.monarchinitiative.phenopacket2prompt.mining.Case;
@@ -31,8 +30,8 @@ import java.util.*;
 public class Utility {
     private static final Logger LOGGER = LoggerFactory.getLogger(Utility.class);
 
-    private static final String PROMPT_DIR = "prompts";
-    private static final String TEXT_MINED_DIR = "text_mined";
+    public static final String PROMPT_DIR = "prompts";
+    public static final String TEXT_MINED_DIR = "text_mined";
 
 
     private final Map<String, HpInternational> internationalMap ;
@@ -148,7 +147,8 @@ public class Utility {
         for (PpktIndividual individual : individualList) {
             List<PhenopacketDisease> diseaseList = individual.getDiseases();
             if (diseaseList.size() != 1) {
-                String errmsg = String.format("[ERROR] Got %d diseases for %s.\n", diseaseList.size(), individual.getPhenopacketId());
+                String errmsg = String.format("[ERROR] Got %d diseases for \"%s\".\n", diseaseList.size(),
+                        individual.getPhenopacketId());
                 throw new PhenolRuntimeException(errmsg);
             }
             PhenopacketDisease pdisease = diseaseList.getFirst();
@@ -159,7 +159,9 @@ public class Utility {
                 String prompt = generator.createPrompt(individual);
                 Utility.outputPromptFromCaseBundle(prompt, promptFileName, dirpath);
             } catch (Exception e) {
-                System.err.printf("[ERROR] Could not process %s: %s\n", promptFileName, e.getMessage());
+                String errmsg = String.format("[ERROR] Could not process %s: %s\n", promptFileName, e.getMessage());
+                System.err.println(errmsg);
+                throw new PhenolRuntimeException(errmsg);
                 //e.printStackTrace();
             }
         }
@@ -191,7 +193,7 @@ public class Utility {
 
 
 
-    public static List<CorrectResult> outputPromptsEnglish(List<File> ppktFiles, Ontology hpo) {
+    public static List<CorrectResult> outputPromptsEnglish(List<File> ppktFiles) {
         Utility.createDir("prompts/en");
         List<CorrectResult> correctResultList = new ArrayList<>();
         PromptGenerator generator = PromptGenerator.english();
@@ -205,7 +207,6 @@ public class Utility {
             }
             PhenopacketDisease pdisease = diseaseList.getFirst();
             String promptFileName = Utility.getFileName( individual.getPhenopacketId(), "en");
-            String diagnosisLine = String.format("%s\t%s\t%s\t%s", pdisease.getDiseaseId(), pdisease.getLabel(), promptFileName, f.getAbsolutePath());
             try {
                 String prompt = generator.createPrompt(individual);
                 Utility.outputPromptFromCaseBundle(prompt, promptFileName, "prompts/en");
@@ -221,8 +222,8 @@ public class Utility {
     }
 
 
-    public static List<CorrectResult> outputPromptsEnglishFromIndividuals(List<PpktIndividual> individualList) {
-        var outd = TEXT_MINED_DIR + File.separator + "en";
+    public static List<CorrectResult> outputPromptsEnglishFromIndividuals(List<PpktIndividual> individualList, String outputDir) {
+        String outd = outputDir + File.separator + "en";
         Utility.createDir(outd);
         List<CorrectResult> correctResultList = new ArrayList<>();
         PromptGenerator generator = PromptGenerator.english();
@@ -237,7 +238,7 @@ public class Utility {
             String promptFileName = Utility.getFileName( individual.getPhenopacketId(), "en");
             try {
                 String prompt = generator.createPrompt(individual);
-                Utility.outputPromptFromCaseBundle(prompt, promptFileName, "prompts/en");
+                Utility.outputPromptFromCaseBundle(prompt, promptFileName, outd);
                 System.out.printf("en      %d.\r", currentCount);
                 currentCount++;
                 var cres = new CorrectResult(promptFileName, pdisease.getDiseaseId(), pdisease.getLabel());
@@ -268,7 +269,7 @@ public class Utility {
         CaseParser caseParser = new CaseParser(Path.of(inputFile));
         List<Case> caseList = caseParser.getCaseList();
         for (Case cs : caseList) {
-            Phenopacket ppkt = fenominalParser.parse(cs.caseText());
+            Phenopacket ppkt = fenominalParser.parse(cs);
             PpktIndividual individual = new PpktIndividual(ppkt);
             caseBundleList.add(new CaseBundle(cs, ppkt, individual));
         }

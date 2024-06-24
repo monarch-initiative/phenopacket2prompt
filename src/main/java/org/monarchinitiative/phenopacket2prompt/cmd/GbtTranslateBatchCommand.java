@@ -4,12 +4,7 @@ package org.monarchinitiative.phenopacket2prompt.cmd;
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenol.io.OntologyLoader;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
-import org.monarchinitiative.phenopacket2prompt.international.HpInternational;
-import org.monarchinitiative.phenopacket2prompt.international.HpInternationalOboParser;
-import org.monarchinitiative.phenopacket2prompt.mining.CaseBundle;
 import org.monarchinitiative.phenopacket2prompt.mining.FenominalParser;
-import org.monarchinitiative.phenopacket2prompt.model.PhenopacketDisease;
-import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
 import org.monarchinitiative.phenopacket2prompt.output.CorrectResult;
 import org.monarchinitiative.phenopacket2prompt.output.PpktCopy;
 import org.monarchinitiative.phenopacket2prompt.output.PromptGenerator;
@@ -17,16 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.Callable;
 
 @CommandLine.Command(name = "batch", aliases = {"B"},
@@ -45,7 +32,7 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
 
     @CommandLine.Option(names = {"-o", "--outdir"},
             description = "path to outdir")
-    private String outdirname = "prompts";
+    private String outdirname = Utility.PROMPT_DIR;
 
     @CommandLine.Option(names = {"-d", "--dir"}, description = "Path to directory with JSON phenopacket files", required = true)
     private String ppktDir;
@@ -69,14 +56,13 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
             return 1;
         }
         Utility utility = new Utility(translationsFile);
+        // parse something
 
         List<File> ppktFiles = Utility.getAllPhenopacketJsonFiles(ppktDir);
         Utility.createDir(outdirname);
-        List<CorrectResult>  correctResultList = Utility.outputPromptsEnglish(ppktFiles, hpo);
+        List<CorrectResult>  correctResultList = Utility.outputPromptsEnglish(ppktFiles);
         // output all non-English languages here
         // SPANISH
-
-      /*
         PromptGenerator spanish = utility.spanish();
         Utility.outputPromptsInternational(ppktFiles,"es", spanish);
 
@@ -89,7 +75,6 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
         // ITALIAN
         PromptGenerator italian = utility.italian();
         Utility.outputPromptsInternational(ppktFiles,"it", italian);
-*/
 
         PromptGenerator turkish = utility.turkish();
         Utility.outputPromptsInternational(ppktFiles,"tr", turkish);
