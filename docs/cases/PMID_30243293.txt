@@ -1,0 +1,8 @@
+[source]
+pmid = PMID:30243293
+title = A case report: autosomal recessive Myotonia congenita caused by a novel splice mutation (c.1401 + 1G > A) in CLCN1 gene of a Chinese Han patient
+[diagnosis]
+disease_id = OMIM:160800
+disease_label = Myotonia congenita, dominant
+[text]
+A 21-year-old man complained of transient muscle stiffness since 10 years. He experienced difficulty in initiating movement and felt muscle weakness after rest. However the symptoms typically improved after repeated contraction (warm-up phenomenon). The symptoms tended to aggravate during cold weather. He was unable to open his eyes immediately after washing his face with cold water. He had non-consanguineous parents and there was no significant family history. Further, the patient showed normal growth and development. Medical examination showed generalized muscle hypertrophy and normal muscle strength as assessed with the Medical Research Council (MRC) sum score. Deep tendon reflexes were attenuated. No nerve dysfunction or sensory deficit was noted. The serum creatine kinase level was 2-fold higher than the upper limit of the normal reference level. Electromyogram showed myotonic discharges. Biceps muscle biopsy specimen was obtained after written informed consent of the patient. The specimen was precooled with isopentane and frozen in liquid nitrogen. A section of muscle biopsy specimen was stained with hematoxylin-eosin (HE) and modified Gomori’s trichrome (MGT). Activity of oxidative enzymes such as succinate dehydrogenase (SDH), NADH-tetrazolium reductase (NADH-TR), and cytochrome c oxidase (COX) were normal.
