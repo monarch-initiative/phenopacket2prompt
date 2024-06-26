@@ -279,7 +279,7 @@ public class TestDriveCommand implements Callable<Integer> {
         StringBuilder sb = new StringBuilder();
         for (PpktIndividual individual : individualList) {
             if (individual.hasExcludedPhenotypeFeatureAtOnset() ||individual.hasObservedPhenotypeFeatureAtOnset()) {
-                String prompt = generator.createPrompt(individual);
+                String prompt = generator.createPromptWithoutHeader(individual);
                 sb.append(prompt).append("\n\n");
             } else {
                 System.err.println("[WARN] No HPO terms found for " + individual.getPhenopacketId());

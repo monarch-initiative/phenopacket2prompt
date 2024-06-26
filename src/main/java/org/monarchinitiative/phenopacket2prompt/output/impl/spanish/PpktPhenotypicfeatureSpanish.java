@@ -119,10 +119,10 @@ public class PpktPhenotypicfeatureSpanish implements PpktPhenotypicFeatureGenera
         var observedStr = getCommaList(observedSpanish);
         var excludedStr = getCommaList(excludedSpanish);
         if (!observed.isEmpty() && ! excluded.isEmpty()) {
-            return String.format("%s presentó los siguientes síntomas: %s. Por el contrario, se %s los siguientes síntomas: %s.",
+            return String.format("%s presentó los siguientes síntomas: %s. Por el contrario, se %s: %s.",
                     personString,
                     observedStr,
-                    excluded.size()>1? "excluyeron":"excluyeró",
+                    excluded.size()>1? "excluyeron los siguientes síntomas":"excluyeró el siguiente síntoma",
                     excludedStr);
         } else if (!observed.isEmpty()) {
             return String.format("%s presentó los siguientes síntomas: %s.", personString, observedStr);
