@@ -127,8 +127,8 @@ public class PpktPhenotypicfeatureSpanish implements PpktPhenotypicFeatureGenera
         } else if (!observed.isEmpty()) {
             return String.format("%s presentó los siguientes síntomas: %s.", personString, observedStr);
         } else if (!excluded.isEmpty()) {
-            return String.format("Al inicio de la enfermedad, se %s los siguientes síntomas: %s.",
-                    excluded.size()>1? "excluyeron":"excluyeró", excludedStr);
+            return String.format("Al inicio de la enfermedad, se %s: %s.",
+                    excluded.size()>1? "excluyeron los siguientes síntomas":"excluyeró el siguiente síntoma", excludedStr);
         } else {
             return "No se describieron explícitamente anomalías fenotípicas al inicio de la enfermedad";
         }

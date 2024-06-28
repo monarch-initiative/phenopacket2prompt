@@ -128,7 +128,7 @@ public class PpktIndividualSpanish implements PPKtIndividualInfoGenerator {
             return String.format("en la edad de %s y %s", components.get(0), components.get(1));
         } else {
             // we must have y,m,d
-            return String.format("en la edad de  %s, %s y %s", components.get(0), components.get(1), components.get(2));
+            return String.format("en la edad de %s, %s y %s", components.get(0), components.get(1), components.get(2));
         }
     }
 
@@ -185,7 +185,7 @@ public class PpktIndividualSpanish implements PPKtIndividualInfoGenerator {
             };
         } else if (y>0) {
             return switch (psex) {
-                case FEMALE -> String.format("La paciente una niña %s", ymd(iso8601Age));
+                case FEMALE -> String.format("La paciente era una niña %s", ymd(iso8601Age));
                 case MALE -> String.format("El paciente era un niño %s", ymd(iso8601Age));
                 default -> String.format("El paciente era un niño %s", ymd(iso8601Age));
             };
