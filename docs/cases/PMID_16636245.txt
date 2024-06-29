@@ -1,0 +1,45 @@
+[source]
+pmid = PMID:16636245
+title = New HSN2 mutation in Japanese patient with hereditary sensory and autonomic neuropathy type 2
+[diagnosis]
+disease_id = OMIM:201300
+disease_label = Neuropathy, hereditary sensory and autonomic, type II
+[text]
+A 39-year-old man first noted that he
+felt no pain in his extremities during his teenage years. He had no
+other developmental abnormalities. His parents and grandparents
+were consanguineous (figure, A). The origins of the oldest family
+members were Japanese. Neither his parents nor siblings were
+affected.
+He had a history of dermatitis factitia (onychotillomania) and
+recurrent skin ulcers at the tip of his fingers and toes since his
+twenties. He was diagnosed with Buerger’s disease at age 26
+years. He had episodes of being febrile due to skin lesion infections,
+resulting in the spontaneous or surgical amputation of affected fingers or toes.
+He was admitted to our hospital at age 39
+years. Neurologic examination revealed the loss of pain and thermal, vibratory,
+or tactile sense in the distal limbs, showing a
+“glove-and-stocking-type” distribution.
+Tendon reflexes were almost absent in both the upper and lower limbs. He did not show
+muscle weakness. Three fingertips of the right hand and two
+fingertips of the left hand were defective; likewise, his toes were
+shortened because of amputations (figure, B). With regard to his
+autonomic functions, there were no complaints of sweating abnormality in the face,
+body, and extremities. The sympathetic skin
+response recorded from the palms was normal. There was no
+evidence of orthostatic hypotension during the head-up tilt test.
+Infrared thermographic analysis revealed that the resting skin
+temperatures of his hands and feet were normal. There was no
+impotence, constipation, or urinary disturbance.
+A nerve conduction study showed the absence of SNAPs in the
+median and sural nerves of both sides, whereas compound muscle
+action potentials and motor conduction velocities in the median
+and tibial nerves were within the normal range. Nerve biopsy was
+performed on the sural nerve  showed typical
+complete loss of myelinated fibers and a decreased number of unmyelinated fibers were
+observed in the sural nerve. There was mild subperineurial edema; however, no inflammatory
+cell infiltration or vasculitis was observed. The complete
+loss of myelinated fibers without onion-bulb formation or
+axonal degeneration is demonstrated. There is mild subperineurial edema; however, there is no inflammatory cell
+infiltration or vasculitis
+
