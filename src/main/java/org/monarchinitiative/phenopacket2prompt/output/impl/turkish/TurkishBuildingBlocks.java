@@ -106,17 +106,17 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String woman() {
-        return "Frau";
+        return "kadın";
     }
 
     @Override
     public String man() {
-        return "Mann";
+        return "adam";
     }
 
     @Override
     public String individual() {
-        return "erwachsene Person unbekannten Geschlechtes";
+        return "cinsiyeti bilinmeyen yetişkin kişi";
     }
 
     @Override
@@ -126,17 +126,17 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String girl() {
-        return "Mädchen";
+        return "kız";
     }
 
     @Override
     public String boy() {
-        return "Junge";
+        return "erkek çocuk";
     }
 
     @Override
     public String child() {
-        return "Kind";
+        return "çocuk";
     }
 
     @Override
@@ -156,47 +156,47 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String maleInfant() {
-        return "männlicher Säugling";
+        return "erkek bebek";
     }
 
     @Override
     public String femaleInfant() {
-        return "weiblicher Säugling";
+        return "kız bebek";
     }
 
     @Override
     public String infant() {
-        return "Säugling";
+        return "bebek";
     }
 
     @Override
     public String newbornBoy() {
-        return "männliches Neugeborenes";
+        return "erkek yenidoğan";
     }
 
     @Override
     public String newbornGirl() {
-        return "weibliches Neugeborenes";
+        return "kız yenidoğan";
     }
 
     @Override
     public String newborn() {
-        return "Neugeborenes";
+        return "yenidoğan";
     }
 
     @Override
     public String maleFetus() {
-        return "männlicher Fet";
+        return "erkek fetüs";
     }
 
     @Override
     public String femaleFetus() {
-        return "weiblicher Fet";
+        return "kız fetüs";
     }
 
     @Override
     public String fetus() {
-        return "Fet";
+        return "fetüs";
     }
 
     @Override
@@ -216,7 +216,7 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String probandWasA() {
-        return "Der Proband war";
+        return "proband şuydu";
     }
 
     @Override
@@ -241,17 +241,17 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String probandWasAMale() {
-        return "Der Proband war ein Mann";
+        return "Proband bir adamdı";
     }
 
     @Override
     public String probandWasAFemale() {
-        return "Die Probandin war eine Frau";
+        return "Proband bir kadındı";
     }
 
     @Override
     public String probandWasAnIndividual() {
-        return "Der Proband war ein Individuum ohne angegebenes Geschlecht";
+        return "Proband cinsiyeti belirtilmemiş bir bireydi";
     }
 
     @Override
