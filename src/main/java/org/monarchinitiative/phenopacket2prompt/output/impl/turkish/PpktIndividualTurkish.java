@@ -304,22 +304,22 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
     }
 
     private String monthString(int m) {
-        return m>1 ? "Monate": "Monat";
+        return "ay";
     }
 
     private String dayString(int d) {
-        return d>1 ? "Tage": "Tag";
+        return "gün";
     }
 
     private String iso8601ToMonthDay(Iso8601Age iso8601Age) {
         int m = iso8601Age.getMonths();
         int d = iso8601Age.getDays();
         if (m == 0) {
-            return String.format("de %d dias", d);
+            return String.format("%d gün", d);
         } else if (d>0){
-            return String.format("%d %s und %d %s", m, monthString(m), d, dayString(d));
+            return String.format("%d ay ve %d gün", m, monthString(m), d, dayString(d));
         } else {
-            return String.format("%d %s", m, m>1 ? "Monate": "Monat");
+            return String.format("%d ay", m);
         }
     }
 
