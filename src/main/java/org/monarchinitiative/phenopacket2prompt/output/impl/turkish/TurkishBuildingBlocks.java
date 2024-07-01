@@ -24,34 +24,34 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String yearsOld(int y) {
-        return String.format("%djährig", y);
+        return String.format("%d yaşında", y);
     }
 
     @Override
     public String monthsOld(int m) {
-        return String.format("%d Monate alt", m);
+        return String.format("%d aylik", m);
     }
 
     @Override
     public String daysOld(int d) {
-        return String.format("%d Tage alt", d);
+        return String.format("%d günlük", d);
     }
 
     @Override
     public String monthDayOld(int m, int d) {
         List<String> components = new ArrayList<>();
         if (m > 0) {
-            components.add(String.format("%d %s", m, m > 1 ? "Monaten" : "Monat"));
+            components.add(String.format("%d ay", m));
         }
         if (d > 0) {
-            components.add(String.format("%d %s", d, d > 1 ? "Tagen" : "Tag"));
+            components.add(String.format("%d gün", d));
         }
         if (components.isEmpty()) {
-            return "am ersten Lebenstag";
+            return "doğumdan sonraki ilk gün";
         } else if (components.size() == 1) {
             return components.get(0);
         } else {
-            return String.format("im Alter von %s und %s", components.get(0), components.get(1));
+            return String.format("%s ve %slükken", components.get(0), components.get(1));
         }
     }
 
