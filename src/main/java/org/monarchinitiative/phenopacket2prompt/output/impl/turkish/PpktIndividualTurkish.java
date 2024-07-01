@@ -333,29 +333,29 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         List<String> components = new ArrayList<>();
 
         if (isoAge.getYears()>1) {
-            components.add(String.format("%d Jahren", isoAge.getYears()));
+            components.add(String.format("%d yıl", isoAge.getYears()));
         } else if (isoAge.getYears() == 1) {
-            components.add("einem Jahr");
+            components.add("bir yıl");
         }
         if (isoAge.getMonths() > 1) {
-            components.add(String.format("%d Monaten", isoAge.getMonths()));
+            components.add(String.format("%d ay", isoAge.getMonths()));
         } else if (isoAge.getMonths() == 1) {
-            components.add("einem Monat");
+            components.add("bir ay");
         }
         if (isoAge.getDays()>1) {
-            components.add(String.format("%d Tagen", isoAge.getDays()));
+            components.add(String.format("%d gün", isoAge.getDays()));
         } else if (isoAge.getDays()==1) {
-            components.add("einem Tag");
+            components.add("bir gün");
         }
         if (components.isEmpty()) {
-            return "bei der Geburt";
+            return "doğumda";
         } else if (components.size() == 1) {
-            return "im Alter von " + components.getFirst();
+            return "yaşında " + components.getFirst();
         } else if (components.size() == 2) {
-            return "im Alter von  " + components.get(0) + " und " + components.get(1);
+            return "yaşında " + components.get(0) + " ve " + components.get(1);
         } else {
-            return "im Alter von "  + components.get(0) + ", " + components.get(1) +
-                    " und " + components.get(2);
+            return "yaşında "  + components.get(0) + ", " + components.get(1) +
+                    " ve " + components.get(2);
         }
     }
 /*
