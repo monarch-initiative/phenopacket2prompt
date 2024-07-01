@@ -44,8 +44,8 @@ public class PpktIndividualSpanish implements PPKtIndividualInfoGenerator {
             }
         }  else {
             individualDescription =  switch (psex) {
-                case FEMALE -> individualDescription = "La paciente era de sexo femenino de edad no especificada";
-                case MALE -> individualDescription = "El paciente era de sexo masculino de edad no especificada";
+                case FEMALE -> individualDescription = "La paciente era de sexo femenino y de edad no especificada";
+                case MALE -> individualDescription = "El paciente era de sexo masculino y de edad no especificada";
                 default -> individualDescription = "El paciente era una persona de sexo y edad no especificados";
             };
         }
@@ -185,16 +185,16 @@ public class PpktIndividualSpanish implements PPKtIndividualInfoGenerator {
             };
         } else if (y>0) {
             return switch (psex) {
-                case FEMALE -> String.format("La paciente era una niña %s", ymd(iso8601Age));
-                case MALE -> String.format("El paciente era un niño %s", ymd(iso8601Age));
-                default -> String.format("El paciente era un niño %s", ymd(iso8601Age));
+                case FEMALE -> String.format("La paciente era una niña de %s", ymd(iso8601Age));
+                case MALE -> String.format("El paciente era un niño de %s", ymd(iso8601Age));
+                default -> String.format("El paciente era un niño de %s", ymd(iso8601Age));
             };
         } else if (m>0 || d> 0) {
             return switch (psex) {
                 // note that in Spanish infante is up to 5 years
-                case FEMALE -> String.format("La paciente era una bebé %s", ymd(iso8601Age));
-                case MALE -> String.format("El paciente era un bebé %s", ymd(iso8601Age));
-                default -> String.format("El paciente era un bebé %s", ymd(iso8601Age));
+                case FEMALE -> String.format("La paciente era una bebé de %s", ymd(iso8601Age));
+                case MALE -> String.format("El paciente era un bebé de %s", ymd(iso8601Age));
+                default -> String.format("El paciente era un bebé de %s", ymd(iso8601Age));
             };
         } else {
             return switch (psex) {

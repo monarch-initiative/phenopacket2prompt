@@ -71,7 +71,7 @@ public class PpktIndividualItalian implements PPKtIndividualInfoGenerator {
         } else if (hpoOnsetTermAge.isCongenital()) {
             return "alla nascita";
         } else if (hpoOnsetTermAge.isInfant()) {
-            return "durante l'infanzia";
+            return "durante il periodo infantile";
         } else if (hpoOnsetTermAge.isChild()) {
             return "da bambino";
         } else if (hpoOnsetTermAge.isJuvenile()) {
@@ -195,9 +195,9 @@ public class PpktIndividualItalian implements PPKtIndividualInfoGenerator {
             };
         } else if (m>0 || d> 0) {
             return switch (psex) {
-                case FEMALE -> String.format("La paziente era un'infante %s", ymd(iso8601Age));
-                case MALE -> String.format("Il paziente era un infante %s", ymd(iso8601Age));
-                default -> String.format("Il paziente era un infante %s", ymd(iso8601Age));
+                case FEMALE -> String.format("La paziente era un'infante femmina di %s", ymd(iso8601Age));
+                case MALE -> String.format("Il paziente era un infante maschio di %s", ymd(iso8601Age));
+                default -> String.format("Il paziente era un infante di %s", ymd(iso8601Age));
             };
         } else {
             return switch (psex) {
