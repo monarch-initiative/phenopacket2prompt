@@ -63,45 +63,44 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
                 throw new PhenolRuntimeException("Did not recognize last exam age type " + onsetAge.ageType());
             }
         } else {
-            onsetDescription = "Der Krankheitsbeginn wurde nicht angegeben";
+            onsetDescription = "Hastalığın başlangıcı belirtilmedi";
         }
         return String.format("%s. %s.", individualDescription, onsetDescription);
     }
 
     private String hpoOnsetDescription(HpoOnsetAge hpoOnsetTermAge) {
-        return String.format("Der Krankheitsbeginn trat %s auf",
+        return String.format("Hastalığın başlangıcı %s meydana geldi",
                 nameOfLifeStage(hpoOnsetTermAge));
     }
 
     private String nameOfLifeStage(HpoOnsetAge hpoOnsetTermAge) {
         if (hpoOnsetTermAge.isFetus()) {
-            return "während der Fetalperiode";
+            return "fetüs döneminde";
         } else if (hpoOnsetTermAge.isCongenital()) {
-            return "zum Zeitpunkt der Geburt";
+            return "doğumda";
         } else if (hpoOnsetTermAge.isInfant()) {
-            return "im Säuglingsalter";
+            return "infantil döneminde";
         } else if (hpoOnsetTermAge.isChild()) {
-            return "im Kindesalter";
+            return "çocukluk döneminde";
         } else if (hpoOnsetTermAge.isJuvenile()) {
-            return "im Jugendlichenalter";
+            return "ergenlik döneminde";
         } else if (hpoOnsetTermAge.isNeonate()) {
-            return "im Neugeborenenalter"; // +bbGenerator.newborn();
+            return "yenidoğan döneminde";
         } else if (hpoOnsetTermAge.isYoungAdult()) {
-            return "im jungen Erwachsenenalter" ;
+            return "genç yetişkinlik döneminde";
         } else if (hpoOnsetTermAge.isMiddleAge()) {
-            return "im mittleren Erwachsenenalter" ;
+            return "orta yaş döneminde";
         } else if (hpoOnsetTermAge.isLateAdultAge()) {
-            return "im späten Erwachsenenalter" ;
+            return "geç yetişkinlik döneminde";
         } else if (hpoOnsetTermAge.isAdult()) {
-            // d.h. nicht weiter spezifiziert
-            return "im Erwachsenenalter" ;
+            return "yetişkinlik döneminde";
         } else {
-            throw new PhenolRuntimeException("Could not identify German life stage name for HpoOnsetAge " + hpoOnsetTermAge.toString());
+            throw new PhenolRuntimeException("Could not identify Turkish life stage name for HpoOnsetAge " + hpoOnsetTermAge.toString());
         }
     }
 
     private String iso8601onsetDescription(Iso8601Age isoAge) {
-        return String.format("Der Krankheitsbeginn trat im Alter von %s auf",
+        return String.format("Hastalığın başlangıcı %s yaşında meydana geldi",
                 bbGenerator.yearsMonthsDaysOld(isoAge.getYears(), isoAge.getMonths(), isoAge.getDays()));
     }
 
@@ -135,15 +134,15 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
             int d = isoage.getDays();
             if (psex.equals(PhenopacketSex.FEMALE)) {
                 if (y > 17) {
-                    return String.format("Eine %djährige Patientin", y);
+                    return String.format("%d yaşındaki bir hasta", y);
                 } else if (y > 9) {
-                    return String.format("Eine %djährige Jugendliche", y);
+                    return String.format("%d yaşındaki bir genç", y);
                 } else if (y > 0) {
-                    return String.format("Ein %djähriges Mädchen", y);
-                } else if (m>0) {
-                    return String.format("Ein %d Monate alter weiblicher Säugling", m);
+                    return String.format("%d yaşındaki bir kız çocuğu", y);
+                } else if (m > 0) {
+                    return String.format("%d aylık bir kız bebek", m);
                 } else  {
-                    return String.format("Ein %d Tage alter weiblicher Säugling", d);
+                    return String.format("%d günlük bir kız bebek", d);
                 }
             }
         } else {
@@ -191,23 +190,20 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         int d = iso8601Age.getDays();
 
         if (y > 10) {
-            return String.format("Im Alter von %d Jahren", y);
+            return String.format("%d yaşında", y);
         } else if (y > 0) {
             if (m > 0) {
-                return String.format("Im Alter von %d %s und %d %s", y,
-                        y>1?"Jahren" : "Jahr",
-                        m,  m>1?"Monaten" : "Monat");
+                return String.format("%d %s ve %d %s yaşında", y, "yıl", m, "ay");
             } else {
-                return String.format("Im Alter von %d %s", y, y>1?"Jahren" : "Jahr");
+                return String.format("%d yaşında", y);
             }
         }
-        if (m>0) {
-            return String.format("Im Alter von %d %s y %d %s", m,  m>1?"Monaten" : "Monat",
-                    d,  d>1?"Tagen" : "Tag");
+        if (m > 0) {
+            return String.format("%d %s ve %d %s yaşında", m, "ay", d, "gün");
         } else {
-            return String.format("%d Tage",  d);
+            return String.format("%d gün", d);
         }
-     }
+    }
 
 
     private String iso8601individualDescription(PhenopacketSex psex, Iso8601Age iso8601Age) {
@@ -217,11 +213,11 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         // if older
         if (y > 17) {
             return switch (psex) {
-                case FEMALE -> String.format("Die Probandin war eine %s Frau",
+                case FEMALE -> String.format("Proband %d yaşında bir kadındı",
                         dAlter(iso8601Age, GrammatikalischesGeschlecht.WEIBLICH));
-                case MALE -> String.format("Der Proband war ein %s Mann",
+                case MALE -> String.format("\"Proband %d yaşında bir adamdı",
                         dAlter(iso8601Age, GrammatikalischesGeschlecht.MAENNLICH));
-                default -> String.format("Der Proband war ein %s %s",
+                default -> String.format("Proband %d yaşında bir bireydi",
                         dAlter(iso8601Age, GrammatikalischesGeschlecht.NEUTRUM),
                         bbGenerator.individual());
             };
@@ -250,7 +246,7 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         } else if (m > 0 || d > 0) {
             return switch (psex) {
                 case FEMALE -> String.format("%s ein %s %s", bbGenerator.probandWasA(),
-                        dAlter(iso8601Age, GrammatikalischesGeschlecht.MAENNLICH), // "der weibliche Säungling",
+                        dAlter(iso8601Age, GrammatikalischesGeschlecht.MAENNLICH), // "der WEIBLICHe Säungling",
                         bbGenerator.femaleInfant());
                 case MALE -> String.format("%s ein %s %s", bbGenerator.probandWasA(),
                         dAlter(iso8601Age, GrammatikalischesGeschlecht.MAENNLICH),
@@ -410,13 +406,13 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
             };
         } else if (hpoOnsetTermAge.isCongenital()) {
             return switch (psex) {
-                case FEMALE -> "Die Probandin war ein weibliches Neugeborenes";
+                case FEMALE -> "Die Probandin war ein WEIBLICHes Neugeborenes";
                 case MALE -> "Der Probandwar ein männliches Neugeborenes";
                 default -> "Der Patient war ein Neugeborenes ohne angegebenes Geschelcht";
             };
         } else if (hpoOnsetTermAge.isInfant()) {
             return switch (psex) {
-                case FEMALE -> "Die Probandin war ein weiblicher Säugling";
+                case FEMALE -> "Die Probandin war ein WEIBLICHer Säugling";
                 case MALE -> "Der Proband war ein männlicher Säugling";
                 default -> "Der Proband war ein Säugling ohne angegebenes Geschlecht";
             };
