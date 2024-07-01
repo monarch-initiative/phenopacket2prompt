@@ -213,53 +213,33 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         // if older
         if (y > 17) {
             return switch (psex) {
-                case FEMALE -> String.format("Proband %d yaşında bir kadındı",
-                        dAlter(iso8601Age, GrammatikalischesGeschlecht.WEIBLICH));
-                case MALE -> String.format("\"Proband %d yaşında bir adamdı",
-                        dAlter(iso8601Age, GrammatikalischesGeschlecht.MAENNLICH));
-                default -> String.format("Proband %d yaşında bir bireydi",
-                        dAlter(iso8601Age, GrammatikalischesGeschlecht.NEUTRUM),
-                        bbGenerator.individual());
+                case FEMALE -> String.format("Olgu %d yaşında bir kadındı", y);
+                case MALE -> String.format("Olgu %d yaşında bir adamdı", y);
+                default -> String.format("Olgu %d yaşında bir bireydi", y);
             };
         } else if (y > 9) {
             return switch (psex) {
-                case FEMALE -> String.format("%s %s %s", bbGenerator.probandWasA(),
-                        dAlter(iso8601Age, GrammatikalischesGeschlecht.WEIBLICH),
-                        bbGenerator.adolescentGirl());
-                case MALE -> String.format("%s %s %s", bbGenerator.probandWasA(),
-                        dAlter(iso8601Age, GrammatikalischesGeschlecht.MAENNLICH),
-                        bbGenerator.adolescentBoy());
-                default -> String.format("%s %s %s", bbGenerator.probandWasA(),
-                        dAlter(iso8601Age, GrammatikalischesGeschlecht.NEUTRUM),  bbGenerator.adolescentChild());
+                case FEMALE -> String.format("Olgu %d yaşında bir genç kızdı", y);
+                case MALE -> String.format("Olgu %d yaşında bir gençti", y);
+                default -> String.format("Olgu %d yaşında bir ergendi", y);
             };
         } else if (y > 0) {
-            String age = String.format("Olgu %d yaş %d aylık", y, m);
             return switch (psex) {
-                case FEMALE -> String.format("%s %s %s", bbGenerator.probandWasA(),
-                        dAlter(iso8601Age, GrammatikalischesGeschlecht.NEUTRUM), // "das Mädchen"
-                        bbGenerator.girl());
-                case MALE -> String.format("%s bir erkek çocuktu.", age);
-                default -> String.format("Bu Pat. bir yil on ay kacindik%s %s %s", bbGenerator.probandWasA(),
-                        dAlter(iso8601Age, GrammatikalischesGeschlecht.NEUTRUM), // Das Individuum
-                        bbGenerator.child());
+                case FEMALE -> String.format("Olgu %d yaşında bir kız çocuğuydu", y);
+                case MALE -> String.format("Olgu %d yaşında bir erkek çocuğuydu", y);
+                default -> String.format("Olgu %d yaşında bir çocuktu", y);
             };
         } else if (m > 0 || d > 0) {
             return switch (psex) {
-                case FEMALE -> String.format("%s ein %s %s", bbGenerator.probandWasA(),
-                        dAlter(iso8601Age, GrammatikalischesGeschlecht.MAENNLICH), // "der WEIBLICHe Säungling",
-                        bbGenerator.femaleInfant());
-                case MALE -> String.format("%s ein %s %s", bbGenerator.probandWasA(),
-                        dAlter(iso8601Age, GrammatikalischesGeschlecht.MAENNLICH),
-                        bbGenerator.maleInfant());
-                default -> String.format("%s %s %s", bbGenerator.probandWasA(),
-                        dAlter(iso8601Age, GrammatikalischesGeschlecht.MAENNLICH), // "der Säugling
-                        bbGenerator.infant());
+                case FEMALE -> String.format("Olgu %d aylık bir kız bebekti", m);
+                case MALE -> String.format("Olgu %d aylık bir erkek bebekti", m);
+                default -> String.format("Olgu %d günlük bir bebekti", d);
             };
         } else {
             return switch (psex) {
-                case FEMALE -> String.format("Die Probandin war ein %s", bbGenerator.probandWasA(), bbGenerator.newbornGirl());
-                case MALE -> String.format("Der Proband war ein %s", bbGenerator.probandWasA(), bbGenerator.newbornBoy());
-                default -> String.format("Der Proband war ein Neugeborenes ohne angegebenes Geschlecht");
+                case FEMALE -> "Olgu yenidoğan bir kız bebekti";
+                case MALE -> "Olgu yenidoğan bir erkek bebekti";
+                default -> "Olgu cinsiyeti belirtilmemiş bir yenidoğandı";
             };
         }
     }
@@ -274,13 +254,13 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         int d = iso8601Age.getDays();
         List<String> components = new ArrayList<>();
         if (y > 0) {
-            components.add(String.format("%d %s", y, y > 1 ? "Jahre" : "Jahr"));
+            components.add(String.format("%d yıl", y));
         }
         if (m > 0) {
-            components.add(String.format("%d %s", m, m > 1 ? "Monate" : "Monat"));
+            components.add(String.format("%d ay", m));
         }
         if (d > 0) {
-            components.add(String.format("%d %s", d, d > 1 ? "Tage" : "Tag"));
+            components.add(String.format("%d gün", d));
         }
         String ymd;
         if (components.isEmpty()) {
@@ -288,14 +268,14 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         } else if (components.size() == 1) {
             ymd = components.get(0);
         } else if (components.size() == 2) {
-            ymd = String.format("%s und %s", components.get(0), components.get(1));
+            ymd = String.format("%s ve %s", components.get(0), components.get(1));
         } else {
-            ymd = String.format("%s, %s und %s", components.get(0), components.get(1), components.get(2));
+            ymd = String.format("%s, %s ve %s", components.get(0), components.get(1), components.get(2));
         }
         return switch (geschlecht) {
-            case MAENNLICH -> String.format("%s alter", ymd);
-            case WEIBLICH -> String.format("%s alte", ymd);
-            case NEUTRUM -> String.format("%s altes", ymd);
+            case MAENNLICH -> String.format("%s yaşında", ymd);
+            case WEIBLICH -> String.format("%s yaşında", ymd);
+            case NEUTRUM -> String.format("%s yaşında", ymd);
         };
     }
 
@@ -306,21 +286,21 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         int d = iso8601Age.getDays();
         if (psex.equals(PhenopacketSex.MALE)) {
             if (iso8601Age.getMonths() == 0) {
-                return String.format("ein %djähriger Junge", y);
+                return String.format("%d yaşında bir erkek çocuk", y);
             } else {
-                return String.format("ein %d %s, %d %s alter Junge", y, y>1?"Jahre":"Jahr", m, m>1?"Monate":"Monat");
+                return String.format("%d %s yıl, %d %s ay yaşında bir erkek çocuk", y, y>1?"Jahre":"Jahr", m, m>1?"Monate":"Monat");
             }
         } else if (psex.equals(PhenopacketSex.FEMALE)) {
             if (iso8601Age.getMonths() == 0) {
-                return String.format("ein %djähriges Mädchen", y);
+                return String.format("%d yaşında bir kız çocuk", y);
             } else {
-                return String.format("ein %d %s, %d %s altes Mädchen", y, y>1?"Jahre":"Jahr", m, m>1?"Monate":"Monat");
+                return String.format("%d %s yıl, %d %s ay yaşında bir kız çocuk", y, y>1?"Jahre":"Jahr", m, m>1?"Monate":"Monat");
             }
         }
         if (iso8601Age.getMonths() == 0) {
-            return String.format("ein %djähriges Kind", y);
+            return String.format("%d yaşında bir çocuk", y);
         } else {
-            return String.format("ein %d %s, %d %s altes Kind", y, y>1?"Jahre":"Jahr", m, m>1?"Monate":"Monat");        }
+            return String.format("%d %s yıl, %d %s ay yaşında bir çocuk", y, m);        }
     }
 
     private String monthString(int m) {
