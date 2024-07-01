@@ -51,7 +51,7 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
         } else if (components.size() == 1) {
             return components.get(0);
         } else {
-            return String.format("%s ve %slükken", components.get(0), components.get(1));
+            return String.format("%s ve %slükken ", components.get(0), components.get(1));
         }
     }
 
