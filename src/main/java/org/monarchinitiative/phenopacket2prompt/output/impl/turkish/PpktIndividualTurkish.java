@@ -386,33 +386,33 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
             };
         } else if (hpoOnsetTermAge.isCongenital()) {
             return switch (psex) {
-                case FEMALE -> "Die Probandin war ein WEIBLICHes Neugeborenes";
-                case MALE -> "Der Probandwar ein männliches Neugeborenes";
-                default -> "Der Patient war ein Neugeborenes ohne angegebenes Geschelcht";
+                case FEMALE -> "Proband doğumda kadın bir yenidoğandı";
+                case MALE -> "Proband doğumda erkek bir yenidoğandı";
+                default -> "Proband doğumda cinsiyeti belirtilmemiş bir yenidoğandı";
             };
         } else if (hpoOnsetTermAge.isInfant()) {
             return switch (psex) {
-                case FEMALE -> "Die Probandin war ein WEIBLICHer Säugling";
-                case MALE -> "Der Proband war ein männlicher Säugling";
-                default -> "Der Proband war ein Säugling ohne angegebenes Geschlecht";
+                case FEMALE -> "Proband bir kız bebekti";
+                case MALE -> "Proband bir erkek bebekti";
+                default -> "Proband cinsiyeti belirtilmemiş bir bebekti";
             };
         } else if (hpoOnsetTermAge.isChild()) {
             return switch (psex) {
-                case FEMALE -> "Die Probandin war ein Mädchen";
-                case MALE -> "Der Proband war ein Junge";
-                default -> "Der Proband war ein Kind ohne angegebenes Geschlecht";
+                case FEMALE -> "Proband bir kız çocuğuydu";
+                case MALE -> "Proband bir erkek çocuğuydu";
+                default -> "Proband cinsiyeti belirtilmemiş bir çocuktu";
             };
         } else if (hpoOnsetTermAge.isJuvenile()) {
             return switch (psex) {
-                case FEMALE -> "Die Probandin war eine Jugendliche";
-                case MALE -> "Der Proband war ein Jugendlicher";
-                default -> "Der Proband war ein Jugendlicher ohne angegebenes Geschlecht";
+                case FEMALE -> "Proband bir genç kızdı";
+                case MALE -> "Proband bir gençti";
+                default -> "Proband cinsiyeti belirtilmemiş bir ergendi";
             };
         } else if (hpoOnsetTermAge.isAdult()) {
             return switch (psex) {
-                case FEMALE -> "Die Probandin war eine Frau";
-                case MALE -> "Der Proband war ein Mann";
-                default -> "Der Proband war eine erwachsene Person ohne angegebenes Geschlecht";
+                case FEMALE -> "Proband yetişkin bir kadındı";
+                case MALE -> "Proband yetişkin bir adamdı";
+                default -> "Proband yetişkin bir bireydi";
 
             };
         } else {
@@ -424,9 +424,9 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
     @Override
     public String heSheIndividual(PhenopacketSex psex) {
         return switch (psex) {
-            case FEMALE -> "sie";
-            case MALE -> "er";
-            default -> "die Person";
+            case FEMALE -> "o";
+            case MALE -> "o";
+            default -> "kişi";
         };
     }
 
@@ -437,14 +437,14 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         } else if (ppktAge.ageType().equals(PhenopacketAgeType.HPO_ONSET_AGE_TYPE)) {
             String label = ppktAge.age(); // something like "Infantile onset"
             return switch (label) {
-                case "Infantile onset" -> "Als Säugling";
-                case "Childhood onset" -> "In der Kindheit";
-                case "Neonatal onset"  -> "In der neugeborenen Zeit";
-                case "Congenital onset" -> "Zum Zeitpunkt der Geburt";
-                case "Adult onset" -> "Im Erwachsenenalter";
-                case "Juvenile onset" -> "Im Jugendlichenalter";
+                case "Infantile onset" -> "Bebeklikte";
+                case "Childhood onset" -> "Çocuklukta";
+                case "Neonatal onset"  -> "Yenidoğan döneminde";
+                case "Congenital onset" -> "Doğumda";
+                case "Adult onset" -> "Yetişkinlikte";
+                case "Juvenile onset" -> "Ergenlikte";
                 default-> {
-                    throw new PhenolRuntimeException("No German translation for " + label);
+                    throw new PhenolRuntimeException("No Turkish translation for " + label);
                 }
             };
         } else {
