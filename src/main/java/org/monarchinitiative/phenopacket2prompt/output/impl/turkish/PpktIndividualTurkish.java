@@ -213,33 +213,33 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         // if older
         if (y > 17) {
             return switch (psex) {
-                case FEMALE -> String.format("Olgu %d yaşında bir kadındı", y);
-                case MALE -> String.format("Olgu %d yaşında bir adamdı", y);
-                default -> String.format("Olgu %d yaşında bir bireydi", y);
+                case FEMALE -> String.format("Proband %d yaşında bir kadındı", y);
+                case MALE -> String.format("Proband %d yaşında bir adamdı", y);
+                default -> String.format("Proband %d yaşında bir bireydi", y);
             };
         } else if (y > 9) {
             return switch (psex) {
-                case FEMALE -> String.format("Olgu %d yaşında bir genç kızdı", y);
-                case MALE -> String.format("Olgu %d yaşında bir gençti", y);
-                default -> String.format("Olgu %d yaşında bir ergendi", y);
+                case FEMALE -> String.format("Proband %d yaşında bir genç kızdı", y);
+                case MALE -> String.format("Proband %d yaşında bir gençti", y);
+                default -> String.format("Proband %d yaşında bir ergendi", y);
             };
         } else if (y > 0) {
             return switch (psex) {
-                case FEMALE -> String.format("Olgu %d yaşında bir kız çocuğuydu", y);
-                case MALE -> String.format("Olgu %d yaşında bir erkek çocuğuydu", y);
-                default -> String.format("Olgu %d yaşında bir çocuktu", y);
+                case FEMALE -> String.format("Proband %d yaşında bir kız çocuğuydu", y);
+                case MALE -> String.format("Proband %d yaşında bir erkek çocuğuydu", y);
+                default -> String.format("Proband %d yaşında bir çocuktu", y);
             };
         } else if (m > 0 || d > 0) {
             return switch (psex) {
-                case FEMALE -> String.format("Olgu %d aylık bir kız bebekti", m);
-                case MALE -> String.format("Olgu %d aylık bir erkek bebekti", m);
-                default -> String.format("Olgu %d günlük bir bebekti", d);
+                case FEMALE -> String.format("Proband %d aylık bir kız bebekti", m);
+                case MALE -> String.format("Proband %d aylık bir erkek bebekti", m);
+                default -> String.format("Proband %d günlük bir bebekti", d);
             };
         } else {
             return switch (psex) {
-                case FEMALE -> "Olgu yenidoğan bir kız bebekti";
-                case MALE -> "Olgu yenidoğan bir erkek bebekti";
-                default -> "Olgu cinsiyeti belirtilmemiş bir yenidoğandı";
+                case FEMALE -> "Proband yenidoğan bir kız bebekti";
+                case MALE -> "Proband yenidoğan bir erkek bebekti";
+                default -> "Proband cinsiyeti belirtilmemiş bir yenidoğandı";
             };
         }
     }
@@ -451,8 +451,6 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
             return ""; // should never get here
         }
     }
-
-
-
+    
 
 }
