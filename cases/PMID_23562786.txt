@@ -1,0 +1,18 @@
+[source]
+pmid = PMID:23562786
+title = A novel COMP mutation in a Chinese patient with pseudoachondroplasia
+[diagnosis]
+disease_id = OMIM:177170
+disease_label = Pseudoachondroplasia
+[text]
+The patient was the first child of healthy non-consanguineous Chinese parents. He was born at term with a birth weight of 3.5 kg and a height of 50 cm.
+His development milestone appeared normal before the age of approximately 1.5 years, by which time he had learnt to walk. Since then the boy had complained of pain in lower extremities at times.
+His growth rate had been lower than normal since age 2 years. The patient was first referred for genetics and endocrine evaluation for his short stature at the age of 2.75 years.
+He was with a height of 85.7 cm (< 3th centile; − 2.02 SD), a weight of 13 kg (25–50th centile; − 0.17 SD), and a sitting-height of 53 cm (− 1.48 SD). Sitting height/leg length ratio was 1.621 (+ 1.51 SD).
+Disproportionate short-limb short stature was noted. Waddling gait and genu varus were obvious. Examination of his upper limbs showed restricted extension at the elbows and moderate brachydactyly.
+No facial dysmorphism or other positive signs were noted. There is no family history. Laboratory tests including mucopolysaccharide analysis of urine and thyroid function tests were normal.
+Radiographs revealed features suggestive of pseudoachondroplasia including short tubular bones with irregular epiphyses and metaphyses, small capital femoral epiphyses, brachydactyly, and anterior tonguing or beaking of the vertebral bodies (Figs. 1A–D).
+And the skull X-ray was normal (figure not shown).
+Fig. 1. Radiographic findings in the 2.75-year-old patient. (A) The pelvic showed: abnormal acetabular with flat roof and irregular margins; small capital femoral epiphyses and irregular, flared metaphyseal borders.
+(B) The hand showed: shortening and broadening of phalanges and metacarpals with irregular metaphyses; obvious delay in carpal ossification. (C) The femoral and tibias showed widened, irregular and flared metaphyseal borders.
+(D) Characteristic anterior tonguing or beaking of the vertebral bodies was displayed.

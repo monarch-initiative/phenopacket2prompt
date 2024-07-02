@@ -1,0 +1,32 @@
+[source]
+pmid = PMID:30053862
+title = A familial case of Galloway-Mowat syndrome due to a novel TP53RK mutation: a case report
+[diagnosis]
+disease_id = OMIM:617730
+disease_label = Galloway-Mowat syndrome 4
+[text]
+Case II-1
+This female baby was born after a gestational period of 39+3 weeks. The birth weight was 2250 g
+(< 3rd percentile), height was 46 cm (5–10th percentile), head circumference was 29 cm (< 3rd percentile),
+and the Apgar scores at 1 and 5 min were 5 and 7, respectively.
+A diaphragmatic hernia was noted in the delivery room.
+The initial serum albumin level at day one was 3.3 g/dL and the initial serum creatinine level,
+which reflects the mother’s renal function, was 0.58 mg/dL. Imaging revealed a hiatal hernia
+with gastric volvulus (Fig. 1). She also had facial dysmorphism including ocular hypertelorism
+and low-set ears, and a brain magnetic resonance image (MRI) revealed microcephaly with a
+simplified gyral pattern (Fig. 2a). Surgical repair of the hiatal hernia was performed 6 days
+after birth without any serious events. The baby started to feed on a mix of breast milk and formula.
+Two days after surgery, generalized edema developed with a decrease in urine volume.
+Serum albumin levels decreased to 2.0 g/dL, serum creatinine levels increased to 1.29 mg/dL,
+and 24-h urinary protein excretion was 2871 mg/day. Renal ultrasonography revealed increased
+echogenicity of both kidneys with poor differentiation between the peripheral cortex and
+central echogenic complex. At the age of 2 weeks, an open kidney biopsy was performed (Fig. 3).
+Thirty-eight (44%) of 87 glomeruli exhibited segmental lobular collapse and sclerosis,
+and some of the nonsclerotic glomeruli showed features of immature fetal glomeruli.
+Tubules displayed severe focal atrophy and loss. Infiltration of mononuclear cells and fibrosis
+were observed in the interstitium. A follow-up brain MRI at 4 months of age showed the progression of
+diffuse brain atrophy with subarachnoid space widening (Fig. 2b).
+Massive proteinuria persisted and serum creatinine levels began to rise rapidly at the age of 9 months.
+However, the baby received conservative treatment only, including intermittent albumin replacement,
+because the parents did not want immunosuppressive treatment or any other aggressive renal replacement
+therapy. The baby died at the age of 10 months.

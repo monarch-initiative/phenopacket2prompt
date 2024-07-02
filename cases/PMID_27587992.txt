@@ -1,0 +1,14 @@
+[source]
+pmid = PMID:27587992
+title = New ANTXR1 Gene Mutation for GAPO Syndrome: A Case Report
+[diagnosis]
+disease_id = OMIM:230740
+disease_label = GAPO syndrome
+[text]
+The 2 male siblings diagnosed with GAPO syndrome were 13 and 14 years of age.
+The parents denied consanguinity. Both patients presented with alopecia (fig. 1b),
+a saddle nose, thickened eyelids and thick lips, in addition to dwarfism, hypotrichosis,
+strabismus, shallow orbits, protruding auricles, prominent supraorbital ridges,
+high and bossed forehead, and a small face with dysplasia.
+Oral examination showed thickened upper and lower alveolar ridges in a
+buccolingual direction and lined with normal mucosa; pseudoanodontia was also present.

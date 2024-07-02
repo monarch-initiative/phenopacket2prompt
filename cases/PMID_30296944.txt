@@ -1,0 +1,40 @@
+[source]
+pmid = PMID:30296944
+title = Description of a novel RyR2 mutation in a juvenile patient with symptomatic catecholaminergic polymorphic ventricular tachycardia in sleep and during exercise: a case report
+[diagnosis]
+disease_id = OMIM:604772
+disease_label = Ventricular tachycardia, catecholaminergic polymorphic, 1
+[text]
+A 17-year-old Caucasian boy was admitted to our intensive care unit (ICU) after successful
+resuscitation by emergency services. While performing running exercise in a fitness center,
+he suddenly collapsed. Because neither pulse nor breathing could be detected by the bystanders,
+immediate resuscitation was performed. In the first heart rhythm analysis conducted by the paramedics,
+ventricular fibrillation (VF) was seen and immediately defibrillated into sinus rhythm. The patient
+recovered quickly and was transferred to our ICU by the ambulance service. At admission, the
+patient was in hemodynamically stable condition with normal vital signs (heart rate 95/min,
+blood pressure 125/79 mmHg, auricular temperature 36.5 °C, respiration 15 breaths/min, oxygen saturation
+of 100% on 4-L nasal cannula). The physical examination revealed no abnormal findings. Auscultation of the
+heart showed a regular rate and rhythm with normal S1 and S2 and no murmurs or rubs. The breath sounds
+of the lungs were equal and clear bilaterally with no wheezes, rhonchi, or rales. The patient was awake
+(Glasgow Coma Scale score of 15) and orientated in all aspects. No focal sensory or motor deficits,
+aphasia, or inadequate balances were noted in the neurological examination. Deep tendon reflexes and
+cranial nerves II through XII were intact. Because there were no cerebral or other sequelae at the
+time of hospital admission, we decided not to obtain a cranial computed tomographic scan,
+owing to the patient’s young age. When asked about the event, he told us that he had no
+symptoms prior to the collapse. However, in the years before, he had syncopated several times
+while climbing stairs, playing soccer, and once when he got frightened. A general practitioner
+previously performed an exercise ECG, which showed multiple premature beats under submaximal
+stress (Fig. 1). As a result, beta-blockers were prescribed (metoprolol succinate 47.5 mg once per day).
+Apart from this, the patient had no medical history or prior medication. The patient was a nonsmoker
+with no regular alcohol consumption and an unremarkable family, social, and environmental history.
+Twelve-lead electrocardiogram obtained during ergometry showing a bigeminus with
+right bundle branch block morphology at 80 W. At this point, ergometry was stopped because
+recurrent syncopes under physical activity were reported in this patient
+At ICU admission, initial medical treatment included the first surface ECG after cardiac arrest,
+which showed negative T-waves in V1 and biphasic T-waves in V2 (Fig. 2). The results of blood
+tests showed normal findings without signs of cardiac ischemia or metabolic disorders (Table 1).
+Respiratory disorders (bronchospasm, aspiration) or neurovascular events seemed to be unlikely
+because the physical examination, blood gas analysis, and a pulmonary x-ray showed normal findings.
+An echocardiogram revealed normal left ventricular function without wall motion abnormalities,
+right heart strain, or valve disease. Additionally, a cardiac magnetic resonance
+imaging scan was performed and showed normal findings.

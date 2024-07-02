@@ -1,0 +1,19 @@
+[source]
+pmid = PMID:30012084
+title = The most 5' truncating homozygous mutation of WNT1 in siblings with osteogenesis imperfecta with a variable degree of brain anomalies: a case report
+[diagnosis]
+disease_id = OMIM:615220
+disease_label = Osteogenesis imperfecta, type XV
+[text]
+A 14-year-old Thai girl was born via cesarean section due to premature rupture of the membrane with a birth weight of 2500 g.
+She is the first child of a consanguineous (second-degree relatives) couple. Both parents are healthy and have never had fractures.
+During her first year of life, she had delayed motor development and growth failure. At one year of age, she could not sit by
+herself and weighed 7.5 kg (< 3rd centile). She presented to our hospital at 14 months of age with fractures of both femora
+without a history of significant trauma. She was found to have ptosis of both eyes with normal teeth but no blue sclerae.
+She was small for her age. Her weight was 7.8 kg (3rd centile) and her length was 68 cm (< 3rd centile). Skeletal survey
+showed diffuse osteopenia, multiple healed fractures of the right humoral shaft, both tibiae and fibulae. Spine radiograph showed
+flattening and indentation of vertebral bodies (Fig. 1).
+Radiological features of the proband. Imaging of the thoracic and lumbar spines at 14 months of age, (a) the
+antero-posterior and (b) lateral views revealed depressed multiple vertebrae.
+Figures c-f showed imaging at 14 years of age of upper extremities (c-d) and lower extremities (e-f) revealing deformities
+of humeri, left ulna and radius, right tibia and fibula, left tibia and fibula, respectively

@@ -1,0 +1,12 @@
+[source]
+pmid = PMID:25469541
+title = Identification and molecular characterisation of a homozygous missense mutation in the ADAMTS10 gene in a patient with Weill-Marchesani syndrome
+[diagnosis]
+disease_id = OMIM:277600
+disease_label = Weill-Marchesani syndrome 1, recessive
+[text]
+An 18-year-old woman was initially referred to our Department for genetic evaluation of suspected atypical Noonan syndrome with pulmonic stenosis, short stature, and brachydactyly. The patient was born at term after an uneventful pregnancy from consanguineous parents (second-degree cousins, Supplementary Figure S2). After birth, a valvular pulmonary stenosis and a small muscular ventricular septal defect were observed. The VSD closed spontaneously. The valvular stenosis underwent an unsuccessful balloon catheterisation when the patient was 8 years old, with subsequent spontaneous regression. She developed a high degree of myopia (−10 dpt) in early childhood, but no further ophthalmological abnormalities were reported.
+
+Upon examination at age 19 years, the patient presented with short stature (140cm), muscular build, scoliosis, and an accentuated lumbar lordosis. She was highly myopic (−13.5 dpt OD and −16 dpt OS). She had joint stiffness at the elbows with reduced motility (supination −23°) and was unable to make a fist with both hands. Her knees were also affected, and contracture of the calf musculature had led to an inability to stand with both feet parallel and simultaneously on the ground. She had marked brachydactyly. Her father had also brachydactyly and was of short stature, as well as her mother (145 cm). No other family members were affected.
+
+The referral diagnosis of Noonan syndrome was based on her short stature and the presence of pulmonic stenosis. Brachydactyly was considered an independent familial dominant trait. Genetic analysis did not reveal functional variants in the PTPN11, SOS1, KRAS, and RAF1 genes. However, the pattern of brachydactyly, joint stiffness, ophthalmological symptoms, and heart defect led us to suspect a diagnosis of WMS, which was further strengthened by the finding of microspherophakia in a scheduled ophthalmological examination.

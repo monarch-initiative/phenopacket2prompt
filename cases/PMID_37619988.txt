@@ -1,0 +1,16 @@
+[source]
+pmid = PMID:37619988
+title = Compound heterozygous variants in RAB34 in a rare skeletal ciliopathy syndrome
+[diagnosis]
+disease_id = OMIM:620718
+disease_label = Orofaciodigital syndrome XX
+[text]
+The affected fetus was the second child of a healthy non-consanguineous Japanese couple.
+The pregnancy was initiated by in vitro fertilization procedure, and two fertilized eggs were transferred.
+At GA 9+4, the mother was diagnosed with vanishing twins. The ultrasound of the remaining fetus at GA 13+2
+showed multiple abnormalities, including posterior neck edema (nuchal translucency 5.6mm), micrognathia,
+low-set ears, auricular hypoplasia, bilateral cleft lip and palate, short extremities and polydactyly,
+and atrioventricular septal defect (Supplementary Figure 1). Multiple abnormalities were seen in the follow-up scans and the family opted for termination of pregnancy (TOP) at GA 17+5. The autopsy results were consistent with the ultrasound findings and are summarized in Figure 1.
+Postmortem photographs of the affected fetus (TOP GA 17+5). Note bilateral cleft lip and palate,
+auricular hypoplasia, microretrognathia, narrow thorax, rhizomelic shortening of the limbs,
+bilateral pre- and post-axial polydactyly of hands and feet. (B) Postmortem radiographs. Note handlebar clavicles, mild thoracic narrowing, mildly delayed vertebral ossification, underdeveloped lower part of the ilia, rhizomelic shortening of the long bones and lack of metaphyseal flaring. (C) Magnified photographs of hands. Note 7 digits with preaxial polysyndactyly and postaxial polydactyly of both hands. (D) Magnified photographs of feet. Note 6 digits with preaxial polydactyly of the right foot, and 7 digits with preaxial polydactyly and postaxial polysyndactyly of the left foot. [Colour figure can be viewed at wileyonlinelibrary.com]

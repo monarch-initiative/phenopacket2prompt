@@ -1,0 +1,11 @@
+[source]
+pmid = PMID:16962354
+title = Functional analysis of mutations in TGIF associated with holoprosencephaly
+[diagnosis]
+disease_id = OMIM:142946
+disease_label = Holoprosencephaly 4
+[text]
+A male proband presenting with lobar holoprosencephaly, atypical ventricles with small frontal horns,
+hypothalamic and caudate fusion, diabetes insipidus, seizures,
+premaxillary agenesis, microcephaly, absent nasal root and septum with a
+depressed nasal tip (Fig. 1A and B).

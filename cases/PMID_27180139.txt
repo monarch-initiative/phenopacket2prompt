@@ -1,0 +1,21 @@
+[source]
+pmid = PMID:27180139
+title = A novel nonsense GPSM2 mutation in a Yemeni family underlying Chudley-McCullough syndrome
+[diagnosis]
+disease_id = OMIM:604213
+disease_label = Chudley-McCullough syndrome
+[text]
+Case 1: The proband (IV.1, Fig. 1) was a 12-year old boy born to consanguineous parents of Yemeni origin.
+He was born at term via spontaneous vaginal delivery. At 8-months of age, his parents noted hearing deficit,
+which was clinically diagnosed as bilateral severe sensorineural hearing loss. A cochlear implant (CI) was placed in the
+right ear at 4 years of age. He was asthmatic, and parents reported an acute exacerbation of asthma once every three months,
+requiring salbutamol nebulization. At 3-years of age, he had an episode of bronchopneumonia along with an acute exacerbation
+of asthma.
+Upon examination, he was found to be an alert and active boy with a thin build. Height and weight measurements were both
+around the 3rd centile. He had a triangular face with deep seated eyes, sparse eyebrows and prominent and posteriorly angulated ears
+ (Fig. 2A). Syndactyly was noted between the 2nd and 3rd toes bilaterally, and the elbow and knee joints were found to be
+ hyperextensible. There were no other clinically abnormal findings, apart from hyperpigmented skin lesions at the suprapubic
+ region and the presence of dry scaly palms. Speech delay was moderate. He was able to speak in sentences, but with poor
+ articulation. There was also cognitive delay, noted by the inability to tell the time in minutes, or to follow complex commands.
+ Brain CT scan revealed a posterior third ventricular cystic lesion, suggestive of an arachnoid cyst, along with
+ partial agenesis of the corpus callosum.

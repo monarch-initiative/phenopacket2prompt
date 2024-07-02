@@ -1,0 +1,21 @@
+[source]
+pmid = PMID:29333303
+title = Schinzel-Giedion Syndrome with Congenital Megacalycosis in a Turkish Patient: Report of SETBP1 Mutation and Literature Review of the Clinical Features
+[diagnosis]
+disease_id = OMIM:269150
+disease_label = Schinzel-Giedion midface retraction syndrome
+[text]
+The proposita was born at 39 1/7 weeks of gestation by spontaneous vaginal delivery after an uneventful pregnancy.
+The infant was an appropriate size for her gestational age, with a birth weight of 3,020 g.
+The parents were nonconsanguineous. Antenatal ultrasonography revealed bilateral pelvic dilatation and polyhydramnios.
+At birth, the patient had coarse facial features with midface retraction, frontal bossing, bitemporal narrowing, wide anterior fontanel,
+hypertrichosis over the forehead, low nasal bridge, ocular hypertelorism, low set ears, abdominal distention, and bilateral talipes equinovarus (Figure 1).
+Radiological examination showed bowed long bones and broad ribs (Figure 2). Echocardiogram revealed patent ductus arteriosus and patent foramen ovale.
+Abdominal ultrasound showed severe hydronephrosis on the right, moderate hydronephrosis on the left, and diastasis recti.
+Optic fundus examination and auditory brainstem response testing were normal. Cerebral magnetic resonance imaging (MRI)
+showed moderate dilatation of the third and lateral ventricles, 2-3 mm choroidal cysts with grossly normal cerebral structures.
+Bilateral megacalycosis with nonobstructive dilatation was seen on abdominal MRI (Figure 3). Screening tests for inborn metabolism
+errors were negative. Complete blood count and renal function tests were normal. On follow-up examination at 8 months of age,
+the patient had severe growth retardation, developmental delays, feeding problems, and seizures, which were partially controlled with
+antiepileptic drugs. She had severe visual impairment with absence of fixation and no reaction to bright light.
+An auditory evoked response test was repeated and showed severe deafness. She died at 11 months of age from respiratory failure.

@@ -1,0 +1,8 @@
+[source]
+pmid = PMID:19458539
+title = Defective myotilin homodimerization caused by a novel mutation in MYOT exon 9 in the first Japanese limb girdle muscular dystrophy 1A patient
+[diagnosis]
+disease_id = OMIM:609200
+disease_label = Myopathy, myofibrillar, 3
+[text]
+The 57-year-old female patient presented with gait disturbance. She started experiencing difficulty in standing up and climbing the stairs by age 41 years. Her condition gradually progressed, and by age 50 years, she could not walk long distances and could not stand up or climb stairs without support. Her deceased father and elder sister had a similar condition. Her sister was previously diagnosed as having sporadic inclusion body myositis, but further information could not be obtained. On examination, the patient had proximal dominant muscle weakness, especially in neck flexors, iliopsoas, hamstring, and quadriceps muscles (3/5 by manual muscle test), but no facial muscle weakness. She also showed a waddling gait and decreased deep tendon reflexes. Serum creatine kinase was mildly elevated (385 IU/L; normal, <200 IU/L).

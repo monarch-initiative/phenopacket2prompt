@@ -1,0 +1,17 @@
+[source]
+pmid = PMID:24969041
+title = Identification of a novel missense GLRA1 gene mutation in hyperekplexia: a case report
+[diagnosis]
+disease_id = OMIM:149400
+disease_label = Hyperekplexia 1
+[text]
+A male neonate was born to term at the 40th week of gestation by cesarean section delivery after an uneventful pregnancy.
+His birth weight was 3990g and Apgar score was 9/10. At day 1 post-term, he developed a pneumothorax and was admitted
+to the perinatal intensive care unit for extra oxygen and parenteral fluid therapy. At day 4 post-term, abnormal movements,
+stiffness of the muscles and convulsions were observed, and phenobarbital therapy was initiated. A neurogical investigation
+described dyskinesia. At day 11 post-term, he was hospitalized in a developmental neurology ward. An examination did not
+identify any hypoxia-induced regulatory abnormalities. The observed recurrent muscular hypertonia was attributed to a
+suspected ion channel disorder and carbamazepine therapy was initiated.
+Ultrasonography of his hip indicated the possibility of dysplasia on the left side, and ultrasonography of his abdomen
+revealed bilateral mild pyelectasis. The results of neurosonography, electroencephalography and magnetic resonance
+imaging of the head did not indicate any abnormalities of the central nervous system.

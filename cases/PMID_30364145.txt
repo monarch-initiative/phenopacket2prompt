@@ -1,0 +1,20 @@
+[source]
+pmid = PMID:30364145
+title = First Replication of the Involvement of OTUD6B in Intellectual Disability Syndrome With Seizures and Dysmorphic Features
+[diagnosis]
+disease_id = OMIM:617452
+disease_label = Intellectual developmental disorder with dysmorphic facies, seizures, and distal limb anomalies
+[text]
+The proband is a 6-year-old female, second-born of non-consanguineous healthy parents. She was born by cesarean section delivery at 38 weeks of gestation,
+after a pregnancy complicated by intrauterine growth restriction (IUGR). Her birth weight was 2,095 g. A Tetralogy of Fallot was diagnosed soon after birth,
+requiring cardiac surgery intervention at the age of 6 months.
+During the first 2 months, she showed feeding difficulties, associated with gastroesophageal reflux.
+Moreover, she also had a neurodevelopmental delay. She sat independently at 11 months, walked at 18 months, and pronounced her first words at 2 years.
+Due to the occurrence of palpebral ptosis, a Duane syndrome was suspected. Nevertheless, brain MRI was normal,
+occipitofrontal circumference was 47.8 cm (z-score −1.5).
+Main dysmorphic facial features included: large ears, long smooth philtrum, thin upper lip, high arched palate, hanging columella,
+narrow long face, wide forehead, sunken eyes, and hypotelorism (Figure 1A).
+The patient also has finger abnormalities, i.e., broad thumbs and first toes, and fetal pads (Figure 1A).
+At 5 years, tonic-clonic seizures occurred, thus valproate treatment was started.
+At the latest neurological evaluation, at 6 years of age, she has mild intellectual disability, mild motor difficulty, and episodic behavioral disorders.
+

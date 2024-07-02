@@ -1,0 +1,12 @@
+[source]
+pmid = PMID:27330822
+title = A novel deleterious mutation in the COMP gene that causes pseudoachondroplasia
+[diagnosis]
+disease_id = OMIM:177170
+disease_label = Pseudoachondroplasia
+[text]
+The proband (II-1) was 3 years old and 77 cm tall. He had strikingly short limbs (upper limb length 42 cm and lower limb length 33 cm), small hands, short fingers and a waddling gait.
+A lateral spine radiograph (Figure 2a) showed anterior beaking of the vertebrae and platyspondyly.
+The pelvis radiograph (Figure 2c) showed small femoral heads, irregular acetabulae, enlarged acetabular angles and a widened symphysis pubis.
+Radiographs further indicated epiphyseal and metaphyseal changes in the joints of the long and short tubular bones including the femur, tibia, fibula, ulna and radius (Figure 2b,d).
+(a) Radiograph showing anterior beaking of the vertebral bodies. (b) Radiograph of knees. (c) Radiograph showing small femoral heads, flared metaphyseal borders and widened symphysis pubis.

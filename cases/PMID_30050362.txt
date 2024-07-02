@@ -1,0 +1,29 @@
+[source]
+pmid = PMID:30050362
+title = Protein-losing enteropathy and joint contractures caused by a novel homozygous ANTXR2 mutation
+[diagnosis]
+disease_id = OMIM:228600
+disease_label = Hyaline fibromatosis syndrome
+[text]
+The patient was an Asian 10-month-old male (individual II-3 in Figure 1) who was bom full term with a birth weight of
+3.75 kg (66 percentile). His parents were half-first cousins and had 2 healthy daughters (Figure 1).
+The proband had mild contractures in major joints at birth but was otherwise noted to be healthy.
+At 5 months of age, his joint contractures had progressively worsened and were associated with pain in his wrists,
+elbows, shoulders, hips, knees, and ankles. Concurrently, he developed dark brown/black spots on his knuckles, ankles,
+back, and neck. Initially, arthrogryposis was suspected, and so he received physical therapy, which resulted in a femur fracture.
+At that time, he also developed persistent protein-losing enteropathy with significant weight loss.
+He came to the USA for additional medical care at the age of 10 months. According to the family,
+there were no other family members who had similar symptoms as the patient.
+On presentation, the most striking features were the severe malnutrition (5 kg; <3 percentile) and constant irritability.
+On physical examination, significant joint contractures of the wrists, knees, hips, and ankles were noted (Figure 2A and B).
+Oral mucosa demonstrated gingival hyperplasia (Figure 2C). There were generalized sclerodermatous changes of the skin,
+most prominently in the left lower extremity (Figure 2B ). Skin was significant for pearly, erythematous papules
+and indurated plaques located symmetrically on the back (Figure 2C and D). Similar indurated plaques that were more
+erythematous than violaceous were also seen on the posterior scalp (Figure 2E).
+The perianal area revealed multiple coalescent skin-colored, indurated papules involving the perineum (Figure 2F ).
+Due to long-standing malnutrition, the child had multiple electrolyte abnormalities including a nonanion gap acidosis,
+hyponatremia, hyperkalemia, and hypoalbuminemia.
+Clinical findings of patient and skin biopsy. Notes: Contractures of the wrists and ankles (A and B).
+There were generalized sclerodermatous changes of the skin also appreciated in the extremities,
+most prominently in the left lower extremity (B). Gingival hyperplasia (C). Skin findings on the back (D),
+posterior scalp (E), and perineum perianal area (F).
