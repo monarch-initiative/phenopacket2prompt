@@ -262,8 +262,8 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
             };
         } else {
             return switch (psex) {
-                case FEMALE -> String.format("Die Probandin war ein %s", bbGenerator.probandWasA(), bbGenerator.newbornGirl()); // das
-                case MALE -> String.format("Der Proband war ein %s", bbGenerator.probandWasA(), bbGenerator.newbornBoy());
+                case FEMALE -> String.format("Die Probandin war ein %s", bbGenerator.newbornGirl()); // das
+                case MALE -> String.format("Der Proband war ein %s", bbGenerator.newbornBoy());
                 default -> String.format("Der Proband war ein Neugeborenes ohne angegebenes Geschlecht");
             };
         }

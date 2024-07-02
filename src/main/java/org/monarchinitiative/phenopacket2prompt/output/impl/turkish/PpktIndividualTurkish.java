@@ -300,7 +300,7 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         if (iso8601Age.getMonths() == 0) {
             return String.format("%d yaşında bir çocuk", y);
         } else {
-            return String.format("%d %s yıl, %d %s ay yaşında bir çocuk", y, m);        }
+            return String.format("%d yıl, %d ay yaşında bir çocuk", y, m);        }
     }
 
     private String monthString(int m) {
