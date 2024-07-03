@@ -44,6 +44,8 @@ public class DutchBuildingBlocks implements BuildingBlockGenerator {
         return String.join(" ", components);
     }
 
+
+
     @Override
     public String yearsOld(int y) {
         return String.format("%d jaar oud", y);
@@ -282,6 +284,10 @@ public class DutchBuildingBlocks implements BuildingBlockGenerator {
         return "Tijdens de foetale periode";
     }
 
+    @Override
+    public String duringEmbryonic() {
+        return "Tijdens de embryonale periode";
+    }
     @Override
     public String asNeonate() {
         return "Als pasgeborene";

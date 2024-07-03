@@ -280,6 +280,11 @@ public class EnglishBuildingBlocks implements BuildingBlockGenerator {
     }
 
     @Override
+    public String duringEmbryonic() {
+        return "During the embryonic period";
+    }
+
+    @Override
     public String asNeonate() {
         return "As a neonate";
     }

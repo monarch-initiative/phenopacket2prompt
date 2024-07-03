@@ -300,7 +300,8 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
         return switch (geschlecht) {
             case MAENNLICH -> String.format("%s alter", ymd);
             case WEIBLICH -> String.format("%s alte", ymd);
-            case NEUTRUM -> String.format("%s altes", ymd);
+            case NEUTRUM -> String.format("%s alte", ymd);
+            //TODO: check this is OK. "alte" in the examples I have seen always refers to "die Person", which is feminine, e.g. "46 Jahre alte erwachsene Person", not "altes"
         };
     }
 
@@ -412,7 +413,7 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
         } else if (hpoOnsetTermAge.isCongenital()) {
             return switch (psex) {
                 case FEMALE -> "Die Probandin war ein weibliches Neugeborenes";
-                case MALE -> "Der Probandwar ein männliches Neugeborenes";
+                case MALE -> "Der Proband war ein männliches Neugeborenes";
                 default -> "Der Patient war ein Neugeborenes ohne angegebenes Geschelcht";
             };
         } else if (hpoOnsetTermAge.isInfant()) {
