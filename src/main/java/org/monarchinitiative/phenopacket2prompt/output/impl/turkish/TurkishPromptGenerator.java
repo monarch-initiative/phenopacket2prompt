@@ -51,8 +51,8 @@ public class TurkishPromptGenerator implements PromptGenerator {
     public String getVignetteAtAge(PhenopacketAge page, PhenopacketSex psex, List<OntologyTerm> terms) {
         String ageString = this.ppktAgeSexGenerator.atAgeForVignette(page);
         String person = switch (psex) {
-            case MALE -> "o";
-            case FEMALE -> "o";
+            case MALE -> "";
+            case FEMALE -> "";
             default -> "etkilenen kişi";
         };
         return this.ppktPhenotypicFeatureGenerator.featuresAtEncounter(person, ageString, terms);
@@ -61,8 +61,8 @@ public class TurkishPromptGenerator implements PromptGenerator {
     @Override
     public  String getVignetteAtOnset(PpktIndividual individual){
         String person = switch (individual.getSex()) {
-            case MALE -> "O";
-            case FEMALE -> "O";
+            case MALE -> "";
+            case FEMALE -> "";
             default -> "Etkilenen kişi";
         };
         return this.ppktPhenotypicFeatureGenerator.featuresAtOnset(person, individual.getPhenotypicFeaturesAtOnset());
