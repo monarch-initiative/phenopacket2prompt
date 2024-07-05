@@ -72,10 +72,10 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
         } else if (components.size() == 1) {
             return components.get(0);
         } else if (components.size() == 2) {
-            return String.format("%s ve %slükken", components.get(0), components.get(1));
+            return String.format("%s ve %slıkken", components.get(0), components.get(1));
         } else {
             // we must have y,m,d
-            return String.format("%s %s ve %slükken", components.get(0), components.get(1), components.get(2));
+            return String.format("%s %s ve %slıkken", components.get(0), components.get(1), components.get(2));
         }
     }
 
