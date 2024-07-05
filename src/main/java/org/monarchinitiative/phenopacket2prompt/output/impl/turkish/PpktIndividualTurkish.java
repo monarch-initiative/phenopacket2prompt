@@ -333,7 +333,7 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         List<String> components = new ArrayList<>();
 
         if (isoAge.getYears()>1) {
-            components.add(String.format("%d yıl", isoAge.getYears()));
+            components.add(String.format("%d yaş", isoAge.getYears()));
         } else if (isoAge.getYears() == 1) {
             components.add("bir yıl");
         }
