@@ -254,13 +254,13 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         int d = iso8601Age.getDays();
         List<String> components = new ArrayList<>();
         if (y > 0) {
-            components.add(String.format("%d yıl", y));
+            components.add(String.format("%d yaşinda", y));
         }
         if (m > 0) {
-            components.add(String.format("%d ay", m));
+            components.add(String.format("%d aylıkken", m));
         }
         if (d > 0) {
-            components.add(String.format("%d gün", d));
+            components.add(String.format("%d günlükken", d));
         }
         String ymd;
         if (components.isEmpty()) {
@@ -315,11 +315,11 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         int m = iso8601Age.getMonths();
         int d = iso8601Age.getDays();
         if (m == 0) {
-            return String.format("%d gün", d);
+            return String.format("%d günlükken", d);
         } else if (d>0){
-            return String.format("%d ay %d gün", m, monthString(m), d, dayString(d));
+            return String.format("%d ay %d günlükken", m, monthString(m), d, dayString(d));
         } else {
-            return String.format("%d ay", m);
+            return String.format("%d aylıkken", m);
         }
     }
 
