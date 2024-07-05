@@ -288,19 +288,19 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
             if (iso8601Age.getMonths() == 0) {
                 return String.format("%d yaşında bir erkek çocuk", y);
             } else {
-                return String.format("%d %s yıl, %d %s ay yaşında bir erkek çocuk", y, y>1?"Jahre":"Jahr", m, m>1?"Monate":"Monat");
+                return String.format("%d %s yaş, %d %s aylıkken bir erkek çocuk", y, y>1?"Jahre":"Jahr", m, m>1?"Monate":"Monat");
             }
         } else if (psex.equals(PhenopacketSex.FEMALE)) {
             if (iso8601Age.getMonths() == 0) {
                 return String.format("%d yaşında bir kız çocuk", y);
             } else {
-                return String.format("%d %s yıl, %d %s ay yaşında bir kız çocuk", y, y>1?"Jahre":"Jahr", m, m>1?"Monate":"Monat");
+                return String.format("%d %s yaş, %d %s aylıkken bir kız çocuk", y, y>1?"Jahre":"Jahr", m, m>1?"Monate":"Monat");
             }
         }
         if (iso8601Age.getMonths() == 0) {
             return String.format("%d yaşında bir çocuk", y);
         } else {
-            return String.format("%d yıl, %d ay yaşında bir çocuk", y, m);        }
+            return String.format("%d yaş, %d aylıkken bir çocuk", y, m);        }
     }
 
     private String monthString(int m) {
