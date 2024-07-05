@@ -6,6 +6,7 @@ import org.monarchinitiative.phenol.io.OntologyLoader;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenol.ontology.data.TermId;
 import org.monarchinitiative.phenopacket2prompt.mining.FenominalParser;
+import org.monarchinitiative.phenopacket2prompt.model.OntologyTerm;
 import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
 import org.monarchinitiative.phenopacket2prompt.output.PromptGenerator;
 import org.phenopackets.phenopackettools.builder.PhenopacketBuilder;
@@ -51,6 +52,10 @@ public class TestDriveCommand implements Callable<Integer> {
 
     private final static Map<TermId, String> observedMap;
     private final static Map<TermId, String> excludedMap;
+    private final static Map<TermId, String> observedSecondTimePoint;
+    private final static Map<TermId, String> excludedSecondTimePoint;
+
+
 
 
     private final static  Random RANDOM = new Random();
@@ -72,6 +77,25 @@ public class TestDriveCommand implements Callable<Integer> {
         excludedMap.put(TermId.of("HP:0002900"), "Hypokalemia");
         excludedMap.put(TermId.of("HP:0001629"), "Ventricular septal defect");
         excludedMap.put(TermId.of("HP:0000083"), "Renal insufficiency");
+        // for second time point
+        observedSecondTimePoint = new HashMap<>();
+        observedSecondTimePoint.put(TermId.of("HP:0003077"), "Hyperlipidemia");
+        observedSecondTimePoint.put(TermId.of("HP:0003113"), "Hypochloremia");
+        observedSecondTimePoint.put(TermId.of("HP:0002905"), "Hyperphosphatemia");
+        observedSecondTimePoint.put(TermId.of("HP:0032097"), "Hypermanganesemia");
+        observedSecondTimePoint.put(TermId.of("HP:0002901"), "Hypocalcemia");
+        observedSecondTimePoint.put(TermId.of("HP:0004380"), "Aortic valve calcification");
+        observedSecondTimePoint.put(TermId.of("HP:0004382"), "Mitral valve calcification");
+        observedSecondTimePoint.put(TermId.of("HP:0001634"), "Mitral valve prolapse");
+        observedSecondTimePoint.put(TermId.of("HP:0001712"), "Left ventricular hypertrophy");
+
+
+        excludedSecondTimePoint= new HashMap<>();
+        excludedSecondTimePoint.put(TermId.of("HP:0000400"), "Macrotia");
+        excludedSecondTimePoint.put(TermId.of("HP:0400004"), "Long ear");
+        excludedSecondTimePoint.put(TermId.of("HP:0000369"), "Low-set ears");
+        excludedSecondTimePoint.put(TermId.of("HP:0012378"), "Fatigue");
+        excludedSecondTimePoint.put(TermId.of("HP:0002664"), "Neoplasm");
     }
 
     private PhenotypicFeature generatePF(TermId tid, String label, TimeElement telem, boolean excluded) {
@@ -102,16 +126,6 @@ public class TestDriveCommand implements Callable<Integer> {
             sb.append(chars.charAt(RANDOM.nextInt(chars.length())));
         return sb.toString();
     }
-
-
-
-
-    private final static PhenotypicFeature e1 = PhenotypicFeatureBuilder.builder("", "").excluded().build();
-    private final static PhenotypicFeature e2 = PhenotypicFeatureBuilder.builder("", "").excluded().build();
-    private final static PhenotypicFeature e3 = PhenotypicFeatureBuilder.builder("", "").excluded().build();
-    private final static PhenotypicFeature e4 = PhenotypicFeatureBuilder.builder("", "").excluded().build();
-    private final static PhenotypicFeature e5 = PhenotypicFeatureBuilder.builder("HP:0001395", "Hepatic fibrosis").excluded().build();
-    private final static List<PhenotypicFeature> excludedFeatureList = List.of(e1,e2, e3, e4, e5);
 
 
     private final static Disease d1 = DiseaseBuilder.builder("OMIM:162200", "Neurofibromatosis, type 1").build();
@@ -147,6 +161,60 @@ public class TestDriveCommand implements Callable<Integer> {
         return randomValue < t;
     }
 
+    private TimeElement getSecondObservedTime(TimeElement onset1) {
+        if (onset1.hasOntologyClass()) {
+            TermId firstHpo = TermId.of(onset1.getOntologyClass().getId());
+            OntologyTerm second = getNextHpoOnset(firstHpo);
+            return TimeElements.ontologyClass(OntologyClassBuilder.ontologyClass(second.getTid().getValue(), second.getLabel()));
+        } else if (onset1.hasAge()) {
+            String isoAge = onset1.getAge().getIso8601Duration();
+            char digit = isoAge.charAt(1); // it#s always P3Y etc, i.e., the first character is always P and the next character is always the most significant age digit
+            if (! Character.isDigit(digit)) {
+                throw new PhenolRuntimeException("Malformed iso string " + isoAge);
+            }
+            int d =  Character.getNumericValue(digit);
+            String nextIsoAge = String.format("P%d%s", ++d, isoAge.substring(2));
+            return TimeElements.age(nextIsoAge);
+        } else {
+            // Not initialized, just return anything
+            return TimeElements.age("P20Y2M");
+        }
+    }
+
+    private final static List<OntologyTerm> orderedHpoOnsets;
+    static  {
+        orderedHpoOnsets = new ArrayList<>();
+        List<TimeElement> clzList = List.of(TimeElements.antenatalOnset(),
+              //  TimeElements.embryonalOnset(),
+              //  TimeElements.fetalOnset(),
+                TimeElements.congenitalOnset(),
+                TimeElements.neonatalOnset(),
+                TimeElements.infantileOnset(),
+                TimeElements.childhoodOnset(),
+                TimeElements.juvenileOnset(),
+                TimeElements.youngAdultOnset(),
+                TimeElements.middleAgeOnset(),
+                TimeElements.lateOnset());
+        for (TimeElement te: clzList) {
+            OntologyClass clz = te.getOntologyClass();
+            orderedHpoOnsets.add(new OntologyTerm(TermId.of(clz.getId()), clz.getLabel()));
+        }
+    }
+
+
+
+
+    private OntologyTerm getNextHpoOnset(TermId firstHpo) {
+        int N = orderedHpoOnsets.size();
+        for (int i=0; i<N; i++) {
+            if (orderedHpoOnsets.get(i).getTid().equals(firstHpo)) {
+                if (i < N - 1) {
+                    return orderedHpoOnsets.get(i + 1);
+                }
+            }
+        }
+        return orderedHpoOnsets.getLast();
+    }
 
 
     public TestDriveCommand() {
@@ -158,6 +226,7 @@ public class TestDriveCommand implements Callable<Integer> {
                 builder.individual(i).addDisease(d);
                 // Add some terms at age of onset
                 TimeElement onst = d.getOnset();
+                TimeElement secondTime = getSecondObservedTime(onst);
                 List<TermId> tidList = new ArrayList<>(observedMap.keySet());
                 Collections.shuffle(tidList);
                 int randomIndex = RANDOM.nextInt(tidList.size());
@@ -174,6 +243,30 @@ public class TestDriveCommand implements Callable<Integer> {
                         TermId tid = tidList.get(ii);
                         String label = observedMap.get(tid);
                         PhenotypicFeature pf = generatePF(tid, label);
+                        builder.addPhenotypicFeature(pf);
+                    }
+                }
+                // Add observed terms at second time point
+                List<TermId> tidList2 = new ArrayList<>(observedSecondTimePoint.keySet());
+                Collections.shuffle(tidList2);
+                if (randomChoice(0.6)) {
+                     randomIndex = RANDOM.nextInt(observedSecondTimePoint.size());
+                    for (int ii=0; ii<randomIndex;ii++) {
+                        TermId tid = tidList2.get(ii);
+                        String label = observedSecondTimePoint.get(tid);
+                        PhenotypicFeature pf = generatePF(tid, label, secondTime);
+                        builder.addPhenotypicFeature(pf);
+                    }
+                }
+                // Add excluded terms at second time point
+                 tidList2 = new ArrayList<>(excludedSecondTimePoint.keySet());
+                Collections.shuffle(tidList2);
+                if (randomChoice(0.9)) {
+                    randomIndex = RANDOM.nextInt(excludedSecondTimePoint.size());
+                    for (int ii=0; ii<randomIndex;ii++) {
+                        TermId tid = tidList2.get(ii);
+                        String label = excludedSecondTimePoint.get(tid);
+                        PhenotypicFeature pf = generatePF(tid, label, secondTime);
                         builder.addPhenotypicFeature(pf);
                     }
                 }
@@ -265,7 +358,7 @@ public class TestDriveCommand implements Callable<Integer> {
         try {
             Files.write(Paths.get(outfileName), sb.toString().getBytes());
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
 
 
@@ -279,7 +372,7 @@ public class TestDriveCommand implements Callable<Integer> {
         StringBuilder sb = new StringBuilder();
         for (PpktIndividual individual : individualList) {
             if (individual.hasExcludedPhenotypeFeatureAtOnset() ||individual.hasObservedPhenotypeFeatureAtOnset()) {
-                String prompt = generator.createPrompt(individual);
+                String prompt = generator.createPromptWithoutHeader(individual);
                 sb.append(prompt).append("\n\n");
             } else {
                 System.err.println("[WARN] No HPO terms found for " + individual.getPhenopacketId());

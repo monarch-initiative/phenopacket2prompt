@@ -49,7 +49,7 @@ public interface PromptGenerator {
 
 
     static PromptGenerator dutch(HpInternational international) {
-        PpktPhenotypicFeatureGenerator pfgen = new PpktPhenotypicfeatureDutch(international);
+        PpktPhenotypicFeatureGenerator pfgen = new PpktPhenotypicFeatureDutch(international);
         return new DutchPromptGenerator(pfgen);
     }
 

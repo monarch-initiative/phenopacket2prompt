@@ -1,4 +1,4 @@
-package org.monarchinitiative.phenopacket2prompt.output.impl.turkish;
+package org.monarchinitiative.phenopacket2prompt.output.impl.dutch;
 
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenopacket2prompt.international.HpInternational;
@@ -8,14 +8,14 @@ import org.monarchinitiative.phenopacket2prompt.output.PpktPhenotypicFeatureGene
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class PpktPhenotypicfeatureTurkish implements PpktPhenotypicFeatureGenerator {
+public class PpktPhenotypicFeatureDutch implements PpktPhenotypicFeatureGenerator {
 
-    private final HpInternational turkish;
+    private final HpInternational dutch;
     private Set<String> missingTranslations;
 
 
-    public PpktPhenotypicfeatureTurkish(HpInternational international) {
-        turkish = international;
+    public PpktPhenotypicFeatureDutch(HpInternational international) {
+        dutch = international;
         missingTranslations = new HashSet<>();
     }
 
@@ -23,7 +23,7 @@ public class PpktPhenotypicfeatureTurkish implements PpktPhenotypicFeatureGenera
     private List<String> getTranslations(List<OntologyTerm> ontologyTerms) {
         List<String> labels = new ArrayList<>();
         for (var term: ontologyTerms) {
-            Optional<String> opt = turkish.getLabel(term.getTid());
+            Optional<String> opt = dutch.getLabel(term.getTid());
             if (opt.isPresent()) {
                 labels.add(opt.get());
             } else {
@@ -46,14 +46,14 @@ public class PpktPhenotypicfeatureTurkish implements PpktPhenotypicFeatureGenera
         if (items.size() == 2) {
             // no comma if we just have two items.
             // one item will work with the below code
-            return String.join(" ve ", items);
+            return String.join(" en ", items);
         }
         // if we have more than two, join all but the very last item with a comma
         String penultimate = items.stream()
                 .limit(items.size() - 1)
-                .collect(Collectors.joining(","));
+                .collect(Collectors.joining(", "));
         String ultimate = items.get(items.size() - 1);
-        return penultimate + " ve " + ultimate;
+        return penultimate + " en " + ultimate;
     }
 
     @Override
@@ -63,17 +63,17 @@ public class PpktPhenotypicfeatureTurkish implements PpktPhenotypicFeatureGenera
         List<String> observedLabels = getTranslations(observedTerms);
         List<String> excludedLabels = getTranslations(excludedTerms);
         if (observedLabels.isEmpty() && excludedLabels.isEmpty()) {
-            return "fenotipik anormallik yok"; // should never happen, actually!
+            return "zonder fenotypische abnormaliteiten"; // should never happen, actually!
         } else if (excludedLabels.isEmpty()) {
             return getCommaList(observedLabels) + ". ";
         } else if (observedLabels.isEmpty()) {
             if (excludedLabels.size() > 1) {
-                return String.format("%s dışlandı.", getCommaList(excludedLabels));
+                return String.format("%s waren uitgesloten.", getCommaList(excludedLabels));
             } else {
-                return String.format("%s dışlandı.",excludedLabels.getFirst());
+                return String.format("%s was uitgesloten.",excludedLabels.getFirst());
             }
         } else {
-            String exclusion = String.format("Buna karşın  %s %s dışlandı.", excludedLabels.size()>1? "wurden":"wurde", getCommaList(excludedLabels));
+            String exclusion = String.format("%s %s echter uitgesloten.", getCommaList(excludedLabels), excludedLabels.size()>1? "waren":"was");
             return getCommaList(observedLabels) + ". " +  exclusion;
         }
     }
@@ -87,23 +87,23 @@ public class PpktPhenotypicfeatureTurkish implements PpktPhenotypicFeatureGenera
     public String featuresAtEncounter(String personString, String ageString, List<OntologyTerm> ontologyTerms) {
         List<OntologyTerm> observed = getObservedFeatures(ontologyTerms);
         List<OntologyTerm> excluded = getExcludedFeatures(ontologyTerms);
-        List<String> observedGerman = getTranslations(observed);
-        List<String> excludedGerman = getTranslations(excluded);
-        var observedStr = getCommaList(observedGerman);
-        var excludedStr = getCommaList(excludedGerman);
+        List<String> observeddutch = getTranslations(observed);
+        List<String> excludeddutch = getTranslations(excluded);
+        var observedStr = getCommaList(observeddutch);
+        var excludedStr = getCommaList(excludeddutch);
         if (!observed.isEmpty() && ! excluded.isEmpty()) {
-            return String.format("%s %s şu belirtilerle başvurdu: %s. Buna karşın %s dışlandı: %s.",
+            return String.format("%s presenteerde %s met de volgende symptomen: %s. In tegenstelling daartegen %s uitgesloten: %s.",
                     ageString,
                     personString,
                     observedStr,
-                    excluded.size()>1? "şu belirtiler":"şu belirti",
+                    excluded.size()>1? "waren de volgende symptomen":"was het volgende symptoom",
                     excludedStr);
         } else if (!observed.isEmpty()) {
-            return String.format("%s %s şu belirtilerle başvurdu: %s.", ageString, personString,  observedStr);
+            return String.format("%s presenteerde %s met de volgende symptomen: %s.", ageString, personString,  observedStr);
         } else if (!excluded.isEmpty()) {
-            return String.format("%s %s dışlandı: %s.",
+            return String.format("%s %s de volgende symptomen uitgesloten: %s.",
                     ageString,
-                    excluded.size()>1? "şu belirtiler":"şu belirti", excludedStr);
+                    excluded.size()>1? "waren":"was", excludedStr);
         } else {
             throw new PhenolRuntimeException("No features found for time point " + ageString); // should never happen
         }
@@ -113,27 +113,28 @@ public class PpktPhenotypicfeatureTurkish implements PpktPhenotypicFeatureGenera
     public String featuresAtOnset(String personString, List<OntologyTerm> ontologyTerms) {
         List<OntologyTerm> observed = getObservedFeatures(ontologyTerms);
         List<OntologyTerm> excluded = getExcludedFeatures(ontologyTerms);
-        List<String> observedGerman = getTranslations(observed);
-        List<String> excludedGerman = getTranslations(excluded);
-        var observedStr = getCommaList(observedGerman);
-        var excludedStr = getCommaList(excludedGerman);
+        List<String> observeddutch = getTranslations(observed);
+        List<String> excludeddutch = getTranslations(excluded);
+        var observedStr = getCommaList(observeddutch);
+        var excludedStr = getCommaList(excludeddutch);
 
-        if (!observed.isEmpty() && !excluded.isEmpty()) {
-            return String.format("%s şu belirtilerle ortaya çıktı: %s. Buna karşın %s dışlandı: %s.",
+        if (!observed.isEmpty() && ! excluded.isEmpty()) {
+            return String.format("%s presenteerde met de volgende symptomen: %s. In tegenstelling daartegen %s uitgesloten: %s.",
                     personString,
                     observedStr,
-                    excluded.size() > 1 ? "şu belirtiler" : "şu belirti",
+                    excluded.size()>1? "waren de volgende symptomen":"was het volgende symptoom",
                     excludedStr);
         } else if (!observed.isEmpty()) {
-            return String.format("%s şu belirtilerle ortaya çıktı: %s.", personString, observedStr);
+            return String.format("%s presenteerde met %s: %s.", personString,
+                    observed.size()>1? "de volgende symptomen":"het volgende symptoom", observedStr);
         } else if (!excluded.isEmpty()) {
-            return String.format("Hastalık başlangıcında %s dışlandı: %s.",
-                    excluded.size() > 1 ? "şu belirtiler" : "şu belirti", excludedStr);
+            return String.format("Bij het begin van de ziekte %s uitgesloten: %s.",
+                    excluded.size()>1? "waren de volgende symptomen":"was het volgende symptoom", excludedStr);
         } else {
-            return "Hastalık başlangıcında açıkça belirtilmiş fenotipik anormallik yok.";
+            return "Geen fenotypische abnormaliteiten waren bij het begin van de ziekte vastgesteld.";
         }
     }
+
+
+
 }
-
-
-

@@ -1,0 +1,21 @@
+[source]
+pmid = PMID:28392951
+title = Three Novel Mutations in the NPHS1 Gene in Vietnamese Patients with Congenital Nephrotic Syndrome
+[diagnosis]
+disease_id = OMIM:256300
+disease_label = Nephrotic syndrome, type 1
+[text]
+Patient 1
+A 40-day-old boy was admitted in the Department of Pediatrics,
+Vietnam National Hospital of Pediatrics. He was a full-term
+normal delivery with a birth weight of 2.8 kg.
+The weight of the placenta was unknown. The biochemical indices
+of the blood serum revealed 27.2 g/L serum total protein
+(normal is > 56 g/L), 8.84 g/L albumin (normal is > 25 g/L),
+and 10.9 mM/L cholesterol. The biochemical indices of the urine
+revealed 6,100 mg/L protein (normal is < 200 mg/L) and
+8,918 mg/L protein/creatinine (normal is < 300 mg/L).
+Patient had a whole-body edema, multimembrane effusion,
+severe pneumonia, severe decrease blood protein and plasma albumin,
+and high levels of protein in urine, recurrent many times.
+

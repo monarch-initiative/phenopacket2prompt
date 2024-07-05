@@ -15,7 +15,7 @@ Teşhislerinizin insan uzmanlarınkine kıyasla nasıl olduğunu görmek için k
 Bu liste uygun olduğunu düşündüğünüz kadar çok tanı içermelidir.
 
 Gerekçenizi açıklamanıza gerek yok, sadece teşhisleri listeleyin.\s
-Bu talimatları size Almanca olarak verdim, ancak cevabınızı yalnızca İngilizce olarak vermenizi rica ediyorum.
+Bu talimatları size Türkçe olarak verdim, ancak cevabınızı yalnızca İngilizce olarak vermenizi rica ediyorum.
 İşte vaka:
 
 """;
