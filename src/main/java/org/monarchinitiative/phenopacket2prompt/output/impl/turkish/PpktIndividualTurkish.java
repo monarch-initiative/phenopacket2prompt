@@ -335,7 +335,7 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         if (isoAge.getYears()>1) {
             components.add(String.format("%d yaş", isoAge.getYears()));
         } else if (isoAge.getYears() == 1) {
-            components.add("bir yıl");
+            components.add("bir yaş");
         }
         if (isoAge.getMonths() > 1) {
             components.add(String.format("%d ay", isoAge.getMonths()));
