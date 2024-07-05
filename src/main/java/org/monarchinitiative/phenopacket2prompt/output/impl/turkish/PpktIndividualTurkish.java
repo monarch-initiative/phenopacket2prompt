@@ -100,7 +100,7 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
     }
 
     private String iso8601onsetDescription(Iso8601Age isoAge) {
-        return String.format("Hastalığın başlangıcı %s yaşında meydana geldi",
+        return String.format("Hastalı %s yaşında başladı",
                 bbGenerator.yearsMonthsDaysOld(isoAge.getYears(), isoAge.getMonths(), isoAge.getDays()));
     }
 
