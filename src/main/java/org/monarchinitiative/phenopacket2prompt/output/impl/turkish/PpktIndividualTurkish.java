@@ -317,7 +317,7 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         if (m == 0) {
             return String.format("%d gün", d);
         } else if (d>0){
-            return String.format("%d ay ve %d gün", m, monthString(m), d, dayString(d));
+            return String.format("%d ay %d gün", m, monthString(m), d, dayString(d));
         } else {
             return String.format("%d ay", m);
         }
