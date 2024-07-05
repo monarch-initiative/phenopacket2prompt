@@ -69,7 +69,7 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
     }
 
     private String hpoOnsetDescription(HpoOnsetAge hpoOnsetTermAge) {
-        return String.format("Hastalığın başlangıcı %s meydana geldi",
+        return String.format("Hastalık %s başladı",
                 nameOfLifeStage(hpoOnsetTermAge));
     }
 
@@ -193,13 +193,13 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
             return String.format("%d yaşında", y);
         } else if (y > 0) {
             if (m > 0) {
-                return String.format("%d %s ve %d %s yaşında", y, "yıl", m, "ay");
+                return String.format("%d %s %d %s yaşında", y, "yıl", m, "ay");
             } else {
                 return String.format("%d yaşında", y);
             }
         }
         if (m > 0) {
-            return String.format("%d %s ve %d %s yaşında", m, "ay", d, "gün");
+            return String.format("%d %s %d %s yaşında", m, "ay", d, "gün");
         } else {
             return String.format("%d gün", d);
         }
