@@ -51,7 +51,7 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
         } else if (components.size() == 1) {
             return components.get(0);
         } else {
-            return String.format("%s ve %slıkken", components.get(0), components.get(1));
+            return String.format("%s %slıkken", components.get(0), components.get(1));
         }
     }
 
@@ -59,7 +59,7 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
     public String yearsMonthsDaysOld(int y, int m, int d) {
         List<String> components = new ArrayList<>();
         if (y > 0) {
-            components.add(String.format("%d yıl", y));
+            components.add(String.format("%d yaş", y));
         }
         if (m > 0) {
             components.add(String.format("%d ay", m));
@@ -72,10 +72,10 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
         } else if (components.size() == 1) {
             return components.get(0);
         } else if (components.size() == 2) {
-            return String.format("%s ve %slıkken", components.get(0), components.get(1));
+            return String.format("%s %slıkken", components.get(0), components.get(1));
         } else {
             // we must have y,m,d
-            return String.format("%s %s ve %slıkken", components.get(0), components.get(1), components.get(2));
+            return String.format("%s %s %slıkken", components.get(0), components.get(1), components.get(2));
         }
     }
 
