@@ -241,7 +241,7 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String probandWasAMale() {
-        return "Proband bir adamdı";
+        return "Proband bir erkekti";
     }
 
     @Override
