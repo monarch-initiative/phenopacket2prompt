@@ -201,7 +201,7 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         if (m > 0) {
             return String.format("%d %s %d %s yaşında", m, "ay", d, "gün");
         } else {
-            return String.format("%d gün", d);
+            return String.format("%d günlükken", d);
         }
     }
 

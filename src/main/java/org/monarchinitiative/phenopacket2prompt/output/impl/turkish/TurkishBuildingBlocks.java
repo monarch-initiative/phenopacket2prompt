@@ -59,13 +59,13 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
     public String yearsMonthsDaysOld(int y, int m, int d) {
         List<String> components = new ArrayList<>();
         if (y > 0) {
-            components.add(String.format("%d yaş", y));
+            components.add(String.format("%d yaşında", y));
         }
         if (m > 0) {
-            components.add(String.format("%d ay", m));
+            components.add(String.format("%d aylıkken", m));
         }
         if (d > 0) {
-            components.add(String.format("%d gün", d));
+            components.add(String.format("%d günlükken", d));
         }
         if (components.isEmpty()) {
             return "doğumdan sonraki ilk gün";
