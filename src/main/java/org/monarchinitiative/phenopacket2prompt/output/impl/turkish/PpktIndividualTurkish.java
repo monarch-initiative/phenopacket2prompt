@@ -333,19 +333,19 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         List<String> components = new ArrayList<>();
 
         if (isoAge.getYears()>1) {
-            components.add(String.format("%d yaş", isoAge.getYears()));
+            components.add(String.format("%d yaşinda", isoAge.getYears()));
         } else if (isoAge.getYears() == 1) {
-            components.add("bir yaş");
+            components.add("bir yaşinda");
         }
         if (isoAge.getMonths() > 1) {
-            components.add(String.format("%d ay", isoAge.getMonths()));
+            components.add(String.format("%d aylıkken", isoAge.getMonths()));
         } else if (isoAge.getMonths() == 1) {
-            components.add("bir ay");
+            components.add("bir aylıkken");
         }
         if (isoAge.getDays()>1) {
-            components.add(String.format("%d gün", isoAge.getDays()));
+            components.add(String.format("%d günlükken", isoAge.getDays()));
         } else if (isoAge.getDays()==1) {
-            components.add("bir gün");
+            components.add("bir günlükken");
         }
         if (components.isEmpty()) {
             return "doğumda";
