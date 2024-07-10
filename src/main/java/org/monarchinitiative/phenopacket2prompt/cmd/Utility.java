@@ -161,8 +161,7 @@ public class Utility {
             } catch (Exception e) {
                 String errmsg = String.format("[ERROR] Could not process %s: %s\n", promptFileName, e.getMessage());
                 System.err.println(errmsg);
-                throw new PhenolRuntimeException(errmsg);
-                //e.printStackTrace();
+                LOGGER.error(errmsg);
             }
         }
 
