@@ -98,7 +98,7 @@ public class TestDriveCommand implements Callable<Integer> {
         excludedSecondTimePoint.put(TermId.of("HP:0002664"), "Neoplasm");
     }
 
-    private PhenotypicFeature generatePF(TermId tid, String label, TimeElement telem, boolean excluded) {
+    private static PhenotypicFeature generatePF(TermId tid, String label, TimeElement telem, boolean excluded) {
         PhenotypicFeatureBuilder builder = PhenotypicFeatureBuilder.builder(tid.getValue(), label);
         if (telem != null) {
             builder.onset(telem);
@@ -109,11 +109,11 @@ public class TestDriveCommand implements Callable<Integer> {
         return builder.build();
     }
 
-    private PhenotypicFeature generatePF(TermId tid, String label, TimeElement telem) {
+    private static PhenotypicFeature generatePF(TermId tid, String label, TimeElement telem) {
        return generatePF(tid, label, telem, false);
     }
 
-    private PhenotypicFeature generatePF(TermId tid, String label) {
+    private static PhenotypicFeature generatePF(TermId tid, String label) {
         return generatePF(tid, label, null);
     }
 
@@ -153,15 +153,14 @@ public class TestDriveCommand implements Callable<Integer> {
     private final static MetaData metadata = MetaDataBuilder.builder("curator").build();
 
 
-    private final List<PpktIndividual> ppktIndividuals;
 
 
-    private boolean randomChoice(double t) {
+    private static boolean randomChoice(double t) {
         double randomValue = RANDOM.nextDouble(); // returns double between 0 and 1
         return randomValue < t;
     }
 
-    private TimeElement getSecondObservedTime(TimeElement onset1) {
+    private static TimeElement getSecondObservedTime(TimeElement onset1) {
         if (onset1.hasOntologyClass()) {
             TermId firstHpo = TermId.of(onset1.getOntologyClass().getId());
             OntologyTerm second = getNextHpoOnset(firstHpo);
@@ -202,9 +201,12 @@ public class TestDriveCommand implements Callable<Integer> {
     }
 
 
-
-
-    private OntologyTerm getNextHpoOnset(TermId firstHpo) {
+    /**
+     * Given an HPO Onset, return the next available onset at an older age.
+     * @param firstHpo current age of onset, e.g., at initial presentation
+     * @return another age of onset, at a secondary onset of an HPO term
+     */
+    private static OntologyTerm getNextHpoOnset(TermId firstHpo) {
         int N = orderedHpoOnsets.size();
         for (int i=0; i<N; i++) {
             if (orderedHpoOnsets.get(i).getTid().equals(firstHpo)) {
@@ -217,10 +219,15 @@ public class TestDriveCommand implements Callable<Integer> {
     }
 
 
-    public TestDriveCommand() {
-        ppktIndividuals = new ArrayList<>();
+    /**
+     * This method creates "random" phenopackets with various combinations of age, sex, observed and excluded terms,
+     * and time points.
+     * @return List of PpktIndividuals
+     */
+    private static List<PpktIndividual> getPpktIndividuals() {
+        List<PpktIndividual> ppktIndividuals = new ArrayList<>();
         for (Disease d : diseaseList) {
-            for (Individual i: individualList) {
+            for (Individual i : individualList) {
                 String randomId = generateRandomPassword(20);
                 PhenopacketBuilder builder = PhenopacketBuilder.create(randomId, metadata);
                 builder.individual(i).addDisease(d);
@@ -231,15 +238,15 @@ public class TestDriveCommand implements Callable<Integer> {
                 Collections.shuffle(tidList);
                 int randomIndex = RANDOM.nextInt(tidList.size());
                 if (randomChoice(0.8)) {
-                    for (int ii=0; ii<randomIndex;ii++) {
+                    for (int ii = 0; ii < randomIndex; ii++) {
                         TermId tid = tidList.get(ii);
                         String label = observedMap.get(tid);
                         PhenotypicFeature pf = generatePF(tid, label, onst);
                         builder.addPhenotypicFeature(pf);
                     }
                 } else {
-                        // no onset
-                    for (int ii=0; ii<randomIndex;ii++) {
+                    // no onset
+                    for (int ii = 0; ii < randomIndex; ii++) {
                         TermId tid = tidList.get(ii);
                         String label = observedMap.get(tid);
                         PhenotypicFeature pf = generatePF(tid, label);
@@ -250,8 +257,8 @@ public class TestDriveCommand implements Callable<Integer> {
                 List<TermId> tidList2 = new ArrayList<>(observedSecondTimePoint.keySet());
                 Collections.shuffle(tidList2);
                 if (randomChoice(0.6)) {
-                     randomIndex = RANDOM.nextInt(observedSecondTimePoint.size());
-                    for (int ii=0; ii<randomIndex;ii++) {
+                    randomIndex = RANDOM.nextInt(observedSecondTimePoint.size());
+                    for (int ii = 0; ii < randomIndex; ii++) {
                         TermId tid = tidList2.get(ii);
                         String label = observedSecondTimePoint.get(tid);
                         PhenotypicFeature pf = generatePF(tid, label, secondTime);
@@ -259,11 +266,11 @@ public class TestDriveCommand implements Callable<Integer> {
                     }
                 }
                 // Add excluded terms at second time point
-                 tidList2 = new ArrayList<>(excludedSecondTimePoint.keySet());
+                tidList2 = new ArrayList<>(excludedSecondTimePoint.keySet());
                 Collections.shuffle(tidList2);
                 if (randomChoice(0.9)) {
                     randomIndex = RANDOM.nextInt(excludedSecondTimePoint.size());
-                    for (int ii=0; ii<randomIndex;ii++) {
+                    for (int ii = 0; ii < randomIndex; ii++) {
                         TermId tid = tidList2.get(ii);
                         String label = excludedSecondTimePoint.get(tid);
                         PhenotypicFeature pf = generatePF(tid, label, secondTime);
@@ -274,7 +281,7 @@ public class TestDriveCommand implements Callable<Integer> {
                 Collections.shuffle(tidList);
                 randomIndex = RANDOM.nextInt(tidList.size());
                 if (randomChoice(0.8)) {
-                    for (int ii=0; ii<randomIndex;ii++) {
+                    for (int ii = 0; ii < randomIndex; ii++) {
                         TermId tid = tidList.get(ii);
                         String label = excludedMap.get(tid);
                         PhenotypicFeature pf = generatePF(tid, label, onst, true);
@@ -282,7 +289,7 @@ public class TestDriveCommand implements Callable<Integer> {
                     }
                 } else {
                     // no onset
-                    for (int ii=0; ii<randomIndex;ii++) {
+                    for (int ii = 0; ii < randomIndex; ii++) {
                         TermId tid = tidList.get(ii);
                         String label = excludedMap.get(tid);
                         PhenotypicFeature pf = generatePF(tid, label, null, true);
@@ -293,18 +300,13 @@ public class TestDriveCommand implements Callable<Integer> {
                 PpktIndividual individual = new PpktIndividual(ppkt);
                 ppktIndividuals.add(individual);
             }
-            System.out.printf("[INFO] Added %d simulated individuals.\n", ppktIndividuals.size());
         }
-
-    }
-
-
-    public List<PpktIndividual> getPpktIndividuals() {
+        System.out.printf("[INFO] Added %d simulated individuals.\n", ppktIndividuals.size());
         return ppktIndividuals;
     }
 
     @Override
-    public Integer call() throws Exception {
+    public Integer call() {
         java.io.File hpJsonFile = new java.io.File(hpoJsonPath);
         boolean useExactMatching = true;
         if (! hpJsonFile.isFile()) {
@@ -353,7 +355,7 @@ public class TestDriveCommand implements Callable<Integer> {
         sb.append("Turkish\n");
         sb.append(HEADER_LINE);
         sb.append(trText);
-        System.out.println(sb.toString());
+        System.out.println(sb);
         System.out.println("Wrote to " + outfileName);
         try {
             Files.write(Paths.get(outfileName), sb.toString().getBytes());
