@@ -1,0 +1,40 @@
+[source]
+pmid = PMID:11952552
+title = Genetic analysis of a severe case of Netherton syndrome and application for prenatal testing
+[diagnosis]
+disease_id = OMIM:256500
+disease_label = Netherton syndrome
+[text]
+The patient was the first child of consanguineous (first
+degree cousins), clinically normal parents of Turkish
+ethnic origin. The baby was born in the 36th week of
+pregnancy with normal weight according to age.
+Family history did not show any previous occurrence
+of the disorder.
+The patient presented with erythroderma accompanied by silvery white, exfoliative scaling, accentuated in
+the area of the elbows, knees, cheeks and scalp. Mucous
+membranes and nail plates were not affected.
+There was no indication of an ectropium or eclabium.
+Histological examination of a biopsy taken from the
+lateral thigh showed an acanthotic, psoriasiform epidermis covered by a thin parakeratotic stratum corneum.
+Absence of the stratum granulosum and spongiosis of
+the basal and suprabasal layers of the epidermis were
+evident. The upper papillary dermis showed a mild
+perivascular lymphohistiocytic infiltrate (Fig. 2).
+Light microscopy examination identified the characteristic hair shaft abnormality of NS, i.e. trichorrhexis
+invaginata (bamboo nodes) defined by swelling and
+invagination of the hair shaft. In addition multiple
+sections with torsion twists (pili torti) were observed.
+Ultrastructural examination by electron microscopy
+revealed pronounced suppression of terminal epidermal
+differentiation indicating a severe functional disturbance
+of the epidermal barrier. The horn lamellae consisted of
+incompletely cornified and parakeratotic cells containing multiple lipid droplets and residues of cellular
+components. The upper layers of vital cells were barely
+flattened and showed few structural components. Only a
+few tonofilaments and only isolated keratohyalin granules were present that were not able to spread on the
+scarce amount of tonofilaments (Fig. 4a). In most
+regions there were only two to three exfoliating regressive horn cells and no keratohyalin at all (Fig. 4b).
+Lamellar bodies were, in some places, decreased in
+number and in general were poorly structured. In the
+lower epidermal layers occasional exocytosis of lymphocytes could be observed (not shown).

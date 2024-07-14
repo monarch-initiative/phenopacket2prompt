@@ -1,0 +1,18 @@
+[source]
+pmid = PMID:37459438
+title = SLC4A10 mutation causes a neurological disorder associated with impaired GABAergic transmission
+[diagnosis]
+disease_id = OMIM:620746
+disease_label = Neurodevelopmental disorder with hypotonia and characteristic brain abnormalities
+[text]
+Family 2, II:1
+This boy was the only child born to unrelated Austrian parents. He was severely hypotonic in the neonatal
+period with poor suck, resulting in faltering growth and delayed acquisition of motor milestones, rolling
+first at three-and-a-half years. He has mild craniofacial dysmorphism with an elongated face, prominent
+metopic ridge, tent-shaped mouth with long philtrum, low-set large ears and tapering fingers. Skeletal
+anomalies include bilateral coxa vara anteverta and left developmental dysplasia of the hip requiring
+surgical remediation. At age four years and eight months he has severe global developmental delay
+(virtually non-ambulatory, babbles only, no speech), severe central and peripheral hypotonia, severe failure
+to thrive but no microcephaly. MRI neuroimaging at 10 months of age, reported by the local radiologist,
+showed slit lateral ventricles (first seen on neonatal cranial ultrasound) with generalized cerebral volume
+loss and a hypoplastic corpus callosum (Fig. 2). Myelination appears appropriate for age.

@@ -1,0 +1,25 @@
+[source]
+pmid = PMID:26734137
+title = Case report: vitamin D‐dependent rickets type 1 caused by a novel CYP27B1 mutation
+[diagnosis]
+disease_id = OMIM:264700
+disease_label = Vitamin D-dependent rickets, type I
+[text]
+The male patient was born after an uneventful pregnancy by spontaneous delivery.
+The parents are nonconsanguineous healthy Caucasians, and the patient has two elder and one younger healthy siblings.
+Birth weight and length were 3430 g and 51 cm, respectively. He was fully breastfed the first 6 months and partly breastfed
+until age 10.5 months. Growth and development milestones were normal including the ability to sit at 6 months, crawl, and stand up at 8 months.
+At the age of 8 months, growth and weight stagnated, and he lost the ability to crawl and stand. There was no history of seizures.
+The first clinical examination at 18 months revealed height −3 SD and weight −3.5 SD. Craniofacial features were not clearly dysmorphic,
+but a triangular mouth and low ears were noted. Musculoskeletal examination showed a generally atrophic body with muscle weakness
+and reduced subcutaneous fat, and signs of rickets with rachitic rosary, lack of tooth eruption, palpable widening of distal radius,
+and double malleoli. Biochemical tests (normal intervals in parenthesis) showed markedly decreased ionized serum calcium 1.08 mmol/L (1.20–1.35 mmol/L),
+serum phosphate 0.72 mmol/L (1.20–1.80 mmol/L) and 1,25(OH)2D 24 pmol/L (adults 71–177pmol/L),
+normal serum chloride 107 mmol/L (102–112 mmol/L) and increased serum alkaline phosphatase 14020U/L (55–515U/L), PTH 57.0 pmol/L (1.1–6.9 pmol/L),
+and serum 25‐(OH)D 96 nmol/L (adults: 37–120 pmol/L with supplements and 10–66 without).
+Twenty‐four‐hour urine showed signs of phosphate wasting with tubular reabsorption of 65% (normally above 80%), low calcium excretion, ketoaciduria,
+and hyperaminoaciduria. There was a tendency toward metabolic acidosis with negative base excess of −5. According to the medical record,
+radiologic findings included general rough halisteresis of all bones with severe cupping of metaphyses, poorly defined bone nuclei,
+and subperiosteal bleedings. There were fractures of both ulna and tibia with visible fracture lines and callus.
+Chest X‐ray was described with rachitic rosary, and otherwise normal heart and lung findings.
+At 18 years of age, the patient reported having experienced bone pain and general malaise.

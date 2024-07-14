@@ -1,0 +1,28 @@
+[source]
+pmid = PMID:9012405
+title = A mutation in the XPB/ERCC3 DNA repair transcription gene, associated with trichothiodystrophy
+[diagnosis]
+disease_id = OMIM:616390
+disease_label = Trichothiodystrophy 2, photosensitive
+[text]
+The index case (TTD6VI), a male born at term from
+first-cousin marriage (birth wt 3,110 g), was examined
+first at birth, when he was found to have congenital
+ichthyosis (collodion baby). The skin condition improved within 3 wk. leaving a mild ichthyosis of the
+trunk. TTD6VI was clinically evaluated regularly during
+his 1st year and then at the ages of 2, 4, 6, and 10 years.
+An electron-microscopy study showed the accumulation
+of intracellular lipid mortar and an increased number in
+the stratum corneum, corresponding to an increase in
+lamellar bodies in the stratum granulosum (Taieb et al.
+1987). A diagnosis was suspected at 3 years of
+age, on the basis of the following clinical manifestations:
+mild ichthyosis of the trunk, with involvement of scalp,
+palms, and soles; mild photosensitivity, noted during the
+summer of 1988; lack of second upper incisor; and hair
+growing normally but coarse and with a tiger-tail pattern under polarized light (van Neste et al. 1989).
+ Other findings included normal intelligence
+and lower-limit growth (-2 SD), normal neurological
+examination, salt-and-pepper appearance of ophthalmic
+fundi, normal bone X-ray survey, negative phototesting
+(followed, however, by a finding of massive desquamation), and elevated (350 IU/liter) IgE levels.

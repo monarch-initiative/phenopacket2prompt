@@ -1,0 +1,27 @@
+[source]
+pmid = PMID:36420349
+title = A Case of Autosomal Recessive Intellectual Developmental Disorder Type 5 Presenting with Epilepsy
+[diagnosis]
+disease_id = OMIM:611091
+disease_label = Intellectual developmental disorder, autosomal recessive 5
+[text]
+This patient was born full-term from nonconsanguineous Nepalese parents in Nepal. The mother was a gravida 1 para 1 (G1P1)
+female with an unremarkable pregnancy. The patient’s postnatal course was unremarkable. Developmental delays were first
+appreciated around 1 year of age. He sat up on his own at 12 months, started combat crawling at 2 years, and walked at 3 years with an ataxic gait.
+He moved to the USA at 5 years of age. He has never been verbal and his intelligence quotient (IQ) was found to be approximately 40.
+Based on these findings, he was diagnosed with significant intellectual disability and autism. He was evaluated by an outside geneticist at
+8 years of age with concern for dysmorphic features, significant microcephaly, and sensorineural and conductive hearing loss.
+On exam, inverted nipples and shawl scrotum were observed.
+At 11 years of age, he underwent an electroencephalogram (EEG) at a different facility due to concern about night-time agitation and staring episodes.
+Reportedly EEG was abnormal and showed diffuse slowing along with focal spike and slow wave discharges without any electrographic seizures.
+Antiseizure medications were not started.
+At 14 years of age, he presented with a new type of seizure characterized by impaired consciousness, drooling, eye deviation, and mouth twitching.
+The left side of his body would also hunch over. Each episode would last for 15–20 minutes and would often be followed by sleepiness. These episodes
+occurred almost on a daily basis. He underwent 24 hours ambulatory EEG and interictal findings showed frequent generalized 1–2.5 Hz spike and slow wave
+discharges (Figure 1) and sleep-activated focal epileptiform discharges without any electrographic seizures. He was started on Valproic acid.
+The dose was slowly titrated up to 750 mg twice daily (30 mg/kg/day) but his seizures remained uncontrolled. As a result, Clobazam was added after 6 months.
+Currently, he is on Clobazam 10 mg twice daily along with Valproic acid and this has been effective so far.
+At baseline, the patient is nonverbal, cognitively delayed, and does not follow commands. He has increased tone throughout,
+with strength against gravity in all extremities. Deep tendon reflexes are 2+ throughout without clonus. He ambulates mainly with a wheelchair,
+although he can walk short distances with assistance and he has a wide-based spastic gait. He has a gastrostomy tube for feeding as he is unable to
+eat anything by mouth. He has not been toilet trained and he wears diapers.

@@ -1,0 +1,28 @@
+[source]
+pmid = PMID:36595822
+title = C.487C>T mutation in PAX4 gene causes MODY9: A case report and literature review
+[diagnosis]
+disease_id = OMIM:612225
+disease_label = Maturity-onset diabetes of the young, type IX
+[text]
+The proband was male, aged 19 months. He was delivered at the 39th gestational week by cesarean section. 
+Birth weight and length were 3.35 kg and 51 cm, respectively. The neuromotor development was normal from birth to date.
+The patient had no family history of diabetes.
+More than half a month before admission, the patient developed unprovoked polyuria and polydipsia.
+2 days before admission, the child suffered from severe wheezing with Kussmaul breathing and poor general condition.
+His random blood glucose levels were 40 mmol/L, and his urine ketone body was positive. On arrival at the emergency unit,
+the intravenous blood glucose level was 20.74 mmol/L, and blood gas analysis resulted in pH 7.07, PCO2 17.5 mm Hg, BE – 23.5 mmol/L,
+then the patient was admitted to the endocrinology department for further treatment.
+2.1. Physical examination on admission
+Patient’s temperature was 37℃, respiration rate was 37 times/min, pulse was 150 times/min, and blood pressure was 116/62 mm Hg.
+The patient’s weight was 12 kg with normal physical development. He was in poor general condition, with a decreased level of consciousness,
+no tears when crying, an anemic appearance, Kussmaul respiration, and a fruity breath odor. His lips and skin were dry with slightly
+low skin elasticity. The right upper lung presented with moist carackles. The upper extremities were cool to the elbows,
+while the lower extremities were cool to the knees, with a dilated blood vessel pattern on the limbs and a CRT of 3 seconds.
+2.2. Laboratory and imaging results on admission.
+The blood sugar was 21.69 mmol/L (3.9–6.1 mmol/L), and glycosylated hemoglobin was 11.1% (4–6%). At the 0th minute, the insulin
+level was 0.56 μIU/mL (6.0–27.0 μIU/mL), C-peptide level was 0.09 ng/mL (1.1–5.0 ng/mL).
+Anti-islet cell and anti-glutamate decarboxylase antibodies were negative. Blood gas analysis repeated: pH 7.06, PCO2 15mm Hg, PO2 74 mm Hg.
+Urine routine analyses showed that the glucose was 4+, ketone was 3+, and the protein was 1+. Cortisol and thyroid function tests are normal.
+Chest X-ray showed slightly more texture and fuzziness in the lungs with a patchy shadow on the right upper lung.
+Abdominal ultrasound showed no abnormalities.
