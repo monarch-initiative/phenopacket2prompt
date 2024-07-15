@@ -1,0 +1,35 @@
+[source]
+pmid = PMID:25678555
+title = Biallelic mutations in CAD, impair de novo pyrimidine biosynthesis and decrease glycosylation precursors
+[diagnosis]
+disease_id = OMIM:616457
+disease_label = Developmental and epileptic encephalopathy 50
+[text]
+UDP4003 is the younger of two male siblings born to non-consanguineous parents and was admitted to
+the NIH Clinical Center at 4 years of age; his parents gave written, informed consent.
+Gestation was normal and delivery occurred at 38 weeks via C-section due to a history of placenta accrete.
+Birth weight was 3402 g (25–50%); birth length 54.9 cm (75%); OFC 35.6 cm (25%);
+APGAR scores were 8 and 9. Diarrhea and poor weight gain led to a bowel biopsy at age 6 months that
+revealed pan-disaccharidase deficiency, treated with probiotics and digestive enzymes.
+Renal tubular acidosis was diagnosed at age 1 year and treated with citrate; it resolved at 21 months.
+Seizures occurred at 17 months of age.
+When first seen at the NIH, his height was 100.2 cm (25%), weight 14.2 kg (10%), OFC 49 cm (10%).
+Delays in expressive language and fine motor development were recognized; mild hypotonia and
+a slightly wide-based gait had been noted at 17 months of age, at which time an MRI/MRS was normal.
+Laboratory studies included a peripheral blood smear showing anisopoikilocytosis, acanthocytes and
+schistocytes; similar findings were present at 12 months of age. Fanconi and Shwachman-Diamond
+Syndromes (MIM-260400) were excluded. The bone marrow was dyserythropoietic,
+resembling Congenital Dyserthythropoietic Anemia Type II (MIM-224100) (Fig. 1B),
+but direct gene sequencing excluded mutations in SEC23B (MIM-610512).
+RBC enzymology was normal, but the RBC proteins RhAG and to a lesser extent Band-3 migrated abnormally
+on polyacrylamide gel electrophoresis, suggesting abnormal glycosylation (Fig. 1C).
+Urine amino and organic acids, plasma 6zs (specifically no β-alanine abnormalities),
+uric acid, fasting lipid profile, lactate, pyruvate, acylcarnitine, free and total carnitine,
+quantitative analysis of immunoglobulins, vitamin D, vitamin E and
+cerebrospinal fluid examination were normal.
+Vitamin A was moderately decreased at 22 mcg/dl (normal, 36–120).
+Ammonia levels were 69 and 47 mg/dl (normal, 11–35).
+Urine purines and pyrimidines (including uracil, uric acid, hypoxanthine or xanthine) were normal;
+previous urine purine testing for xanthine, inosine, guanosine, adenine, adenosine,
+deoxyadenosine and hypoxanthine showed only a mild elevation of guanosine.
+Urine orotic acid was normal at the NIH; a moderate decrease had been previously observed on one occasion.

@@ -1,0 +1,31 @@
+[source]
+pmid = PMID:31997314
+title = Report of the first patient with a homozygous OTUD7A variant responsible for epileptic encephalopathy and related proteasome dysfunction
+[diagnosis]
+disease_id = OMIM:OTUD7A
+disease_label = Neurodevelopmental disorder with hypotonia and seizures	620790	AR	3
+[text]
+The proband was born at term after an uneventful pregnancy and delivery. His growth parameters were normal. 
+He was the second male child of distant consanguineous Portuguese parents, both presenting with a learning disability. 
+They had completed middle school but did not obtain a high school diploma. His 5-year-old brother was attending a regular 
+school and presented nonspecific learning difficulties. However, his formal evaluation could not be performed because of the family context. 
+Otherwise, the family history was unremarkable.
+The initial evaluation of the patient occurred with the development of abnormal movements at 4 months described by the parents as loss of head control
+for few seconds in association with hypotonia. However, brain magnetic resonance imaging (MRI), performed at 5 months, was normal. Head control was acquired at 10 months.
+He was able to roll over by age 12 months. At 14 months, the electroencephalogram (EEG) highlighted a typical pattern of infantile spasms with hypsarrythmia (Figure S2A).
+The diagnosis of infantile spasms led to treatment with vigabatrin (VGB) and prednisolone, which resulted in complete control of the spasms 14 days after the initiation of treatment.
+Repeated EEGs showed a continuous sleep and awake abnormal background pattern with frequent, multifocal sharp waves. The corticosteroid therapy was progressively lowered after 1month.
+A follow-up brain MRI at 1year and 3months was performed, corresponding to 1month after the beginning of vigabatrin treatment.
+The imaging revealed unspecific anomalies: T2/FLAIR showed bilateral hyperintensity of the globi pallidi and of the ventroposterolateral nuclei of the thalamus,
+enlarged subarachnoid space, in particular in the frontoparietal region, bilateral sulcal widening of the cerebral hemispheres, enlarged cerebellar interfolial spaces
+and a thin corpus callosum.
+VGB-associated reversible MRI signal changes compatible with those presented by our patient have been described in the literature.
+Proton MR Spectroscopy was normal. Lactic and pyruvic acid were normal in cerebrospinal fluid. Because of the control of the spasms, vigabatrin treatment was stopped at 18 months.
+The follow-up EEG performed 2weeks after VGB withdrawal confirmed that the spasms were completely resolved and the patient was seizure-free.
+On the last exam at 28 months, the parents declared that he had been able to sit without support since the age of 23 months.
+He could not walk but was able to stand for a few seconds. He used three words: papa, maman, Kevin. He did not eat alone, did not point, and did not grasp with his whole hand.
+He was able to wave goodbye and because he had developed a pincer grasp, he was partially able to grab and hold objects and transfer across the midline.
+He also babbled, made eye contact and smiled in response to social stimuli. His weight and head circumference were 12.05kg (−0.5 SD) and 48.5 cm (−2SD), respectively.
+He presented hypotonia. Tendon reflexes were normal, and there were neither Babinski nor Hoffman signs, and no tremors or hypokinesia. He was seizure free until 28 months
+when he started to present atypical absence seizures characterized at the EEG by generalized spike and wave with motor manifestations.
+He was thus initially treated with levetiracetam alone, allowing a significant decrease of seizures, which was subsequently associated with zonisamide allowing to achieve a seizure-free state.

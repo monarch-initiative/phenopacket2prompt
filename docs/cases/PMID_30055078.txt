@@ -1,0 +1,27 @@
+[source]
+pmid = PMID:30055078
+title = A novel MYT1L mutation in a patient with severe early-onset obesity and intellectual disability
+[diagnosis]
+disease_id = OMIM:616521
+disease_label = Intellectual developmental disorder, autosomal dominant 39
+[text]
+The index patient is a 13-year-old boy who was born at 37 weeks of gestation
+to unrelated healthy parents of Finnish descent. Pregnancy and delivery were uncomplicated
+and birth measurements were normal: weight of 3.38 kg (+0.1 SD), length 50 cm (+0.1 SD)
+and OFC 33 cm. Already at 12 months he was overweight with weight 12.2 kg (+2.2 SD) and
+length 77.6 cm (+0.8 SD) (body mass index (BMI) 20.3 kg/m2, BMI Z-score +2.3) and by 2
+years his BMI Z-score had increased to +3.8 (weight +3.5 SD, length +1.1 SD) (Figure 1a).
+Parents reported hyperphagia, food seeking behavior, and impaired satiety. Presently at the
+age of 13.8 years, he is obese with weight 82.1 kg and height 163.1 cm (BMI 31 kg/m2, BMI
+Z-score +2.8), and waist circumference 104.5 cm. His parents have normal
+weight (mother’s BMI 23 kg/m2 and father’s 25 kg/m2). His 9-year-old sister has normal BMI
+(Z score +1.6) and normal development. In addition to severe obesity, his neurological, cognitive and motor development were
+delayed. He presented with delayed speech, clumsiness, problems with balance, and
+strabismus. He was diagnosed with attention deficit and hyperactivity but had no aggressive
+behavior. He did not present with any dysmorphic features. Brain MRI at 4 years was normal
+and showed no hypothalamic or pituitary pathology. An electroencephalography EEG was
+also normal. He attends a special needs school.
+Laboratory investigations during childhood excluded hypothyroidism, hypercortisolism,
+and metabolic abnormalities. Fasting blood concentrations of glucose, insulin, cholesterol,
+and triglycerides were within normal range. Karyotype and screening for Prader-Willi and
+Fragile-X syndromes were normal.
