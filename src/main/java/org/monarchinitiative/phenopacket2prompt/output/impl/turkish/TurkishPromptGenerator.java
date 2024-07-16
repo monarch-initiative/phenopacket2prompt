@@ -61,8 +61,8 @@ public class TurkishPromptGenerator implements PromptGenerator {
     @Override
     public  String getVignetteAtOnset(PpktIndividual individual){
         String person = switch (individual.getSex()) {
-            case MALE -> "";
-            case FEMALE -> "";
+            case MALE -> "Etkilenen kişi";
+            case FEMALE -> "Etkilenen kişi";
             default -> "Etkilenen kişi";
         };
         return this.ppktPhenotypicFeatureGenerator.featuresAtOnset(person, individual.getPhenotypicFeaturesAtOnset());
