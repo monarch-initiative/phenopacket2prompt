@@ -69,7 +69,7 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
     }
 
     private String hpoOnsetDescription(HpoOnsetAge hpoOnsetTermAge) {
-        return String.format("Hastalığın başlangıcı %s meydana geldi",
+        return String.format("Hastalık %s başladı",
                 nameOfLifeStage(hpoOnsetTermAge));
     }
 
@@ -100,7 +100,7 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
     }
 
     private String iso8601onsetDescription(Iso8601Age isoAge) {
-        return String.format("Hastalığın başlangıcı %s yaşında meydana geldi",
+        return String.format("Hastalık %s başladı",
                 bbGenerator.yearsMonthsDaysOld(isoAge.getYears(), isoAge.getMonths(), isoAge.getDays()));
     }
 
@@ -193,15 +193,15 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
             return String.format("%d yaşında", y);
         } else if (y > 0) {
             if (m > 0) {
-                return String.format("%d %s ve %d %s yaşında", y, "yıl", m, "ay");
+                return String.format("%d %s %d %s yaşında", y, "yıl", m, "ay");
             } else {
                 return String.format("%d yaşında", y);
             }
         }
         if (m > 0) {
-            return String.format("%d %s ve %d %s yaşında", m, "ay", d, "gün");
+            return String.format("%d %s %d %s yaşında", m, "ay", d, "gün");
         } else {
-            return String.format("%d gün", d);
+            return String.format("%d günlükken", d);
         }
     }
 
@@ -254,13 +254,13 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         int d = iso8601Age.getDays();
         List<String> components = new ArrayList<>();
         if (y > 0) {
-            components.add(String.format("%d yıl", y));
+            components.add(String.format("%d yaşinda", y));
         }
         if (m > 0) {
-            components.add(String.format("%d ay", m));
+            components.add(String.format("%d aylıkken", m));
         }
         if (d > 0) {
-            components.add(String.format("%d gün", d));
+            components.add(String.format("%d günlükken", d));
         }
         String ymd;
         if (components.isEmpty()) {
@@ -288,19 +288,19 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
             if (iso8601Age.getMonths() == 0) {
                 return String.format("%d yaşında bir erkek çocuk", y);
             } else {
-                return String.format("%d %s yıl, %d %s ay yaşında bir erkek çocuk", y, y>1?"Jahre":"Jahr", m, m>1?"Monate":"Monat");
+                return String.format("%d %s yaş, %d %s aylıkken bir erkek çocuk", y, y>1?"Jahre":"Jahr", m, m>1?"Monate":"Monat");
             }
         } else if (psex.equals(PhenopacketSex.FEMALE)) {
             if (iso8601Age.getMonths() == 0) {
                 return String.format("%d yaşında bir kız çocuk", y);
             } else {
-                return String.format("%d %s yıl, %d %s ay yaşında bir kız çocuk", y, y>1?"Jahre":"Jahr", m, m>1?"Monate":"Monat");
+                return String.format("%d %s yaş, %d %s aylıkken bir kız çocuk", y, y>1?"Jahre":"Jahr", m, m>1?"Monate":"Monat");
             }
         }
         if (iso8601Age.getMonths() == 0) {
             return String.format("%d yaşında bir çocuk", y);
         } else {
-            return String.format("%d yıl, %d ay yaşında bir çocuk", y, m);        }
+            return String.format("%d yaş, %d aylıkken bir çocuk", y, m);        }
     }
 
     private String monthString(int m) {
@@ -315,11 +315,11 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         int m = iso8601Age.getMonths();
         int d = iso8601Age.getDays();
         if (m == 0) {
-            return String.format("%d gün", d);
+            return String.format("%d günlükken", d);
         } else if (d>0){
-            return String.format("%d ay ve %d gün", m, monthString(m), d, dayString(d));
+            return String.format("%d ay %d günlükken", m, monthString(m), d, dayString(d));
         } else {
-            return String.format("%d ay", m);
+            return String.format("%d aylıkken", m);
         }
     }
 
@@ -333,19 +333,19 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         List<String> components = new ArrayList<>();
 
         if (isoAge.getYears()>1) {
-            components.add(String.format("%d yıl", isoAge.getYears()));
+            components.add(String.format("%d yaşinda", isoAge.getYears()));
         } else if (isoAge.getYears() == 1) {
-            components.add("bir yıl");
+            components.add("bir yaşinda");
         }
         if (isoAge.getMonths() > 1) {
-            components.add(String.format("%d ay", isoAge.getMonths()));
+            components.add(String.format("%d aylıkken", isoAge.getMonths()));
         } else if (isoAge.getMonths() == 1) {
-            components.add("bir ay");
+            components.add("bir aylıkken");
         }
         if (isoAge.getDays()>1) {
-            components.add(String.format("%d gün", isoAge.getDays()));
+            components.add(String.format("%d günlükken", isoAge.getDays()));
         } else if (isoAge.getDays()==1) {
-            components.add("bir gün");
+            components.add("bir günlükken");
         }
         if (components.isEmpty()) {
             return "doğumda";
