@@ -190,16 +190,16 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         int d = iso8601Age.getDays();
 
         if (y > 10) {
-            return String.format("%d yaş", y);
+            return String.format("%d yaşında", y);
         } else if (y > 0) {
             if (m > 0) {
-                return String.format("%d %s %d %s yaş", y, "yıl", m, "ay");
+                return String.format("%d %s %d %s yaşında", y, "yıl", m, "ay");
             } else {
-                return String.format("%d yaş", y);
+                return String.format("%d yaşında", y);
             }
         }
         if (m > 0) {
-            return String.format("%d %s %d %s yaş", m, "ay", d, "gün");
+            return String.format("%d %s %d %s yaşında", m, "ay", d, "gün");
         } else {
             return String.format("%d günlükken", d);
         }
