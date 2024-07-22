@@ -1,0 +1,46 @@
+[source]
+pmid = PMID:33727065
+title = Successful treatment of a novel type I interferonopathy due to a de novo PSMB9 gene mutation with a Janus kinase inhibitor
+[diagnosis]
+disease_id = OMIM:620796
+disease_label = Proteasome-associated autoinflammatory syndrome 6
+[text]
+A 1-month-old boy visited a hospital for evaluation and treatment of skin rashes, fever, pale face due to respiratory failure,
+and cluster seizures. Initial blood tests revealed pancytopenia (white blood cell count at 3.83 × 109/L, hemoglobin at 7.6 g/dL,
+and platelets at 52 × 109/L), elevated levels of liver enzymes (aspartate aminotransferase at 923 IU/L, alanine aminotransferase at 426 IU/L),
+marked elevation of creatine phosphokinase (CPK at 26,839 IU/L), and abnormal coagulation test results, including prothrombin time-international
+normalized ratio at 1.40 seconds, fibrinogen at 105 mg/dL, fibrin degradation products at 29.8 mg/L, D-dimers at 21.0 mg/L, and antithrombin at 33 %.
+Cerebrospinal fluid tests were notable for increased levels of total protein (148.2 mg/dL), normal glucose (45 mg/dL),
+and a normal cell count (11 × 106/L). Acute encephalopathy was suspected; the patient was initially treated with acyclovir,
+cefotaxime, intravenous immunoglobulin, and methylprednisolone pulse therapy. His symptoms improved temporarily, but fever,
+elevation of CPK, and seizures reappeared rapidly.
+Serologic screening results for infectious pathogens and various encephalopathy-associated autoantibodies were uniformly negative.
+Although serum PCR test results for BK virus and JC virus were transiently positive after methylprednisolone pulse therapy,
+we confirmed that viremia test had negative outcomes without any specific antiviral treatment before hematopoietic stem cell transplantation.
+The lymphocyte subset analysis (CD3, CD4, CD8, and CD19 cell counts) revealed mild lymphocytopenia, whereas the lymphocyte
+stimulation tests with PHA and concanavalin A were within the normal limits.
+Head computed tomography revealed bilateral calcification of the basal ganglia (Fig 1, A), which led to the suspicion of a type I interferonopathy.
+Although we could not eliminate the possibility of the effect of viral infection, elevated levels of IFN-α were detected in both serum (36.5 pg/mL)
+and spinal fluid (6.9 pg/mL) (Fig 1, E). A biopsy of the left quadriceps revealed primarily immature muscle fibers that were round and small,
+measuring 7 to 16 microns in diameter. Immunohistochemical staining confirmed the expression of HLA class I molecule and deposition of the
+membrane attack complex on myofibrotic membranes; these results suggested immune-mediated damage to the muscle tissue.
+Chest computed tomography scan revealed mild pulmonary infiltrative shadows bilaterally in the dorsal lung fields and mild cardiomegaly,
+and an echocardiogram revealed severe pulmonary hypertension with tricuspid regurgitation at a peak velocity of 5.18 m/s; the estimated pressure
+gradient between the right ventricle and the right atrium at peak systole was 107 mmHg.
+The pulmonary hypertension was unresponsive to multiple lines of treatment, including epoprostenol sodium, sildenafil citrate,
+milrinone, macitentan, and inhalation of nitric oxide (NO). Venoarterial extracorporeal membranous oxygenation (VA-ECMO) was
+introduced due to progression of right heart failure.
+Under the approval from the institutional review board, we initiated therapy with the JAK inhibitor, tofacitinib,
+at a dose of 0.2 mg/kg/d twice daily on day 1 after the VA-ECMO induction; the dose was increased to 0.3 mg/kg/d after 2 weeks.
+Shortly after starting on tofacitinib, the serum level of CPK normalized and chilblain-like rashes improved.
+VA-ECMO and NO inhalation were successfully withdrawn after 16 days and 39 days, respectively, without further complications.
+His pulmonary hypertension was well controlled on sildenafil citrate and macitentan.
+At age 7 months, he underwent an HLA 7/8 allele-matched unrelated cord blood transplantation after a reduced-intensity
+conditioning regimen that included fludarabine (120 mg/m2) and melphalan (140 mg/m2) with total body irradiation at 3 Gy.
+Tacrolimus and short-term methotrexate were used as prophylaxis against graft versus host disease. He was engrafted at day 14 after
+transplantation; he developed mild skin graft versus host disease, which improved without additional treatment.
+He also developed posttransplant nephrotic syndrome at day 104, which responded well to steroids and cyclosporin A.
+Hematopoiesis was evaluated with short tandem repeat analysis, which revealed stable mixed donor chimerism undergoing gradual increase,
+determined at 38.1% on day 28, 47.1% on day 116, 61.7% on day 179, 67.5% on day 350, and 63.1% on day 645.
+At 2 years posttransplantation, the patient no longer requires tofacitinib or vasodilator drugs and is in
+good health without fever, skin rash, pulmonary hypertension, or other symptoms associated with type I interferonopathy.

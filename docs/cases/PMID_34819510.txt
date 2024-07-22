@@ -1,0 +1,70 @@
+[source]
+pmid = PMID:34819510
+title = Heterozygous missense variant of the proteasome subunit β-type 9 causes neonatal-onset autoinflammation and immunodeficiency
+[diagnosis]
+disease_id = OMIM:620796
+disease_label = Proteasome-associated autoinflammatory syndrome 6
+[text]
+Patient 1, the second son of nonconsanguineous parents in Okinawa, developed multiple exudative
+erythemas in the face, trunk and extremities since 2 weeks after birth (Fig. 1a and Supplementary
+Fig. 1a) and was hospitalized in University of the Ryukyus Hospital at one-month old due to fever
+with elevated serum C-reactive protein (CRP) and hepatic aminotransferases. He was once
+recovered from these manifestations without treatments, but developed febrile convulsion at 4
+months of age and basal ganglia calcification was detected (Fig. 1e). At 7-month old extremely high
+levels of serum creatinine kinase (CK) (11,800 IU L-1) and N terminal-pro brain natriuretic peptide
+(NT-proBNP) (33,445 pg ml-1) were noted. Then cardiogenic shock with severe pulmonary arterial
+hypertension (PAH) was revealed (Fig. 1d). PAH was not fully recovered, but somehow controlled
+by intubation, systemic corticosteroid and administration of sildenafil, bosentan and ambrisentan.
+He also showed myositis, which was revealed by magnetic resonance imaging (MRI) and
+histological findings showing partially necrotic myofibers with mononuclear cell and eosinophil
+infiltration (Fig. 1c and Supplementary Fig. 1b). Although autoantibodies were all negative, steroid
+pulse was applied under a diagnosis of juvenile dermatomyositis. High-dose corticosteroid was
+effective, but corticosteroid was hardly tapered and elevation of serum CK and enlargement of
+exudative erythema with edema recurrently appeared even after intravenous γ-globulin (IVIG),
+intravenous cyclophosphamide (IVCY), or oral administration of immunosuppressants including
+cyclosporine, azathioprine or mycophenolate mofetil. Since 7-month old, he showed such episodes
+of erythema with serum CK elevation, which lasted about two weeks and recurred with one to two
+episodes per month. In one episode at 10 years of age serum cytokine levels were measured under
+the use of steroids and immunosuppressive drugs. Serum levels of
+interleukin (IL)-1β, IL-6, TNF-α, IL-18 and IFN-γ were transiently high when erythema appeared
+(days 0 and 4). IP-10 (418 pg ml-1) was also elevated, while IFN-α was not detected (day 0).
+Although erythema lesion was worsened with increase of serum CK, decrease of white blood cell
+count and the progression of anemia during steroid pulse, these indexes were gradually ameliorated
+after steroid pulse. Although HLH was suspected, bone marrow aspiration test showed no prominent
+abnormalities. Notably serum IL-18 levels were constantly high, but correlated with exacerbation
+of manifestations. When erythema lesion and serum CK elevation were improved, some cytokine
+levels again increased (day 18). This may foreshadow the next episode, which in fact happened
+thereafter. At the same age, congestive cirrhosis with portal hypertension became apparent.
+Respiratory syncytial virus infection occasionally recurred with low serum IgG level and IgG
+supplementation was frequently required since 8 years of age (Table 1). Importantly, at 10-year old,
+both TREC and KREC levels showed below 50 copies µg-1 DNA. Although the effects of
+immunosuppressants (prednisolone 10mg and mycophenolate mofetil 500mg) cannot be excluded,
+polyoma (BK/JC) viruses were detected in peripheral blood at 6 and 10-year old. Meanwhile, at 10-
+year old during the treatment with dexamethasone, expression of ISGs was not upregulated in the
+whole blood (Supplementary Fig. 1e) and p-STAT1 staining was also faint in the lesional skin, which
+was obtained at 7-month old during the treatment with prednisolone.
+Unfortunately, he died with acute liver hemorrhage at 11 years of age.
+[text]
+Patient 2, the first son of nonconsanguineous parents in the mainland of Japan, developed skin rash
+in the face and extremities at 25 days after birth (Fig. 1b) and was then hospitalized in Gifu
+Municipal Hospital and later Gifu University Hospital for convulsion and shock with decreased
+white blood cell and platelet counts, increased serum hepatic transaminases, CK and CRP, and
+increased protein concentration in central spinal fluid (CSF). Initially, acute encephalitis and
+disseminated intravascular coagulation were suspected and steroid pulse with IVIG was
+administered. However, he got worse with fever, skin rash (Supplementary Fig. 2a,b), pancytopenia,
+splenomegaly, and increased serum ferritin and soluble CD25 at 43 days of age, and his symptoms
+fulfilled the diagnostic criteria of hemophagocytic lymphohistiocytosis (HLH)-2004.
+Intracranial calcification was revealed at 65-day old (Supplementary Fig. 2c). Autoantibodies including
+dermatomyositis associated one were all negative. High-dose corticosteroid (prednisolone 3mg
+kg-1 day-1) was effective for fever and skin eruptions, but not for pancytopenia and the high serum
+CK and BNP. Chest CT scan showed pneumonia (Supplementary Fig. 2d) and cardioechography
+showed severe PAH (Supplementary Fig. 2e,f), which was refractory to sildenafil and macitentan
+and rather seriously progressive. Because of this lethal event, the patient was transferred to Nagoya
+University Hospital. It should be emphasized that polyoma (BK/JC) viruses were detected in the
+peripheral blood already at 31 days of age, at the time without any therapy. Flowcytometry analysis
+of peripheral blood lymphocytes revealed decrease of CD8 T and γδ T cells and almost absence of
+natural killer (NK) cells (Table 1 and Supplementary Table 1). NK cell activity was also decreased.
+TREC and KREC levels were within normal range. Serum level of IFN-α (12.6-49.9 pg ml-1), as
+well as those of IP-10 (1000 pg ml-1), IL-6 (ND-46.4 pg ml-1) and IL-18 (2120-4400 pg ml-1), were
+increased and high IFN-α level was also observed in CSF. Expression of ISGs was
+upregulated in the whole blood and p-STAT1 was positively stained in the skin lesion.
