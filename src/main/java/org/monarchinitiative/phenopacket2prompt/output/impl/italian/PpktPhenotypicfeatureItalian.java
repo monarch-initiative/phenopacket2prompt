@@ -64,7 +64,7 @@ public class PpktPhenotypicfeatureItalian implements PpktPhenotypicFeatureGenera
         // if we have more than two, join all but the very last item with a comma
         String penultimate = items.stream()
                 .limit(items.size() - 1)
-                .collect(Collectors.joining(","));
+                .collect(Collectors.joining(", "));
         String ultimate = items.get(items.size() - 1);
         return penultimate + getConnector(ultimate) + ultimate;
     }
@@ -84,9 +84,9 @@ public class PpktPhenotypicfeatureItalian implements PpktPhenotypicFeatureGenera
             return getCommaList(observedLabels) + ". ";
         } else if (observedLabels.isEmpty()) {
             if (excludedLabels.size() > 1) {
-                return String.format("si escluse la presenza di %s.", getCommaList(excludedLabels));
+                return String.format("si escluse la presenza di %s. ", getCommaList(excludedLabels));
             } else {
-                return String.format("si escluse la presenza di %s.",excludedLabels.getFirst());
+                return String.format("si escluse la presenza di %s. ",excludedLabels.getFirst());
             }
         } else {
             String exclusion;
@@ -106,10 +106,10 @@ public class PpktPhenotypicfeatureItalian implements PpktPhenotypicFeatureGenera
     public String featuresAtOnset(String personString, List<OntologyTerm> ontologyTerms) {
         List<OntologyTerm> observed = getObservedFeatures(ontologyTerms);
         List<OntologyTerm> excluded = getExcludedFeatures(ontologyTerms);
-        List<String> observedSpanish = getTranslations(observed);
-        List<String> excludedSpanish = getTranslations(excluded);
-        var observedStr = getCommaList(observedSpanish);
-        var excludedStr = getCommaList(excludedSpanish);
+        List<String> observedItalian = getTranslations(observed);
+        List<String> excludedItalian = getTranslations(excluded);
+        var observedStr = getCommaList(observedItalian);
+        var excludedStr = getCommaList(excludedItalian);
         if (!observed.isEmpty() && ! excluded.isEmpty()) {
             return String.format("%s presentò i sequenti sintomi: %s. Al contrario, si %s: %s.",
                     personString,

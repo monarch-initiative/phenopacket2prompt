@@ -92,7 +92,7 @@ public class PpktIndividualItalianTest extends PPKtIndividualBase{
                 new TestIdvlAtAge("infantile",
                         infantile, new TestOutcome.Ok("Durante il periodo infantile")),
                 new TestIdvlAtAge("childhood age",
-                        childhood, new TestOutcome.Ok("Durante l'infanzia")),
+                        childhood, new TestOutcome.Ok("Da bambino")),
                 new TestIdvlAtAge("46 years old",
                         p46y, new TestOutcome.Ok("All'età di 46 anni"))
         );

@@ -86,9 +86,9 @@ public class PpktIndividualSpanishTest extends PPKtIndividualBase{
                 new TestIdvlAtAge("congenital",
                         congenital, new TestOutcome.Ok("Al nacer")),
                 new TestIdvlAtAge("infantile",
-                        infantile, new TestOutcome.Ok("Durante el período infantil")),
+                        infantile, new TestOutcome.Ok("Durante la infancia temprana")), // not OK, infancia temprana is up to 5 yrs, apparently
                 new TestIdvlAtAge("childhood age",
-                        childhood, new TestOutcome.Ok("Durante la infancia")),
+                        childhood, new TestOutcome.Ok("Durante la niñez")),
                 new TestIdvlAtAge("46 years old",
                         p46y, new TestOutcome.Ok("A la edad de 46 años"))
         );

@@ -271,6 +271,8 @@ public class PpktIndividualDutch implements PPKtIndividualInfoGenerator {
                 return buildBlocks.duringFetal();
             } else if (ppktAge.isCongenital()) {
                 return buildBlocks.atBirth();
+            } else if (ppktAge.isEmbryo()) {
+                return buildBlocks.duringEmbryonic();
             } else if (ppktAge.isNeonate()) {
                 return buildBlocks.asNeonate();
             } else if (ppktAge.isInfant()) {

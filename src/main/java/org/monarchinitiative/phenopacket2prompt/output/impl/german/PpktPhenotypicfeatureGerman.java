@@ -51,7 +51,7 @@ public class PpktPhenotypicfeatureGerman implements PpktPhenotypicFeatureGenerat
         // if we have more than two, join all but the very last item with a comma
         String penultimate = items.stream()
                 .limit(items.size() - 1)
-                .collect(Collectors.joining(","));
+                .collect(Collectors.joining(", "));
         String ultimate = items.get(items.size() - 1);
         return penultimate + " und " + ultimate;
     }

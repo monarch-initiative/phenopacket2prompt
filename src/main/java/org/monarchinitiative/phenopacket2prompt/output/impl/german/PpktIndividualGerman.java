@@ -461,24 +461,36 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
         if (ppktAge.ageType().equals(PhenopacketAgeType.ISO8601_AGE_TYPE)) {
             return imAlterVonIsoAgeExact(ppktAge);
         } else if (ppktAge.ageType().equals(PhenopacketAgeType.HPO_ONSET_AGE_TYPE)) {
-            String label = ppktAge.age(); // something like "Infantile onset"
-            return switch (label) {
-                case "Infantile onset" -> "Als Säugling";
-                case "Childhood onset" -> "In der Kindheit";
-                case "Neonatal onset"  -> "In der neugeborenen Zeit";
-                case "Congenital onset" -> "Zum Zeitpunkt der Geburt";
-                case "Adult onset" -> "Im Erwachsenenalter";
-                case "Juvenile onset" -> "Im Jugendlichenalter";
-                default-> {
-                    throw new PhenolRuntimeException("No German translation for " + label);
-                }
-            };
+            if (ppktAge.isFetus()) {
+                return "Während der Fetalperiode";
+            } else if (ppktAge.isCongenital()) {
+                return "Zum Zeitpunkt der Geburt";
+            } else if (ppktAge.isEmbryo()) {
+                return "Während der Embryonalzeit";
+            } else if (ppktAge.isNeonate()) {
+                return "In der neugeborenen Zeit";
+            } else if (ppktAge.isInfant()) {
+                return "Als Säugling";
+            } else if (ppktAge.isChild()) {
+                return "In der Kindheit";
+            } else if (ppktAge.isJuvenile()) {
+                return "Im Jugendlichenalter";
+            } else if (ppktAge.isYoungAdult()) {
+                return "Im jungen Erwachsenenalter";
+            } else if (ppktAge.isMiddleAge()) {
+                return "Im mittleren Erwachsenenalter";
+            } else if (ppktAge.isLateAdultAge()) {
+                return "Im späten Erwachsenenalter";
+            } else if (ppktAge.isAdult()) {
+                return "Im Erwachsenenalter";
+            } else {
+                throw new PhenolRuntimeException("Did not recognize onset: " + ppktAge.toString());
+            }
         } else {
-            return ""; // should never get here
+            throw new PhenolRuntimeException("Bad age type");
+
         }
+
+
     }
-
-
-
-
 }
