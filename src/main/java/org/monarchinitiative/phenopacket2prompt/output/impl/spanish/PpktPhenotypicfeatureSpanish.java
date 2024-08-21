@@ -71,7 +71,7 @@ public class PpktPhenotypicfeatureSpanish implements PpktPhenotypicFeatureGenera
         // if we have more than two, join all but the very last item with a comma
         String penultimate = items.stream()
                 .limit(items.size() - 1)
-                .collect(Collectors.joining(","));
+                .collect(Collectors.joining(", "));
         String ultimate = items.get(items.size() - 1);
         return penultimate + getConnector(ultimate) + ultimate;
     }
@@ -127,8 +127,8 @@ public class PpktPhenotypicfeatureSpanish implements PpktPhenotypicFeatureGenera
         } else if (!observed.isEmpty()) {
             return String.format("%s presentó los siguientes síntomas: %s.", personString, observedStr);
         } else if (!excluded.isEmpty()) {
-            return String.format("Al inicio de la enfermedad, se %s los siguientes síntomas: %s.",
-                    excluded.size()>1? "excluyeron":"excluyeró", excludedStr);
+            return String.format("Al inicio de la enfermedad, se %s: %s.",
+                    excluded.size()>1? "excluyeron los siguientes síntomas":"excluyeró el siguiente síntoma", excludedStr);
         } else {
             return "No se describieron explícitamente anomalías fenotípicas al inicio de la enfermedad";
         }

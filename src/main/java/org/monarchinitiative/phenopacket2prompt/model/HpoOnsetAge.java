@@ -42,7 +42,6 @@ public final class HpoOnsetAge implements PhenopacketAge {
         return new HpoOnsetAge(juvenileOnset.getValue(), "Juvenile onset");
     }
 
-
     private final static TermId neonatalOnset = TermId.of("HP:0003623");
     private final static TermId congenitalOnset = TermId.of("HP:0003577");
     private final static TermId infantileOnset = TermId.of("HP:0003593");
@@ -106,6 +105,9 @@ public final class HpoOnsetAge implements PhenopacketAge {
     public boolean isNeonate() {
         return tid.equals(neonatalOnset);
     }
+
+    @Override
+    public boolean isEmbryo() { return tid.equals(embryonalOnset);  }
 
     @Override
     public boolean isCongenital() {

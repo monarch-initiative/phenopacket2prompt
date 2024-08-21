@@ -21,15 +21,15 @@ public class PpktIndividualSpanishTest extends PPKtIndividualBase{
     private static Stream<TestIndividual> testGetIndividualDescription() {
         return Stream.of(
                 new TestIndividual("46 year olf female, infantile onset",
-                        female46yearsInfantileOnset(), new TestOutcome.Ok("La paciente era una mujer de 46 años que se presentó en el primer año de vida con")),
+                        female46yearsInfantileOnset(), new TestOutcome.Ok("La paciente era una mujer de 46 años. El inicio de la enfermedad ocurrió en la infancia temprana.")),
                 new TestIndividual("male 4 months, congenital onset",
-                       male4monthsCongenitalOnset(), new TestOutcome.Ok("El paciente era un bebé de 4 meses que se presentó al nacer con")),
+                       male4monthsCongenitalOnset(), new TestOutcome.Ok("El paciente era un bebé de 4 meses. El inicio de la enfermedad ocurrió en el momento del nacimiento.")),
                 new TestIndividual("female, no onset",
-                        femaleNoAge(), new TestOutcome.Ok("La paciente se presentó con")),
+                        femaleNoAge(), new TestOutcome.Ok("La paciente era de sexo femenino y de edad no especificada. No se indicó la edad del inicio de la enfermedad.")),
                 new TestIndividual("female, no HPOs",
                         femaleNoHPOs(), new TestOutcome.Error(() -> new PhenolRuntimeException("No HPO annotations"))),
                 new TestIndividual("unknown sex, no 4yo",
-                        unknownSex4YearsOnset(),  new TestOutcome.Ok("El paciente se presentó en la niñez con"))
+                        unknownSex4YearsOnset(),  new TestOutcome.Ok("El paciente era una persona de sexo y edad no especificados. El inicio de la enfermedad ocurrió en la niñez."))
         );
     }
 
@@ -86,9 +86,9 @@ public class PpktIndividualSpanishTest extends PPKtIndividualBase{
                 new TestIdvlAtAge("congenital",
                         congenital, new TestOutcome.Ok("Al nacer")),
                 new TestIdvlAtAge("infantile",
-                        infantile, new TestOutcome.Ok("Durante el período infantil")),
+                        infantile, new TestOutcome.Ok("Durante la infancia temprana")), // not OK, infancia temprana is up to 5 yrs, apparently
                 new TestIdvlAtAge("childhood age",
-                        childhood, new TestOutcome.Ok("Durante la infancia")),
+                        childhood, new TestOutcome.Ok("Durante la niñez")),
                 new TestIdvlAtAge("46 years old",
                         p46y, new TestOutcome.Ok("A la edad de 46 años"))
         );

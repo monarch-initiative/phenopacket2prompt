@@ -262,8 +262,8 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
             };
         } else {
             return switch (psex) {
-                case FEMALE -> String.format("Die Probandin war ein %s", bbGenerator.probandWasA(), bbGenerator.newbornGirl()); // das
-                case MALE -> String.format("Der Proband war ein %s", bbGenerator.probandWasA(), bbGenerator.newbornBoy());
+                case FEMALE -> String.format("Die Probandin war ein %s", bbGenerator.newbornGirl()); // das
+                case MALE -> String.format("Der Proband war ein %s", bbGenerator.newbornBoy());
                 default -> String.format("Der Proband war ein Neugeborenes ohne angegebenes Geschlecht");
             };
         }
@@ -300,7 +300,8 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
         return switch (geschlecht) {
             case MAENNLICH -> String.format("%s alter", ymd);
             case WEIBLICH -> String.format("%s alte", ymd);
-            case NEUTRUM -> String.format("%s altes", ymd);
+            case NEUTRUM -> String.format("%s alte", ymd);
+            //TODO: check this is OK. "alte" in the examples I have seen always refers to "die Person", which is feminine, e.g. "46 Jahre alte erwachsene Person", not "altes"
         };
     }
 
@@ -412,7 +413,7 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
         } else if (hpoOnsetTermAge.isCongenital()) {
             return switch (psex) {
                 case FEMALE -> "Die Probandin war ein weibliches Neugeborenes";
-                case MALE -> "Der Probandwar ein männliches Neugeborenes";
+                case MALE -> "Der Proband war ein männliches Neugeborenes";
                 default -> "Der Patient war ein Neugeborenes ohne angegebenes Geschelcht";
             };
         } else if (hpoOnsetTermAge.isInfant()) {
@@ -460,24 +461,36 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
         if (ppktAge.ageType().equals(PhenopacketAgeType.ISO8601_AGE_TYPE)) {
             return imAlterVonIsoAgeExact(ppktAge);
         } else if (ppktAge.ageType().equals(PhenopacketAgeType.HPO_ONSET_AGE_TYPE)) {
-            String label = ppktAge.age(); // something like "Infantile onset"
-            return switch (label) {
-                case "Infantile onset" -> "Als Säugling";
-                case "Childhood onset" -> "In der Kindheit";
-                case "Neonatal onset"  -> "In der neugeborenen Zeit";
-                case "Congenital onset" -> "Zum Zeitpunkt der Geburt";
-                case "Adult onset" -> "Im Erwachsenenalter";
-                case "Juvenile onset" -> "Im Jugendlichenalter";
-                default-> {
-                    throw new PhenolRuntimeException("No German translation for " + label);
-                }
-            };
+            if (ppktAge.isFetus()) {
+                return "Während der Fetalperiode";
+            } else if (ppktAge.isCongenital()) {
+                return "Zum Zeitpunkt der Geburt";
+            } else if (ppktAge.isEmbryo()) {
+                return "Während der Embryonalzeit";
+            } else if (ppktAge.isNeonate()) {
+                return "In der neugeborenen Zeit";
+            } else if (ppktAge.isInfant()) {
+                return "Als Säugling";
+            } else if (ppktAge.isChild()) {
+                return "In der Kindheit";
+            } else if (ppktAge.isJuvenile()) {
+                return "Im Jugendlichenalter";
+            } else if (ppktAge.isYoungAdult()) {
+                return "Im jungen Erwachsenenalter";
+            } else if (ppktAge.isMiddleAge()) {
+                return "Im mittleren Erwachsenenalter";
+            } else if (ppktAge.isLateAdultAge()) {
+                return "Im späten Erwachsenenalter";
+            } else if (ppktAge.isAdult()) {
+                return "Im Erwachsenenalter";
+            } else {
+                throw new PhenolRuntimeException("Did not recognize onset: " + ppktAge.toString());
+            }
         } else {
-            return ""; // should never get here
+            throw new PhenolRuntimeException("Bad age type");
+
         }
+
+
     }
-
-
-
-
 }

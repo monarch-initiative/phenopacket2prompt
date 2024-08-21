@@ -275,6 +275,11 @@ public class GermanBuildingBlocks implements BuildingBlockGenerator {
     }
 
     @Override
+    public String duringEmbryonic() {
+        return "";
+    }
+
+    @Override
     public String asNeonate() {
         return "";
     }

@@ -2,27 +2,24 @@ package org.monarchinitiative.phenopacket2prompt.cmd;
 
 
 import org.monarchinitiative.biodownload.BioDownloader;
-import org.monarchinitiative.biodownload.BioDownloaderBuilder;
 import org.monarchinitiative.biodownload.FileDownloadException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
 
-import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
 import java.util.concurrent.Callable;
 
 /**
  * Download a number of files needed for the analysis. We download by default to a subdirectory called
- * {@code data}, which is created if necessary.
+ * {@code data}, which is created if necessary. We download the files {@code hp.obo}, {@code phenotype.hpoa},
+ * {@code Homo_sapiencs_gene_info.gz}, and {@code mim2gene_medgen}.
  * @author <a href="mailto:peter.robinson@jax.org">Peter Robinson</a>
  */
 
-@CommandLine.Command(name = "download", aliases = {"D"},
+@CommandLine.Command(name = "download",
         mixinStandardHelpOptions = true,
         description = "Download files for phenopacket2prompt")
 public class DownloadCommand implements Callable<Integer>{

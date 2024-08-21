@@ -67,13 +67,12 @@ public class SpanishPromptGenerator implements PromptGenerator {
 
 
     /**
-     * The following structure should work for most other languages, but the function
-     * can be overridden if necessary.
      * @param individual The individual for whom we are creating the prompt
-     * @return the prompt text
+     * @return the prompt text (lacking the LLM-specific header)
      */
+
     @Override
-    public  String createPrompt(PpktIndividual individual) {
+    public  String createPromptWithoutHeader(PpktIndividual individual) {
         String individualInfo = getIndividualInformation(individual);
         // For creating the prompt, we first report the onset and the unspecified terms together, and then
         String onsetDescription = getVignetteAtOnset(individual);
@@ -81,7 +80,6 @@ public class SpanishPromptGenerator implements PromptGenerator {
         // We then report the rest, one for each specified time
         //String onsetFeatures = formatFeatures(onsetTerms);
         StringBuilder sb = new StringBuilder();
-        sb.append(queryHeader());
         sb.append(individualInfo).append("\n").append(onsetDescription).append("\n");
         for (var entry: pfMap.entrySet()) {
             String vignette = getVignetteAtAge(entry.getKey(), individual.getSex(), entry.getValue());
@@ -89,5 +87,7 @@ public class SpanishPromptGenerator implements PromptGenerator {
         }
         return sb.toString();
     }
+
+
 
 }

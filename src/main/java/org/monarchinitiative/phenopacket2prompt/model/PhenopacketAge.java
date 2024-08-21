@@ -13,6 +13,8 @@ public sealed interface PhenopacketAge permits AgeNotSpecified, HpoOnsetAge, Iso
 
     boolean isNeonate();
 
+    boolean isEmbryo();
+
     boolean isFetus();
 
     boolean isCongenital();

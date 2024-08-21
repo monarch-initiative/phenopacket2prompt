@@ -24,34 +24,34 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String yearsOld(int y) {
-        return String.format("%djährig", y);
+        return String.format("%d yaşında", y);
     }
 
     @Override
     public String monthsOld(int m) {
-        return String.format("%d Monate alt", m);
+        return String.format("%d aylik", m);
     }
 
     @Override
     public String daysOld(int d) {
-        return String.format("%d Tage alt", d);
+        return String.format("%d günlük", d);
     }
 
     @Override
     public String monthDayOld(int m, int d) {
         List<String> components = new ArrayList<>();
         if (m > 0) {
-            components.add(String.format("%d %s", m, m > 1 ? "Monaten" : "Monat"));
+            components.add(String.format("%d ay", m));
         }
         if (d > 0) {
-            components.add(String.format("%d %s", d, d > 1 ? "Tagen" : "Tag"));
+            components.add(String.format("%d gün", d));
         }
         if (components.isEmpty()) {
-            return "am ersten Lebenstag";
+            return "doğumdan sonraki ilk gün";
         } else if (components.size() == 1) {
             return components.get(0);
         } else {
-            return String.format("im Alter von %s und %s", components.get(0), components.get(1));
+            return String.format("%s %slıkken", components.get(0), components.get(1));
         }
     }
 
@@ -59,23 +59,27 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
     public String yearsMonthsDaysOld(int y, int m, int d) {
         List<String> components = new ArrayList<>();
         if (y > 0) {
-            components.add(String.format("%d %s", y, y > 1 ? "Jahren" : "Jahr"));
+            if (m == 0 && d == 0) {
+                components.add(String.format("%d yaşında", y));
+            } else {
+                components.add(String.format("%d yaş", y));
+            }
         }
         if (m > 0) {
-            components.add(String.format("%d %s", m, m > 1 ? "Monaten" : "Monat"));
+            components.add(String.format("%d aylıkken", m));
         }
         if (d > 0) {
-            components.add(String.format("%d %s", d, d > 1 ? "Tagen" : "Tag"));
+            components.add(String.format("%d günlükken", d));
         }
         if (components.isEmpty()) {
-            return "am ersten Lebenstag";
+            return "doğumdan sonraki ilk gün";
         } else if (components.size() == 1) {
             return components.get(0);
         } else if (components.size() == 2) {
-            return String.format("im Alter von %s und %s", components.get(0), components.get(1));
+            return String.format("%s %slıkken", components.get(0), components.get(1));
         } else {
             // we must have y,m,d
-            return String.format("im Alter von %s, %s und %s", components.get(0), components.get(1), components.get(2));
+            return String.format("%s %s %slıkken", components.get(0), components.get(1), components.get(2));
         }
     }
 
@@ -106,17 +110,17 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String woman() {
-        return "Frau";
+        return "kadın";
     }
 
     @Override
     public String man() {
-        return "Mann";
+        return "adam";
     }
 
     @Override
     public String individual() {
-        return "erwachsene Person unbekannten Geschlechtes";
+        return "cinsiyeti bilinmeyen yetişkin kişi";
     }
 
     @Override
@@ -126,17 +130,17 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String girl() {
-        return "Mädchen";
+        return "kız";
     }
 
     @Override
     public String boy() {
-        return "Junge";
+        return "erkek çocuk";
     }
 
     @Override
     public String child() {
-        return "Kind";
+        return "çocuk";
     }
 
     @Override
@@ -156,47 +160,47 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String maleInfant() {
-        return "männlicher Säugling";
+        return "erkek bebek";
     }
 
     @Override
     public String femaleInfant() {
-        return "weiblicher Säugling";
+        return "kız bebek";
     }
 
     @Override
     public String infant() {
-        return "Säugling";
+        return "bebek";
     }
 
     @Override
     public String newbornBoy() {
-        return "männliches Neugeborenes";
+        return "erkek yenidoğan";
     }
 
     @Override
     public String newbornGirl() {
-        return "weibliches Neugeborenes";
+        return "kız yenidoğan";
     }
 
     @Override
     public String newborn() {
-        return "Neugeborenes";
+        return "yenidoğan";
     }
 
     @Override
     public String maleFetus() {
-        return "männlicher Fet";
+        return "erkek fetüs";
     }
 
     @Override
     public String femaleFetus() {
-        return "weiblicher Fet";
+        return "kız fetüs";
     }
 
     @Override
     public String fetus() {
-        return "Fet";
+        return "fetüs";
     }
 
     @Override
@@ -216,7 +220,7 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String probandWasA() {
-        return "Der Proband war";
+        return "proband şuydu";
     }
 
     @Override
@@ -241,17 +245,17 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String probandWasAMale() {
-        return "Der Proband war ein Mann";
+        return "Proband bir erkekti";
     }
 
     @Override
     public String probandWasAFemale() {
-        return "Die Probandin war eine Frau";
+        return "Proband bir kadındı";
     }
 
     @Override
     public String probandWasAnIndividual() {
-        return "Der Proband war ein Individuum ohne angegebenes Geschlecht";
+        return "Proband cinsiyeti belirtilmemiş bir bireydi";
     }
 
     @Override
@@ -271,6 +275,11 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String duringFetal() {
+        return "";
+    }
+
+    @Override
+    public String duringEmbryonic() {
         return "";
     }
 

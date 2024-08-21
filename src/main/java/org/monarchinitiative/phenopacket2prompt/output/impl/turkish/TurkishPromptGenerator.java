@@ -51,9 +51,9 @@ public class TurkishPromptGenerator implements PromptGenerator {
     public String getVignetteAtAge(PhenopacketAge page, PhenopacketSex psex, List<OntologyTerm> terms) {
         String ageString = this.ppktAgeSexGenerator.atAgeForVignette(page);
         String person = switch (psex) {
-            case MALE -> "er";
-            case FEMALE -> "sie";
-            default -> "die betroffene Person";
+            case MALE -> "";
+            case FEMALE -> "";
+            default -> "etkilenen kişi";
         };
         return this.ppktPhenotypicFeatureGenerator.featuresAtEncounter(person, ageString, terms);
     }
@@ -61,9 +61,9 @@ public class TurkishPromptGenerator implements PromptGenerator {
     @Override
     public  String getVignetteAtOnset(PpktIndividual individual){
         String person = switch (individual.getSex()) {
-            case MALE -> "Er";
-            case FEMALE -> "Sie";
-            default -> "Die betroffene Person";
+            case MALE -> "Etkilenen kişi";
+            case FEMALE -> "Etkilenen kişi";
+            default -> "Etkilenen kişi";
         };
         return this.ppktPhenotypicFeatureGenerator.featuresAtOnset(person, individual.getPhenotypicFeaturesAtOnset());
     }
@@ -76,13 +76,11 @@ public class TurkishPromptGenerator implements PromptGenerator {
     }
 
     /**
-     * The following structure should work for most other languages, but the function
-     * can be overridden if necessary.
      * @param individual The individual for whom we are creating the prompt
-     * @return the prompt text
+     * @return the prompt text (lacking the LLM-specific header)
      */
     @Override
-    public  String createPrompt(PpktIndividual individual) {
+    public  String createPromptWithoutHeader(PpktIndividual individual) {
         String individualInfo = getIndividualInformation(individual);
         // For creating the prompt, we first report the onset and the unspecified terms together, and then
         String onsetDescription = getVignetteAtOnset(individual);
@@ -90,7 +88,6 @@ public class TurkishPromptGenerator implements PromptGenerator {
         // We then report the rest, one for each specified time
         //String onsetFeatures = formatFeatures(onsetTerms);
         StringBuilder sb = new StringBuilder();
-        sb.append(queryHeader());
         sb.append(individualInfo).append("\n").append(onsetDescription).append("\n");
         for (var entry: pfMap.entrySet()) {
             String vignette = getVignetteAtAge(entry.getKey(), individual.getSex(), entry.getValue());

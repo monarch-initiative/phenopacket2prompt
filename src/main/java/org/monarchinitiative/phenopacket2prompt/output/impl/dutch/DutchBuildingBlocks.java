@@ -1,4 +1,4 @@
-package org.monarchinitiative.phenopacket2prompt.output.impl.english;
+package org.monarchinitiative.phenopacket2prompt.output.impl.dutch;
 
 import org.monarchinitiative.phenopacket2prompt.model.Iso8601Age;
 import org.monarchinitiative.phenopacket2prompt.output.BuildingBlockGenerator;
@@ -6,22 +6,22 @@ import org.monarchinitiative.phenopacket2prompt.output.BuildingBlockGenerator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EnglishBuildingBlocks implements BuildingBlockGenerator {
+public class DutchBuildingBlocks implements BuildingBlockGenerator {
 
 
     @Override
     public String days(int d) {
-        return d>1 ? "days" : "day";
+        return d>1 ? "dagen" : "dag";
     }
 
     @Override
     public String months(int m) {
-        return m>1 ? "months" : "month";
+        return "maand";
     }
 
     @Override
     public String years(int y) {
-        return y>1 ? "years" : "year";
+        return "jaar";
     }
 
 
@@ -44,19 +44,21 @@ public class EnglishBuildingBlocks implements BuildingBlockGenerator {
         return String.join(" ", components);
     }
 
+
+
     @Override
     public String yearsOld(int y) {
-        return String.format("%d-year-old", y);
+        return String.format("%d jaar oud", y);
     }
 
     @Override
     public String monthsOld(int m) {
-        return String.format("%d-month-old", m);
+        return String.format("%d maand oud", m);
     }
 
     @Override
     public String daysOld(int d) {
-        return String.format("%d-%s old", d, days(d));
+        return String.format("%d %s oud", d, days(d));
     }
 
     @Override
@@ -65,50 +67,53 @@ public class EnglishBuildingBlocks implements BuildingBlockGenerator {
             return daysOld(d);
         } else if (d==0) {
             return monthsOld(m);
-        }
-        return String.format("%d-month, %d-day old", m,  d);
+        } else if (d==1){
+            return String.format("%d maand en %d dag oud", m,  d);
+        } else
+        return String.format("%d maand en %d dagen oud", m,  d);
     }
 
     @Override
     public String yearsMonthsDaysOld(int y, int m, int d) {
         if (y==0) {
             return monthDayOld(m,d);
-        }
-        if (d==0) {
-            return String.format("%d-year, %d-month old", y,  m);
-        }
-        return String.format("%d-year, %d-month, %d-day old", y, m, d);
+        } else if (d==0) {
+            return String.format("%d jaar en %d maand oud", y,  m);
+        } else if (d==1){
+            return String.format("%d maand en %d dag oud", y,  d);
+        } else
+        return String.format("%d jaar, %d maand en %d dagen oud", y, m, d);
     }
 
     @Override
     public String asNewborn() {
-        return "as a newborn";
+        return "als pasgeborene";
     }
 
     @Override
     public String atTheAgeOf() {
-        return "at the age of";
+        return "op de leeftijd van";
     }
 
 
     @Override
     public String she() {
-        return "she";
+        return "zij";
     }
 
     @Override
     public String he() {
-        return "he";
+        return "hij";
     }
 
     @Override
     public String theProband() {
-        return "the proband";
+        return "de proband";
     }
 
     @Override
     public String woman() {
-        return "woman";
+        return "vrouw";
     }
 
     @Override
@@ -118,215 +123,214 @@ public class EnglishBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String individual() {
-        return "individual";
+        return "persoon";
     }
 
     @Override
     public String theIndividual() {
-        return "the individual";
+        return "de persoon";
     }
 
     @Override
     public String girl() {
-        return "girl";
+        return "meisje";
     }
 
     @Override
     public String boy() {
-        return "boy";
+        return "jongen";
     }
 
     @Override
     public String child() {
-        return "child";
+        return "kind";
     }
 
     @Override
     public String adolescentGirl() {
-        return "adolescent girl";
+        return "adolescent meisje";
     }
 
     @Override
     public String adolescentBoy() {
-        return "adolescent boy";
+        return "adolescente jongen";
     }
 
     @Override
     public String adolescentChild() {
-        return "adolescent child";
+        return "adolescent kind";
     }
 
     @Override
     public String maleInfant() {
-        return "male infant";
+        return "mannelijk kind";
     }
 
     @Override
     public String femaleInfant() {
-        return "female infant";
+        return "vrouwelijk kind";
     }
 
     @Override
     public String infant() {
-        return "infant";
+        return "kind";
     }
 
     @Override
     public String newbornBoy() {
-        return "newborn boy";
+        return "pasgeboren jongetje";
     }
 
     @Override
     public String newbornGirl() {
-        return "newborn girl";
+        return "pasgeboren meisje";
     }
 
     @Override
     public String newborn() {
-        return "newborn";
+        return "pasgeborene";
     }
 
     @Override
     public String maleFetus() {
-        return "male fetus";
+        return "mannelijke foetus";
     }
 
     @Override
     public String femaleFetus() {
-        return "female fetus";
+        return "vrouwelijke foetus";
     }
 
     @Override
     public String fetus() {
-        return "fetus";
+        return "foetus";
     }
 
     @Override
     public String female() {
-        return "female";
+        return "vrouw";
     }
 
     @Override
     public String male() {
-        return "male";
+        return "man";
     }
 
     @Override
     public String adult() {
-        return "adult";
+        return "volwassene";
     }
 
     @Override
     public String probandWasA() {
-        return "The proband was a";
+        return "De proband was een";
     }
 
     @Override
     public String whoPresented() {
-        return "who presented";
+        return "die presenteerde";
     }
 
     @Override
     public String presented() {
-        return "presented";
+        return "presenteerde";
     }
 
     @Override
     public String probandNoAgePresented() {
-        return "The proband presented";
+        return "De proband presenteerde";
     }
 
     @Override
     public String probandNoAgePresentedWith() {
-        return "The proband presented with";
+        return "De proband presenteerde met";
     }
 
 
 
     @Override
     public String presentedWith() {
-        return "presented with";
+        return "presenteerde met";
     }
 
     @Override
     public String with() {
-        return "with";
+        return "met";
     }
 
 
     @Override
     public String probandWasAFemale() {
-        return "The proband was a female";
+        return "De proband was een vrouw";
     }
 
     @Override
     public String probandWasAMale() {
-        return "The proband was a male";
+        return "De proband was een man";
     }
 
     @Override
     public String probandWasAnIndividual() {
-        return "The proband was an individual";
+        return "De proband was een persoon";
     }
 
     @Override
     public String inWhomManifestationsWereExcluded() {
-        return "in whom the following clinical manifestations were excluded";
+        return "bij wie de volgende klinische manifestaties werden uitgesloten";
     }
 
     @Override
     public String duringFetal() {
-        return "During the fetal period";
+        return "Tijdens de foetale periode";
     }
 
     @Override
     public String duringEmbryonic() {
-        return "During the embryonic period";
+        return "Tijdens de embryonale periode";
     }
-
     @Override
     public String asNeonate() {
-        return "As a neonate";
+        return "Als pasgeborene";
     }
 
     @Override
     public String atBirth() {
-        return  "At birth";
+        return  "Bij de geboorte";
     }
 
     @Override
     public String asInfant() {
-        return "As an infant";
+        return "Als baby";
     }
 
     @Override
     public String inChildhood() {
-        return "As a child";
+        return "Als kind";
     }
 
     @Override
     public String asAdolescent() {
-        return "As an adolescent";
+        return "Als adolescent";
     }
 
     @Override
     public String asAdult() {
-        return "As an adult";
+        return "Als volwassene";
     }
 
     @Override
     public String asYoungAdult() {
-        return "As a young adult";
+        return "Als jongvolwassene";
     }
 
     @Override
     public String asMiddleAge() {
-        return "During middle age";
+        return "Op middelbare leeftijd";
     }
 
     @Override
     public String asLateOnset() {
-        return "During old age";
+        return "Op oude leeftijd";
     }
 
 
