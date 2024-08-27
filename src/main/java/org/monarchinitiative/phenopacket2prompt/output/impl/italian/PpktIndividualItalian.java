@@ -144,10 +144,15 @@ public class PpktIndividualItalian implements PPKtIndividualInfoGenerator {
             } else {
                 return String.format("%d anni", y);
             }
-        } else if (m>0) {
+        } else if (m>0 && d>0) {
             return String.format("%d mesi e %d giorni", m, d);
         } else {
-            return String.format("%d giorni",  d);
+            if (m>0 && d==0) {
+                return String.format("%d mesi", m);
+            }
+            else {
+                return String.format("%d giorni", d);
+            }
         }
     }
 
@@ -272,8 +277,8 @@ public class PpktIndividualItalian implements PPKtIndividualInfoGenerator {
     @Override
     public String heSheIndividual(PhenopacketSex psex) {
         return switch (psex) {
-            case FEMALE -> "lei";
-            case MALE -> "lui";
+            case FEMALE -> "la paziente";
+            case MALE -> "il paziente";
             default -> "il soggetto";
         };
     }

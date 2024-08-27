@@ -56,8 +56,8 @@ public class ItalianPromptGenerator implements PromptGenerator {
     @Override
     public  String getVignetteAtOnset(PpktIndividual individual){
         String person = switch (individual.getSex()) {
-            case MALE -> "Lui";
-            case FEMALE -> "Lei";
+            case MALE -> "Il paziente";
+            case FEMALE -> "La paziente";
             default -> "La persona";
         };
         return this.ppktPhenotypicFeatureGenerator.featuresAtOnset(person, individual.getPhenotypicFeaturesAtOnset());

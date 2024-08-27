@@ -56,9 +56,9 @@ public class PpktIndividualItalianTest extends PPKtIndividualBase{
     private static Stream<TestIdvlHeShe> testGetPPKtSex() {
         return Stream.of(
                 new TestIdvlHeShe("female",
-                        PhenopacketSex.FEMALE, new TestOutcome.Ok("lei")),
+                        PhenopacketSex.FEMALE, new TestOutcome.Ok("la paziente")),
                 new TestIdvlHeShe("male",
-                        PhenopacketSex.MALE, new TestOutcome.Ok("lui")),
+                        PhenopacketSex.MALE, new TestOutcome.Ok("il paziente")),
                 new TestIdvlHeShe("proband",
                         PhenopacketSex.UNKNOWN, new TestOutcome.Ok("il soggetto"))
         );

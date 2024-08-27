@@ -36,10 +36,10 @@ public class EnglishBuildingBlocks implements BuildingBlockGenerator {
             components.add(String.format("%d %s", y, years(y)));
         }
         if (m > 0) {
-            components.add(String.format("%d %s", m, months(y)));
+            components.add(String.format("%d %s", m, months(m)));
         }
         if (d > 0) {
-            components.add(String.format("%d %s", d, days(y)));
+            components.add(String.format("%d %s", d, days(d)));
         }
         return String.join(" ", components);
     }

@@ -36,10 +36,10 @@ public class DutchBuildingBlocks implements BuildingBlockGenerator {
             components.add(String.format("%d %s", y, years(y)));
         }
         if (m > 0) {
-            components.add(String.format("%d %s", m, months(y)));
+            components.add(String.format("%d %s", m, months(m)));
         }
         if (d > 0) {
-            components.add(String.format("%d %s", d, days(y)));
+            components.add(String.format("%d %s", d, days(d)));
         }
         return String.join(" ", components);
     }
@@ -80,7 +80,7 @@ public class DutchBuildingBlocks implements BuildingBlockGenerator {
         } else if (d==0) {
             return String.format("%d jaar en %d maand oud", y,  m);
         } else if (d==1){
-            return String.format("%d maand en %d dag oud", y,  d);
+            return String.format("%d jaar, %d maand en %d dag oud", y, m,  d);
         } else
         return String.format("%d jaar, %d maand en %d dagen oud", y, m, d);
     }

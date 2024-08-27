@@ -201,11 +201,14 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
                 return String.format("Im Alter von %d %s", y, y>1?"Jahren" : "Jahr");
             }
         }
-        if (m>0) {
-            return String.format("Im Alter von %d %s y %d %s", m,  m>1?"Monaten" : "Monat",
+        if (m>0 && d>0) {
+            return String.format("Im Alter von %d %s und %d %s", m,  m>1?"Monaten" : "Monat",
                     d,  d>1?"Tagen" : "Tag");
-        } else {
-            return String.format("%d Tage",  d);
+        } else if (m>0 && d==0) {
+            return String.format("Im Alter von %d %s",  m,  m>1?"Monaten" : "Monat");
+        }
+        else {
+            return String.format("Im Alter von %d %s",  d, d>1?"Tagen" : "Tag");
         }
      }
 
@@ -227,24 +230,24 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
             };
         } else if (y > 9) {
             return switch (psex) {
-                case FEMALE -> String.format("%s %s %s", bbGenerator.probandWasA(),
+                case FEMALE -> String.format("%s eine %s %s", bbGenerator.probandWasA(),
                         dAlter(iso8601Age, GrammatikalischesGeschlecht.WEIBLICH),
                         bbGenerator.adolescentGirl());
-                case MALE -> String.format("%s %s %s", bbGenerator.probandWasA(),
+                case MALE -> String.format("%s ein %s %s", bbGenerator.probandWasA(),
                         dAlter(iso8601Age, GrammatikalischesGeschlecht.MAENNLICH),
                         bbGenerator.adolescentBoy());
-                default -> String.format("%s %s %s", bbGenerator.probandWasA(),
+                default -> String.format("%s ein %s %s", bbGenerator.probandWasA(),
                         dAlter(iso8601Age, GrammatikalischesGeschlecht.NEUTRUM),  bbGenerator.adolescentChild());
             };
         } else if (y > 0) {
             return switch (psex) {
-                case FEMALE -> String.format("%s %s %s", bbGenerator.probandWasA(),
+                case FEMALE -> String.format("%s ein %s %s", bbGenerator.probandWasA(),
                         dAlter(iso8601Age, GrammatikalischesGeschlecht.NEUTRUM), // "das Mädchen"
                         bbGenerator.girl());
                 case MALE -> String.format("%s ein %s %s", bbGenerator.probandWasA(),
                         dAlter(iso8601Age, GrammatikalischesGeschlecht.MAENNLICH),
                         bbGenerator.boy());
-                default -> String.format("%s %s %s", bbGenerator.probandWasA(),
+                default -> String.format("%s ein %s %s", bbGenerator.probandWasA(),
                         dAlter(iso8601Age, GrammatikalischesGeschlecht.NEUTRUM), // Das Individuum
                         bbGenerator.child());
             };
@@ -300,7 +303,7 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
         return switch (geschlecht) {
             case MAENNLICH -> String.format("%s alter", ymd);
             case WEIBLICH -> String.format("%s alte", ymd);
-            case NEUTRUM -> String.format("%s alte", ymd);
+            case NEUTRUM -> String.format("%s altes", ymd);
             //TODO: check this is OK. "alte" in the examples I have seen always refers to "die Person", which is feminine, e.g. "46 Jahre alte erwachsene Person", not "altes"
         };
     }
