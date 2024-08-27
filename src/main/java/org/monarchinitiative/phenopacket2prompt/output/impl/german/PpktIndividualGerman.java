@@ -224,8 +224,8 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
                         dAlter(iso8601Age, GrammatikalischesGeschlecht.WEIBLICH));
                 case MALE -> String.format("Der Proband war ein %s Mann",
                         dAlter(iso8601Age, GrammatikalischesGeschlecht.MAENNLICH));
-                default -> String.format("Der Proband war ein %s %s",
-                        dAlter(iso8601Age, GrammatikalischesGeschlecht.NEUTRUM),
+                default -> String.format("Der Proband war eine %s %s",
+                        dAlter(iso8601Age, GrammatikalischesGeschlecht.WEIBLICH),
                         bbGenerator.individual());
             };
         } else if (y > 9) {
@@ -237,7 +237,7 @@ public class PpktIndividualGerman implements PPKtIndividualInfoGenerator {
                         dAlter(iso8601Age, GrammatikalischesGeschlecht.MAENNLICH),
                         bbGenerator.adolescentBoy());
                 default -> String.format("%s ein %s %s", bbGenerator.probandWasA(),
-                        dAlter(iso8601Age, GrammatikalischesGeschlecht.NEUTRUM),  bbGenerator.adolescentChild());
+                        dAlter(iso8601Age, GrammatikalischesGeschlecht.MAENNLICH),  bbGenerator.adolescentChild());
             };
         } else if (y > 0) {
             return switch (psex) {

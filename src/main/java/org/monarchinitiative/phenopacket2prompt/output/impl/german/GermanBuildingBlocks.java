@@ -151,7 +151,7 @@ public class GermanBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String adolescentChild() {
-        return "Jugendlicher";
+        return "Jugendlicher unbekannten Geschlechtes";
     }
 
     @Override
