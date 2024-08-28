@@ -15,7 +15,7 @@ public class PpktPhenotypicfeatureChinese implements PpktPhenotypicFeatureGenera
 
 
     public PpktPhenotypicfeatureChinese(HpInternational international) {
-        german = international;
+        chinese = international;
         missingTranslations = new HashSet<>();
     }
 
@@ -23,7 +23,7 @@ public class PpktPhenotypicfeatureChinese implements PpktPhenotypicFeatureGenera
     private List<String> getTranslations(List<OntologyTerm> ontologyTerms) {
         List<String> labels = new ArrayList<>();
         for (var term: ontologyTerms) {
-            Optional<String> opt = german.getLabel(term.getTid());
+            Optional<String> opt = chinese.getLabel(term.getTid());
             if (opt.isPresent()) {
                 labels.add(opt.get());
             } else {

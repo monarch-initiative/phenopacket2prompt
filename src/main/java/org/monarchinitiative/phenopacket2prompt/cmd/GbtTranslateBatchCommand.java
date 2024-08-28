@@ -75,9 +75,12 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
         // ITALIAN
         PromptGenerator italian = utility.italian();
         Utility.outputPromptsInternational(ppktFiles,"it", italian);
-
+        //Turkish
         PromptGenerator turkish = utility.turkish();
         Utility.outputPromptsInternational(ppktFiles,"tr", turkish);
+        // chinese
+        PromptGenerator chinese = utility.chinese();
+        Utility.outputPromptsInternational(ppktFiles,"zh", chinese);
 
         // output original phenopackets
         PpktCopy pcopy = new PpktCopy(new File(outdirname));

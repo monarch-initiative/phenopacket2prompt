@@ -304,7 +304,7 @@ public class PpktIndividualChinese implements PPKtIndividualInfoGenerator {
             case NEUTRUM -> String.format("%s altes", ymd);
         };
         */
-       return String.format("%s时",ymd)
+       return String.format("%s时",ymd);
     }
 
 

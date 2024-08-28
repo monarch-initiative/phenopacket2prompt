@@ -323,4 +323,9 @@ public class ChineseBuildingBlocks implements BuildingBlockGenerator {
     public String fromIso(Iso8601Age ppktAge) {
         return "";
     }
+
+    @Override
+    public String duringEmbryonic() {
+        return "";
+    }
 }

@@ -62,6 +62,9 @@ public class Utility {
         return PromptGenerator.italian(internationalMap.get("it"));
     }
 
+    public PromptGenerator chinese() {
+        return PromptGenerator.chinese(internationalMap.get("zh"));
+    }
 
 
     public static String getFileName(String phenopacketID, String languageCode) {
