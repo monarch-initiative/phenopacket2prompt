@@ -94,7 +94,7 @@ public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
 
 
     private String iso8601onsetDescription(Iso8601Age isoAge) {
-        return String.format("Disease onset occurred when the proband was %s",
+        return String.format("Disease onset occurred when the proband was a %s",
                 buildBlocks.yearsMonthsDaysOld(isoAge.getYears(), isoAge.getMonths(), isoAge.getDays()));
     }
 

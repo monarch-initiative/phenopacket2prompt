@@ -251,7 +251,7 @@ public class GermanBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String probandWasAnIndividual() {
-        return "Der Proband war ein Individuum ohne angegebenes Geschlecht";
+        return "Der Proband war ein Individuum ohne angegebenes Geschlecht und Alter";
     }
 
     @Override

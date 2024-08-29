@@ -271,7 +271,7 @@ public class DutchBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String probandWasAnIndividual() {
-        return "De proband was een persoon";
+        return "De proband was een persoon van onbepaald geslacht en leeftijd";
     }
 
     @Override
