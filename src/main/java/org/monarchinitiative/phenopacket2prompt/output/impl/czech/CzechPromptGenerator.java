@@ -4,12 +4,14 @@ import org.monarchinitiative.phenopacket2prompt.model.OntologyTerm;
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketAge;
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketSex;
 import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
+import org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualInfoGenerator;
 import org.monarchinitiative.phenopacket2prompt.output.PromptGenerator;
 
 import java.util.List;
 
 public class CzechPromptGenerator implements PromptGenerator {
 
+    private final PPKtIndividualInfoGenerator individualInfoGenerator;
     private final String header = """
 Provádím experiment na kazuistice, abych jsem porovnal Vaše diagnózy s diagnózami od expertov. Odprezentujem vám část kazuistiky.
 V tomto případě jste "Dr. GPT-4", jazykový model, který poskytuje diagnózu. Mám pro vás několik pokynů.
@@ -28,6 +30,10 @@ Tento seznam by měl obsahovat tolik diagnóz, kolik považujete za rozumné. Ne
 Zde je kazuistika:
 
 """;
+
+    public CzechPromptGenerator() {
+        individualInfoGenerator = new PpktIndividualCzech();
+    }
 
     @Override
     public String queryHeader() {
