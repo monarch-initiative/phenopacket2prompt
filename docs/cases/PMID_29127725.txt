@@ -1,0 +1,36 @@
+[source]
+pmid = PMID:29127725
+title = A loss-of-function homozygous mutation in DDX59 implicates a conserved DEAD-box RNA helicase in nervous system development and function
+[diagnosis]
+disease_id = OMIM:174300
+disease_label = Orofaciodigital syndrome V
+[text]
+Patient 1  was the first born from healthy parents, non-consanguineous for their account.
+Family history was unremarkable, except for three prior spontaneous
+miscarriages. The pregnancy was complicated by intrauterine growth
+retardation. Delivery at term was normal, with a weight at birth of
+2,350 g (<3rd centile), length of 47 cm (3rd centile), and occipital–
+frontal circumference of 32 cm (5th centile). APGAR scores were 6 and
+9 at 1 and 5 min, respectively. He had bilateral postaxial extra-digits
+on his hands that were surgically removed in his late childhood. He
+also had bilateral cutaneous syndactyly of fingers 2–5, clinodactyly of
+the fifth fingers, and fingertip pads. His lower limbs were normal. Since
+the first months of life, he developed generalized seizures, which were
+controlled by anticonvulsant drugs. Developmental milestones were
+delayed and the patient showed cognitive difficulties during childhood,
+with an I.Q. of 70 (Terman-Merril scale) measured at the age
+of 9 years. For these reasons, he has undergone developmental and
+speech therapies since the age of 3 years. At the age of 17 years, his
+height was 165 cm (3rd centile), weight was 67 kg (50th centile), and
+head circumference 53 cm (10th centile). He had distinctive facial features,
+including prominent thick eyebrows, malocclusion, high-arched
+palate, and rounded prominent jaw (Figure 1G and H).
+A cerebral magnetic resonance imaging (MRI) disclosed thinning of the cerebral cortex
+in front of the ventricular collateral trigone (not shown).
+Wakefulness electroencephalograms showed diffuse high amplitude slow
+waves intermingled with sharp waves or spikes. Since early adulthood
+he started to complain of migraine. As part of his neurological presentation,
+he also presented lower limbs weakness and some walking difficulties. At the age of 30, after an episode of loss of consciousness
+associated with generalized seizures, he underwent a follow-up brain
+MRI scan, which showed diffuse white matter signal abnormalities and
+multifocal cortical–subcortical infarcts involving both cerebral hemispheres (Figure 1P and Q).

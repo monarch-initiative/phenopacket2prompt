@@ -23,7 +23,7 @@ import java.util.concurrent.Callable;
  * @author <a href="mailto:peter.robinson@jax.org">Peter Robinson</a>
  */
 
-@CommandLine.Command(name = "download", aliases = {"D"},
+@CommandLine.Command(name = "download",
         mixinStandardHelpOptions = true,
         description = "Download files for phenopacket2promot")
 public class DownloadCommand implements Callable<Integer>{
@@ -40,8 +40,9 @@ public class DownloadCommand implements Callable<Integer>{
         Path destination = Paths.get(datadir);
         BioDownloaderBuilder builder = BioDownloader.builder(destination);
         builder.hpoJson();
-        URL hpoInternational = new URL("https://github.com/obophenotype/human-phenotype-ontology/releases/latest/download/hp-international.obo");
-        builder.custom("hp-international.obo", hpoInternational);
+        String hpoInternational = "https://github.com/obophenotype/human-phenotype-ontology/releases/latest/download/hp-international.obo";
+        URL hpoInternationalUrl  = Paths.get(hpoInternational).toUri().toURL() ;
+        builder.custom("hp-international.obo", hpoInternationalUrl);
         BioDownloader downloader = builder.build();
         List<File> files = downloader.download();
         return 0;

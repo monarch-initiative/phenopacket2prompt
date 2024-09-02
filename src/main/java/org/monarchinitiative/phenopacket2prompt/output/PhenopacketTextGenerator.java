@@ -4,7 +4,7 @@ public interface PhenopacketTextGenerator {
 
 
 
-    String QUERY_HEADER();
+    String GPT_PROMPT_HEADER();
 
 
 }

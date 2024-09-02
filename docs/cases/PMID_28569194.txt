@@ -1,0 +1,11 @@
+[source]
+pmid = PMID:28569194
+title = Severe child form of primary hyperoxaluria type 2 - a case report revealing consequence of GRHPR deficiency on metabolism
+[diagnosis]
+disease_id = OMIM:260000
+disease_label = Hyperoxaluria, primary, type II
+[text]
+A 10-month-old girl with a history of tonsilopharyngitis, bilateral inborn hip dysplasia with improvement, dispenzarised by an orthopaedist, was referred to hospital because of a one-day febrilities and positive urinary finding of ketone bodies, proteins, leukocyturia and haematuria. She was born after a normal pregnancy at full term with an uncomplicated perinatal and neonatal course. There was no history of gross haematuria or colicky abdominal pain, and she had received no medication except for antipyretics. The family history was negative with respect to renal and metabolic disease, including urolithiasis and nephrocalcinosis, however, genetic counselling revealed that the parents have common ancestors in the fourth generation.
+On physical examination the child appeared mildly dehydrated with increased body temperature of 37.6 °C. A laboratory examination found moderate anaemia (haemoglobin 93.0 g/l), leucocytosis (15x109/l) and moderately elevated CRP (42.6 mg/l). Serum electrolyte, urea and creatinine levels were normal. The calcium/creatinine ratio and 24 h calcium excretion was within the reference range. Blood gas analysis was normal with no evidence of metabolic acidosis. Ultrasonography of the abdomen raised suspicion of ureterolithiasis l.sin. Cystourethrography was indicated, showing concrement sized 2 cm x 0.8 cm in the distal part of the left ureter with mild dilatation of the renal pelvis and ureter (Fig. 1).
+At the age of 11 months, an ureterolithotomy was performed at the University Children Hospital Bratislava. A chemical analysis of the extracted stone was performed, and the stone was characterised as a composite of virtually pure calcium oxalate. The following course was without any complications.
+

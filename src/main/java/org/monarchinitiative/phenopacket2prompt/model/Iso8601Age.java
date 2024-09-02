@@ -78,7 +78,7 @@ public final class Iso8601Age implements PhenopacketAge {
 
     @Override
     public boolean isJuvenile() {
-        return years >= 6 && years < 18;
+        return years >= 6 && years < 16;
     }
 
     @Override
@@ -92,6 +92,16 @@ public final class Iso8601Age implements PhenopacketAge {
     }
 
     @Override
+    public boolean isNeonate() {
+        return years == 0 && months < 1;
+    }
+
+    @Override
+    public boolean isEmbryo() {
+        // always false because we cannot express prenatal ages with iso
+        return false;
+    }
+    @Override
     public boolean isFetus() {
         // always false because we cannot express prenatal ages with iso
         return false;
@@ -101,6 +111,26 @@ public final class Iso8601Age implements PhenopacketAge {
     public boolean isCongenital() {
        // rarely. Usually we use Hpo Onset for congenital
         return years == 0 && months == 0 && days == 0;
+    }
+
+    @Override
+    public boolean isYoungAdult() {
+        return years >15 && years < 40;
+    }
+
+    @Override
+    public boolean isMiddleAge() {
+        return years > 39 && years < 60;
+    }
+
+    @Override
+    public boolean isLateAdultAge() {
+        return years >= 60;
+    }
+
+    @Override
+    public boolean isAdult() {
+        return years >= 16;
     }
 
     @Override
@@ -116,8 +146,7 @@ public final class Iso8601Age implements PhenopacketAge {
 
     @Override
     public boolean equals(Object obj) {
-        if (! (obj instanceof PhenopacketAge)) return false;
-        PhenopacketAge iso = (PhenopacketAge) obj;
+        if (! (obj instanceof PhenopacketAge iso)) return false;
         return iso.totalDays() == totalDays();
     }
 }

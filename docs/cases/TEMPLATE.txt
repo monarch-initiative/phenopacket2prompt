@@ -1,0 +1,7 @@
+[source]
+pmid = PMID:
+title =
+[diagnosis]
+disease_id = OMIM:
+disease_label =
+[text]

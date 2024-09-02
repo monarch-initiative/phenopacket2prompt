@@ -1,6 +1,5 @@
 package org.monarchinitiative.phenopacket2prompt.output.impl.dutch;
 
-import org.monarchinitiative.phenol.ontology.data.Ontology;
 import org.monarchinitiative.phenopacket2prompt.model.OntologyTerm;
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketAge;
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketSex;
@@ -11,12 +10,10 @@ import org.monarchinitiative.phenopacket2prompt.output.PpktPhenotypicFeatureGene
 import org.monarchinitiative.phenopacket2prompt.output.PromptGenerator;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class DutchPromptGenerator implements PromptGenerator {
-
-    private final Ontology hpo;
-
 
     private final PPKtIndividualInfoGenerator ppktAgeSexGenerator;
 
@@ -26,16 +23,18 @@ public class DutchPromptGenerator implements PromptGenerator {
 
 
 
-    public DutchPromptGenerator(Ontology hpo, PpktPhenotypicFeatureGenerator pfgen) {
-        this.hpo = hpo;
+    public DutchPromptGenerator(PpktPhenotypicFeatureGenerator pfgen) {
         ppktAgeSexGenerator = new PpktIndividualDutch();
         ppktTextGenerator = new PpktTextDutch();
         this.ppktPhenotypicFeatureGenerator = pfgen;
     }
 
+
+
+
     @Override
     public String queryHeader() {
-        return ppktTextGenerator.QUERY_HEADER();
+        return ppktTextGenerator.GPT_PROMPT_HEADER();
     }
 
     @Override
@@ -50,14 +49,56 @@ public class DutchPromptGenerator implements PromptGenerator {
 
     @Override
     public String getVignetteAtAge(PhenopacketAge page, PhenopacketSex psex, List<OntologyTerm> terms) {
-        String ageString = this.ppktAgeSexGenerator.atAge(page);
-        String features = formatFeatures(terms);
-        return String.format("%s, %s presenteerde met %s", ageString, ppktAgeSexGenerator.heSheIndividual(psex), features);
+        String ageString = this.ppktAgeSexGenerator.atAgeForVignette(page);
+        String person = switch (psex) {
+            case MALE -> "hij";
+            case FEMALE -> "zij";
+            default -> "de persoon";
+        };
+        return this.ppktPhenotypicFeatureGenerator.featuresAtEncounter(person, ageString, terms);
     }
+
+    @Override
+    public  String getVignetteAtOnset(PpktIndividual individual){
+        String person = switch (individual.getSex()) {
+            case MALE -> "Hij";
+            case FEMALE -> "Zij";
+            default -> "De persoon";
+        };
+        return this.ppktPhenotypicFeatureGenerator.featuresAtOnset(person, individual.getPhenotypicFeaturesAtOnset());
+    }
+
 
 
     @Override
     public Set<String> getMissingTranslations() {
         return this.ppktPhenotypicFeatureGenerator.getMissingTranslations();
     }
+
+    /**
+     * The following structure should work for most other languages, but the function
+     * can be overridden if necessary.
+     * @param individual The individual for whom we are creating the prompt
+     * @return the prompt text
+     */
+    @Override
+    public  String createPrompt(PpktIndividual individual) {
+        String individualInfo = getIndividualInformation(individual);
+        // For creating the prompt, we first report the onset and the unspecified terms together, and then
+        String onsetDescription = getVignetteAtOnset(individual);
+        Map<PhenopacketAge, List<OntologyTerm>> pfMap = individual.extractSpecifiedAgePhenotypicFeatures();
+        // We then report the rest, one for each specified time
+        //String onsetFeatures = formatFeatures(onsetTerms);
+        StringBuilder sb = new StringBuilder();
+        sb.append(queryHeader());
+        sb.append(individualInfo).append("\n").append(onsetDescription).append("\n");
+        for (var entry: pfMap.entrySet()) {
+            String vignette = getVignetteAtAge(entry.getKey(), individual.getSex(), entry.getValue());
+            sb.append(vignette).append("\n");
+        }
+        return sb.toString();
+    }
+
+
+
 }

@@ -26,8 +26,8 @@ public class HpInternationalOboParser {
      * @param annots a String such as source:value="Split hand", translation:status="OFFICIAL", source:language="en", translation:language="tr"}
      * @return in this case "tr"
      */
-    public Optional<String> getLanguage(String annots) {
-        final String translation = "translation:language=\"(\\w{2,3})\"";
+    public static Optional<String> getLanguage(String annots) {
+        final String translation = "babelon:translation_language=\"(\\w{2,3})\"";
         final Pattern pattern = Pattern.compile(translation);
         Matcher matcher = pattern.matcher(annots);
         if (matcher.find()) {
@@ -38,17 +38,6 @@ public class HpInternationalOboParser {
         }
     }
 
-    public Optional<String> getTranslation(String annots) {
-        final String translation = "translation:language=\"(\\w{2,2})\"";
-        final Pattern pattern = Pattern.compile(translation);
-        Matcher matcher = pattern.matcher(annots);
-        if (matcher.find()) {
-            String language = matcher.group(1);
-            return Optional.of(language);
-        } else {
-            return Optional.empty();
-        }
-    }
 
     public HpInternationalOboParser(File file) {
         languageToInternationalMap = new HashMap<>();
@@ -93,9 +82,7 @@ public class HpInternationalOboParser {
                                 System.err.printf("[ERROR] Could not extract language for %s.\n", line);
                             }
                         }
-
                     }
-
                 }
                // System.out.println(line);
             }
