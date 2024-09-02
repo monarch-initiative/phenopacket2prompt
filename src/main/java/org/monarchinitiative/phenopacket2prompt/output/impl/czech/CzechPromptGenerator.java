@@ -5,6 +5,7 @@ import org.monarchinitiative.phenopacket2prompt.model.PhenopacketAge;
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketSex;
 import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
 import org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualInfoGenerator;
+import org.monarchinitiative.phenopacket2prompt.output.PpktPhenotypicFeatureGenerator;
 import org.monarchinitiative.phenopacket2prompt.output.PromptGenerator;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 public class CzechPromptGenerator implements PromptGenerator {
 
     private final PPKtIndividualInfoGenerator individualInfoGenerator;
+    private final PpktPhenotypicFeatureGenerator ppktPhenotypicFeatureGenerator;
     private final String header = """
 Provádím experiment na kazuistice, abych jsem porovnal Vaše diagnózy s diagnózami od expertov. Odprezentujem vám část kazuistiky.
 V tomto případě jste "Dr. GPT-4", jazykový model, který poskytuje diagnózu. Mám pro vás několik pokynů.
@@ -31,8 +33,9 @@ Zde je kazuistika:
 
 """;
 
-    public CzechPromptGenerator() {
+    public CzechPromptGenerator(PpktPhenotypicFeatureGenerator pfgen) {
         individualInfoGenerator = new PpktIndividualCzech();
+        ppktPhenotypicFeatureGenerator = pfgen;
     }
 
     @Override
@@ -42,16 +45,18 @@ Zde je kazuistika:
 
     @Override
     public String getIndividualInformation(PpktIndividual ppktIndividual) {
-        return "";
+        return individualInfoGenerator.getIndividualDescription(ppktIndividual);
     }
 
     @Override
     public String formatFeatures(List<OntologyTerm> ontologyTerms) {
-        return "";
+        return ppktPhenotypicFeatureGenerator.formatFeatures(ontologyTerms);
     }
 
     @Override
     public String getVignetteAtAge(PhenopacketAge page, PhenopacketSex psex, List<OntologyTerm> terms) {
-        return "";
+        String ageString = this.individualInfoGenerator.atAgeForVignette(page);
+        String features = formatFeatures(terms);
+        return String.format("%s, %s se prezentoval s následujícími symptomy: %s", ageString, individualInfoGenerator.heSheIndividual(psex), features);
     }
 }
