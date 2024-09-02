@@ -158,22 +158,22 @@ public class DutchBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String adolescentChild() {
-        return "adolescent kind";
+        return "adolescent";
     }
 
     @Override
     public String maleInfant() {
-        return "mannelijk kind";
+        return "mannelijke baby";
     }
 
     @Override
     public String femaleInfant() {
-        return "vrouwelijk kind";
+        return "vrouwelijke baby";
     }
 
     @Override
     public String infant() {
-        return "kind";
+        return "baby";
     }
 
     @Override
