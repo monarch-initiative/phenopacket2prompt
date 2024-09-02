@@ -36,10 +36,10 @@ public class EnglishBuildingBlocks implements BuildingBlockGenerator {
             components.add(String.format("%d %s", y, years(y)));
         }
         if (m > 0) {
-            components.add(String.format("%d %s", m, months(y)));
+            components.add(String.format("%d %s", m, months(m)));
         }
         if (d > 0) {
-            components.add(String.format("%d %s", d, days(y)));
+            components.add(String.format("%d %s", d, days(d)));
         }
         return String.join(" ", components);
     }
@@ -266,7 +266,7 @@ public class EnglishBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String probandWasAnIndividual() {
-        return "The proband was an individual";
+        return "The proband was an individual of unspecified sex and age";
     }
 
     @Override

@@ -1,4 +1,4 @@
-package org.monarchinitiative.phenopacket2prompt.output.impl.italian;
+package org.monarchinitiative.phenopacket2prompt.output.impl.chinese;
 
 import org.monarchinitiative.phenopacket2prompt.model.OntologyTerm;
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketAge;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class ItalianPromptGenerator implements PromptGenerator {
+public class ChinesePromptGenerator implements PromptGenerator {
 
     private final PPKtIndividualInfoGenerator ppktAgeSexGenerator;
 
@@ -23,11 +23,14 @@ public class ItalianPromptGenerator implements PromptGenerator {
 
 
 
-    public ItalianPromptGenerator(PpktPhenotypicFeatureGenerator pfgen) {
-        ppktAgeSexGenerator = new PpktIndividualItalian();
-        ppktTextGenerator = new PpktTextItalian();
+    public ChinesePromptGenerator(PpktPhenotypicFeatureGenerator pfgen) {
+        ppktAgeSexGenerator = new PpktIndividualChinese();
+        ppktTextGenerator = new PpktTextChinese();
         this.ppktPhenotypicFeatureGenerator = pfgen;
     }
+
+
+
 
     @Override
     public String queryHeader() {
@@ -44,30 +47,40 @@ public class ItalianPromptGenerator implements PromptGenerator {
         return ppktPhenotypicFeatureGenerator.formatFeatures(ontologyTerms);
     }
 
-    // featuresAtOnset not used in italian!! To be fixed!!
-
     @Override
     public String getVignetteAtAge(PhenopacketAge page, PhenopacketSex psex, List<OntologyTerm> terms) {
         String ageString = this.ppktAgeSexGenerator.atAgeForVignette(page);
-        String features = formatFeatures(terms);
-        return String.format("%s, %s presentò %s", ageString, ppktAgeSexGenerator.heSheIndividual(psex), features);
+        String person = switch (psex) {
+            case MALE -> "er";
+            case FEMALE -> "sie";
+            default -> "die betroffene Person";
+        };
+        return this.ppktPhenotypicFeatureGenerator.featuresAtEncounter(person, ageString, terms);
     }
 
     @Override
     public  String getVignetteAtOnset(PpktIndividual individual){
         String person = switch (individual.getSex()) {
-            case MALE -> "Il paziente";
-            case FEMALE -> "La paziente";
-            default -> "La persona";
+            case MALE -> "Er";
+            case FEMALE -> "Sie";
+            default -> "Die betroffene Person";
         };
         return this.ppktPhenotypicFeatureGenerator.featuresAtOnset(person, individual.getPhenotypicFeaturesAtOnset());
     }
+
+
 
     @Override
     public Set<String> getMissingTranslations() {
         return this.ppktPhenotypicFeatureGenerator.getMissingTranslations();
     }
 
+    /**
+     * The following structure should work for most other languages, but the function
+     * can be overridden if necessary.
+     * @param individual The individual for whom we are creating the prompt
+     * @return the prompt text
+     */
     @Override
     public  String createPrompt(PpktIndividual individual) {
         String individualInfo = getIndividualInformation(individual);
@@ -87,7 +100,5 @@ public class ItalianPromptGenerator implements PromptGenerator {
     }
 
 
+
 }
-
-
-

@@ -1,4 +1,4 @@
-package org.monarchinitiative.phenopacket2prompt.output.impl.german;
+package org.monarchinitiative.phenopacket2prompt.output.impl.chinese;
 
 import org.monarchinitiative.phenopacket2prompt.model.Iso8601Age;
 import org.monarchinitiative.phenopacket2prompt.output.BuildingBlockGenerator;
@@ -6,7 +6,7 @@ import org.monarchinitiative.phenopacket2prompt.output.BuildingBlockGenerator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GermanBuildingBlocks implements BuildingBlockGenerator {
+public class ChineseBuildingBlocks implements BuildingBlockGenerator {
     @Override
     public String days(int d) {
         return "";
@@ -24,34 +24,34 @@ public class GermanBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String yearsOld(int y) {
-        return String.format("%djährig", y);
+        return String.format("%d岁", y);
     }
 
     @Override
     public String monthsOld(int m) {
-        return String.format("%d Monate alt", m);
+        return String.format("%d个月大", m);
     }
 
     @Override
     public String daysOld(int d) {
-        return String.format("%d Tage alt", d);
+        return String.format("%d天大", d);
     }
 
     @Override
     public String monthDayOld(int m, int d) {
         List<String> components = new ArrayList<>();
         if (m > 0) {
-            components.add(String.format("%d %s", m, m > 1 ? "Monaten" : "Monat"));
+            components.add(String.format("%d个月", m));
         }
         if (d > 0) {
-            components.add(String.format("%d %s", d, d > 1 ? "Tagen" : "Tag"));
+            components.add(String.format("%d天", d));
         }
         if (components.isEmpty()) {
-            return "am ersten Lebenstag";
+            return "自出生起";
         } else if (components.size() == 1) {
             return components.get(0);
         } else {
-            return String.format("im Alter von %s und %s", components.get(0), components.get(1));
+            return String.format("%s%s大时", components.get(0), components.get(1));
         }
     }
 
@@ -59,23 +59,23 @@ public class GermanBuildingBlocks implements BuildingBlockGenerator {
     public String yearsMonthsDaysOld(int y, int m, int d) {
         List<String> components = new ArrayList<>();
         if (y > 0) {
-            components.add(String.format("%d %s", y, y > 1 ? "Jahren" : "Jahr"));
+            components.add(String.format("%d岁", y));
         }
         if (m > 0) {
-            components.add(String.format("%d %s", m, m > 1 ? "Monaten" : "Monat"));
+            components.add(String.format("%d个月", m));
         }
         if (d > 0) {
-            components.add(String.format("%d %s", d, d > 1 ? "Tagen" : "Tag"));
+            components.add(String.format("%d天", d));
         }
         if (components.isEmpty()) {
-            return "am ersten Lebenstag";
+            return "自出生起";
         } else if (components.size() == 1) {
             return components.get(0);
         } else if (components.size() == 2) {
-            return String.format("im Alter von %s und %s", components.get(0), components.get(1));
+            return String.format("%s%s大时", components.get(0), components.get(1));
         } else {
             // we must have y,m,d
-            return String.format("im Alter von %s, %s und %s", components.get(0), components.get(1), components.get(2));
+            return String.format("%s%s%s大时", components.get(0), components.get(1), components.get(2));
         }
     }
 
@@ -101,22 +101,22 @@ public class GermanBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String theProband() {
-        return "";
+        return "受试者";
     }
 
     @Override
     public String woman() {
-        return "Frau";
+        return "女性";
     }
 
     @Override
     public String man() {
-        return "Mann";
+        return "男性";
     }
 
     @Override
     public String individual() {
-        return "erwachsene Person unbekannten Geschlechtes";
+        return "未知性别成年人";
     }
 
     @Override
@@ -126,77 +126,77 @@ public class GermanBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String girl() {
-        return "Mädchen";
+        return "女孩";
     }
 
     @Override
     public String boy() {
-        return "Junge";
+        return "男孩";
     }
 
     @Override
     public String child() {
-        return "Kind";
+        return "儿童";
     }
 
     @Override
     public String adolescentGirl() {
-        return "Jugendliche";
+        return "";
     }
 
     @Override
     public String adolescentBoy() {
-        return "Jugendlicher";
+        return "";
     }
 
     @Override
     public String adolescentChild() {
-        return "Jugendlicher unbekannten Geschlechtes";
+        return "";
     }
 
     @Override
     public String maleInfant() {
-        return "männlicher Säugling";
+        return "男婴";
     }
 
     @Override
     public String femaleInfant() {
-        return "weiblicher Säugling";
+        return "女婴";
     }
 
     @Override
     public String infant() {
-        return "Säugling";
+        return "婴儿";
     }
 
     @Override
     public String newbornBoy() {
-        return "männliches Neugeborenes";
+        return "男性新生儿";
     }
 
     @Override
     public String newbornGirl() {
-        return "weibliches Neugeborenes";
+        return "女性新生儿";
     }
 
     @Override
     public String newborn() {
-        return "Neugeborenes";
+        return "新生儿";
     }
 
     @Override
     public String maleFetus() {
-        return "männlicher Fet";
+        return "男性胎儿";
     }
 
     @Override
     public String femaleFetus() {
-        return "weiblicher Fet";
+        return "女性胎儿";
     }
 
     @Override
     public String fetus() {
-        return "Fet";
+        return "胎儿";
     }
 
     @Override
@@ -216,7 +216,7 @@ public class GermanBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String probandWasA() {
-        return "Der Proband war";
+        return "受试者是";
     }
 
     @Override
@@ -241,17 +241,17 @@ public class GermanBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String probandWasAMale() {
-        return "Der Proband war ein Mann";
+        return "受试者为一名男性";
     }
 
     @Override
     public String probandWasAFemale() {
-        return "Die Probandin war eine Frau";
+        return "受试者为一名女性";
     }
 
     @Override
     public String probandWasAnIndividual() {
-        return "Der Proband war ein Individuum ohne angegebenes Geschlecht und Alter";
+        return "受试者性别未知";
     }
 
     @Override
@@ -271,11 +271,6 @@ public class GermanBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String duringFetal() {
-        return "";
-    }
-
-    @Override
-    public String duringEmbryonic() {
         return "";
     }
 
@@ -326,6 +321,11 @@ public class GermanBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String fromIso(Iso8601Age ppktAge) {
+        return "";
+    }
+
+    @Override
+    public String duringEmbryonic() {
         return "";
     }
 }
