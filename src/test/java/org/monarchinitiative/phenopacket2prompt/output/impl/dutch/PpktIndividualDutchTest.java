@@ -22,15 +22,15 @@ public class PpktIndividualDutchTest extends PPKtIndividualBase{
     private static Stream<TestIndividual> testGetIndividualDescription() {
         return Stream.of(
                 new TestIndividual("46 year olf female, infantile onset",
-                        female46yearsInfantileOnset(), new TestOutcome.Ok("De proband was een vrouw van 46 jaar oud die als baby presenteerde met")),
+                        female46yearsInfantileOnset(), new TestOutcome.Ok("De proband was een 46 jaar oude vrouw. De ziekte begon toen de proband een baby was.")),
                 new TestIndividual("male 4 months, congenital onset",
-                        male4monthsCongenitalOnset(), new TestOutcome.Ok("De proband was een mannelijke baby van 4 maanden oud die in de neonatale periode presenteerde met")),
+                        male4monthsCongenitalOnset(), new TestOutcome.Ok("De proband was een 4 maand oude mannelijke baby. De ziekte begon toen de proband een pasgeborene was.")),
                 new TestIndividual("female, no onset",
-                        femaleNoAge(), new TestOutcome.Ok("De proband was een vrouw die presenteerde met")),
+                        femaleNoAge(), new TestOutcome.Ok("De proband was een vrouw. De leeftijd bij het begin van de ziekte werd niet gespecificeerd.")),
                 new TestIndividual("female, no HPOs",
                         femaleNoHPOs(), new TestOutcome.Error(() -> new PhenolRuntimeException("No HPO annotations"))),
-                new TestIndividual("unknown sex, no 4mo",
-                        unknownSex4MonthOnset(),  new TestOutcome.Ok("De proband presenteerde als kind met"))
+                new TestIndividual("unknown sex, no 4yo",
+                        unknownSex4YearsOnset(),  new TestOutcome.Ok("De proband was een persoon van onbepaald geslacht en leeftijd. De ziekte begon toen de proband een kind was."))
         );
     }
 
@@ -89,13 +89,13 @@ public class PpktIndividualDutchTest extends PPKtIndividualBase{
     private static Stream<TestIdvlAtAge> testIndlAtAge() {
         return Stream.of(
                 new TestIdvlAtAge("congenital",
-                        congenital, new TestOutcome.Ok("Bij geboorte")),
+                        congenital, new TestOutcome.Ok("Bij de geboorte")),
                 new TestIdvlAtAge("infantile",
-                        infantile, new TestOutcome.Ok("Tijdens de infantiele periode")),
+                        infantile, new TestOutcome.Ok("Als baby")),
                 new TestIdvlAtAge("childhood age",
-                        childhood, new TestOutcome.Ok("Tijdens de jeugd")),
+                        childhood, new TestOutcome.Ok("Als kind")),
                 new TestIdvlAtAge("46 years old",
-                        p46y, new TestOutcome.Ok("Op de leeftijd van 46 jaar oud"))
+                        p46y, new TestOutcome.Ok("Op een leeftijd van 46 jaar"))
         );
     }
 
@@ -106,10 +106,10 @@ public class PpktIndividualDutchTest extends PPKtIndividualBase{
         PPKtIndividualInfoGenerator generator = new PpktIndividualDutch();
         switch (testCase.expectedOutcome()) {
             case TestOutcome.Ok(String expectedResult) ->
-                    assertEquals(expectedResult, generator.atAge(testCase.ppktAge()));
+                    assertEquals(expectedResult, generator.atAgeForVignette(testCase.ppktAge()));
             case TestOutcome.Error(Supplier<? extends RuntimeException> exceptionSupplier) ->
                     assertThrows(exceptionSupplier.get().getClass(),
-                            () -> generator.atAge(testCase.ppktAge()),
+                            () -> generator.atAgeForVignette(testCase.ppktAge()),
                             "Incorrect error handling for: " + testCase.description());
         }
 

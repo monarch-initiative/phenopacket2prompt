@@ -205,9 +205,9 @@ public class PpktIndividualDutch implements PPKtIndividualInfoGenerator {
         } else if (m > 0 || d > 0) {
             String age = buildBlocks.monthDayOld(m, d);
             return switch (psex) {
-                case FEMALE -> String.format("%s %s %s", buildBlocks.probandWasA(), age, buildBlocks.femaleInfant());
-                case MALE -> String.format("%s %s %s", buildBlocks.probandWasA(), age, buildBlocks.maleInfant());
-                default -> String.format("%s %s %s", buildBlocks.probandWasA(), age, buildBlocks.infant());
+                case FEMALE -> String.format("%s %se %s", buildBlocks.probandWasA(), age, buildBlocks.femaleInfant());
+                case MALE -> String.format("%s %se %s", buildBlocks.probandWasA(), age, buildBlocks.maleInfant());
+                default -> String.format("%s %se %s", buildBlocks.probandWasA(), age, buildBlocks.infant());
             };
         } else {
             return switch (psex) {
