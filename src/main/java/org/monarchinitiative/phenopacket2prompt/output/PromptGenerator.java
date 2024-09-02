@@ -73,6 +73,10 @@ public interface PromptGenerator {
         return new ChinesePromptGenerator(pfgen);
     }
 
+    static PromptGenerator czech(HpInternational international) {
+        throw new RuntimeException("Not yet implemented!");
+    }
+
 
     /**
      * The following structure should work for most other languages, but the function

@@ -65,7 +65,9 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
         // SPANISH
         PromptGenerator spanish = utility.spanish();
         Utility.outputPromptsInternational(ppktFiles,"es", spanish);
-
+        // Czech
+        PromptGenerator czech = utility.czech();
+        Utility.outputPromptsInternational(ppktFiles, "cs", czech);
         // Dutch
         PromptGenerator dutch = utility.dutch();
         Utility.outputPromptsInternational(ppktFiles,"nl", dutch);
