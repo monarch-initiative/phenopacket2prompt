@@ -62,6 +62,11 @@ public class PpktPhenotypicFeatureDutch implements PpktPhenotypicFeatureGenerato
         List<OntologyTerm> excludedTerms = getExcludedFeatures(ontologyTerms);
         List<String> observedLabels = getTranslations(observedTerms);
         List<String> excludedLabels = getTranslations(excludedTerms);
+
+        if (observedTerms.size() != observedLabels.size() ||
+                excludedTerms.size() != excludedLabels.size() ) {
+            throw new PhenolRuntimeException("Missing translation, function formatFeatures().");
+        }
         if (observedLabels.isEmpty() && excludedLabels.isEmpty()) {
             return "zonder fenotypische abnormaliteiten"; // should never happen, actually!
         } else if (excludedLabels.isEmpty()) {
@@ -87,10 +92,15 @@ public class PpktPhenotypicFeatureDutch implements PpktPhenotypicFeatureGenerato
     public String featuresAtEncounter(String personString, String ageString, List<OntologyTerm> ontologyTerms) {
         List<OntologyTerm> observed = getObservedFeatures(ontologyTerms);
         List<OntologyTerm> excluded = getExcludedFeatures(ontologyTerms);
-        List<String> observeddutch = getTranslations(observed);
-        List<String> excludeddutch = getTranslations(excluded);
-        var observedStr = getCommaList(observeddutch);
-        var excludedStr = getCommaList(excludeddutch);
+        List<String> observedDutch = getTranslations(observed);
+        List<String> excludedDutch = getTranslations(excluded);
+
+        if (observed.size() != observedDutch.size() ||
+                excluded.size() != excludedDutch.size() ) {
+            throw new PhenolRuntimeException("Missing translation, function featuresAtEncounter().");
+        }
+        var observedStr = getCommaList(observedDutch);
+        var excludedStr = getCommaList(excludedDutch);
         if (!observed.isEmpty() && ! excluded.isEmpty()) {
             return String.format("%s presenteerde %s met de volgende symptomen: %s. In tegenstelling daartegen %s uitgesloten: %s.",
                     ageString,
@@ -113,10 +123,15 @@ public class PpktPhenotypicFeatureDutch implements PpktPhenotypicFeatureGenerato
     public String featuresAtOnset(String personString, List<OntologyTerm> ontologyTerms) {
         List<OntologyTerm> observed = getObservedFeatures(ontologyTerms);
         List<OntologyTerm> excluded = getExcludedFeatures(ontologyTerms);
-        List<String> observeddutch = getTranslations(observed);
-        List<String> excludeddutch = getTranslations(excluded);
-        var observedStr = getCommaList(observeddutch);
-        var excludedStr = getCommaList(excludeddutch);
+        List<String> observedDutch = getTranslations(observed);
+        List<String> excludedDutch = getTranslations(excluded);
+
+        if (observed.size() != observedDutch.size() ||
+                excluded.size() != excludedDutch.size() ) {
+            throw new PhenolRuntimeException("Missing translation, function featuresAtOnset().");
+        }
+        var observedStr = getCommaList(observedDutch);
+        var excludedStr = getCommaList(excludedDutch);
 
         if (!observed.isEmpty() && ! excluded.isEmpty()) {
             return String.format("%s presenteerde met de volgende symptomen: %s. In tegenstelling daartegen %s uitgesloten: %s.",

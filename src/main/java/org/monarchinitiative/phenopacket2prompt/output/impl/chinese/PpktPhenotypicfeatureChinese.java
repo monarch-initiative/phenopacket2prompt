@@ -62,6 +62,11 @@ public class PpktPhenotypicfeatureChinese implements PpktPhenotypicFeatureGenera
         List<OntologyTerm> excludedTerms = getExcludedFeatures(ontologyTerms);
         List<String> observedLabels = getTranslations(observedTerms);
         List<String> excludedLabels = getTranslations(excludedTerms);
+
+        if (observedTerms.size() != observedLabels.size() ||
+                excludedTerms.size() != excludedLabels.size() ) {
+            throw new PhenolRuntimeException("Missing translation, function formatFeatures().");
+        }
         if (observedLabels.isEmpty() && excludedLabels.isEmpty()) {
             return "无异常"; // should never happen, actually!
         } else if (excludedLabels.isEmpty()) {
@@ -87,10 +92,15 @@ public class PpktPhenotypicfeatureChinese implements PpktPhenotypicFeatureGenera
     public String featuresAtEncounter(String personString, String ageString, List<OntologyTerm> ontologyTerms) {
         List<OntologyTerm> observed = getObservedFeatures(ontologyTerms);
         List<OntologyTerm> excluded = getExcludedFeatures(ontologyTerms);
-        List<String> observedGerman = getTranslations(observed);
-        List<String> excludedGerman = getTranslations(excluded);
-        var observedStr = getCommaList(observedGerman);
-        var excludedStr = getCommaList(excludedGerman);
+        List<String> observedChinese = getTranslations(observed);
+        List<String> excludedChinese = getTranslations(excluded);
+
+        if (observed.size() != observedChinese.size() ||
+                excluded.size() != excludedChinese.size() ) {
+            throw new PhenolRuntimeException("Missing translation, function featuresAtEncounter().");
+        }
+        var observedStr = getCommaList(observedChinese);
+        var excludedStr = getCommaList(excludedChinese);
         if (!observed.isEmpty() && ! excluded.isEmpty()) {
             return String.format("%s %s出现以下症状: %s. 以下症状被排除: %s.",
                     ageString,
@@ -111,10 +121,15 @@ public class PpktPhenotypicfeatureChinese implements PpktPhenotypicFeatureGenera
     public String featuresAtOnset(String personString, List<OntologyTerm> ontologyTerms) {
         List<OntologyTerm> observed = getObservedFeatures(ontologyTerms);
         List<OntologyTerm> excluded = getExcludedFeatures(ontologyTerms);
-        List<String> observedGerman = getTranslations(observed);
-        List<String> excludedGerman = getTranslations(excluded);
-        var observedStr = getCommaList(observedGerman);
-        var excludedStr = getCommaList(excludedGerman);
+        List<String> observedChinese = getTranslations(observed);
+        List<String> excludedChinese = getTranslations(excluded);
+
+        if (observed.size() != observedChinese.size() ||
+                excluded.size() != excludedChinese.size() ) {
+            throw new PhenolRuntimeException("Missing translation, function featuresAtOnset().");
+        }
+        var observedStr = getCommaList(observedChinese);
+        var excludedStr = getCommaList(excludedChinese);
 
         if (!observed.isEmpty() && ! excluded.isEmpty()) {
             return String.format("%s 出现了以下症状: %s. 以下症状被排除: %s.",

@@ -78,6 +78,11 @@ public class PpktPhenotypicfeatureItalian implements PpktPhenotypicFeatureGenera
         List<OntologyTerm> excludedTerms = ontologyTerms.stream()
                 .filter(OntologyTerm::isExcluded).toList();
         List<String> excludedLabels = getTranslations(excludedTerms);
+
+        if (observedTerms.size() != observedLabels.size() ||
+                excludedTerms.size() != excludedLabels.size() ) {
+            throw new PhenolRuntimeException("Missing translation, function formatFeatures().");
+        }
         if (observedLabels.isEmpty() && excludedLabels.isEmpty()) {
             return "Nessuna anomalia fenotipica"; // should never happen, actually!
         } else if (excludedLabels.isEmpty()) {
@@ -108,6 +113,11 @@ public class PpktPhenotypicfeatureItalian implements PpktPhenotypicFeatureGenera
         List<OntologyTerm> excluded = getExcludedFeatures(ontologyTerms);
         List<String> observedItalian = getTranslations(observed);
         List<String> excludedItalian = getTranslations(excluded);
+
+        if (observed.size() != observedItalian.size() ||
+                excluded.size() != excludedItalian.size() ) {
+            throw new PhenolRuntimeException("Missing translation, function featuresAtOnset().");
+        }
         var observedStr = getCommaList(observedItalian);
         var excludedStr = getCommaList(excludedItalian);
         if (!observed.isEmpty() && ! excluded.isEmpty()) {
@@ -129,10 +139,15 @@ public class PpktPhenotypicfeatureItalian implements PpktPhenotypicFeatureGenera
     public String featuresAtEncounter(String personString, String ageString, List<OntologyTerm> ontologyTerms) {
         List<OntologyTerm> observed = getObservedFeatures(ontologyTerms);
         List<OntologyTerm> excluded = getExcludedFeatures(ontologyTerms);
-        List<String> observedGerman = getTranslations(observed);
-        List<String> excludedGerman = getTranslations(excluded);
-        var observedStr = getCommaList(observedGerman);
-        var excludedStr = getCommaList(excludedGerman);
+        List<String> observedItalian = getTranslations(observed);
+        List<String> excludedItalian = getTranslations(excluded);
+        if (observed.size() != observedItalian.size() ||
+                excluded.size() != excludedItalian.size() ) {
+            throw new PhenolRuntimeException("Missing translation, function featuresAtOnset().");
+        }
+
+        var observedStr = getCommaList(observedItalian);
+        var excludedStr = getCommaList(excludedItalian);
         if (!observed.isEmpty() && ! excluded.isEmpty()) {
             return String.format("%s presentava %s i seguenti sintomi: %s. Al contrario, si %s i seguenti sintomi: %s.",
                     personString,
