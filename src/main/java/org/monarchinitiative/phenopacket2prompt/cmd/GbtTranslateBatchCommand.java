@@ -4,25 +4,16 @@ package org.monarchinitiative.phenopacket2prompt.cmd;
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenol.io.OntologyLoader;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
-import org.monarchinitiative.phenopacket2prompt.international.HpInternational;
-import org.monarchinitiative.phenopacket2prompt.international.HpInternationalOboParser;
-import org.monarchinitiative.phenopacket2prompt.model.PhenopacketDisease;
-import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
+import org.monarchinitiative.phenopacket2prompt.mining.FenominalParser;
 import org.monarchinitiative.phenopacket2prompt.output.CorrectResult;
+import org.monarchinitiative.phenopacket2prompt.output.PpktCopy;
 import org.monarchinitiative.phenopacket2prompt.output.PromptGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Callable;
 
 @CommandLine.Command(name = "batch", aliases = {"B"},
@@ -30,7 +21,6 @@ import java.util.concurrent.Callable;
         description = "Translate batch of phenopackets and output prompts")
 public class GbtTranslateBatchCommand implements Callable<Integer> {
     private final static Logger LOGGER = LoggerFactory.getLogger(GbtTranslateBatchCommand.class);
-
 
     @CommandLine.Option(names = {"--hp"},
             description = "path to HP json file")
@@ -40,160 +30,91 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
             description = "path to translations file")
     private String translationsPath = "data/hp-international.obo";
 
+    @CommandLine.Option(names = {"-o", "--outdir"},
+            description = "path to outdir")
+    private String outdirname = Utility.PROMPT_DIR;
+
     @CommandLine.Option(names = {"-d", "--dir"}, description = "Path to directory with JSON phenopacket files", required = true)
     private String ppktDir;
+
+    private String currentLanguageCode = null;
+    private int currentCount;
+
 
     @Override
     public Integer call() throws Exception {
         File hpJsonFile = new File(hpoJsonPath);
+        boolean useExactMatching = true;
         if (! hpJsonFile.isFile()) {
             throw new PhenolRuntimeException("Could not find hp.json at " + hpJsonFile.getAbsolutePath());
         }
         Ontology hpo = OntologyLoader.loadOntology(hpJsonFile);
         LOGGER.info("HPO version {}", hpo.version().orElse("n/a"));
+        FenominalParser parser = new FenominalParser(hpJsonFile, useExactMatching);
         File translationsFile = new File(translationsPath);
         if (! translationsFile.isFile()) {
             System.err.printf("Could not find translations file at %s. Try download command", translationsPath);
             return 1;
         }
-        HpInternationalOboParser oboParser = new HpInternationalOboParser(translationsFile);
-        Map<String, HpInternational> internationalMap = oboParser.getLanguageToInternationalMap();
-        LOGGER.info("Got {} translations", internationalMap.size());
-        List<File> ppktFiles = getAllPhenopacketJsonFiles();
-        //System.out.print(ppktFiles);
-        createDir("prompts");
-        List<CorrectResult>  correctResultList = outputPromptsEnglish(ppktFiles, hpo);
+        Utility utility = new Utility(translationsFile);
+        // parse something
+
+        List<File> ppktFiles = Utility.getAllPhenopacketJsonFiles(ppktDir);
+        Utility.createDir(outdirname);
+        List<CorrectResult>  correctResultList = Utility.outputPromptsEnglish(ppktFiles);
         // output all non-English languages here
-        PromptGenerator spanish = PromptGenerator.spanish(hpo, internationalMap.get("es"));
-        outputPromptsInternational(ppktFiles, hpo, "es", spanish);
+        String missingTranslationsPath = "missing_translations";
+
+        // SPANISH
+        PromptGenerator spanish = utility.spanish();
+        Utility.outputPromptsInternational(ppktFiles,"es", spanish);
+        Utility.writeMissingTranslations(spanish.getMissingTranslations(),
+                missingTranslationsPath,"spanish.txt");
+
+        // Dutch
+        PromptGenerator dutch = utility.dutch();
+        Utility.outputPromptsInternational(ppktFiles,"nl", dutch);
+        Utility.writeMissingTranslations(dutch.getMissingTranslations(),
+                missingTranslationsPath, "dutch.txt");
+
+        // GERMAN
+        PromptGenerator german = utility.german();
+        Utility.outputPromptsInternational(ppktFiles,"de", german);
+        Utility.writeMissingTranslations(german.getMissingTranslations(),
+                missingTranslationsPath, "german.txt");
+
+        // ITALIAN
+        PromptGenerator italian = utility.italian();
+        Utility.outputPromptsInternational(ppktFiles,"it", italian);
+        Utility.writeMissingTranslations(italian.getMissingTranslations(),
+                missingTranslationsPath, "italian.txt");
+
+        //Turkish
+        PromptGenerator turkish = utility.turkish();
+        Utility.outputPromptsInternational(ppktFiles,"tr", turkish);
+        Utility.writeMissingTranslations(turkish.getMissingTranslations(),
+                missingTranslationsPath, "turkish.txt");
+
+        // chinese
+        PromptGenerator chinese = utility.chinese();
+        Utility.outputPromptsInternational(ppktFiles,"zh", chinese);
+        Utility.writeMissingTranslations(chinese.getMissingTranslations(),
+                missingTranslationsPath, "chinese.txt");
+
+        // output original phenopackets
+        PpktCopy pcopy = new PpktCopy(new File(outdirname));
+        for (var file : ppktFiles) {
+            pcopy.copyFile(file);
+        }
         // output file with correct diagnosis list
-        outputCorrectResults(correctResultList);
+        Utility.outputCorrectPPKt(correctResultList);
         return 0;
     }
 
-    private void outputCorrectResults(List<CorrectResult> correctResultList) {
-        File outfile = new File("prompts" + File.separator + "correct_results.tsv");
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(outfile))) {
-            for (var cres : correctResultList) {
-                bw.write(String.format("%s\t%s\t%s\n", cres.diseaseLabel(), cres.diseaseId().getValue(), cres.promptFileName()));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.printf("[INFO] Output a total of %d prompts in en and es.\n", correctResultList.size());
-    }
-
-
-    private String getFileName(String phenopacketID, String languageCode) {
-        //String leo_test_output = phenopacketID.replaceAll("[\\W]", phenopacketID).replaceAll("/","_") + "-prompt.txt";
-        //System.out.println(phenopacketID);
-        //System.out.println(leo_test_output);
-        //return phenopacketID.replaceAll("[^\\w]", phenopacketID).replaceAll("/","_") + "-prompt.txt";
-        return phenopacketID+".json" + "_" + languageCode+ "-prompt.txt";
-    }
-
-
-
-    private void outputPromptsInternational(List<File> ppktFiles, Ontology hpo, String languageCode, PromptGenerator generator) {
-        String dirpath = String.format("prompts/%s", languageCode);
-        createDir(dirpath);
-        List<String> diagnosisList = new ArrayList<>();
-        for (var f: ppktFiles) {
-            PpktIndividual individual = new PpktIndividual(f);
-            List<PhenopacketDisease> diseaseList = individual.getDiseases();
-            if (diseaseList.size() != 1) {
-                System.err.println(String.format("[ERROR] Got %d diseases for %s.\n", diseaseList.size(), individual.getPhenopacketId()));
-                continue;
-            }
-            PhenopacketDisease pdisease = diseaseList.get(0);
-            String promptFileName = getFileName( individual.getPhenopacketId(), languageCode);
-            String diagnosisLine = String.format("%s\t%s\t%s\t%s", pdisease.getDiseaseId(), pdisease.getLabel(), promptFileName, f.getAbsolutePath());
-            try {
-                diagnosisList.add(diagnosisLine);
-                String prompt = generator.createPrompt(individual);
-                outputPrompt(prompt, promptFileName, dirpath);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-
-    private List<CorrectResult> outputPromptsEnglish(List<File> ppktFiles, Ontology hpo) {
-        createDir("prompts/en");
-        List<CorrectResult> correctResultList = new ArrayList<>();
-        PromptGenerator generator = PromptGenerator.english(hpo);
-
-        for (var f: ppktFiles) {
-            PpktIndividual individual = new PpktIndividual(f);
-            List<PhenopacketDisease> diseaseList = individual.getDiseases();
-            if (diseaseList.size() != 1) {
-                System.err.println(String.format("[ERROR] Got %d diseases for %s.\n", diseaseList.size(), individual.getPhenopacketId()));
-                continue;
-            }
-            PhenopacketDisease pdisease = diseaseList.get(0);
-            String promptFileName = getFileName( individual.getPhenopacketId(), "en");
-            String diagnosisLine = String.format("%s\t%s\t%s\t%s", pdisease.getDiseaseId(), pdisease.getLabel(), promptFileName, f.getAbsolutePath());
-            try {
-                String prompt = generator.createPrompt(individual);
-                outputPrompt(prompt, promptFileName, "prompts/en");
-                var cres = new CorrectResult(promptFileName, pdisease.getDiseaseId(), pdisease.getLabel());
-                correctResultList.add(cres);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return correctResultList;
-    }
-
-
-
-    private void outputPrompt(String prompt, String promptFileName, String dir) {
-        File outpath = new File(dir + File.separator + promptFileName);
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(outpath))) {
-            bw.write(prompt);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.print(".");
-    }
-
-
-
-    private void createDir(String path) {
-        File pathAsFile = new File(path);
-        if (!Files.exists(Paths.get(path))) {
-            pathAsFile.mkdir();
-        }
-    }
 
 
 
 
 
-    private List<File> getAllPhenopacketJsonFiles() {
-        List<String> ppktDirectories = new ArrayList<>();
-        List<File> ppktFiles = new ArrayList<>();
-        File[] items = new File(this.ppktDir).listFiles();
-        // We know that all phenopackets are located in the subdirectories
-        if (!ppktDir.substring(ppktDir.length() - 1).equals("/")) {
-            ppktDir += "/";
-        }
-        for (File item : items) {
-            if (item.isDirectory())
-                ppktDirectories.add(ppktDir+item.getName());
-        }
-        for (var f: ppktDirectories) {
-            File subdir = new File(f);
-            File[] files = subdir.listFiles();
-            for (var ff : files) {
-                if (ff.isFile() && ff.getAbsolutePath().endsWith(".json")) {
-                    ppktFiles.add(ff);
-                }
-            }
-        }
-        System.out.printf("Retrieved %d files.\n", ppktFiles.size());
-        return ppktFiles;
-    }
 
 }

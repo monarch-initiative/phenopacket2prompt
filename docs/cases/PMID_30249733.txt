@@ -1,0 +1,26 @@
+[source]
+pmid = PMID:30249733
+title = Novel mutation in the CHST14 gene causing musculocontractural type of Ehlers-Danlos syndrome
+[diagnosis]
+disease_id = OMIM:601776
+disease_label = Ehlers-Danlos syndrome, musculocontractural type 1
+[text]
+A 3-year-old boy, born out of a third-degree consanguineous marriage was referred to us by the paediatric surgeons on
+suspicion of an underlying genetic disorder. He was being followed by them for bilateral hydronephrosis with bilateral
+pelviureteric junction obstruction (right >left). The child was born by normal vaginal delivery with a birth weight of 2.7kg.
+The length and head circumference at birth were not recorded. At birth, he was noted to have bilateral clubfeet.
+The child started sitting at around 7–8 months of age however had difficulty in standing and walking.
+At the current age of 3 years also, he is able to stand with support only for few minutes.
+In the other sectors of development like cognition and language, the child showed appropriate gain and currently is able
+to tell short stories and enjoys playing with family members. Anthropometry at the age of 3 years showed weight to be 12.6kg,
+length to be 88cm and head circumference of 47cm at 3 years of age. For the initial 1–1.5 years of life,
+the parents were mainly concerned about clubfeet in their child and were taking opinion of local practitioners for the same.
+During an episode of acute febrile illness, he was coincidently diagnosed to have hydronephrosis and in view of cryptorchidism
+noted by the examining physician was referred to our centre for evaluation and management.
+On examination, the child had facial dysmorphism in the form of synophrys, hypertelorism, down slanting palpebral fissures,
+low set ears, thin upper lip, high arched palate and prominent nasolabial folds (figures 1A and 2A–C).
+He had tapering fingers with bilaterally thin and adducted thumbs (figure 1B). The deep palmer creases were absent and
+only a few fine creases were seen. Feet showed bilateral talipes equinovarus deformity (figure 1C).
+The skin was hyperelastic and hypermobility of fingers, elbow and knee joints was noted. Generalised hypotonia was present.
+The child also had bilateral cryptorchidism. No bruises or haematomas were seen and even on repeated asking the parents denied
+any bleeding tendency.

@@ -1,14 +1,13 @@
 package org.monarchinitiative.phenopacket2prompt.output.impl.spanish;
 
+import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenopacket2prompt.international.HpInternational;
 import org.monarchinitiative.phenopacket2prompt.model.OntologyTerm;
 import org.monarchinitiative.phenopacket2prompt.output.PpktPhenotypicFeatureGenerator;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class PpktPhenotypicfeatureSpanish implements PpktPhenotypicFeatureGenerator {
 
@@ -16,9 +15,10 @@ public class PpktPhenotypicfeatureSpanish implements PpktPhenotypicFeatureGenera
 
     public PpktPhenotypicfeatureSpanish(HpInternational international) {
         spanish = international;
+        missingTranslations = new HashSet<>();
     }
 
-
+    private Set<String> missingTranslations;
 
     private List<String> getTranslations(List<OntologyTerm> ontologyTerms) {
         List<String> labels = new ArrayList<>();
@@ -27,7 +27,8 @@ public class PpktPhenotypicfeatureSpanish implements PpktPhenotypicFeatureGenera
             if (opt.isPresent()) {
                 labels.add(opt.get());
             } else {
-                System.err.printf("[ERROR] Could not find %s translation for %s (%s).\n", spanish.getLanguageAcronym(), term.getLabel(), term.getTid().getValue());
+                String missing = String.format(" %s (%s)", term.getLabel(), term.getTid().getValue());
+                missingTranslations.add(missing);
             }
         }
         return labels;
@@ -36,26 +37,43 @@ public class PpktPhenotypicfeatureSpanish implements PpktPhenotypicFeatureGenera
 
     private final Set<Character> vowels = Set.of('A', 'E', 'I', 'O', 'U', 'Y');
 
-    private String getOxfordCommaList(List<String> items) {
+    String getConnector(String nextWord) {
+        if (nextWord.length() < 2) {
+            return "y"; // should never happen but do not want to crash
+        }
+        char letter = nextWord.charAt(0);
+        if (vowels.contains(letter)) {
+            return " i ";
+        }
+        Character letter2 = nextWord.charAt(1);
+        if (letter == 'H' && vowels.contains(letter2)) {
+            return " i ";
+        }
+        return " y ";
+
+    }
+
+
+
+
+
+    private String getCommaList(List<String> items) {
+        if (items.isEmpty()) return ""; // will be filtered out
         if (items.size() == 1) {
-            return items.get(0);
+            return items.getFirst();
         }
         if (items.size() == 2) {
             // no comma if we just have two items.
             // one item will work with the below code
-            return String.join(" and ", items);
+            String connector = getConnector(items.get(1));
+            return String.join(connector, items);
         }
-        String symList = String.join(", ", items);
-        int jj = symList.lastIndexOf(", ");
-        if (jj > 0) {
-            String end = symList.substring(jj+2);
-            if (vowels.contains(end.charAt(0))) {
-                symList = symList.substring(0, jj) + " i " + end;
-            } else {
-                symList = symList.substring(0, jj) + " y " + end;
-            }
-        }
-        return symList;
+        // if we have more than two, join all but the very last item with a comma
+        String penultimate = items.stream()
+                .limit(items.size() - 1)
+                .collect(Collectors.joining(", "));
+        String ultimate = items.get(items.size() - 1);
+        return penultimate + getConnector(ultimate) + ultimate;
     }
 
     @Override
@@ -68,23 +86,76 @@ public class PpktPhenotypicfeatureSpanish implements PpktPhenotypicFeatureGenera
                 .filter(OntologyTerm::isExcluded).toList();
         List<String> excludedLabels = getTranslations(excludedTerms);
         if (observedLabels.isEmpty() && excludedLabels.isEmpty()) {
-            return "no phenotypic abnormalities"; // should never happen, actually!
+            throw new PhenolRuntimeException("No phenotypic abnormalities"); // should never happen, actually!
         } else if (excludedLabels.isEmpty()) {
-            return getOxfordCommaList(observedLabels) + ". ";
+            return getCommaList(observedLabels) + ".";
         } else if (observedLabels.isEmpty()) {
             if (excludedLabels.size() > 1) {
-                return String.format("por lo que se excluyeron %s.", getOxfordCommaList(excludedLabels));
+                return String.format("se descartaron %s.", getCommaList(excludedLabels));
             } else {
-                return String.format("por lo que %s fue excluido.",excludedLabels.get(0));
+                return String.format("se descartó %s.",excludedLabels.getFirst());
             }
         } else {
             String exclusion;
             if (excludedLabels.size() == 1) {
-                exclusion = String.format(" y se excluyó %s.", getOxfordCommaList(excludedLabels));
+                exclusion = String.format(". En cambio, se descartó %s.", getCommaList(excludedLabels));
             } else {
-                exclusion =  String.format(" y se excluyeron %s.", getOxfordCommaList(excludedLabels));
+                exclusion =  String.format(". En cambio, se descartaron %s.", getCommaList(excludedLabels));
             }
-            return getOxfordCommaList(observedLabels) +  exclusion;
+            return getCommaList(observedLabels) +  exclusion;
+        }
+    }
+
+    public Set<String> getMissingTranslations() {
+        return missingTranslations;
+    }
+
+    @Override
+    public String featuresAtOnset(String personString, List<OntologyTerm> ontologyTerms) {
+        List<OntologyTerm> observed = getObservedFeatures(ontologyTerms);
+        List<OntologyTerm> excluded = getExcludedFeatures(ontologyTerms);
+        List<String> observedSpanish = getTranslations(observed);
+        List<String> excludedSpanish = getTranslations(excluded);
+        var observedStr = getCommaList(observedSpanish);
+        var excludedStr = getCommaList(excludedSpanish);
+        if (!observed.isEmpty() && ! excluded.isEmpty()) {
+            return String.format("%s presentó los siguientes síntomas: %s. Por el contrario, se %s: %s.",
+                    personString,
+                    observedStr,
+                    excluded.size()>1? "excluyeron los siguientes síntomas":"excluyeró el siguiente síntoma",
+                    excludedStr);
+        } else if (!observed.isEmpty()) {
+            return String.format("%s presentó los siguientes síntomas: %s.", personString, observedStr);
+        } else if (!excluded.isEmpty()) {
+            return String.format("Al inicio de la enfermedad, se %s: %s.",
+                    excluded.size()>1? "excluyeron los siguientes síntomas":"excluyeró el siguiente síntoma", excludedStr);
+        } else {
+            return "No se describieron explícitamente anomalías fenotípicas al inicio de la enfermedad";
+        }
+    }
+    @Override
+    public String featuresAtEncounter(String personString, String ageString, List<OntologyTerm> ontologyTerms) {
+        List<OntologyTerm> observed = getObservedFeatures(ontologyTerms);
+        List<OntologyTerm> excluded = getExcludedFeatures(ontologyTerms);
+        List<String> observedGerman = getTranslations(observed);
+        List<String> excludedGerman = getTranslations(excluded);
+        var observedStr = getCommaList(observedGerman);
+        var excludedStr = getCommaList(excludedGerman);
+        if (!observed.isEmpty() && ! excluded.isEmpty()) {
+            return String.format("%s presentaba %s los siguientes síntomas: %s. Por el contrario, se %s los siguientes síntomas: %s.",
+                    personString,
+                    ageString,
+                    observedStr,
+                    excluded.size()>1? "excluyeron":"excluyeró",
+                    excludedStr);
+        } else if (!observed.isEmpty()) {
+            return String.format("%s presentaba %s los siguientes síntomas: %s.", ageString, personString,  observedStr);
+        } else if (!excluded.isEmpty()) {
+            return String.format("%s se %s los siguientes síntomas: %s.",
+                    ageString,
+                    excluded.size()>1? "excluyeron":"excluyeró", excludedStr);
+        } else {
+            throw new PhenolRuntimeException("No features found for time point " + ageString); // should never happen
         }
     }
 }

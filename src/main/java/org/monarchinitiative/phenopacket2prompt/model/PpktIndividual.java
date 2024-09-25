@@ -15,16 +15,44 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+import java.util.function.Predicate;
 
 public class PpktIndividual {
-    final Logger LOGGER = LoggerFactory.getLogger(PpktIndividual.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PpktIndividual.class);
 
     private final Phenopacket ppkt;
 
     private final String phenopacketId;
 
+    private final List<OntologyTerm> phenotypicFeaturesAtOnset;
+    /** features that were observed after the onset but at a specified age. We output a separate vignette for
+     * each of these ages.
+     */
+    private final Map<PhenopacketAge, List<OntologyTerm>> phenotypicFeaturesAtSpecifiedAge;
 
-    public PpktIndividual(File ppktJsonFile) {
+    private final List<OntologyTerm> phenotypicFeaturesAtOnsetWithoutSpecifiedAge;
+
+
+    public PpktIndividual(Phenopacket ppkt) {
+        this.ppkt = ppkt;
+        this.phenopacketId = ppkt.getId();
+        phenotypicFeaturesAtSpecifiedAge = extractSpecifiedAgePhenotypicFeatures();
+        List<OntologyTerm> onsetTerms = extractPhenotypicFeaturesAtOnset();
+        List<OntologyTerm> unspecifiedTerms = extractPhenotypicFeaturesWithNoSpecifiedAge();
+        if (onsetTerms.isEmpty()) {
+            phenotypicFeaturesAtOnset = List.copyOf(unspecifiedTerms);
+            phenotypicFeaturesAtOnsetWithoutSpecifiedAge = List.of();
+        } else {
+            // For now, we will put all unspecified terms at the onset
+            onsetTerms.addAll(unspecifiedTerms);
+            phenotypicFeaturesAtOnset = List.copyOf(onsetTerms);
+            phenotypicFeaturesAtOnsetWithoutSpecifiedAge = List.of();
+        }
+
+
+    }
+
+    public static PpktIndividual fromFile(File ppktJsonFile) {
         JSONParser parser = new JSONParser();
         try {
             Object obj = parser.parse(new FileReader(ppktJsonFile));
@@ -32,13 +60,19 @@ public class PpktIndividual {
             String phenopacketJsonString = jsonObject.toJSONString();
             Phenopacket.Builder phenoPacketBuilder = Phenopacket.newBuilder();
             JsonFormat.parser().merge(phenopacketJsonString, phenoPacketBuilder);
-            this.ppkt = phenoPacketBuilder.build();
+            Phenopacket ppkt = phenoPacketBuilder.build();
+            return new PpktIndividual(ppkt);
         } catch (IOException | ParseException e1) {
             LOGGER.error("Could not ingest phenopacket: {}", e1.getMessage());
             throw new PhenolRuntimeException("Could not load phenopacket at " + ppktJsonFile);
         }
-        this.phenopacketId = ppkt.getId();
     }
+
+    public static PpktIndividual fromPhenopacket(Phenopacket ppkt) {
+        return new PpktIndividual(ppkt);
+    }
+
+
 
     public String getPhenopacketId() {
         return phenopacketId;
@@ -63,7 +97,6 @@ public class PpktIndividual {
         } else {
             return Optional.empty();
         }
-
     }
 
     public Optional<PhenopacketAge> getAgeAtLastExamination() {
@@ -98,7 +131,7 @@ public class PpktIndividual {
 
 
 
-    public List<OntologyTerm> getPhenotypicFeaturesWithNoSpecifiedAge() {
+    private List<OntologyTerm> extractPhenotypicFeaturesWithNoSpecifiedAge() {
         List<OntologyTerm> unspecifiedFeatures = new ArrayList<>();
         for (var pf : ppkt.getPhenotypicFeaturesList()) {
             OntologyClass clz = pf.getType();
@@ -136,8 +169,10 @@ public class PpktIndividual {
         return false;
     }
 
-
-    public List<OntologyTerm> getPhenotypicFeaturesAtOnset() {
+    /**
+     * @return List of Phenotypic features that were observed at the age of onset.
+     */
+    private List<OntologyTerm> extractPhenotypicFeaturesAtOnset() {
         Optional<PhenopacketAge> opt = getAgeAtOnset();
         if (opt.isEmpty()) {
             return new ArrayList<>(); //
@@ -167,11 +202,13 @@ public class PpktIndividual {
         return onsetFeatures;
     }
 
+
+
     /**
      * This code does not include features with unspecified onset (for that, use {@code getPhenotypicFeaturesWithNoSpecifiedAge}) or terms at the age of onset
      * @return map of phenotypic features with specified onset after the age of onset
      */
-    public Map<PhenopacketAge, List<OntologyTerm>> getSpecifiedAgePhenotypicFeatures() {
+    public Map<PhenopacketAge, List<OntologyTerm>> extractSpecifiedAgePhenotypicFeatures() {
         Map<PhenopacketAge, List<OntologyTerm>> ageToFeatureMap = new HashMap<>();
         Optional<PhenopacketAge> onsetOpt = getAgeAtOnset();
         for (var pf : ppkt.getPhenotypicFeaturesList()) {
@@ -202,4 +239,36 @@ public class PpktIndividual {
         }
         return ageToFeatureMap;
     }
+
+    public int annotationCount() {
+        return ppkt.getPhenotypicFeaturesCount();
+    }
+
+    public List<OntologyTerm> getPhenotypicFeaturesAtOnset() {
+        return phenotypicFeaturesAtOnset;
+    }
+
+    public List<OntologyTerm> getObservedPhenotypicFeaturesAtOnset() {
+        return phenotypicFeaturesAtOnset.stream().filter(Predicate.not(OntologyTerm::isExcluded)).toList();
+    }
+
+    public List<OntologyTerm> getExcludedPhenotypicFeaturesAtOnset() {
+        return phenotypicFeaturesAtOnset.stream().filter(OntologyTerm::isExcluded).toList();
+    }
+
+    public boolean hasObservedPhenotypeFeatureAtOnset() {
+        return phenotypicFeaturesAtOnset.stream().anyMatch(Predicate.not(OntologyTerm::isExcluded));
+    }
+
+    public boolean hasExcludedPhenotypeFeatureAtOnset() {
+        return phenotypicFeaturesAtOnset.stream().anyMatch(OntologyTerm::isExcluded);
+    }
+
+    public Map<PhenopacketAge, List<OntologyTerm>> getPhenotypicFeaturesAtSpecifiedAge() {
+        return phenotypicFeaturesAtSpecifiedAge;
+    }
+
+   /* public List<OntologyTerm> getPhenotypicFeaturesAtOnsetWithoutSpecifiedAge() {
+        return phenotypicFeaturesAtOnsetWithoutSpecifiedAge;
+    }*/
 }

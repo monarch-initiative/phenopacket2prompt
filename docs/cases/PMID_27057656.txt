@@ -1,0 +1,30 @@
+[source]
+pmid = PMID:27057656
+title = Novel ADAMTSL2-mutations in a patient with geleophysic dysplasia type I
+[diagnosis]
+disease_id = OMIM:231050
+disease_label = Geleophysic dysplasia 1
+[text]
+The patient was the first child of healthy and nonconsanguineous German parents. Polyhydramnios and
+short extremities were observed on prenatal ultrasound.
+He was born after an uneventful pregnancy in the 34th
+gestational week with normal birth measurements
+(length 43 cm, 10–25th centile; weight 2260 g, 30th centile; occipitofrontal head circumference 34 cm, 75th
+centile). The patient had mild pulmonary stenosis.
+He presented with recurrent respiratory infections, progressive short stature and
+unusual facial features. Skeletal
+survey at the age of 1 year and 3 months (Fig. 1) indicated severe brachydactyly,
+with shortening of metacarpalia and phalanges. Bone age was severely delayed
+and he showed poor diaphyseal modelling of the phalanges. The femur, humerus and ulna were short, which
+had already been observed on prenatal ultrasound. As no
+lateral radiography of the spine had been performed,
+there was no information on vertebral anomalies.
+On examination at the age of 15 months, our patient
+presented with short stature [height 66 cm, 9 cm < 3rd
+centile; weight 6870 g, 2000 g <3rd centile (corrected for
+length: 25th centile)]; occipitofrontal head circumference
+was normal (48.7 cm, 75th centile). Facial dysmorphism
+included thin lip vermilion, long philtrum, a broad nasal
+tip and bilateral ptosis (Fig. 2). The elbows and knees
+were not fully extendable. Psychomotor development
+was delayed; he could neither walk nor talk at that age.

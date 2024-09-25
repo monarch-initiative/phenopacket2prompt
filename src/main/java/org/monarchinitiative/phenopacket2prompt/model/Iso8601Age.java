@@ -2,7 +2,9 @@ package org.monarchinitiative.phenopacket2prompt.model;
 
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 
-public class Iso8601Age implements PhenopacketAge {
+import java.util.Objects;
+
+public final class Iso8601Age implements PhenopacketAge {
 
     private final String iso8601;
 
@@ -57,12 +59,14 @@ public class Iso8601Age implements PhenopacketAge {
     @Override
     public String age() {
         StringBuilder sb = new StringBuilder();
-        if (years > 0) {
-            return String.format("%d year-old", years);
+        if (years == 1) {
+            return "one year";
+        } else if (years > 1) {
+            return String.format("%d years", years);
         } else if (months > 0) {
-            return String.format("%d month-old", months);
+            return String.format("%d months", months);
         } else {
-            return String.format("%d day-old", days);
+            return String.format("%d days", days);
         }
     }
 
@@ -74,12 +78,12 @@ public class Iso8601Age implements PhenopacketAge {
 
     @Override
     public boolean isJuvenile() {
-        return years >= 10 && years < 18;
+        return years >= 6 && years < 16;
     }
 
     @Override
     public boolean isChild() {
-        return years >= 1 && years < 10;
+        return years >= 1 && years < 6;
     }
 
     @Override
@@ -87,6 +91,16 @@ public class Iso8601Age implements PhenopacketAge {
         return years < 1;
     }
 
+    @Override
+    public boolean isNeonate() {
+        return years == 0 && months < 1;
+    }
+
+    @Override
+    public boolean isEmbryo() {
+        // always false because we cannot express prenatal ages with iso
+        return false;
+    }
     @Override
     public boolean isFetus() {
         // always false because we cannot express prenatal ages with iso
@@ -100,7 +114,39 @@ public class Iso8601Age implements PhenopacketAge {
     }
 
     @Override
+    public boolean isYoungAdult() {
+        return years >15 && years < 40;
+    }
+
+    @Override
+    public boolean isMiddleAge() {
+        return years > 39 && years < 60;
+    }
+
+    @Override
+    public boolean isLateAdultAge() {
+        return years >= 60;
+    }
+
+    @Override
+    public boolean isAdult() {
+        return years >= 16;
+    }
+
+    @Override
     public int totalDays() {
         return totalDays;
+    }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(totalDays());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (! (obj instanceof PhenopacketAge iso)) return false;
+        return iso.totalDays() == totalDays();
     }
 }

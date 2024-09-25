@@ -4,12 +4,17 @@ import org.monarchinitiative.phenopacket2prompt.model.PhenopacketAge;
 import org.monarchinitiative.phenopacket2prompt.model.PhenopacketSex;
 import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
 
-public interface PhenopacketIndividualInformationGenerator {
+public interface PPKtIndividualInfoGenerator {
 
     String getIndividualDescription(PpktIndividual individual);
 
     String heSheIndividual(PhenopacketSex psex);
 
-    String atAge(PhenopacketAge ppktAge);
+    /**
+     * Generate an age description intended for the vignettes for a specified age (i.e., not for the very first sentence).
+     * @param ppktAge
+     * @return
+     */
+    String atAgeForVignette(PhenopacketAge ppktAge);
 
 }

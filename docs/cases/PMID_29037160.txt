@@ -1,0 +1,12 @@
+[source]
+pmid = PMID:29037160
+title = Homozygous, and compound heterozygous mutation in 3 Turkish family with Jervell and Lange-Nielsen syndrome: case reports
+[diagnosis]
+disease_id = OMIM:220400
+disease_label = Jervell and Lange-Nielsen syndrome
+[text]
+Case 3 (family III)
+A 5 year old male child (Fig. 2c; IV-5) was examined due to pre-diagnosis of long QT syndrome. He was a second child of a first-degree consanguineous marriage.
+He displayed symptoms of tachypnea and postnatal bradycardia and was transferred to another hospital on the second day of his birth.
+In the physical examination, bilateral hearing loss was determined. His resting 12 lead ECG exhibited a prolongation in
+QTc distance of 520 ms (Fig. 2d). The ECG of both parents demonstrated normal ECG readings at rest. No syncope was detected on his follow-up period.
