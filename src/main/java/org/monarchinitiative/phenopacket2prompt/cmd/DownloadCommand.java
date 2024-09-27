@@ -10,6 +10,8 @@ import picocli.CommandLine;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -35,13 +37,13 @@ public class DownloadCommand implements Callable<Integer>{
     public boolean overwrite;
 
     @Override
-    public Integer call() throws FileDownloadException, MalformedURLException {
+    public Integer call() throws FileDownloadException, MalformedURLException, URISyntaxException {
         logger.info(String.format("Download analysis to %s", datadir));
         Path destination = Paths.get(datadir);
         BioDownloaderBuilder builder = BioDownloader.builder(destination);
         builder.hpoJson();
         String hpoInternational = "https://github.com/obophenotype/human-phenotype-ontology/releases/latest/download/hp-international.obo";
-        URL hpoInternationalUrl  = Paths.get(hpoInternational).toUri().toURL() ;
+        URL hpoInternationalUrl  = new URI(hpoInternational).toURL() ;
         builder.custom("hp-international.obo", hpoInternationalUrl);
         BioDownloader downloader = builder.build();
         List<File> files = downloader.download();
