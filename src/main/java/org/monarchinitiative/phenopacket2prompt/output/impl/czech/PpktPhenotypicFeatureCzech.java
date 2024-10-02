@@ -31,60 +31,60 @@ public class PpktPhenotypicFeatureCzech implements PpktPhenotypicFeatureGenerato
         return labels;
     }
 
-    /**
-     * This method is called right after the demographic information are given, e.g.,
-     * The proband was a 32-year-old female who presented at the age of 2 years[...]"
-     * @param ontologyTerms
-     * @return
-     */
-    public String featuresAtPresentation(String person, List<OntologyTerm> ontologyTerms) {
-        List<String>  observed = getObservedFeaturesAsStr(ontologyTerms);
-        List<String>  excluded = getExcludedFeaturesAsStr(ontologyTerms);
-        if (! observed.isEmpty() && ! excluded.isEmpty()) {
-            return String.format("s %s. In contrast, %s %s excluded. ",
-                    getOxfordCommaList(observed),
-                    getOxfordCommaList(excluded),
-                    excluded.size() > 1 ? "were" : "byl");
+//    /**
+//     * This method is called right after the demographic information are given, e.g.,
+//     * The proband was a 32-year-old female who presented at the age of 2 years[...]"
+//     * @param ontologyTerms
+//     * @return
+//     */
+//    public String featuresAtPresentation(String person, List<OntologyTerm> ontologyTerms) {
+//        List<String>  observed = getObservedFeaturesAsStr(ontologyTerms);
+//        List<String>  excluded = getExcludedFeaturesAsStr(ontologyTerms);
+//        if (! observed.isEmpty() && ! excluded.isEmpty()) {
+//            return String.format("s %s. In contrast, %s %s excluded. ",
+//                    getOxfordCommaList(observed),
+//                    getOxfordCommaList(excluded),
+//                    excluded.size() > 1 ? "were" : "byl");
+//
+//        } else if (!excluded.isEmpty()) {
+//            return String.format(" s %s. ",
+//                    getOxfordCommaList(observed));
+//        } else if (!observed.isEmpty()) {
+//            return String.format(". %s %s excluded. ",
+//                    getOxfordCommaList(excluded),
+//                    excluded.size() > 1 ? "were" : "was");
+//        } else {
+//            throw new PhenolRuntimeException("No phenotypic features passed");
+//        }
+//    }
 
-        } else if (!excluded.isEmpty()) {
-            return String.format(" s %s. ",
-                    getOxfordCommaList(observed));
-        } else if (!observed.isEmpty()) {
-            return String.format(". %s %s excluded. ",
-                    getOxfordCommaList(excluded),
-                    excluded.size() > 1 ? "were" : "was");
-        } else {
-            throw new PhenolRuntimeException("No phenotypic features passed");
-        }
-    }
 
-
-    /**
-     * This method is called right after each subsequent age. For instance,
-     * At the age of 7 years, she[...]"
-     * @param ontologyTerms
-     * @return
-     */
-    public String featuresForVignette(List<OntologyTerm> ontologyTerms) {
-        List<String> observed = getObservedFeaturesAsStr(ontologyTerms);
-        List<String> excluded = getExcludedFeaturesAsStr(ontologyTerms);
-        if (! observed.isEmpty() && ! excluded.isEmpty()) {
-            return String.format(" presented with %s. In contrast, %s %s excluded. ",
-                    getOxfordCommaList(observed),
-                    getOxfordCommaList(excluded),
-                    excluded.size() > 1 ? "were" : "was");
-
-        } else if (!excluded.isEmpty()) {
-            return String.format(" presented with %s. ",
-                    getOxfordCommaList(observed));
-        } else if (!observed.isEmpty()) {
-            return String.format(" . %s %s excluded. ",
-                    getOxfordCommaList(excluded),
-                    excluded.size() > 1 ? "were" : "was");
-        } else {
-            throw new PhenolRuntimeException("No phenotypic features passed");
-        }
-    }
+//    /**
+//     * This method is called right after each subsequent age. For instance,
+//     * At the age of 7 years, she[...]"
+//     * @param ontologyTerms
+//     * @return
+//     */
+//    public String featuresForVignette(List<OntologyTerm> ontologyTerms) {
+//        List<String> observed = getObservedFeaturesAsStr(ontologyTerms);
+//        List<String> excluded = getExcludedFeaturesAsStr(ontologyTerms);
+//        if (! observed.isEmpty() && ! excluded.isEmpty()) {
+//            return String.format(" presented with %s. In contrast, %s %s excluded. ",
+//                    getOxfordCommaList(observed),
+//                    getOxfordCommaList(excluded),
+//                    excluded.size() > 1 ? "were" : "was");
+//
+//        } else if (!excluded.isEmpty()) {
+//            return String.format(" presented with %s. ",
+//                    getOxfordCommaList(observed));
+//        } else if (!observed.isEmpty()) {
+//            return String.format(" . %s %s excluded. ",
+//                    getOxfordCommaList(excluded),
+//                    excluded.size() > 1 ? "were" : "was");
+//        } else {
+//            throw new PhenolRuntimeException("No phenotypic features passed");
+//        }
+//    }
 
 
 
@@ -182,5 +182,10 @@ public class PpktPhenotypicFeatureCzech implements PpktPhenotypicFeatureGenerato
         } else {
             throw new PhenolRuntimeException("No features found for time point " + ageString); // should never happen
         }
+    }
+
+    @Override
+    public Set<String> getMissingTranslations() {
+        return missingTranslations;
     }
 }

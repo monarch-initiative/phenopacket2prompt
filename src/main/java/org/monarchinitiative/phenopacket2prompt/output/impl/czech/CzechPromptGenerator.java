@@ -9,6 +9,7 @@ import org.monarchinitiative.phenopacket2prompt.output.PpktPhenotypicFeatureGene
 import org.monarchinitiative.phenopacket2prompt.output.PromptGenerator;
 
 import java.util.List;
+import java.util.Set;
 
 public class CzechPromptGenerator implements PromptGenerator {
 
@@ -58,5 +59,10 @@ Zde je kazuistika:
         String ageString = this.individualInfoGenerator.atAgeForVignette(page);
         String features = formatFeatures(terms);
         return String.format("%s, %s se prezentoval s následujícími symptomy: %s", ageString, individualInfoGenerator.heSheIndividual(psex), features);
+    }
+
+    @Override
+    public Set<String> getMissingTranslations() {
+        return ppktPhenotypicFeatureGenerator.getMissingTranslations();
     }
 }

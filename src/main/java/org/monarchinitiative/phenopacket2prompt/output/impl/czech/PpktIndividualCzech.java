@@ -4,7 +4,6 @@ import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenopacket2prompt.model.*;
 import org.monarchinitiative.phenopacket2prompt.output.BuildingBlockGenerator;
 import org.monarchinitiative.phenopacket2prompt.output.PPKtIndividualInfoGenerator;
-import org.monarchinitiative.phenopacket2prompt.output.impl.english.EnglishBuildingBlocks;
 
 import java.util.ArrayList;
 import java.util.List;
