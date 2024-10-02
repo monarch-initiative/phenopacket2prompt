@@ -38,7 +38,7 @@ public class PpktIndividualChineseTest extends PPKtIndividualBase{
     @ParameterizedTest
     @MethodSource("testGetIndividualDescription")
     void testEvaluateExpression(TestIndividual testCase) {
-        PPKtIndividualInfoGenerator generator = new PpktIndividualDutch();
+        PPKtIndividualInfoGenerator generator = new PpktIndividualChinese();
         PpktIndividual ppkti = testCase.ppktIndividual();
         switch (testCase.expectedOutcome()) {
             case TestOutcome.Ok(String expectedResult) ->

@@ -51,9 +51,9 @@ public class ChinesePromptGenerator implements PromptGenerator {
     public String getVignetteAtAge(PhenopacketAge page, PhenopacketSex psex, List<OntologyTerm> terms) {
         String ageString = this.ppktAgeSexGenerator.atAgeForVignette(page);
         String person = switch (psex) {
-            case MALE -> "er";
-            case FEMALE -> "sie";
-            default -> "die betroffene Person";
+            case MALE -> "他";
+            case FEMALE -> "她";
+            default -> "患者";
         };
         return this.ppktPhenotypicFeatureGenerator.featuresAtEncounter(person, ageString, terms);
     }
@@ -61,9 +61,9 @@ public class ChinesePromptGenerator implements PromptGenerator {
     @Override
     public  String getVignetteAtOnset(PpktIndividual individual){
         String person = switch (individual.getSex()) {
-            case MALE -> "Er";
-            case FEMALE -> "Sie";
-            default -> "Die betroffene Person";
+            case MALE -> "他";
+            case FEMALE -> "她";
+            default -> "患者";
         };
         return this.ppktPhenotypicFeatureGenerator.featuresAtOnset(person, individual.getPhenotypicFeaturesAtOnset());
     }
