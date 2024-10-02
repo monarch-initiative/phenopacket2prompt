@@ -99,7 +99,7 @@ public class Utility {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.printf("[INFO] Output a total of %d prompts in en, es, nl, de, and it.\n", correctResultList.size());
+        System.out.printf("[INFO] Output a total of %d prompts in en, es, nl, de, tr, zh and it.\n", correctResultList.size());
     }
 
 
@@ -112,6 +112,17 @@ public class Utility {
         }
     }
 
+    public static void writeMissingTranslations(Set<String> Untranslated, String dir, String missingFileName){
+        File missingFile = new File(dir + File.separator + missingFileName);
+        Utility.createDir(dir);
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(missingFile))) {
+            for (String noTranslation : Untranslated) {
+                bw.write(noTranslation + System.lineSeparator());
+            }
+        } catch (IOException e) {
+            throw new PhenolRuntimeException("Could not output file to " + missingFileName);
+        }
+    }
 
 
 
@@ -187,6 +198,8 @@ public class Utility {
                 PROMPT_DIR,
                 generator);
     }
+
+
 
     public static void outputPromptsInternationalMining(List<PpktIndividual> individualList,
                                                         String languageCode,

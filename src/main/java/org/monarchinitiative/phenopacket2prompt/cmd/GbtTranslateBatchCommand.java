@@ -40,6 +40,7 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
     private String currentLanguageCode = null;
     private int currentCount;
 
+
     @Override
     public Integer call() throws Exception {
         File hpJsonFile = new File(hpoJsonPath);
@@ -62,27 +63,49 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
         Utility.createDir(outdirname);
         List<CorrectResult>  correctResultList = Utility.outputPromptsEnglish(ppktFiles);
         // output all non-English languages here
+        String missingTranslationsPath = "missing_translations";
+
         // SPANISH
         PromptGenerator spanish = utility.spanish();
         Utility.outputPromptsInternational(ppktFiles,"es", spanish);
+        Utility.writeMissingTranslations(spanish.getMissingTranslations(),
+                missingTranslationsPath,"spanish.txt");
+
         // Czech
         PromptGenerator czech = utility.czech();
         Utility.outputPromptsInternational(ppktFiles, "cs", czech);
+        Utility.writeMissingTranslations(czech.getMissingTranslations(),
+                missingTranslationsPath,"czech.txt");
+
         // Dutch
         PromptGenerator dutch = utility.dutch();
         Utility.outputPromptsInternational(ppktFiles,"nl", dutch);
+        Utility.writeMissingTranslations(dutch.getMissingTranslations(),
+                missingTranslationsPath, "dutch.txt");
+
         // GERMAN
         PromptGenerator german = utility.german();
         Utility.outputPromptsInternational(ppktFiles,"de", german);
+        Utility.writeMissingTranslations(german.getMissingTranslations(),
+                missingTranslationsPath, "german.txt");
+
         // ITALIAN
         PromptGenerator italian = utility.italian();
         Utility.outputPromptsInternational(ppktFiles,"it", italian);
+        Utility.writeMissingTranslations(italian.getMissingTranslations(),
+                missingTranslationsPath, "italian.txt");
+
         //Turkish
         PromptGenerator turkish = utility.turkish();
         Utility.outputPromptsInternational(ppktFiles,"tr", turkish);
+        Utility.writeMissingTranslations(turkish.getMissingTranslations(),
+                missingTranslationsPath, "turkish.txt");
+
         // chinese
         PromptGenerator chinese = utility.chinese();
         Utility.outputPromptsInternational(ppktFiles,"zh", chinese);
+        Utility.writeMissingTranslations(chinese.getMissingTranslations(),
+                missingTranslationsPath, "chinese.txt");
 
         // output original phenopackets
         PpktCopy pcopy = new PpktCopy(new File(outdirname));

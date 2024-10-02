@@ -2,14 +2,20 @@ package org.monarchinitiative.phenopacket2prompt.cmd;
 
 
 import org.monarchinitiative.biodownload.BioDownloader;
+import org.monarchinitiative.biodownload.BioDownloaderBuilder;
 import org.monarchinitiative.biodownload.FileDownloadException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
 
+import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 /**
@@ -21,25 +27,26 @@ import java.util.concurrent.Callable;
 
 @CommandLine.Command(name = "download",
         mixinStandardHelpOptions = true,
-        description = "Download files for phenopacket2prompt")
+        description = "Download files for phenopacket2promot")
 public class DownloadCommand implements Callable<Integer>{
     private static final Logger logger = LoggerFactory.getLogger(DownloadCommand.class);
     @CommandLine.Option(names={"-d","--data"}, description ="directory to download data (default: ${DEFAULT-VALUE})" )
-    public Path datadir = Path.of("data");
+    public String datadir="data";
 
     @CommandLine.Option(names={"-w","--overwrite"}, description = "overwrite previously downloaded files (default: ${DEFAULT-VALUE})")
-    public boolean overwrite = false;
+    public boolean overwrite;
 
     @Override
-    public Integer call() throws FileDownloadException, MalformedURLException {
+    public Integer call() throws FileDownloadException, MalformedURLException, URISyntaxException {
         logger.info(String.format("Download analysis to %s", datadir));
-        URL hpoInternational = new URL("https://github.com/obophenotype/human-phenotype-ontology/releases/latest/download/hp-international.obo");
-        BioDownloader downloader = BioDownloader.builder(datadir)
-                .overwrite(overwrite)
-                .hpoJson()
-                .custom("hp-international.obo", hpoInternational)
-                .build();
-        downloader.download();
+        Path destination = Paths.get(datadir);
+        BioDownloaderBuilder builder = BioDownloader.builder(destination);
+        builder.hpoJson();
+        String hpoInternational = "https://github.com/obophenotype/human-phenotype-ontology/releases/latest/download/hp-international.obo";
+        URL hpoInternationalUrl  = new URI(hpoInternational).toURL() ;
+        builder.custom("hp-international.obo", hpoInternationalUrl);
+        BioDownloader downloader = builder.build();
+        List<File> files = downloader.download();
         return 0;
     }
 
