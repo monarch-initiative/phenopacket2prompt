@@ -5,9 +5,7 @@ import org.monarchinitiative.phenopacket2prompt.international.HpInternational;
 import org.monarchinitiative.phenopacket2prompt.model.OntologyTerm;
 import org.monarchinitiative.phenopacket2prompt.output.PpktPhenotypicFeatureGenerator;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class PpktPhenotypicFeatureCzech implements PpktPhenotypicFeatureGenerator  {
 
@@ -17,6 +15,20 @@ public class PpktPhenotypicFeatureCzech implements PpktPhenotypicFeatureGenerato
     public PpktPhenotypicFeatureCzech(HpInternational international) {
         czech = international;
         missingTranslations = new HashSet<>();
+    }
+
+    private List<String> getTranslations(List<OntologyTerm> ontologyTerms) {
+        List<String> labels = new ArrayList<>();
+        for (var term: ontologyTerms) {
+            Optional<String> opt = czech.getLabel(term.getTid());
+            if (opt.isPresent()) {
+                labels.add(opt.get());
+            } else {
+                String missing = String.format(" %s (%s)", term.getLabel(), term.getTid().getValue());
+                missingTranslations.add(missing);
+            }
+        }
+        return labels;
     }
 
     /**
@@ -101,8 +113,10 @@ public class PpktPhenotypicFeatureCzech implements PpktPhenotypicFeatureGenerato
      */
     @Override
     public String formatFeatures(List<OntologyTerm> ontologyTerms) {
-        List<String> observed = getObservedFeaturesAsStr(ontologyTerms);
-        List<String> excluded = getExcludedFeaturesAsStr(ontologyTerms);
+        List<OntologyTerm> o = getObservedFeatures(ontologyTerms);
+        List<OntologyTerm> e = getExcludedFeatures(ontologyTerms);
+        List<String> observed = getTranslations(o);
+        List<String> excluded = getTranslations(e);
         if (observed.isEmpty() && excluded.isEmpty()) {
             return "no phenotypic abnormalities."; // should never happen, actually!
         } else if (excluded.isEmpty()) {
@@ -121,8 +135,10 @@ public class PpktPhenotypicFeatureCzech implements PpktPhenotypicFeatureGenerato
 
     @Override
     public String featuresAtOnset(String personString, List<OntologyTerm> ontologyTerms) {
-        List<String> observed = getObservedFeaturesAsStr(ontologyTerms);
-        List<String> excluded = getExcludedFeaturesAsStr(ontologyTerms);
+        List<OntologyTerm> o = getObservedFeatures(ontologyTerms);
+        List<OntologyTerm> e = getExcludedFeatures(ontologyTerms);
+        List<String> observed = getTranslations(o);
+        List<String> excluded = getTranslations(e);
         var observedStr = getOxfordCommaList(observed);
         var excludedStr = getOxfordCommaList(excluded);
         if (!observed.isEmpty() && ! excluded.isEmpty()) {
@@ -135,6 +151,36 @@ public class PpktPhenotypicFeatureCzech implements PpktPhenotypicFeatureGenerato
                     personString, excludedStr);
         } else {
             return "Při nástupu onemocnění nebyly pozorované žádné klinické příznaky.";
+        }
+    }
+
+    @Override
+    public String featuresAtEncounter(String personString, String ageString, List<OntologyTerm> ontologyTerms) {
+        List<OntologyTerm> o = getObservedFeatures(ontologyTerms);
+        List<OntologyTerm> e = getExcludedFeatures(ontologyTerms);
+        List<String> observed = getTranslations(o);
+        List<String> excluded = getTranslations(e);
+
+        var observedStr = getOxfordCommaList(observed);
+        var excludedStr = getOxfordCommaList(excluded);
+        if (!observed.isEmpty() && ! excluded.isEmpty()) {
+            return String.format("%s se prezentoval vo věku %s s následujícimi symptomy: %s. Avšak, %s : %s.",
+                    personString,
+                    ageString,
+                    observedStr,
+                    excluded.size()>1? "následujíci symptomy byly vyloučeny":"následujíci symptom byl vyloučen",
+                    excludedStr);
+        } else if (!observed.isEmpty()) {
+            return String.format("%s se prezentoval vo věku %s s následujícimi symptomy: %s.", personString, ageString, observedStr);
+        } else if (!excluded.isEmpty()) {
+            return String.format("%s %s: %s.",
+                    ageString,
+                    excluded.size()>1
+                            ? "byli následujíci symptomy vyloučeny"
+                            : "byl následujíci symptom vyloučen",
+                    excludedStr);
+        } else {
+            throw new PhenolRuntimeException("No features found for time point " + ageString); // should never happen
         }
     }
 }
