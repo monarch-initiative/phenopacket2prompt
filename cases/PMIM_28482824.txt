@@ -1,0 +1,8 @@
+[source]
+pmid = PMID:28482824
+title = Novel missense mutation in the bZIP transcription factor, MAF, associated with congenital cataract, developmental delay, seizures and hearing loss (Aymé-Gripp syndrome)
+[diagnosis]
+disease_id = OMIM:601088
+disease_label = Ayme-Gripp syndrome
+[text]
+The 20-year-old proband (CS108.01) was diagnosed at birth with bilateral congenital cataract, described as nuclear and posterior polar in the right eye, and milder posterior polar oil droplet cataract in the left eye (Fig. 2a). Cataract in the right eye was removed at 5 months of age and the patient subsequently developed aphakic glaucoma. The right eye ultimately was significantly amblyopic. The proband also had mild to moderate sensorineural hearing loss (he did not appear to have a hearing impairment in early childhood). He was diagnosed with Asperger syndrome and borderline intellectual abilities in childhood. He attended a special school because of the combination of Asperger syndrome and visual/hearing impairment. In spite of this, he completed secondary education and went on to university, implying normal intellectual abilities. His childhood assessments of mild intellectual disability and borderline abilities are likely to have reflected the autism spectrum disorder and possibly the visual impairment. He developed scoliosis during teenage and had seizures at 13.5 years (two, 2 weeks apart). His height was 25th–50th percentile and head circumference was 50th–98th percentile. He had a distinctive facial appearance with narrow posteriorly rotated ears with upturned ear lobules, downslanting palpebral fissures, flat mid-face, short philtrum, prominent narrow chin and dental malocclusion (Fig. 2c). There was no joint limitation.

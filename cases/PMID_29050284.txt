@@ -1,0 +1,9 @@
+[source]
+pmid = PMID:29050284
+title = Mutational analysis of a Chinese family with oculocutaneous albinism type 2
+[diagnosis]
+disease_id = OMIM:203200
+disease_label = Albinism, oculocutaneous, type II
+[text]
+Both the patients have yellow eyebrows and hair, milky skin, and heterochromia iridis, accompanied with photophobia,
+impaired visual acuity, and nystagmus. On the other hand, unaffected family members present normal pigmentation.
