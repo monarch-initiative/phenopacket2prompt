@@ -23,13 +23,13 @@ public class PpktIndividualChineseTest extends PPKtIndividualBase{
                 new TestIndividual("46 year old female, infantile onset",
                         female46yearsInfantileOnset(), new TestOutcome.Ok("患者为46岁女性。疾病于患者婴儿时发作。")),
                 new TestIndividual("male 4 months, congenital onset",
-                        male4monthsCongenitalOnset(), new TestOutcome.Ok("患者为一位四个月大的男婴。疾病于患者出生时发作。")),
+                        male4monthsCongenitalOnset(), new TestOutcome.Ok("患者为一位4个月的男婴。疾病于患者出生时发作。")),
                 new TestIndividual("female, no onset",
-                        femaleNoAge(), new TestOutcome.Ok("患者为女性，年龄不详。发病时间未知。")),
+                        femaleNoAge(), new TestOutcome.Ok("患者为女性，年龄不详。发病年龄未知。")),
                 new TestIndividual("female, no HPOs",
                         femaleNoHPOs(), new TestOutcome.Error(() -> new PhenolRuntimeException("无异常。"))),
                 new TestIndividual("unknown sex, no 4yo",
-                        unknownSex4YearsOnset(),  new TestOutcome.Ok("患者性别和年龄不详。疾病于患者童年时发作."))
+                        unknownSex4YearsOnset(),  new TestOutcome.Ok("患者性别和年龄不详。疾病于患者幼年时发作。"))
         );
     }
 
