@@ -60,9 +60,9 @@ public class CzechBuildingBlocks implements BuildingBlockGenerator {
     @Override
     public String monthDayOld(int m, int d) {
         if (m==0) {
-            return daysOld(d);
+            return "vo věku %d %s".formatted(d, days(d));
         } else if (d==0) {
-            return monthsOld(m);
+            return "vo věku %d %s".formatted(m, months(m));
         }
         return String.format("vo věku %d %s %d %s", m, months(m), d, days(d));
     }
@@ -259,17 +259,17 @@ public class CzechBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String probandWasAFemale() {
-        return "Proband bola žena";
+        return "Probandka byla žena";
     }
 
     @Override
     public String probandWasAMale() {
-        return "Proband bol muž";
+        return "Proband byl muž";
     }
 
     @Override
     public String probandWasAnIndividual() {
-        return "Proband bola osoba neznámeho pohlavia bez udaného veku";
+        return "Proband byla osoba blíže neurčeného pohlaví a věku";
     }
 
     @Override

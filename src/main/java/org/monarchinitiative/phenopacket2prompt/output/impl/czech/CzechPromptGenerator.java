@@ -56,9 +56,26 @@ Zde je kazuistika:
 
     @Override
     public String getVignetteAtAge(PhenopacketAge page, PhenopacketSex psex, List<OntologyTerm> terms) {
+        String proband = switch (psex) {
+            case FEMALE -> Nouns.PROBAND.nominativ(Genus.SHE);  // Probandka
+            case MALE, OTHER, UNKNOWN -> Nouns.PROBAND.nominativ(Genus.HE);  // Proband
+        };
+        proband = proband.substring(0, 1).toUpperCase() + proband.substring(1);
+        String sexAdjective = switch (psex) {
+            case FEMALE -> Adjectives.FEMALE.genitiv(Genus.SHE);
+            case MALE -> Adjectives.MALE.genitiv(Genus.HE);
+            default -> "neuvedeného";  // "unspecified"
+        };
         String ageString = this.individualInfoGenerator.atAgeForVignette(page);
         String features = formatFeatures(terms);
-        return String.format("%s, %s se prezentoval s následujícími symptomy: %s", ageString, individualInfoGenerator.heSheIndividual(psex), features);
+        // Proband zenskeho/muzskeho pohlavia sa vo veku ... prezentoval s nasledujicimi symptomy
+        return String.format(
+                "%s %s pohlaví se vo věku %s prezentoval s následujícími symptomy: %s",
+                proband,
+                sexAdjective,
+                ageString,
+                features
+        );
     }
 
     @Override

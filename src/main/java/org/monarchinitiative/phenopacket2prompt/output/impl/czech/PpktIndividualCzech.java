@@ -76,10 +76,10 @@ public class PpktIndividualCzech implements PPKtIndividualInfoGenerator {
             var onsetAge = onsetOpt.get();
             if (onsetAge.ageType().equals(PhenopacketAgeType.ISO8601_AGE_TYPE)) {
                 Iso8601Age isoAge = (Iso8601Age) onsetAge;
-                onsetDescription =  iso8601onsetDescription(isoAge);
+                onsetDescription =  iso8601onsetDescription(isoAge, psex);
             } else if (onsetAge.ageType().equals(PhenopacketAgeType.HPO_ONSET_AGE_TYPE)) {
                 HpoOnsetAge hpoOnsetTermAge = (HpoOnsetAge) onsetAge;
-                onsetDescription = hpoOnsetDescription(hpoOnsetTermAge);
+                onsetDescription = hpoOnsetDescription(hpoOnsetTermAge, psex);
             } else {
                 // should never happen
                 throw new PhenolRuntimeException("Did not recognize last exam age type " + onsetAge.ageType());
@@ -93,33 +93,45 @@ public class PpktIndividualCzech implements PPKtIndividualInfoGenerator {
 
 
 
-    private String iso8601onsetDescription(Iso8601Age isoAge) {
-        return String.format("První projevy onemocnění se u probanda objevily ve věku %s",
+    private String iso8601onsetDescription(Iso8601Age isoAge, PhenopacketSex psex) {
+        String proband = switch (psex) {
+            case FEMALE -> Nouns.PROBAND.genitiv(Genus.SHE);
+            // Male or generic masculinity
+            case MALE, OTHER, UNKNOWN -> Nouns.PROBAND.genitiv(Genus.HE);
+        };
+        return String.format("První projevy onemocnění se u %s objevily ve věku %s",
+                proband,
                 buildBlocks.yearsMonthsDaysOld(isoAge.getYears(), isoAge.getMonths(), isoAge.getDays()));
     }
 
-    private String hpoOnsetDescription(HpoOnsetAge hpoOnsetTermAge) {
-        return String.format("První projevy onemocnění se u probanda objevily ve věku %s",
+    private String hpoOnsetDescription(HpoOnsetAge hpoOnsetTermAge, PhenopacketSex psex) {
+        String proband = switch (psex) {
+            case FEMALE -> Nouns.PROBAND.genitiv(Genus.SHE);
+            // Male or generic masculinity
+            case MALE, OTHER, UNKNOWN -> Nouns.PROBAND.genitiv(Genus.HE);
+        };
+        return String.format("První projevy onemocnění se u %s objevily %s",
+            proband,
             nameOfLifeStage(hpoOnsetTermAge));
     }
 
     private String nameOfLifeStage(HpoOnsetAge hpoOnsetTermAge) {
         if (hpoOnsetTermAge.isFetus()) {
-            return buildBlocks.fetus();
+            return "v prenatálním období";
         } else if (hpoOnsetTermAge.isCongenital()) {
-            return buildBlocks.newborn();
+            return "v perinatálním období";
         } else if (hpoOnsetTermAge.isInfant()) {
-            return buildBlocks.infant();
+            return "v kojeneckém věku";
         } else if (hpoOnsetTermAge.isChild()) {
-            return buildBlocks.child();
+            return "v detství";
         } else if (hpoOnsetTermAge.isJuvenile()) {
-            return buildBlocks.adolescentChild();
+            return "v období dospívání";
         } else if (hpoOnsetTermAge.isNeonate()) {
-            return buildBlocks.newborn();
+            return "v novorozeneckém období";
         } else if (hpoOnsetTermAge.isYoungAdult()) {
-            return buildBlocks.asYoungAdult();
+            return "v mladé dospělosti";
         }  else if (hpoOnsetTermAge.isAdult()) {
-            return buildBlocks.adult();
+            return "v dospělosti";
         } else {
             throw new PhenolRuntimeException("Could not identify life stage name for HpoOnsetAge " + hpoOnsetTermAge.toString());
         }
@@ -173,42 +185,84 @@ public class PpktIndividualCzech implements PPKtIndividualInfoGenerator {
         int y = iso8601Age.getYears();
         int m = iso8601Age.getMonths();
         int d = iso8601Age.getDays();
+
         // if older
         if (y > 17) {
-            String age = buildBlocks.yearsOld(y);
-            return switch (psex) {
-                case FEMALE -> String.format("%s %s %s", buildBlocks.probandWasA(), age, buildBlocks.woman());
-                case MALE -> String.format("%s %s %s", buildBlocks.probandWasA(), age, buildBlocks.man());
-                default -> String.format("%s %s %s", buildBlocks.probandWasA(), age, buildBlocks.individual());
+            String probandWasA = switch (psex) {
+                case FEMALE -> Nouns.PROBAND.nominativ(Genus.SHE) + " byla";
+                case MALE -> Nouns.PROBAND.nominativ(Genus.HE) + " byl"; // muz/chlapec/
+                case OTHER, UNKNOWN -> Nouns.PROBAND.nominativ(Genus.HE) + " byla"; // ... osoba
             };
+            probandWasA = capitalizeFirstCharacter(probandWasA);
+            String nYearOld = switch (psex) {
+                case FEMALE, OTHER, UNKNOWN -> "%s letá".formatted(y);
+                case MALE -> "%s letý".formatted(y);
+            };
+            String individual = switch (psex) {
+                case FEMALE -> buildBlocks.woman();
+                case MALE -> buildBlocks.man();
+                default -> buildBlocks.individual();
+            };
+
+            return String.format("%s %s %s", probandWasA, nYearOld, individual);
         } else if (y > 9) {
-            String age = buildBlocks.yearsOld(y);
-            return switch (psex) {
-                case FEMALE -> String.format("%s %s %s", buildBlocks.probandWasA(), age, buildBlocks.adolescentGirl());
-                case MALE -> String.format("%s %s %s", buildBlocks.probandWasA(), age, buildBlocks.adolescentBoy());
-                default -> String.format("%s %s %s", buildBlocks.probandWasA(), age, buildBlocks.adolescentChild());
+            String probandWasA = switch (psex) {
+                case FEMALE -> Nouns.PROBAND.nominativ(Genus.SHE) + " byla"; // divka
+                case MALE -> Nouns.PROBAND.nominativ(Genus.HE) + " byl"; // chlapec/
+                case OTHER, UNKNOWN -> Nouns.PROBAND.nominativ(Genus.HE) + " bylo"; // ... dítě
             };
+            probandWasA = capitalizeFirstCharacter(probandWasA);
+            String nYearOld = switch (psex) {
+                case FEMALE -> "%s letá".formatted(y);
+                case MALE -> "%s letý".formatted(y);
+                case OTHER, UNKNOWN -> "%s leté".formatted(y);
+            };
+            String individual = switch (psex) {
+                case FEMALE -> buildBlocks.adolescentGirl();
+                case MALE -> buildBlocks.adolescentBoy();
+                default -> buildBlocks.adolescentChild();
+            };
+            return String.format("%s %s %s", probandWasA, nYearOld, individual);
         } else if (y > 0) {
-            String age = buildBlocks.yearsMonthsDaysOld(y, m, d);
-            return switch (psex) {
-                case FEMALE -> String.format("%s %s %s", buildBlocks.probandWasA(), age, buildBlocks.girl());
-                case MALE -> String.format("%s %s %s", buildBlocks.probandWasA(), age, buildBlocks.boy());
-                default -> String.format("%s %s %s", buildBlocks.probandWasA(), age, buildBlocks.child());
+            String probandWasA = switch (psex) {
+                case FEMALE -> Nouns.PROBAND.nominativ(Genus.SHE) + " byla"; // divka
+                case MALE -> Nouns.PROBAND.nominativ(Genus.HE) + " byl"; // chlapec/
+                case OTHER, UNKNOWN -> Nouns.PROBAND.nominativ(Genus.HE) + " bylo"; // ... dítě
             };
+            probandWasA = capitalizeFirstCharacter(probandWasA);
+            String xYearsYMonthsAndZDaysOld = buildBlocks.yearsMonthsDaysOld(y, m, d);
+            String individual = switch (psex) {
+                case FEMALE -> buildBlocks.girl();
+                case MALE -> buildBlocks.boy();
+                default -> buildBlocks.child();
+            };
+            return String.format("%s %s %s", probandWasA, individual, xYearsYMonthsAndZDaysOld);
         } else if (m > 0 || d > 0) {
-            String age = buildBlocks.monthDayOld(m, d);
-            return switch (psex) {
-                case FEMALE -> String.format("%s %s %s", buildBlocks.probandWasA(), age, buildBlocks.femaleInfant());
-                case MALE -> String.format("%s %s %s", buildBlocks.probandWasA(), age, buildBlocks.maleInfant());
-                default -> String.format("%s %s %s", buildBlocks.probandWasA(), age, buildBlocks.infant());
+            String probandWasA = Nouns.PROBAND.nominativ(Genus.HE) + " byl"; // kojenec
+            probandWasA = capitalizeFirstCharacter(probandWasA);
+            String ofMaleFemaleUnspecifiedSex = switch (psex) {
+                case FEMALE -> Adjectives.FEMALE.genitivNeutrum();
+                case MALE -> Adjectives.MALE.genitivNeutrum();
+                case OTHER, UNKNOWN -> Adjectives.UNSPECIFIED.genitivNeutrum();
             };
+            String inAgeOfYMonthsAndZDays = buildBlocks.monthDayOld(m, d);
+
+            return String.format("%s kojenec %s pohlaví %s", probandWasA, ofMaleFemaleUnspecifiedSex, inAgeOfYMonthsAndZDays);
         } else {
-            return switch (psex) {
-                case FEMALE -> String.format("%s %s", buildBlocks.probandWasA(), buildBlocks.newbornGirl());
-                case MALE -> String.format("%s %s", buildBlocks.probandWasA(), buildBlocks.newbornBoy());
-                default -> String.format("%s %s", buildBlocks.probandWasA(), buildBlocks.newborn());
+            String probandWasA = Nouns.PROBAND.nominativ(Genus.HE) + " byl"; // novorozenec
+            probandWasA = capitalizeFirstCharacter(probandWasA);
+            String ofMaleFemaleUnspecifiedSex = switch (psex) {
+                case FEMALE -> Adjectives.FEMALE.genitivNeutrum();
+                case MALE -> Adjectives.MALE.genitivNeutrum();
+                case OTHER, UNKNOWN -> Adjectives.UNSPECIFIED.genitivNeutrum();
             };
+            String inAgeOfYMonthsAndZDays = buildBlocks.monthDayOld(m, d);
+            return String.format("%s novorozenec %s pohlaví %s", probandWasA, ofMaleFemaleUnspecifiedSex, inAgeOfYMonthsAndZDays);
         }
+    }
+
+    private static String capitalizeFirstCharacter(String val) {
+        return val.substring(0, 1).toUpperCase() + val.substring(1);
     }
 
 
