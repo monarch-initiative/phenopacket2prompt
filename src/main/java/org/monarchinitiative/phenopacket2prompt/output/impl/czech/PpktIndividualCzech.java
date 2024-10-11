@@ -141,9 +141,9 @@ public class PpktIndividualCzech implements PPKtIndividualInfoGenerator {
     @Override
     public String heSheIndividual(PhenopacketSex psex) {
         return switch (psex) {
-            case FEMALE -> buildBlocks.she();
-            case MALE -> buildBlocks.he();
-            default -> buildBlocks.theIndividual();
+            case FEMALE -> Nouns.FEMALE.nominativ(Genus.SHE);
+            case MALE -> Nouns.MALE.nominativ(Genus.HE);
+            default -> Nouns.INDIVIDUAL.nominativ(Genus.HE);
         };
     }
 

@@ -34,11 +34,11 @@ public class PpktIndividualCzechTest extends PPKtIndividualBase {
     private static Stream<TestIdvlHeShe> testGetPPKtSex() {
         return Stream.of(
                 new TestIdvlHeShe("female",
-                        PhenopacketSex.FEMALE, new TestOutcome.Ok("la paziente")),
+                        PhenopacketSex.FEMALE, new TestOutcome.Ok("žena")),
                 new TestIdvlHeShe("male",
-                        PhenopacketSex.MALE, new TestOutcome.Ok("il paziente")),
+                        PhenopacketSex.MALE, new TestOutcome.Ok("muž")),
                 new TestIdvlHeShe("proband",
-                        PhenopacketSex.UNKNOWN, new TestOutcome.Ok("il soggetto"))
+                        PhenopacketSex.UNKNOWN, new TestOutcome.Ok("osoba"))
         );
     }
 
