@@ -45,13 +45,13 @@ public class PpktIndividualCzechTest extends PPKtIndividualBase {
     private static Stream<TestIdvlAtAge> testIndlAtAge() {
         return Stream.of(
                 new TestIdvlAtAge("congenital",
-                        congenital, new TestOutcome.Ok("Alla nascita")),
+                        congenital, new TestOutcome.Ok("Od narození")),
                 new TestIdvlAtAge("infantile",
-                        infantile, new TestOutcome.Ok("Durante il periodo infantile")),
+                        infantile, new TestOutcome.Ok("Ako novorozenec")),
                 new TestIdvlAtAge("childhood age",
-                        childhood, new TestOutcome.Ok("Da bambino")),
+                        childhood, new TestOutcome.Ok("V dětství")),
                 new TestIdvlAtAge("46 years old",
-                        p46y, new TestOutcome.Ok("All'età di 46 anni"))
+                        p46y, new TestOutcome.Ok("Ve věku 46 let"))
         );
     }
 
