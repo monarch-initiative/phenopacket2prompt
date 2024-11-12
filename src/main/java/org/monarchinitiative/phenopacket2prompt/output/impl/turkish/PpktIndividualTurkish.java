@@ -12,7 +12,10 @@ import java.util.Optional;
 public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
 
     private final BuildingBlockGenerator bbGenerator;
-    /** grammatical sex */
+
+    /**
+     * grammatical sex
+     */
     private enum GrammatikalischesGeschlecht {
         MAENNLICH, WEIBLICH, NEUTRUM
     }
@@ -32,7 +35,7 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         String individualDescription;
         String onsetDescription;
         if (lastExamOpt.isPresent()) {
-            var lastExamAge =  lastExamOpt.get();
+            var lastExamAge = lastExamOpt.get();
             if (lastExamAge.ageType().equals(PhenopacketAgeType.ISO8601_AGE_TYPE)) {
                 Iso8601Age isoAge = (Iso8601Age) lastExamAge;
                 individualDescription = iso8601individualDescription(psex, isoAge);
@@ -43,8 +46,8 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
                 // should never happen
                 throw new PhenolRuntimeException("Did not recognize last exam age type " + lastExamAge.ageType());
             }
-        }  else {
-            individualDescription =  switch (psex) {
+        } else {
+            individualDescription = switch (psex) {
                 case FEMALE -> bbGenerator.probandWasAFemale();
                 case MALE -> bbGenerator.probandWasAMale();
                 default -> bbGenerator.probandWasAnIndividual();
@@ -54,7 +57,7 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
             var onsetAge = onsetOpt.get();
             if (onsetAge.ageType().equals(PhenopacketAgeType.ISO8601_AGE_TYPE)) {
                 Iso8601Age isoAge = (Iso8601Age) onsetAge;
-                onsetDescription =  iso8601onsetDescription(isoAge);
+                onsetDescription = iso8601onsetDescription(isoAge);
             } else if (onsetAge.ageType().equals(PhenopacketAgeType.HPO_ONSET_AGE_TYPE)) {
                 HpoOnsetAge hpoOnsetTermAge = (HpoOnsetAge) onsetAge;
                 onsetDescription = hpoOnsetDescription(hpoOnsetTermAge);
@@ -105,11 +108,6 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
     }
 
 
-
-
-
-
-
     public String ageAndSexAtLastExamination(PpktIndividual individual) {
         PhenopacketSex psex = individual.getSex();
         Optional<PhenopacketAge> ageOpt = individual.getAgeAtLastExamination();
@@ -124,7 +122,7 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         }
 
         if (ageOpt.isEmpty()) {
-           return sex;
+            return sex;
         }
         PhenopacketAge age = ageOpt.get();
         if (age.ageType().equals(PhenopacketAgeType.ISO8601_AGE_TYPE)) {
@@ -141,7 +139,7 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
                     return String.format("%d yaşındaki bir kız çocuğu", y);
                 } else if (m > 0) {
                     return String.format("%d aylık bir kız bebek", m);
-                } else  {
+                } else {
                     return String.format("%d günlük bir kız bebek", d);
                 }
             }
@@ -183,7 +181,7 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
     }
 
 
-    private String imAlterVonIsoAgeExact(PhenopacketAge ppktAge) {
+    private String atIsoAgeExact(PhenopacketAge ppktAge) {
         Iso8601Age iso8601Age = (Iso8601Age) ppktAge;
         int y = iso8601Age.getYears();
         int m = iso8601Age.getMonths();
@@ -288,19 +286,20 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
             if (iso8601Age.getMonths() == 0) {
                 return String.format("%d yaşında bir erkek çocuk", y);
             } else {
-                return String.format("%d %s yaş, %d %s aylıkken bir erkek çocuk", y, y>1?"Jahre":"Jahr", m, m>1?"Monate":"Monat");
+                return String.format("%d %s yaş, %d %s aylıkken bir erkek çocuk", y, y > 1 ? "Jahre" : "Jahr", m, m > 1 ? "Monate" : "Monat");
             }
         } else if (psex.equals(PhenopacketSex.FEMALE)) {
             if (iso8601Age.getMonths() == 0) {
                 return String.format("%d yaşında bir kız çocuk", y);
             } else {
-                return String.format("%d %s yaş, %d %s aylıkken bir kız çocuk", y, y>1?"Jahre":"Jahr", m, m>1?"Monate":"Monat");
+                return String.format("%d %s yaş, %d %s aylıkken bir kız çocuk", y, y > 1 ? "Jahre" : "Jahr", m, m > 1 ? "Monate" : "Monat");
             }
         }
         if (iso8601Age.getMonths() == 0) {
             return String.format("%d yaşında bir çocuk", y);
         } else {
-            return String.format("%d yaş, %d aylıkken bir çocuk", y, m);        }
+            return String.format("%d yaş, %d aylıkken bir çocuk", y, m);
+        }
     }
 
     private String monthString(int m) {
@@ -316,7 +315,7 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         int d = iso8601Age.getDays();
         if (m == 0) {
             return String.format("%d günlükken", d);
-        } else if (d>0){
+        } else if (d > 0) {
             return String.format("%d ay %d günlükken", m, monthString(m), d, dayString(d));
         } else {
             return String.format("%d aylıkken", m);
@@ -326,13 +325,14 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
     /**
      * Create a phrase such as "at the age of 7 years, 4 months, and 2 days"
      * Leave out the months and days if they are zero.
+     *
      * @param isoAge
      * @return
      */
     private String iso8601AtAgeOf(Iso8601Age isoAge) {
         List<String> components = new ArrayList<>();
 
-        if (isoAge.getYears()>1) {
+        if (isoAge.getYears() > 1) {
             components.add(String.format("%d yaşinda", isoAge.getYears()));
         } else if (isoAge.getYears() == 1) {
             components.add("bir yaşinda");
@@ -342,9 +342,9 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         } else if (isoAge.getMonths() == 1) {
             components.add("bir aylıkken");
         }
-        if (isoAge.getDays()>1) {
+        if (isoAge.getDays() > 1) {
             components.add(String.format("%d günlükken", isoAge.getDays()));
-        } else if (isoAge.getDays()==1) {
+        } else if (isoAge.getDays() == 1) {
             components.add("bir günlükken");
         }
         if (components.isEmpty()) {
@@ -354,7 +354,7 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         } else if (components.size() == 2) {
             return "yaşında " + components.get(0) + " ve " + components.get(1);
         } else {
-            return "yaşında "  + components.get(0) + ", " + components.get(1) +
+            return "yaşında " + components.get(0) + ", " + components.get(1) +
                     " ve " + components.get(2);
         }
     }
@@ -433,24 +433,35 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
     @Override
     public String atAgeForVignette(PhenopacketAge ppktAge) {
         if (ppktAge.ageType().equals(PhenopacketAgeType.ISO8601_AGE_TYPE)) {
-            return imAlterVonIsoAgeExact(ppktAge);
+            return "Yaşında " + atIsoAgeExact(ppktAge);
         } else if (ppktAge.ageType().equals(PhenopacketAgeType.HPO_ONSET_AGE_TYPE)) {
-            String label = ppktAge.age(); // something like "Infantile onset"
-            return switch (label) {
-                case "Infantile onset" -> "Bebeklikte";
-                case "Childhood onset" -> "Çocuklukta";
-                case "Neonatal onset"  -> "Yenidoğan döneminde";
-                case "Congenital onset" -> "Doğumda";
-                case "Adult onset" -> "Yetişkinlikte";
-                case "Juvenile onset" -> "Ergenlikte";
-                default-> {
-                    throw new PhenolRuntimeException("No Turkish translation for " + label);
-                }
-            };
+            if (ppktAge.isFetus()) {
+                return "Fetal dönemde";
+            } else if (ppktAge.isCongenital()) {
+                return "Doğumda";
+            } else if (ppktAge.isEmbryo()) {
+                return "Embriyonik dönemde";
+            } else if (ppktAge.isNeonate()) {
+                return "Yenidoğan döneminde";
+            } else if (ppktAge.isInfant()) {
+                return "Bebeklik döneminde";
+            } else if (ppktAge.isChild()) {
+                return "Çocukken";
+            } else if (ppktAge.isJuvenile()) {
+                return "Ergenlik döneminde";
+            } else if (ppktAge.isYoungAdult()) {
+                return "Genç yetişkinken";
+            } else if (ppktAge.isMiddleAge()) {
+                return "Orta yaşta";
+            } else if (ppktAge.isLateAdultAge()) {
+                return "Geç yetişkinlik döneminde";
+            } else if (ppktAge.isAdult()) {
+                return "Yetişkinlikte";
+            } else {
+                throw new PhenolRuntimeException("Tanımlanamayan başlangıç: " + ppktAge.toString());
+            }
         } else {
-            return ""; // should never get here
+            throw new PhenolRuntimeException("Geçersiz yaş türü");
         }
     }
-    
-
 }
