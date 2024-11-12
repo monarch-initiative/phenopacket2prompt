@@ -120,13 +120,13 @@ public class PpktPhenotypicFeatureCzech implements PpktPhenotypicFeatureGenerato
         if (observed.isEmpty() && excluded.isEmpty()) {
             return "no phenotypic abnormalities."; // should never happen, actually!
         } else if (excluded.isEmpty()) {
-            return getOxfordCommaList(observed) + ". ";
+            return "Onemocnění zahrnovalo následující symptomy: " + getOxfordCommaList(observed) + ". ";
         } else if (observed.isEmpty()) {
             return "následující symptomy byly vyloučeny: " + getOxfordCommaList(excluded) + ". ";
         } else {
             String exclusion = String.format(
-                    "Avšak, %s %s.",
-                    excluded.size() > 1 ? "tyto symptomy byly vyloučeny:" : "tento symptom byl vyloučen:",
+                    "%s %s.",
+                    excluded.size() > 1 ? "a tyto symptomy byly vyloučeny:" : "a tento symptom byl vyloučen:",
                     getOxfordCommaList(excluded)
         );
             return getOxfordCommaList(observed) + ", " + exclusion;

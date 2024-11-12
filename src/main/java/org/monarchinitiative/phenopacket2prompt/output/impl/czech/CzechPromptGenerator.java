@@ -62,18 +62,23 @@ Zde je kazuistika:
         };
         proband = proband.substring(0, 1).toUpperCase() + proband.substring(1);
         String sexAdjective = switch (psex) {
-            case FEMALE -> Adjectives.FEMALE.genitiv(Genus.SHE);
-            case MALE -> Adjectives.MALE.genitiv(Genus.HE);
+            case FEMALE -> Adjectives.FEMALE.genitiv(Genus.IT);  // sex is neutrum in Czech
+            case MALE -> Adjectives.MALE.genitiv(Genus.IT); // sex is neutrum in Czech
             default -> "neuvedeného";  // "unspecified"
         };
         String ageString = this.individualInfoGenerator.atAgeForVignette(page);
         String features = formatFeatures(terms);
+        String presented = switch (psex) {
+            case MALE, OTHER, UNKNOWN -> "prezentoval";
+            case FEMALE -> "prezentovala";
+        };
         // Proband zenskeho/muzskeho pohlavia sa vo veku ... prezentoval s nasledujicimi symptomy
         return String.format(
-                "%s %s pohlaví se vo věku %s prezentoval s následujícími symptomy: %s",
+                "%s %s pohlaví se vo věku %s %s s následujícími symptomy: %s",
                 proband,
                 sexAdjective,
                 ageString,
+                presented,
                 features
         );
     }

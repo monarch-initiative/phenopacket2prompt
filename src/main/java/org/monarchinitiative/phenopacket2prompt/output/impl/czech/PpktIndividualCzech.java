@@ -312,7 +312,7 @@ public class PpktIndividualCzech implements PPKtIndividualInfoGenerator {
     @Override
     public String atAgeForVignette(PhenopacketAge ppktAge) {
         if (ppktAge.ageType().equals(PhenopacketAgeType.ISO8601_AGE_TYPE)) {
-            return "Ve věku " + buildBlocks.fromIso((Iso8601Age)ppktAge);
+            return buildBlocks.fromIso((Iso8601Age)ppktAge);
         } else if (ppktAge.ageType().equals(PhenopacketAgeType.HPO_ONSET_AGE_TYPE)) {
             if (ppktAge.isEmbryo()) {
                 return buildBlocks.duringEmbryonic();
