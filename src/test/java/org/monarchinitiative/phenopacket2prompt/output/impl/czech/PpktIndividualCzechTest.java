@@ -51,7 +51,7 @@ public class PpktIndividualCzechTest extends PPKtIndividualBase {
                 new TestIdvlAtAge("childhood age",
                         childhood, new TestOutcome.Ok("V dětství")),
                 new TestIdvlAtAge("46 years old",
-                        p46y, new TestOutcome.Ok("Ve věku 46 let"))
+                        p46y, new TestOutcome.Ok("46 let"))
         );
     }
 
