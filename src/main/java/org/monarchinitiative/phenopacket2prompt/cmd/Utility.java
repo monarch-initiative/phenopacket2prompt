@@ -66,6 +66,10 @@ public class Utility {
         return PromptGenerator.chinese(internationalMap.get("zh"));
     }
 
+    public PromptGenerator czech() {
+        return PromptGenerator.czech(internationalMap.get("cs"));
+    }
+
 
     public static String getFileName(String phenopacketID, String languageCode) {
         return phenopacketID.replaceAll("[^\\w]","_") + "_" + languageCode + "-prompt.txt";
