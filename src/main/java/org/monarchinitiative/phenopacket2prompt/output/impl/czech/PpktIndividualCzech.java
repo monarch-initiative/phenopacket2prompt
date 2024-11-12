@@ -85,9 +85,9 @@ public class PpktIndividualCzech implements PPKtIndividualInfoGenerator {
                 throw new PhenolRuntimeException("Did not recognize last exam age type " + onsetAge.ageType());
             }
         } else {
-            onsetDescription = "Nástup onemocnění nebyl specifikován";
+            onsetDescription = "Nástup onemocnění nebyl specifikován.";
         }
-        return String.format("%s. %s.", individualDescription, onsetDescription);
+        return String.format("%s. %s", individualDescription, onsetDescription);
 
     }
 
@@ -99,7 +99,7 @@ public class PpktIndividualCzech implements PPKtIndividualInfoGenerator {
             // Male or generic masculinity
             case MALE, OTHER, UNKNOWN -> Nouns.PROBAND.genitiv(Genus.HE);
         };
-        return String.format("První projevy onemocnění se u %s objevily ve věku %s",
+        return String.format("První projevy onemocnění se u %s objevily %s:",
                 proband,
                 buildBlocks.yearsMonthsDaysOld(isoAge.getYears(), isoAge.getMonths(), isoAge.getDays()));
     }
@@ -110,7 +110,7 @@ public class PpktIndividualCzech implements PPKtIndividualInfoGenerator {
             // Male or generic masculinity
             case MALE, OTHER, UNKNOWN -> Nouns.PROBAND.genitiv(Genus.HE);
         };
-        return String.format("První projevy onemocnění se u %s objevily %s",
+        return String.format("První projevy onemocnění se u %s objevily %s:",
             proband,
             nameOfLifeStage(hpoOnsetTermAge));
     }

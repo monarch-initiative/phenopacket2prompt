@@ -11,17 +11,17 @@ public class CzechBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String days(int d) {
-        return d>1 ? "dní" : "den";
+        return d>1 ? "dní" : "dne";
     }
 
     @Override
     public String months(int m) {
-        return m>1 ? "měsíců" : "měsíc";
+        return m>1 ? "měsíců" : "měsíce";
     }
 
     @Override
     public String years(int y) {
-        return y>1 ? "let" : "rok";
+        return y>1 ? "let" : "roku";
     }
 
     @Override
@@ -146,12 +146,12 @@ public class CzechBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String adolescentGirl() {
-        return "adolescent ženského pohlaví";
+        return "dospívající žena";
     }
 
     @Override
     public String adolescentBoy() {
-        return "adolescent mužského pohlaví";
+        return "dospívající muž";
     }
 
     @Override

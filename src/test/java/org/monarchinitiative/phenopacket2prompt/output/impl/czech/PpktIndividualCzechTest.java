@@ -19,15 +19,15 @@ public class PpktIndividualCzechTest extends PPKtIndividualBase {
     private static Stream<PPKtIndividualBase.TestIndividual> testGetIndividualDescription() {
         return Stream.of(
                 new PPKtIndividualBase.TestIndividual("46 year old female, infantile onset",
-                        female46yearsInfantileOnset(), new PPKtIndividualBase.TestOutcome.Ok("Probandka byla 46 letá žena. První projevy onemocnění se u probandky objevily v kojeneckém věku.")),
+                        female46yearsInfantileOnset(), new PPKtIndividualBase.TestOutcome.Ok("Probandka byla 46 letá žena. První projevy onemocnění se u probandky objevily v kojeneckém věku:")),
                 new PPKtIndividualBase.TestIndividual("male 4 months, congenital onset",
-                        male4monthsCongenitalOnset(), new PPKtIndividualBase.TestOutcome.Ok("Proband byl kojenec mužského pohlaví vo věku 4 měsíců. První projevy onemocnění se u probanda objevily v perinatálním období.")),
+                        male4monthsCongenitalOnset(), new PPKtIndividualBase.TestOutcome.Ok("Proband byl kojenec mužského pohlaví vo věku 4 měsíců. První projevy onemocnění se u probanda objevily v perinatálním období:")),
                 new PPKtIndividualBase.TestIndividual("female, no onset",
                         femaleNoAge(), new PPKtIndividualBase.TestOutcome.Ok("Probandka byla žena. Nástup onemocnění nebyl specifikován.")),
                 new PPKtIndividualBase.TestIndividual("female, no HPOs",
                         femaleNoHPOs(), new PPKtIndividualBase.TestOutcome.Error(() -> new PhenolRuntimeException("Nessuna anomalia fenotipica"))),
                 new PPKtIndividualBase.TestIndividual("unknown sex, no 4yo",
-                        unknownSex4YearsOnset(), new PPKtIndividualBase.TestOutcome.Ok("Proband byla osoba blíže neurčeného pohlaví a věku. První projevy onemocnění se u probanda objevily v detství."))
+                        unknownSex4YearsOnset(), new PPKtIndividualBase.TestOutcome.Ok("Proband byla osoba blíže neurčeného pohlaví a věku. První projevy onemocnění se u probanda objevily v detství:"))
         );
     }
 

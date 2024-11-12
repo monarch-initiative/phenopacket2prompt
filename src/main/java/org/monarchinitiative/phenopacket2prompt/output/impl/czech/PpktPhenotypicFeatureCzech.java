@@ -124,10 +124,10 @@ public class PpktPhenotypicFeatureCzech implements PpktPhenotypicFeatureGenerato
         } else if (observed.isEmpty()) {
             return "následující symptomy byly vyloučeny: " + getOxfordCommaList(excluded) + ". ";
         } else {
-            String exclusion = String.format("Avšak, symptomy %s %s %s.",
-                    excluded.size() > 1 ? "symptomy" : "symptom",
-                    getOxfordCommaList(excluded),
-                    excluded.size() > 1 ? "boly vyloučeny" : "bol vyloučen"
+            String exclusion = String.format(
+                    "Avšak, %s %s.",
+                    excluded.size() > 1 ? "tyto symptomy byly vyloučeny:" : "tento symptom byl vyloučen:",
+                    getOxfordCommaList(excluded)
         );
             return getOxfordCommaList(observed) + ", " + exclusion;
         }
