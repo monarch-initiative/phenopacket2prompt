@@ -71,6 +71,12 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
         Utility.writeMissingTranslations(spanish.getMissingTranslations(),
                 missingTranslationsPath,"spanish.txt");
 
+        // Czech
+        PromptGenerator czech = utility.czech();
+        Utility.outputPromptsInternational(ppktFiles, "cs", czech);
+        Utility.writeMissingTranslations(czech.getMissingTranslations(),
+                missingTranslationsPath,"czech.txt");
+
         // Dutch
         PromptGenerator dutch = utility.dutch();
         Utility.outputPromptsInternational(ppktFiles,"nl", dutch);
