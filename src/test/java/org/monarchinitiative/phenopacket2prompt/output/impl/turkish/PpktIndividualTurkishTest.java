@@ -87,13 +87,13 @@ public class PpktIndividualTurkishTest extends PPKtIndividualBase{
     private static Stream<TestIdvlAtAge> testIndlAtAge() {
         return Stream.of(
                 new TestIdvlAtAge("congenital",
-                        congenital, new TestOutcome.Ok("Zum Zeitpunkt der Geburt")),
+                        congenital, new TestOutcome.Ok("Doğum anında")),
                 new TestIdvlAtAge("infantile",
-                        infantile, new TestOutcome.Ok("Als Säugling")),
+                        infantile, new TestOutcome.Ok("Bir bebek olarak")),
                 new TestIdvlAtAge("childhood age",
-                        childhood, new TestOutcome.Ok("In der Kindheit")),
+                        childhood, new TestOutcome.Ok("Çocuklukta")),
                 new TestIdvlAtAge("46 years old",
-                        p46y, new TestOutcome.Ok("Im Alter von 46 Jahren"))
+                        p46y, new TestOutcome.Ok("46 yaşındayken"))
         );
     }
 
