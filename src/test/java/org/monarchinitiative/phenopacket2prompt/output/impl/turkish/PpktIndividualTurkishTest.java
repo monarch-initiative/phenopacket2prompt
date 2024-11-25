@@ -84,18 +84,16 @@ public class PpktIndividualTurkishTest extends PPKtIndividualBase{
 //public record TestIdvlAtAge(String description, PhenopacketAge ppktAge, TestOutcome expectedOutcome) {}
 
 
-
-
     private static Stream<TestIdvlAtAge> testIndlAtAge() {
         return Stream.of(
                 new TestIdvlAtAge("congenital",
-                        congenital, new TestOutcome.Ok("Alla nascita")),
+                        congenital, new TestOutcome.Ok("Zum Zeitpunkt der Geburt")),
                 new TestIdvlAtAge("infantile",
-                        infantile, new TestOutcome.Ok("Durante il periodo infantile")),
+                        infantile, new TestOutcome.Ok("Als Säugling")),
                 new TestIdvlAtAge("childhood age",
-                        childhood, new TestOutcome.Ok("Da bambino")),
+                        childhood, new TestOutcome.Ok("In der Kindheit")),
                 new TestIdvlAtAge("46 years old",
-                        p46y, new TestOutcome.Ok("All'età di 46 anni"))
+                        p46y, new TestOutcome.Ok("Im Alter von 46 Jahren"))
         );
     }
 
