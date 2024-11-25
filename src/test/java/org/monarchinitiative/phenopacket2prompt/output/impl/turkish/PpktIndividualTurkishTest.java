@@ -22,15 +22,15 @@ public class PpktIndividualTurkishTest extends PPKtIndividualBase{
     private static Stream<TestIndividual> testGetIndividualDescription() {
         return Stream.of(
                 new TestIndividual("46 year old female, infantile onset",
-                        female46yearsInfantileOnset(), new TestOutcome.Ok("Proband 46 yaşında bir kadındı. Hastalığın başlangıcı bebeklik döneminde meydana gelmiştir.")),
+                        female46yearsInfantileOnset(), new TestOutcome.Ok("Proband 46 yaşında bir kadındı. Hastalık infantil döneminde başladı.")),
                 new TestIndividual("male 4 months, congenital onset",
-                        male4monthsCongenitalOnset(), new TestOutcome.Ok("Proband 4 aylık bir erkek bebekti. Hastalığın başlangıcı doğum sırasında meydana gelmiştir.")),
+                        male4monthsCongenitalOnset(), new TestOutcome.Ok("Proband 4 aylık bir erkek bebekti. Hastalık doğumda başladı.")),
                 new TestIndividual("female, no onset",
-                        femaleNoAge(), new TestOutcome.Ok("Test yapılan kişi bir kadındı. Hastalığın başlangıcı belirtilmemiştir.")),
+                        femaleNoAge(), new TestOutcome.Ok("Proband bir kadındı. Hastalığın başlangıcı belirtilmedi.")),
                 new TestIndividual("female, no HPOs",
                         femaleNoHPOs(), new TestOutcome.Error(() -> new PhenolRuntimeException("No HPO annotations"))),
                 new TestIndividual("unknown sex, no 4yo",
-                        unknownSex4YearsOnset(),  new TestOutcome.Ok("Proband, cinsiyeti veya yaşı belirtilmemiş bir bireydi. Hastalığın başlangıcı çocukluk döneminde gerçekleşmiştir."))
+                        unknownSex4YearsOnset(),  new TestOutcome.Ok("Proband cinsiyeti belirtilmemiş bir bireydi. Hastalık çocukluk döneminde başladı."))
         );
     }
 
