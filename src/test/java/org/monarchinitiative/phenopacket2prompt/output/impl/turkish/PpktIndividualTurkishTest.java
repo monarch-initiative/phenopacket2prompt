@@ -57,11 +57,11 @@ public class PpktIndividualTurkishTest extends PPKtIndividualBase{
     private static Stream<TestIdvlHeShe> testGetPPKtSex() {
         return Stream.of(
                 new TestIdvlHeShe("female",
-                        PhenopacketSex.FEMALE, new TestOutcome.Ok("die Probandin")),
+                        PhenopacketSex.FEMALE, new TestOutcome.Ok("o")),
                 new TestIdvlHeShe("male",
-                        PhenopacketSex.MALE, new TestOutcome.Ok("der Proband")),
+                        PhenopacketSex.MALE, new TestOutcome.Ok("o")),
                 new TestIdvlHeShe("proband",
-                        PhenopacketSex.UNKNOWN, new TestOutcome.Ok("der Proband"))
+                        PhenopacketSex.UNKNOWN, new TestOutcome.Ok("kişi"))
         );
     }
 
