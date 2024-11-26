@@ -117,6 +117,11 @@ public class PpktPhenotypicFeatureCzech implements PpktPhenotypicFeatureGenerato
         List<OntologyTerm> e = getExcludedFeatures(ontologyTerms);
         List<String> observed = getTranslations(o);
         List<String> excluded = getTranslations(e);
+
+        if (o.size() != observed.size() || e.size() != excluded.size() ) {
+            throw new PhenolRuntimeException("Missing translation, function featuresAtOnset().");
+        }
+
         if (observed.isEmpty() && excluded.isEmpty()) {
             return "no phenotypic abnormalities."; // should never happen, actually!
         } else if (excluded.isEmpty()) {
@@ -139,6 +144,10 @@ public class PpktPhenotypicFeatureCzech implements PpktPhenotypicFeatureGenerato
         List<OntologyTerm> e = getExcludedFeatures(ontologyTerms);
         List<String> observed = getTranslations(o);
         List<String> excluded = getTranslations(e);
+
+        if (o.size() != observed.size() || e.size() != excluded.size() ) {
+            throw new PhenolRuntimeException("Missing translation, function featuresAtOnset().");
+        }
         var observedStr = getOxfordCommaList(observed);
         var excludedStr = getOxfordCommaList(excluded);
         if (!observed.isEmpty() && ! excluded.isEmpty()) {
@@ -160,6 +169,9 @@ public class PpktPhenotypicFeatureCzech implements PpktPhenotypicFeatureGenerato
         List<OntologyTerm> e = getExcludedFeatures(ontologyTerms);
         List<String> observed = getTranslations(o);
         List<String> excluded = getTranslations(e);
+        if (o.size() != observed.size() || e.size() != excluded.size() ) {
+            throw new PhenolRuntimeException("Missing translation, function featuresAtOnset().");
+            }
 
         var observedStr = getOxfordCommaList(observed);
         var excludedStr = getOxfordCommaList(excluded);
