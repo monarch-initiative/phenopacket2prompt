@@ -346,15 +346,21 @@ public class TestDriveCommand implements Callable<Integer> {
         sb.append("German\n");
         sb.append(HEADER_LINE);
         sb.append(deText);
+        // ITALIAN
         String itText = createPrompts(individualList, utility.italian());
         sb.append("Italian\n");
         sb.append(HEADER_LINE);
         sb.append(itText);
-        // ITALIAN
+        // Turkish
         String trText = createPrompts(individualList, utility.turkish());
         sb.append("Turkish\n");
         sb.append(HEADER_LINE);
         sb.append(trText);
+        // Japanese
+        String jpText = createPrompts(individualList, utility.japanese());
+        sb.append("Japanese");
+        sb.append(HEADER_LINE);
+        sb.append(jpText);
         System.out.println(sb);
         System.out.println("Wrote to " + outfileName);
         try {

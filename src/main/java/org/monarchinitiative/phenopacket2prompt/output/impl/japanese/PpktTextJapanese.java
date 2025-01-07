@@ -1,0 +1,24 @@
+package org.monarchinitiative.phenopacket2prompt.output.impl.japanese;
+
+import org.monarchinitiative.phenopacket2prompt.output.PhenopacketTextGenerator;
+
+public class PpktTextJapanese implements PhenopacketTextGenerator {
+
+    @Override
+    public String GPT_PROMPT_HEADER() {
+        return  """
+あなたの診断が人間の専門家の診断とどのように比較されるかを見るために、臨床症例報告書を使って実験を行っています。ある症例の一部をお見せします。あなたは患者を治療しようとしているわけではありません。この場合、あなたは「GPT-4博士」であり、診断を提供するAI言語モデルです。ここにいくつかのガイドラインがあります。第一に、確定診断は一つであり、それは現在ヒトに存在することが知られている診断である。診断はほとんどの場合、遺伝子検査によって確定される。しかし、そのような診断のための検査が存在しないまれなケースでは、有効な臨床的基準を用いて診断を下すこともできるし、非常にまれなケースでは、単に専門家の意見によって確認されることもある。症例を読んだ後、可能性の高いものから順に診断候補を整理し、鑑別診断を行ってほしい。各候補は病名とともに記載する。例えば、第一候補が分枝眼球顔面症候群で、第二候補が嚢胞性線維症であれば、英語で以下のように記載する：
+
+1. Branchiooculofacial syndrome
+2. Cystic fibrosis
+
+このリストには、適切と思われる診断名をいくつでも入れてください。
+
+理由を説明する必要はありません。
+この指示はドイツ語で行いましたが、回答は英語のみでお願いします。
+以下にケースを示します：
+             
+""";
+    }
+
+}

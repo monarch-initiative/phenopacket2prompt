@@ -66,6 +66,10 @@ public class Utility {
         return PromptGenerator.chinese(internationalMap.get("zh"));
     }
 
+    public PromptGenerator japanese() {
+        return PromptGenerator.japanese(internationalMap.get("ja"));
+    }
+
     public PromptGenerator czech() {
         return PromptGenerator.czech(internationalMap.get("cs"));
     }

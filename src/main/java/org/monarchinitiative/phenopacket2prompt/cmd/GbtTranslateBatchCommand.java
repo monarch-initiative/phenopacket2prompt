@@ -107,6 +107,13 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
         Utility.writeMissingTranslations(chinese.getMissingTranslations(),
                 missingTranslationsPath, "chinese.txt");
 
+        // Japanese
+        // Note official two-letter language code for Japanese is JP, but our files have JA
+        PromptGenerator japanese = utility.japanese();
+        Utility.outputPromptsInternational(ppktFiles,"ja", japanese);
+        Utility.writeMissingTranslations(japanese.getMissingTranslations(),
+                missingTranslationsPath, "japanese.txt");
+
         // output original phenopackets
         PpktCopy pcopy = new PpktCopy(new File(outdirname));
         for (var file : ppktFiles) {
