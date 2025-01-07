@@ -49,7 +49,7 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
         if (components.isEmpty()) {
             return "doğumdan sonraki ilk gün";
         } else if (components.size() == 1) {
-            return components.get(0);
+            return components.getFirst();
         } else {
             return String.format("%s %slıkken", components.get(0), components.get(1));
         }
@@ -74,7 +74,7 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
         if (components.isEmpty()) {
             return "doğumdan sonraki ilk gün";
         } else if (components.size() == 1) {
-            return components.get(0);
+            return components.getFirst();
         } else if (components.size() == 2) {
             return String.format("%s %slıkken", components.get(0), components.get(1));
         } else {

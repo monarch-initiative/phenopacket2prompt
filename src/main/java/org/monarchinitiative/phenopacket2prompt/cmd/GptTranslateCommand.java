@@ -45,7 +45,7 @@ public class GptTranslateCommand implements Callable<Integer> {
 
 
     @Override
-    public Integer call() throws Exception {
+    public Integer call() {
         File hpJsonFile = new File(hpoJsonPath);
         if (! hpJsonFile.isFile()) {
             throw new PhenolRuntimeException("Could not find hp.json at " + hpJsonFile.getAbsolutePath());

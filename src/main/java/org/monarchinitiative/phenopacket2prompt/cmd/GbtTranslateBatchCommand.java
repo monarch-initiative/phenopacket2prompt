@@ -42,7 +42,7 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
 
 
     @Override
-    public Integer call() throws Exception {
+    public Integer call() {
         File hpJsonFile = new File(hpoJsonPath);
         boolean useExactMatching = true;
         if (! hpJsonFile.isFile()) {

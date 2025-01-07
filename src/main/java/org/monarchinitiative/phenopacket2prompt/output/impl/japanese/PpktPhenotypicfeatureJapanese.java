@@ -55,7 +55,7 @@ public class PpktPhenotypicfeatureJapanese implements PpktPhenotypicFeatureGener
         String penultimate = items.stream()
                 .limit(items.size() - 1)
                 .collect(Collectors.joining(", "));
-        String ultimate = items.get(items.size() - 1);
+        String ultimate = items.getLast();
         return penultimate + " アンド " + ultimate;
     }
 

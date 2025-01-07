@@ -264,7 +264,7 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         if (components.isEmpty()) {
             ymd = "";
         } else if (components.size() == 1) {
-            ymd = components.get(0);
+            ymd = components.getFirst();
         } else if (components.size() == 2) {
             ymd = String.format("%s ve %s", components.get(0), components.get(1));
         } else {
@@ -316,7 +316,7 @@ public class PpktIndividualTurkish implements PPKtIndividualInfoGenerator {
         if (m == 0) {
             return String.format("%d günlükken", d);
         } else if (d > 0) {
-            return String.format("%d ay %d günlükken", m, monthString(m), d, dayString(d));
+            return String.format("%d ay %d günlükken", m, d);
         } else {
             return String.format("%d aylıkken", m);
         }

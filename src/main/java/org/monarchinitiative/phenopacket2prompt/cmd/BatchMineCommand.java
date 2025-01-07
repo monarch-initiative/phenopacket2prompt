@@ -15,7 +15,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -49,7 +48,7 @@ public class BatchMineCommand implements Callable<Integer> {
 
 
     @Override
-    public Integer call() throws Exception {
+    public Integer call() {
         File inDirectory = new File(input);
         if (!inDirectory.isDirectory()) {
             throw new PhenolRuntimeException("Could not find directory at " + input);

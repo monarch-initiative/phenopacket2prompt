@@ -285,7 +285,7 @@ public class PpktIndividualJapanese implements PPKtIndividualInfoGenerator {
         if (components.isEmpty()) {
             ymd = "";
         } else if (components.size() == 1) {
-            ymd = components.get(0);
+            ymd = components.getFirst();
         } else if (components.size() == 2) {
             ymd = String.format("%s そして %s", components.get(0), components.get(1)); // そして = and
         } else {

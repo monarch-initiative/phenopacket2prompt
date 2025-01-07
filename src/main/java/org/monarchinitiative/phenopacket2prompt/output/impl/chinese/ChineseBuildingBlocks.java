@@ -49,7 +49,7 @@ public class ChineseBuildingBlocks implements BuildingBlockGenerator {
         if (components.isEmpty()) {
             return "自出生起";
         } else if (components.size() == 1) {
-            return components.get(0);
+            return components.getFirst();
         } else {
             return String.format("%s%s大时", components.get(0), components.get(1));
         }
@@ -70,7 +70,7 @@ public class ChineseBuildingBlocks implements BuildingBlockGenerator {
         if (components.isEmpty()) {
             return "自出生起";
         } else if (components.size() == 1) {
-            return components.get(0);
+            return components.getFirst();
         } else if (components.size() == 2) {
             return String.format("%s%s大时", components.get(0), components.get(1));
         } else {

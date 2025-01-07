@@ -70,7 +70,7 @@ public class JapaneseBuildingBlocks implements BuildingBlockGenerator {
         if (components.isEmpty()) {
             return "生まれて初めて"; // On the first day of life
         } else if (components.size() == 1) {
-            return components.get(0);
+            return components.getFirst();
         } else if (components.size() == 2) {
             // At the age of
             return String.format("\"歳にして %s そして %s", components.get(0), components.get(1));
