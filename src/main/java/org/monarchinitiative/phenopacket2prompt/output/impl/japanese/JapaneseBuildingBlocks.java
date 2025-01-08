@@ -1,4 +1,4 @@
-package org.monarchinitiative.phenopacket2prompt.output.impl.turkish;
+package org.monarchinitiative.phenopacket2prompt.output.impl.japanese;
 
 import org.monarchinitiative.phenopacket2prompt.model.Iso8601Age;
 import org.monarchinitiative.phenopacket2prompt.output.BuildingBlockGenerator;
@@ -6,7 +6,7 @@ import org.monarchinitiative.phenopacket2prompt.output.BuildingBlockGenerator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TurkishBuildingBlocks implements BuildingBlockGenerator {
+public class JapaneseBuildingBlocks implements BuildingBlockGenerator {
     @Override
     public String days(int d) {
         return "";
@@ -24,34 +24,34 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String yearsOld(int y) {
-        return String.format("%d yaşında", y);
+        return String.format("%d 歳", y);
     }
 
     @Override
     public String monthsOld(int m) {
-        return String.format("%d aylik", m);
+        return String.format("%d モナート高度", m);
     }
 
     @Override
     public String daysOld(int d) {
-        return String.format("%d günlük", d);
+        return String.format("%d 日", d);
     }
 
     @Override
     public String monthDayOld(int m, int d) {
         List<String> components = new ArrayList<>();
         if (m > 0) {
-            components.add(String.format("%d ay", m));
+            components.add(String.format("%d 月", m));
         }
         if (d > 0) {
-            components.add(String.format("%d gün", d));
+            components.add(String.format("%d 日数", d));
         }
         if (components.isEmpty()) {
-            return "doğumdan sonraki ilk gün";
+            return "生まれて初めて";
         } else if (components.size() == 1) {
             return components.getFirst();
         } else {
-            return String.format("%s %slıkken", components.get(0), components.get(1));
+                return String.format("歳にして %s アンド %s", components.get(0), components.get(1));
         }
     }
 
@@ -59,27 +59,24 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
     public String yearsMonthsDaysOld(int y, int m, int d) {
         List<String> components = new ArrayList<>();
         if (y > 0) {
-            if (m == 0 && d == 0) {
-                components.add(String.format("%d yaşında", y));
-            } else {
-                components.add(String.format("%d yaş", y));
-            }
+            components.add(String.format("%d 年", y)); // Years
         }
         if (m > 0) {
-            components.add(String.format("%d aylıkken", m));
+            components.add(String.format("%d 月", m)); // Months
         }
         if (d > 0) {
-            components.add(String.format("%d günlükken", d));
+            components.add(String.format("%d 日数", d)); // Days
         }
         if (components.isEmpty()) {
-            return "doğumdan sonraki ilk gün";
+            return "生まれて初めて"; // On the first day of life
         } else if (components.size() == 1) {
             return components.getFirst();
         } else if (components.size() == 2) {
-            return String.format("%s %slıkken", components.get(0), components.get(1));
+            // At the age of
+            return String.format("\"歳にして %s そして %s", components.get(0), components.get(1));
         } else {
-            // we must have y,m,d
-            return String.format("%s %s %slıkken", components.get(0), components.get(1), components.get(2));
+            // we must have y,m,d - At the age of ? years, ? months, and ? days
+            return String.format("歳にして  %s, %s そして %s", components.get(0), components.get(1), components.get(2));
         }
     }
 
@@ -110,17 +107,17 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String woman() {
-        return "kadın";
+        return "夫人";
     }
 
     @Override
     public String man() {
-        return "adam";
+        return "男性";
     }
 
     @Override
     public String individual() {
-        return "cinsiyeti bilinmeyen yetişkin kişi";
+        return "性別不明";
     }
 
     @Override
@@ -130,77 +127,77 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String girl() {
-        return "kız";
+        return "女子";
     }
 
     @Override
     public String boy() {
-        return "erkek çocuk";
+        return "少年";
     }
 
     @Override
     public String child() {
-        return "çocuk";
+        return "子供";
     }
 
     @Override
     public String adolescentGirl() {
-        return "";
+        return "ティーンエイジャー";
     }
 
     @Override
     public String adolescentBoy() {
-        return "";
+        return "思春期";
     }
 
     @Override
     public String adolescentChild() {
-        return "";
-    }
+        return "性別不明の青少年";
+    } // Adolescent child (sex unknown)
 
     @Override
     public String maleInfant() {
-        return "erkek bebek";
+        return "男児";
     }
 
     @Override
     public String femaleInfant() {
-        return "kız bebek";
+        return "女児";
     }
 
     @Override
     public String infant() {
-        return "bebek";
+        return "幼児";
     }
 
     @Override
     public String newbornBoy() {
-        return "erkek yenidoğan";
+        return "男性新生児";
     }
 
     @Override
     public String newbornGirl() {
-        return "kız yenidoğan";
+        return "女性新生児";
     }
 
     @Override
     public String newborn() {
-        return "yenidoğan";
+        return "新生児";
     }
 
     @Override
     public String maleFetus() {
-        return "erkek fetüs";
+        return "男性フェット";
     }
 
     @Override
     public String femaleFetus() {
-        return "kız fetüs";
+        return "女性フェット";
     }
 
     @Override
     public String fetus() {
-        return "fetüs";
+        return "フェット";
     }
 
     @Override
@@ -220,8 +217,8 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String probandWasA() {
-        return "proband şuydu";
-    }
+        return "テストに参加したのは";
+    } // the proband was...
 
     @Override
     public String whoPresented() {
@@ -245,17 +242,18 @@ public class TurkishBuildingBlocks implements BuildingBlockGenerator {
 
     @Override
     public String probandWasAMale() {
-        return "Proband bir erkekti";
+            return "テストに参加したのは、ある男性だった。";
     }
 
     @Override
     public String probandWasAFemale() {
-        return "Proband bir kadındı";
+        return "被験者は女性";
     }
 
     @Override
     public String probandWasAnIndividual() {
-        return "Proband cinsiyeti belirtilmemiş bir bireydi";
+        return "被験者は性別・年齢不詳の個人。";
+        // The proband was an individual with unspecified age and sex";
     }
 
     @Override

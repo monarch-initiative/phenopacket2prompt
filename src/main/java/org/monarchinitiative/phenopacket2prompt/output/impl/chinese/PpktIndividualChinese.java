@@ -112,7 +112,7 @@ public class PpktIndividualChinese implements PPKtIndividualInfoGenerator {
         if (components.isEmpty()) {
             return "刚出生";
         } else if (components.size() == 1) {
-            return components.get(0);
+            return components.getFirst();
         } else if (components.size() == 2) {
             return String.format("%s%s大", components.get(0), components.get(1));
         } else {

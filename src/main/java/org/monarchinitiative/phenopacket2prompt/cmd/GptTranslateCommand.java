@@ -45,7 +45,7 @@ public class GptTranslateCommand implements Callable<Integer> {
 
 
     @Override
-    public Integer call() throws Exception {
+    public Integer call() {
         File hpJsonFile = new File(hpoJsonPath);
         if (! hpJsonFile.isFile()) {
             throw new PhenolRuntimeException("Could not find hp.json at " + hpJsonFile.getAbsolutePath());
@@ -83,6 +83,11 @@ public class GptTranslateCommand implements Callable<Integer> {
             case "it" -> {
                 PromptGenerator italian = PromptGenerator.italian(internationalMap.get("it"));
                 prompt = italian.createPrompt(individual);
+            }
+            case "jp" -> {
+                // Note the official code for Japanese is jp, but our files have ja
+                PromptGenerator japanese = PromptGenerator.japanese(internationalMap.get("ja"));
+                prompt = japanese.createPrompt(individual);
             }
             case "tr" -> {
                 PromptGenerator turkish = PromptGenerator.turkish(internationalMap.get("tr"));

@@ -66,6 +66,10 @@ public class Utility {
         return PromptGenerator.chinese(internationalMap.get("zh"));
     }
 
+    public PromptGenerator japanese() {
+        return PromptGenerator.japanese(internationalMap.get("ja"));
+    }
+
     public PromptGenerator czech() {
         return PromptGenerator.czech(internationalMap.get("cs"));
     }
@@ -90,6 +94,14 @@ public class Utility {
         outputCorrectResults(correctResultList, PROMPT_DIR);
     }
 
+    /**
+     * Output correct results to file.
+     * @param correctResultList an ArrayList of the correct results, coming from outputPromptsEnglish
+     *                           or outputPromptsEnglishFromIndividuals. Format is a list of triples
+     *                          promptFileName, Disease ID, Disease Label
+     * @param basename the directory where prompts are output to.
+     * @return The square root of the given number.
+     */
     public static  void outputCorrectResults(List<CorrectResult> correctResultList, String basename) {
         File outfile = new File(basename + File.separator + "correct_results.tsv");
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(outfile))) {
@@ -99,7 +111,7 @@ public class Utility {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.printf("[INFO] Output a total of %d prompts in en, es, nl, de, tr, zh and it.\n", correctResultList.size());
+        System.out.printf("[INFO] Output a total of %d prompts in en, es, nl, cs, de, tr, zh and it.\n", correctResultList.size());
     }
 
 
