@@ -409,9 +409,9 @@ public class PpktIndividualJapanese implements PPKtIndividualInfoGenerator {
     @Override
     public String heSheIndividual(PhenopacketSex psex) {
         return switch (psex) {
-            case FEMALE -> "sie";
-            case MALE -> "er";
-            default -> "die Person";
+            case FEMALE -> "彼女";
+            case MALE -> "彼";
+            default -> "その人";
         };
     }
 
@@ -421,27 +421,27 @@ public class PpktIndividualJapanese implements PPKtIndividualInfoGenerator {
             return imAlterVonIsoAgeExact(ppktAge);
         } else if (ppktAge.ageType().equals(PhenopacketAgeType.HPO_ONSET_AGE_TYPE)) {
             if (ppktAge.isFetus()) {
-                return "Während der Fetalperiode";
+                return "胎児期";
             } else if (ppktAge.isCongenital()) {
-                return "Zum Zeitpunkt der Geburt";
+                return "出産時";
             } else if (ppktAge.isEmbryo()) {
-                return "Während der Embryonalzeit";
+                return "胎生期";
             } else if (ppktAge.isNeonate()) {
-                return "In der neugeborenen Zeit";
+                return "新生児期";
             } else if (ppktAge.isInfant()) {
-                return "Als Säugling";
+                return "乳児期";
             } else if (ppktAge.isChild()) {
-                return "In der Kindheit";
+                return "小児期";
             } else if (ppktAge.isJuvenile()) {
-                return "Im Jugendlichenalter";
+                return "青年期";
             } else if (ppktAge.isYoungAdult()) {
-                return "Im jungen Erwachsenenalter";
+                return "青年期";
             } else if (ppktAge.isMiddleAge()) {
-                return "Im mittleren Erwachsenenalter";
+                return "成人期中期";
             } else if (ppktAge.isLateAdultAge()) {
-                return "Im späten Erwachsenenalter";
+                return "成人期後期";
             } else if (ppktAge.isAdult()) {
-                return "Im Erwachsenenalter";
+                return "成人期";
             } else {
                 throw new PhenolRuntimeException("Did not recognize onset: " + ppktAge.toString());
             }
