@@ -15,7 +15,7 @@ public class PpktTextJapanese implements PhenopacketTextGenerator {
 このリストには、適切と思われる診断名をいくつでも入れてください。
 
 理由を説明する必要はありません。
-この指示はドイツ語で行いましたが、回答は英語のみでお願いします。
+この指示は日本語で出されたが、回答は英語のみで行うこと。
 以下にケースを示します：
              
 """;
