@@ -42,7 +42,7 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
 
 
     @Override
-    public Integer call() throws Exception {
+    public Integer call() {
         File hpJsonFile = new File(hpoJsonPath);
         boolean useExactMatching = true;
         if (! hpJsonFile.isFile()) {
@@ -106,6 +106,13 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
         Utility.outputPromptsInternational(ppktFiles,"zh", chinese);
         Utility.writeMissingTranslations(chinese.getMissingTranslations(),
                 missingTranslationsPath, "chinese.txt");
+
+        // Japanese
+        // Note official two-letter language code for Japanese is JP, but our files have JA
+        PromptGenerator japanese = utility.japanese();
+        Utility.outputPromptsInternational(ppktFiles,"ja", japanese);
+        Utility.writeMissingTranslations(japanese.getMissingTranslations(),
+                missingTranslationsPath, "japanese.txt");
 
         // output original phenopackets
         PpktCopy pcopy = new PpktCopy(new File(outdirname));

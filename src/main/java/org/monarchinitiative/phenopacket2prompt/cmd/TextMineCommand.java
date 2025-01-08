@@ -34,7 +34,7 @@ public class TextMineCommand implements Callable<Integer> {
 
 
     @Override
-    public Integer call() throws Exception {
+    public Integer call() {
         LOGGER.info("TextMine command, input = {}", input);
         File hpoJsonFile = new File(datadir + File.separator + "hp.json");
         if (! hpoJsonFile.isFile()) {

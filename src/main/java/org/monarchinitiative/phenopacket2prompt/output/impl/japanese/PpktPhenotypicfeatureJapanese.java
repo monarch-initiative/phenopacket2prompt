@@ -1,4 +1,4 @@
-package org.monarchinitiative.phenopacket2prompt.output.impl.dutch;
+package org.monarchinitiative.phenopacket2prompt.output.impl.japanese;
 
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenopacket2prompt.international.HpInternational;
@@ -8,14 +8,17 @@ import org.monarchinitiative.phenopacket2prompt.output.PpktPhenotypicFeatureGene
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class PpktPhenotypicFeatureDutch implements PpktPhenotypicFeatureGenerator {
+public class PpktPhenotypicfeatureJapanese implements PpktPhenotypicFeatureGenerator {
 
-    private final HpInternational dutch;
+    private final HpInternational japanese;
     private Set<String> missingTranslations;
 
 
-    public PpktPhenotypicFeatureDutch(HpInternational international) {
-        dutch = international;
+    public PpktPhenotypicfeatureJapanese(HpInternational international) {
+        if (international == null) { // should never happen
+            throw new PhenolRuntimeException("Null international object for Japanese");
+        }
+        japanese = international;
         missingTranslations = new HashSet<>();
     }
 
@@ -23,7 +26,7 @@ public class PpktPhenotypicFeatureDutch implements PpktPhenotypicFeatureGenerato
     private List<String> getTranslations(List<OntologyTerm> ontologyTerms) {
         List<String> labels = new ArrayList<>();
         for (var term: ontologyTerms) {
-            Optional<String> opt = dutch.getLabel(term.getTid());
+            Optional<String> opt = japanese.getLabel(term.getTid());
             if (opt.isPresent()) {
                 labels.add(opt.get());
             } else {
@@ -46,14 +49,14 @@ public class PpktPhenotypicFeatureDutch implements PpktPhenotypicFeatureGenerato
         if (items.size() == 2) {
             // no comma if we just have two items.
             // one item will work with the below code
-            return String.join(" en ", items);
+            return String.join(" アンド ", items);
         }
         // if we have more than two, join all but the very last item with a comma
         String penultimate = items.stream()
                 .limit(items.size() - 1)
                 .collect(Collectors.joining(", "));
         String ultimate = items.getLast();
-        return penultimate + " en " + ultimate;
+        return penultimate + " アンド " + ultimate;
     }
 
     @Override
@@ -63,17 +66,13 @@ public class PpktPhenotypicFeatureDutch implements PpktPhenotypicFeatureGenerato
         List<String> observedLabels = getTranslations(observedTerms);
         List<String> excludedLabels = getTranslations(excludedTerms);
         if (observedLabels.isEmpty() && excludedLabels.isEmpty()) {
-            return "zonder fenotypische abnormaliteiten"; // should never happen, actually!
+            return "表現型異常なし"; // should never happen, actually!
         } else if (excludedLabels.isEmpty()) {
             return getCommaList(observedLabels) + ". ";
         } else if (observedLabels.isEmpty()) {
-            if (excludedLabels.size() > 1) {
-                return String.format("%s waren uitgesloten.", getCommaList(excludedLabels));
-            } else {
-                return String.format("%s was uitgesloten.",excludedLabels.getFirst());
-            }
+            return String.format("%s 除外された.", getCommaList(excludedLabels));
         } else {
-            String exclusion = String.format("%s %s echter uitgesloten.", getCommaList(excludedLabels), excludedLabels.size()>1? "waren":"was");
+            String exclusion = String.format("一方、以下を除外した。: %s.", getCommaList(excludedLabels));
             return getCommaList(observedLabels) + ". " +  exclusion;
         }
     }
@@ -87,25 +86,23 @@ public class PpktPhenotypicFeatureDutch implements PpktPhenotypicFeatureGenerato
     public String featuresAtEncounter(String personString, String ageString, List<OntologyTerm> ontologyTerms) {
         List<OntologyTerm> observed = getObservedFeatures(ontologyTerms);
         List<OntologyTerm> excluded = getExcludedFeatures(ontologyTerms);
-        List<String> observeddutch = getTranslations(observed);
-        List<String> excludeddutch = getTranslations(excluded);
-        var observedStr = getCommaList(observeddutch);
-        var excludedStr = getCommaList(excludeddutch);
+        List<String> observedGerman = getTranslations(observed);
+        List<String> excludedGerman = getTranslations(excluded);
+        var observedStr = getCommaList(observedGerman);
+        var excludedStr = getCommaList(excludedGerman);
         if (!observed.isEmpty() && ! excluded.isEmpty()) {
-            return String.format("%s presenteerde %s met de volgende symptomen: %s. In tegenstelling daartegen %s uitgesloten: %s.",
+            return String.format("%s 発表 %s 以下の症状を伴う: %s. 一方、以下の症状は除外された。: %s.",
                     ageString,
                     personString,
                     observedStr,
-                    excluded.size()>1? "waren de volgende symptomen":"was het volgende symptoom",
                     excludedStr);
         } else if (!observed.isEmpty()) {
-            return String.format("%s presenteerde %s met de volgende symptomen: %s.", ageString, personString,  observedStr);
+            return String.format("%s 発表 %s 以下の症状を伴う: %s.", ageString, personString,  observedStr);
         } else if (!excluded.isEmpty()) {
-            return String.format("%s %s de volgende symptomen uitgesloten: %s.",
-                    ageString,
-                    excluded.size()>1? "waren":"was", excludedStr);
+            return String.format("%s 一方、以下の症状は除外された。: %s.",
+                    ageString, excludedStr);
         } else {
-            throw new PhenolRuntimeException("No features found for time point " + ageString); // should never happen
+            throw new PhenolRuntimeException("その時点の特徴は見つからない " + ageString); // should never happen
         }
     }
 
@@ -113,25 +110,23 @@ public class PpktPhenotypicFeatureDutch implements PpktPhenotypicFeatureGenerato
     public String featuresAtOnset(String personString, List<OntologyTerm> ontologyTerms) {
         List<OntologyTerm> observed = getObservedFeatures(ontologyTerms);
         List<OntologyTerm> excluded = getExcludedFeatures(ontologyTerms);
-        List<String> observeddutch = getTranslations(observed);
-        List<String> excludeddutch = getTranslations(excluded);
-        var observedStr = getCommaList(observeddutch);
-        var excludedStr = getCommaList(excludeddutch);
+        List<String> observedGerman = getTranslations(observed);
+        List<String> excludedGerman = getTranslations(excluded);
+        var observedStr = getCommaList(observedGerman);
+        var excludedStr = getCommaList(excludedGerman);
 
         if (!observed.isEmpty() && ! excluded.isEmpty()) {
-            return String.format("%s presenteerde met de volgende symptomen: %s. In tegenstelling daartegen %s uitgesloten: %s.",
+            return String.format("%s 以下の症状を呈した。: %s. 一方、以下の症状は除外された。: %s.",
                     personString,
                     observedStr,
-                    excluded.size()>1? "waren de volgende symptomen":"was het volgende symptoom",
                     excludedStr);
         } else if (!observed.isEmpty()) {
-            return String.format("%s presenteerde met %s: %s.", personString,
-                    observed.size()>1? "de volgende symptomen":"het volgende symptoom", observedStr);
+            return String.format("%s 以下の症状を呈した。: %s.", personString, observedStr);
         } else if (!excluded.isEmpty()) {
-            return String.format("Bij het begin van de ziekte %s uitgesloten: %s.",
-                    excluded.size()>1? "waren de volgende symptomen":"was het volgende symptoom", excludedStr);
+            return String.format("発症時に以下の症状は除外された。: %s.",
+                    excludedStr);
         } else {
-            return "Geen fenotypische abnormaliteiten waren bij het begin van de ziekte vastgesteld.";
+            return "発症時の表現型異常は明示されていない.";
         }
     }
 

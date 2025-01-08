@@ -122,7 +122,7 @@ public class PpktIndividualSpanish implements PPKtIndividualInfoGenerator {
         if (components.isEmpty()) {
             return "en el primer día de vida";
         } else if (components.size() == 1) {
-            return components.get(0);
+            return components.getFirst();
         } else if (components.size() == 2) {
             return String.format("en la edad de %s y %s", components.get(0), components.get(1));
         } else {

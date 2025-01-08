@@ -42,7 +42,7 @@ public class HpInternationalOboParser {
     public HpInternationalOboParser(File file) {
         languageToInternationalMap = new HashMap<>();
         String pattern = "id: (HP:\\d{7,7})";
-        Set<String> acronyms = Set.of("cs", "en", "de", "dtp", "it", "es", "fr", "ja", "nl", "nna", "tr", "tw", "zh");
+        Set<String> acronyms = Set.of("cs", "en", "de", "dtp", "es", "fr", "it", "ja", "nl", "nna", "pt", "tr", "tw", "zh");
         for (String acronym : acronyms) {
             languageToInternationalMap.put(acronym, new HpInternational(acronym));
         }
