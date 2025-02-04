@@ -62,9 +62,11 @@ public class PpktPhenotypicfeatureTurkish implements PpktPhenotypicFeatureGenera
         List<OntologyTerm> excludedTerms = getExcludedFeatures(ontologyTerms);
         List<String> observedLabels = getTranslations(observedTerms);
         List<String> excludedLabels = getTranslations(excludedTerms);
-        if (observedTerms.size() != observedLabels.size() ||
-                excludedTerms.size() != excludedLabels.size() ) {
-            throw new PhenolRuntimeException("Missing translation, function formatFeatures().");
+        if(isFullTranslationsEnabled()) {
+            if (observedTerms.size() != observedLabels.size() ||
+                    excludedTerms.size() != excludedLabels.size()) {
+                throw new PhenolRuntimeException("Missing translation, function formatFeatures().");
+            }
         }
         if (observedLabels.isEmpty() && excludedLabels.isEmpty()) {
             return "fenotipik anormallik yok"; // should never happen, actually!
@@ -91,10 +93,16 @@ public class PpktPhenotypicfeatureTurkish implements PpktPhenotypicFeatureGenera
     public String featuresAtEncounter(String personString, String ageString, List<OntologyTerm> ontologyTerms) {
         List<OntologyTerm> observed = getObservedFeatures(ontologyTerms);
         List<OntologyTerm> excluded = getExcludedFeatures(ontologyTerms);
-        List<String> observedGerman = getTranslations(observed);
-        List<String> excludedGerman = getTranslations(excluded);
-        var observedStr = getCommaList(observedGerman);
-        var excludedStr = getCommaList(excludedGerman);
+        List<String> observedTurkish = getTranslations(observed);
+        List<String> excludedTurkish = getTranslations(excluded);
+        if(isFullTranslationsEnabled()) {
+            if (observed.size() != observedTurkish.size() ||
+                    excluded.size() != excludedTurkish.size()) {
+                throw new PhenolRuntimeException("Missing translation, function featuresAtOnset().");
+            }
+        }
+        var observedStr = getCommaList(observedTurkish);
+        var excludedStr = getCommaList(excludedTurkish);
         if (!observed.isEmpty() && ! excluded.isEmpty()) {
             return String.format("%s %s şu belirtilerle başvurdu: %s. Buna karşın %s dışlandı: %s.",
                     ageString,
@@ -119,10 +127,11 @@ public class PpktPhenotypicfeatureTurkish implements PpktPhenotypicFeatureGenera
         List<OntologyTerm> excluded = getExcludedFeatures(ontologyTerms);
         List<String> observedTurkish = getTranslations(observed);
         List<String> excludedTurkish = getTranslations(excluded);
-
-        if (observed.size() != observedTurkish.size() ||
-                excluded.size() != excludedTurkish.size() ) {
-            throw new PhenolRuntimeException("Missing translation, function featuresAtOnset().");
+        if(isFullTranslationsEnabled()) {
+            if (observed.size() != observedTurkish.size() ||
+                    excluded.size() != excludedTurkish.size()) {
+                throw new PhenolRuntimeException("Missing translation, function featuresAtOnset().");
+            }
         }
         var observedStr = getCommaList(observedTurkish);
         var excludedStr = getCommaList(excludedTurkish);

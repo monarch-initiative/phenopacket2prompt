@@ -78,10 +78,11 @@ public class PpktPhenotypicfeatureItalian implements PpktPhenotypicFeatureGenera
         List<OntologyTerm> excludedTerms = ontologyTerms.stream()
                 .filter(OntologyTerm::isExcluded).toList();
         List<String> excludedLabels = getTranslations(excludedTerms);
-
-        if (observedTerms.size() != observedLabels.size() ||
-                excludedTerms.size() != excludedLabels.size() ) {
-            throw new PhenolRuntimeException("Missing translation, function formatFeatures().");
+        if(isFullTranslationsEnabled()) {
+            if (observedTerms.size() != observedLabels.size() ||
+                    excludedTerms.size() != excludedLabels.size()) {
+                throw new PhenolRuntimeException("Missing translation, function formatFeatures().");
+            }
         }
         if (observedLabels.isEmpty() && excludedLabels.isEmpty()) {
             return "Nessuna anomalia fenotipica"; // should never happen, actually!
@@ -113,10 +114,11 @@ public class PpktPhenotypicfeatureItalian implements PpktPhenotypicFeatureGenera
         List<OntologyTerm> excluded = getExcludedFeatures(ontologyTerms);
         List<String> observedItalian = getTranslations(observed);
         List<String> excludedItalian = getTranslations(excluded);
-
-        if (observed.size() != observedItalian.size() ||
-                excluded.size() != excludedItalian.size() ) {
-            throw new PhenolRuntimeException("Missing translation, function featuresAtOnset().");
+        if(isFullTranslationsEnabled()) {
+            if (observed.size() != observedItalian.size() ||
+                    excluded.size() != excludedItalian.size()) {
+                throw new PhenolRuntimeException("Missing translation, function featuresAtOnset().");
+            }
         }
         var observedStr = getCommaList(observedItalian);
         var excludedStr = getCommaList(excludedItalian);
@@ -141,9 +143,11 @@ public class PpktPhenotypicfeatureItalian implements PpktPhenotypicFeatureGenera
         List<OntologyTerm> excluded = getExcludedFeatures(ontologyTerms);
         List<String> observedItalian = getTranslations(observed);
         List<String> excludedItalian = getTranslations(excluded);
-        if (observed.size() != observedItalian.size() ||
-                excluded.size() != excludedItalian.size() ) {
-            throw new PhenolRuntimeException("Missing translation, function featuresAtOnset().");
+        if(isFullTranslationsEnabled()) {
+            if (observed.size() != observedItalian.size() ||
+                    excluded.size() != excludedItalian.size()) {
+                throw new PhenolRuntimeException("Missing translation, function featuresAtOnset().");
+            }
         }
 
         var observedStr = getCommaList(observedItalian);

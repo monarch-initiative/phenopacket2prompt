@@ -1,12 +1,17 @@
 package org.monarchinitiative.phenopacket2prompt.output;
 
 import org.monarchinitiative.phenopacket2prompt.model.OntologyTerm;
+import org.monarchinitiative.phenopacket2prompt.config.Context;
 
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
 public interface PpktPhenotypicFeatureGenerator {
+
+    default boolean isFullTranslationsEnabled() {
+        return Context.getInstance().isFullTranslations();
+    }
 
     String formatFeatures(List<OntologyTerm> ontologyTerms);
 

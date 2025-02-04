@@ -62,10 +62,11 @@ public class PpktPhenotypicfeatureGerman implements PpktPhenotypicFeatureGenerat
         List<OntologyTerm> excludedTerms = getExcludedFeatures(ontologyTerms);
         List<String> observedLabels = getTranslations(observedTerms);
         List<String> excludedLabels = getTranslations(excludedTerms);
-
-        if (observedTerms.size() != observedLabels.size() ||
-                excludedTerms.size() != excludedLabels.size() ) {
-            throw new PhenolRuntimeException("Missing translation, function formatFeatures().");
+        if(isFullTranslationsEnabled()) {
+            if (observedTerms.size() != observedLabels.size() ||
+                    excludedTerms.size() != excludedLabels.size()) {
+                throw new PhenolRuntimeException("Missing translation, function formatFeatures().");
+            }
         }
         if (observedLabels.isEmpty() && excludedLabels.isEmpty()) {
             return "keine phänotypischen Abnormalitäten"; // should never happen, actually!
@@ -94,10 +95,11 @@ public class PpktPhenotypicfeatureGerman implements PpktPhenotypicFeatureGenerat
         List<OntologyTerm> excluded = getExcludedFeatures(ontologyTerms);
         List<String> observedGerman = getTranslations(observed);
         List<String> excludedGerman = getTranslations(excluded);
-
-        if (observed.size() != observedGerman.size() ||
-                excluded.size() != excludedGerman.size() ) {
-            throw new PhenolRuntimeException("Missing translation, function featuresAtEncounter().");
+        if(isFullTranslationsEnabled()) {
+            if (observed.size() != observedGerman.size() ||
+                    excluded.size() != excludedGerman.size()) {
+                throw new PhenolRuntimeException("Missing translation, function featuresAtEncounter().");
+            }
         }
         var observedStr = getCommaList(observedGerman);
         var excludedStr = getCommaList(excludedGerman);
@@ -125,10 +127,11 @@ public class PpktPhenotypicfeatureGerman implements PpktPhenotypicFeatureGenerat
         List<OntologyTerm> excluded = getExcludedFeatures(ontologyTerms);
         List<String> observedGerman = getTranslations(observed);
         List<String> excludedGerman = getTranslations(excluded);
-
-        if (observed.size() != observedGerman.size() ||
-                excluded.size() != excludedGerman.size() ) {
-            throw new PhenolRuntimeException("Missing translation, function featuresAtOnset().");
+        if(isFullTranslationsEnabled()) {
+            if (observed.size() != observedGerman.size() ||
+                    excluded.size() != excludedGerman.size()) {
+                throw new PhenolRuntimeException("Missing translation, function featuresAtOnset().");
+            }
         }
         var observedStr = getCommaList(observedGerman);
         var excludedStr = getCommaList(excludedGerman);

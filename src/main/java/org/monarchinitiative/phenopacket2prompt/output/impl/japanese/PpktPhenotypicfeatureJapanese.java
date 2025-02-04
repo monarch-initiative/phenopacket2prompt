@@ -65,8 +65,10 @@ public class PpktPhenotypicfeatureJapanese implements PpktPhenotypicFeatureGener
         List<OntologyTerm> excludedTerms = getExcludedFeatures(ontologyTerms);
         List<String> observedLabels = getTranslations(observedTerms);
         List<String> excludedLabels = getTranslations(excludedTerms);
-        if (observedTerms.size() != observedLabels.size() || excludedTerms.size() != excludedLabels.size() ) {
-            throw new PhenolRuntimeException("Missing translation, function formatFeatures().");
+        if(isFullTranslationsEnabled()) {
+            if (observedTerms.size() != observedLabels.size() || excludedTerms.size() != excludedLabels.size()) {
+                throw new PhenolRuntimeException("Missing translation, function formatFeatures().");
+            }
         }
 
         if (observedLabels.isEmpty() && excludedLabels.isEmpty()) {
@@ -92,8 +94,10 @@ public class PpktPhenotypicfeatureJapanese implements PpktPhenotypicFeatureGener
         List<OntologyTerm> excluded = getExcludedFeatures(ontologyTerms);
         List<String> observedJapanese = getTranslations(observed);
         List<String> excludedJapanese = getTranslations(excluded);
-        if (observed.size() != observedJapanese.size() || excluded.size() != excludedJapanese.size() ) {
-            throw new PhenolRuntimeException("Missing translation, function featuresAtEncounter().");
+        if(isFullTranslationsEnabled()) {
+            if (observed.size() != observedJapanese.size() || excluded.size() != excludedJapanese.size()) {
+                throw new PhenolRuntimeException("Missing translation, function featuresAtEncounter().");
+            }
         }
 
         var observedStr = getCommaList(observedJapanese);
@@ -120,8 +124,10 @@ public class PpktPhenotypicfeatureJapanese implements PpktPhenotypicFeatureGener
         List<OntologyTerm> excluded = getExcludedFeatures(ontologyTerms);
         List<String> observedJapanese = getTranslations(observed);
         List<String> excludedJapanese = getTranslations(excluded);
-        if (observed.size() != observedJapanese.size() || excluded.size() != excludedJapanese.size() ) {
-            throw new PhenolRuntimeException("Missing translation, function featuresAtOnset().");
+        if(isFullTranslationsEnabled()) {
+            if (observed.size() != observedJapanese.size() || excluded.size() != excludedJapanese.size()) {
+                throw new PhenolRuntimeException("Missing translation, function featuresAtOnset().");
+            }
         }
 
         var observedStr = getCommaList(observedJapanese);
