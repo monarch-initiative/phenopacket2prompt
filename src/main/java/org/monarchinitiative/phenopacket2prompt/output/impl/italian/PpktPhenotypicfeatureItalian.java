@@ -111,13 +111,13 @@ public class PpktPhenotypicfeatureItalian implements PpktPhenotypicFeatureGenera
         var observedStr = getCommaList(observedItalian);
         var excludedStr = getCommaList(excludedItalian);
         if (!observed.isEmpty() && ! excluded.isEmpty()) {
-            return String.format("%s presentò i sequenti sintomi: %s. Al contrario, si %s: %s.",
+            return String.format("%s presentò i seguenti sintomi: %s. Al contrario, si %s: %s.",
                     personString,
                     observedStr,
-                    excluded.size()>1? "esclusero i sequenti sintomi":"escluse il sequente sintomo",
+                    excluded.size()>1? "esclusero i seguenti sintomi":"escluse il seguente sintomo",
                     excludedStr);
         } else if (!observed.isEmpty()) {
-            return String.format("%s presentò i sequenti sintomi: %s.", personString, observedStr);
+            return String.format("%s presentò i seguenti sintomi: %s.", personString, observedStr);
         } else if (!excluded.isEmpty()) {
             return String.format("All'inizio della malattia, si %s: %s.",
                     excluded.size()>1? "esclusero i seguenti sintomi":"escluse il seguente sintomo", excludedStr);
