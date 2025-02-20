@@ -65,6 +65,12 @@ public class PpktPhenotypicfeatureJapanese implements PpktPhenotypicFeatureGener
         List<OntologyTerm> excludedTerms = getExcludedFeatures(ontologyTerms);
         List<String> observedLabels = getTranslations(observedTerms);
         List<String> excludedLabels = getTranslations(excludedTerms);
+        if(isFullTranslationsEnabled()) {
+            if (observedTerms.size() != observedLabels.size() || excludedTerms.size() != excludedLabels.size()) {
+                throw new PhenolRuntimeException("Missing translation, function formatFeatures().");
+            }
+        }
+
         if (observedLabels.isEmpty() && excludedLabels.isEmpty()) {
             return "表現型異常なし"; // should never happen, actually!
         } else if (excludedLabels.isEmpty()) {
@@ -86,10 +92,16 @@ public class PpktPhenotypicfeatureJapanese implements PpktPhenotypicFeatureGener
     public String featuresAtEncounter(String personString, String ageString, List<OntologyTerm> ontologyTerms) {
         List<OntologyTerm> observed = getObservedFeatures(ontologyTerms);
         List<OntologyTerm> excluded = getExcludedFeatures(ontologyTerms);
-        List<String> observedGerman = getTranslations(observed);
-        List<String> excludedGerman = getTranslations(excluded);
-        var observedStr = getCommaList(observedGerman);
-        var excludedStr = getCommaList(excludedGerman);
+        List<String> observedJapanese = getTranslations(observed);
+        List<String> excludedJapanese = getTranslations(excluded);
+        if(isFullTranslationsEnabled()) {
+            if (observed.size() != observedJapanese.size() || excluded.size() != excludedJapanese.size()) {
+                throw new PhenolRuntimeException("Missing translation, function featuresAtEncounter().");
+            }
+        }
+
+        var observedStr = getCommaList(observedJapanese);
+        var excludedStr = getCommaList(excludedJapanese);
         if (!observed.isEmpty() && ! excluded.isEmpty()) {
             return String.format("%s 発表 %s 以下の症状を伴う: %s. 一方、以下の症状は除外された。: %s.",
                     ageString,
@@ -110,10 +122,16 @@ public class PpktPhenotypicfeatureJapanese implements PpktPhenotypicFeatureGener
     public String featuresAtOnset(String personString, List<OntologyTerm> ontologyTerms) {
         List<OntologyTerm> observed = getObservedFeatures(ontologyTerms);
         List<OntologyTerm> excluded = getExcludedFeatures(ontologyTerms);
-        List<String> observedGerman = getTranslations(observed);
-        List<String> excludedGerman = getTranslations(excluded);
-        var observedStr = getCommaList(observedGerman);
-        var excludedStr = getCommaList(excludedGerman);
+        List<String> observedJapanese = getTranslations(observed);
+        List<String> excludedJapanese = getTranslations(excluded);
+        if(isFullTranslationsEnabled()) {
+            if (observed.size() != observedJapanese.size() || excluded.size() != excludedJapanese.size()) {
+                throw new PhenolRuntimeException("Missing translation, function featuresAtOnset().");
+            }
+        }
+
+        var observedStr = getCommaList(observedJapanese);
+        var excludedStr = getCommaList(excludedJapanese);
 
         if (!observed.isEmpty() && ! excluded.isEmpty()) {
             return String.format("%s 以下の症状を呈した。: %s. 一方、以下の症状は除外された。: %s.",

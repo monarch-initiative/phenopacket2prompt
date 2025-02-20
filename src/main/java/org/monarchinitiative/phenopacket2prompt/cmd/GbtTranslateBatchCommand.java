@@ -1,6 +1,6 @@
 package org.monarchinitiative.phenopacket2prompt.cmd;
 
-
+import org.monarchinitiative.phenopacket2prompt.config.Context;
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenol.io.OntologyLoader;
 import org.monarchinitiative.phenol.ontology.data.Ontology;
@@ -37,6 +37,11 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
     @CommandLine.Option(names = {"-d", "--dir"}, description = "Path to directory with JSON phenopacket files", required = true)
     private String ppktDir;
 
+    @CommandLine.Option(names = {"--full-translations"},
+            description = "Only output prompts for which all HPO terms are available",
+            defaultValue = "false")
+    private boolean fullTransl;
+
     @CommandLine.Option(names = {"--no-preamble"},
             description = "Only output patient description",
             defaultValue = "false")
@@ -49,6 +54,7 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
     @Override
     public Integer call() {
         File hpJsonFile = new File(hpoJsonPath);
+        Context.getInstance().setFullTranslations(fullTransl);
         boolean useExactMatching = true;
         if (! hpJsonFile.isFile()) {
             throw new PhenolRuntimeException("Could not find hp.json at " + hpJsonFile.getAbsolutePath());
