@@ -37,6 +37,11 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
     @CommandLine.Option(names = {"-d", "--dir"}, description = "Path to directory with JSON phenopacket files", required = true)
     private String ppktDir;
 
+    @CommandLine.Option(names = {"--no-preamble"},
+            description = "Only output patient description",
+            defaultValue = "false")
+    private boolean onlyPatient;
+
     private String currentLanguageCode = null;
     private int currentCount;
 
