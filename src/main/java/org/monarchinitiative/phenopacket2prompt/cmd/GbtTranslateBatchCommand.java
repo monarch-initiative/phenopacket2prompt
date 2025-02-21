@@ -42,6 +42,11 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
             defaultValue = "false")
     private boolean fullTransl;
 
+    @CommandLine.Option(names = {"--no-preamble"},
+            description = "Only output patient description",
+            defaultValue = "false")
+    private boolean onlyPatient;
+
     private String currentLanguageCode = null;
     private int currentCount;
 
