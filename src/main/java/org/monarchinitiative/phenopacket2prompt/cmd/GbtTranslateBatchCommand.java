@@ -55,6 +55,8 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
     public Integer call() {
         File hpJsonFile = new File(hpoJsonPath);
         Context.getInstance().setFullTranslations(fullTransl);
+        Context.getInstance().setOnlyPatient(onlyPatient);
+
         boolean useExactMatching = true;
         if (! hpJsonFile.isFile()) {
             throw new PhenolRuntimeException("Could not find hp.json at " + hpJsonFile.getAbsolutePath());

@@ -1,4 +1,5 @@
 package org.monarchinitiative.phenopacket2prompt.output;
+import org.monarchinitiative.phenopacket2prompt.config.Context;
 
 import org.monarchinitiative.phenopacket2prompt.international.HpInternational;
 import org.monarchinitiative.phenopacket2prompt.model.OntologyTerm;
@@ -28,6 +29,9 @@ public interface PromptGenerator {
 
 
 
+    default boolean isOnlyPatientEnabled() {
+        return Context.getInstance().isOnlyPatient();
+    }
 
     String queryHeader();
     String getIndividualInformation(PpktIndividual ppktIndividual);
@@ -95,9 +99,15 @@ public interface PromptGenerator {
      * @return the prompt text
      */
     default String createPrompt(PpktIndividual individual) {
-       return String.format("%s%s",
-               getHeader(),
-               createPromptWithoutHeader(individual));
+        if(isOnlyPatientEnabled()) {
+            return String.format("%s",
+                    createPromptWithoutHeader(individual));
+        }
+        else {
+            return String.format("%s%s",
+                    getHeader(),
+                    createPromptWithoutHeader(individual));
+        }
     }
     // TODO IMPLEMENT EVERYWHERE. WE ALSO NEED VERSIONS FOR EACH LLM, CONSIDER ADDING ENUM
     default String createPromptWithoutHeader(PpktIndividual individual) {

@@ -90,7 +90,9 @@ public class DutchPromptGenerator implements PromptGenerator {
         // We then report the rest, one for each specified time
         //String onsetFeatures = formatFeatures(onsetTerms);
         StringBuilder sb = new StringBuilder();
-        sb.append(queryHeader());
+        if(!isOnlyPatientEnabled()) {
+            sb.append(queryHeader());
+        }
         sb.append(individualInfo).append("\n").append(onsetDescription).append("\n");
         for (var entry: pfMap.entrySet()) {
             String vignette = getVignetteAtAge(entry.getKey(), individual.getSex(), entry.getValue());
