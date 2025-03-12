@@ -1,4 +1,5 @@
 package org.monarchinitiative.phenopacket2prompt.output;
+import org.monarchinitiative.phenopacket2prompt.config.Context;
 
 import org.monarchinitiative.phenopacket2prompt.international.HpInternational;
 import org.monarchinitiative.phenopacket2prompt.model.OntologyTerm;
@@ -28,6 +29,9 @@ public interface PromptGenerator {
 
 
 
+    default boolean isOnlyPatientEnabled() {
+        return Context.getInstance().isOnlyPatient();
+    }
 
     String queryHeader();
     String getIndividualInformation(PpktIndividual ppktIndividual);
@@ -95,24 +99,29 @@ public interface PromptGenerator {
      * @return the prompt text
      */
     default String createPrompt(PpktIndividual individual) {
-       return String.format("%s%s",
-               getHeader(),
-               createPromptWithoutHeader(individual));
+        if(isOnlyPatientEnabled()) {
+            return String.format("%s",
+                    createPromptWithoutHeader(individual));
+        }
+        else {
+            return String.format("%s%s",
+                    getHeader(),
+                    createPromptWithoutHeader(individual));
+        }
     }
     // TODO IMPLEMENT EVERYWHERE. WE ALSO NEED VERSIONS FOR EACH LLM, CONSIDER ADDING ENUM
     default String createPromptWithoutHeader(PpktIndividual individual) {
         String individualInfo = getIndividualInformation(individual);
         // For creating the prompt, we first report the onset and the unspecified terms together, and then
-        List<OntologyTerm> onsetTerms = individual.getPhenotypicFeaturesAtOnset();
+        String onsetDescription = getVignetteAtOnset(individual);
         Map<PhenopacketAge, List<OntologyTerm>> pfMap = individual.extractSpecifiedAgePhenotypicFeatures();
         // We then report the rest, one for each specified time
-        String onsetFeatures = formatFeatures(onsetTerms);
+        //String onsetFeatures = formatFeatures(onsetTerms);
         StringBuilder sb = new StringBuilder();
-
-        sb.append(individualInfo).append(" ").append(onsetFeatures);
+        sb.append(individualInfo).append("\n").append(onsetDescription).append("\n");
         for (var entry: pfMap.entrySet()) {
             String vignette = getVignetteAtAge(entry.getKey(), individual.getSex(), entry.getValue());
-            sb.append(vignette).append(" ");
+            sb.append(vignette).append("\n");
         }
         return sb.toString();
     }

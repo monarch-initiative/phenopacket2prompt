@@ -199,7 +199,7 @@ public class Utility {
 
 
 
-    public static void outputPromptsInternational(List<File> ppktFiles, String languageCode, PromptGenerator generator) {
+    public static void outputPromptsInternational(List<File> ppktFiles, String languageCode, PromptGenerator generator, String outdirname) {
         List<PpktIndividual> individualList = new ArrayList<>();
         for (var f: ppktFiles) {
             PpktIndividual individual = PpktIndividual.fromFile(f);
@@ -207,7 +207,7 @@ public class Utility {
         }
         outputPromptsInternationalFromIndividualList(individualList,
                 languageCode,
-                PROMPT_DIR,
+                outdirname,
                 generator);
     }
 
@@ -224,8 +224,8 @@ public class Utility {
 
 
 
-    public static List<CorrectResult> outputPromptsEnglish(List<File> ppktFiles) {
-        Utility.createDir("prompts/en");
+    public static List<CorrectResult> outputPromptsEnglish(List<File> ppktFiles, String outdirname) {
+        Utility.createDir(outdirname + "/en");
         List<CorrectResult> correctResultList = new ArrayList<>();
         PromptGenerator generator = PromptGenerator.english();
         int currentCount = 0;
@@ -240,7 +240,7 @@ public class Utility {
             String promptFileName = Utility.getFileName( individual.getPhenopacketId(), "en");
             try {
                 String prompt = generator.createPrompt(individual);
-                Utility.outputPromptFromCaseBundle(prompt, promptFileName, "prompts/en");
+                Utility.outputPromptFromCaseBundle(prompt, promptFileName, outdirname + "/en");
                 System.out.printf("en      %d.\r", currentCount);
                 currentCount++;
                 var cres = new CorrectResult(promptFileName, pdisease.getDiseaseId(), pdisease.getLabel());
