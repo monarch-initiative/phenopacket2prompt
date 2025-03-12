@@ -14,9 +14,18 @@ class GbtTranslateBatchCommandTest {
 
     static Stream<TestCase> provideTestCases() {
         return Stream.of(
-                new TestCase("-p", "PMID_27672653_Individual_1_PATIENTONLY_en-prompt.txt"),
-                new TestCase("--only-patient-description=true", "PMID_27672653_Individual_1_PATIENTONLY_en-prompt.txt"),
-                new TestCase("--only-patient-description=false", "PMID_27672653_Individual_1_en-prompt.txt")
+                new TestCase("-p",
+                        "PMID_27672653_Individual_1_PATIENTONLY_en-prompt.txt",
+                        "PMID_27672653_Individual_1_PATIENTONLY_it-prompt.txt",
+                        "PMID_27672653_Individual_1_PATIENTONLY_es-prompt.txt"),
+                new TestCase("--only-patient-description=true",
+                        "PMID_27672653_Individual_1_PATIENTONLY_en-prompt.txt",
+                        "PMID_27672653_Individual_1_PATIENTONLY_it-prompt.txt",
+                        "PMID_27672653_Individual_1_PATIENTONLY_es-prompt.txt"),
+                new TestCase("--only-patient-description=false",
+                        "PMID_27672653_Individual_1_en-prompt.txt",
+                        "PMID_27672653_Individual_1_it-prompt.txt",
+                        "PMID_27672653_Individual_1_es-prompt.txt")
         );
     }
 
@@ -29,7 +38,9 @@ class GbtTranslateBatchCommandTest {
         copyTestData("data/GCDH_test_ppkt.json", testDataFolder.resolve("GCDH_test_ppkt.json"));
 
         // Define output file path
-        Path outputFile = tempDir.resolve("en/PMID_27672653_Individual_1_en-prompt.txt"); // issue here?
+        Path outputFileEn = tempDir.resolve("en/PMID_27672653_Individual_1_en-prompt.txt");
+        Path outputFileIt = tempDir.resolve("it/PMID_27672653_Individual_1_it-prompt.txt");
+        Path outputFileEs = tempDir.resolve("es/PMID_27672653_Individual_1_es-prompt.txt");
 
         // Execute the command
         CommandLine cmd = new CommandLine(new GbtTranslateBatchCommand());
@@ -39,22 +50,36 @@ class GbtTranslateBatchCommandTest {
         Assertions.assertEquals(0, exitCode, "Command should exit successfully.");
 
         // Read expected output
-        String expectedOutput = readResourceFile("data/expected-output/" + testCase.expectedOutputFile);
+        String expectedOutputFileEn = readResourceFile("data/expected-output/" + testCase.expectedOutputFileEn);
+        String expectedOutputFileIt = readResourceFile("data/expected-output/" + testCase.expectedOutputFileIt);
+        String expectedOutputFileEs = readResourceFile("data/expected-output/" + testCase.expectedOutputFileEs);
+
 
         // Read actual output from the file
-        String actualOutput = Files.readString(outputFile).trim();
+        String actualOutputEn = Files.readString(outputFileEn).trim();
+        String actualOutputIt = Files.readString(outputFileIt).trim();
+        String actualOutputEs = Files.readString(outputFileEs).trim();
 
         // Compare output
-        Assertions.assertEquals(expectedOutput, actualOutput, "Output file content should match expected output.");
+        Assertions.assertEquals(expectedOutputFileEn, actualOutputEn, "Output file content should match expected output.");
+        Assertions.assertEquals(expectedOutputFileIt, actualOutputIt, "Output file content should match expected output.");
+        Assertions.assertEquals(expectedOutputFileEs, actualOutputEs, "Output file content should match expected output.");
+
+
     }
 
     static class TestCase {
         String input;
-        String expectedOutputFile;
+        String expectedOutputFileEn;
+        String expectedOutputFileIt;
+        String expectedOutputFileEs;
 
-        TestCase(String input, String expectedOutputFile) {
+        TestCase(String input, String expectedOutputFileEn, String expectedOutputFileIt, String expectedOutputFileEs) {
             this.input = input;
-            this.expectedOutputFile = expectedOutputFile;
+            this.expectedOutputFileEn = expectedOutputFileEn;
+            this.expectedOutputFileIt = expectedOutputFileIt;
+            this.expectedOutputFileEs = expectedOutputFileEs;
+
         }
 
         @Override
