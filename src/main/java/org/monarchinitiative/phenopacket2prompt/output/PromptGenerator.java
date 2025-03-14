@@ -34,6 +34,8 @@ public interface PromptGenerator {
     }
 
     String queryHeader();
+    String queryFooter();
+
     String getIndividualInformation(PpktIndividual ppktIndividual);
 
     String formatFeatures( List<OntologyTerm> ontologyTerms);

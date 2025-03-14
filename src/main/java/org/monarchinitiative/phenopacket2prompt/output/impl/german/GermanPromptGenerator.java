@@ -10,7 +10,6 @@ import org.monarchinitiative.phenopacket2prompt.output.PpktPhenotypicFeatureGene
 import org.monarchinitiative.phenopacket2prompt.output.PromptGenerator;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class GermanPromptGenerator implements PromptGenerator {
@@ -34,9 +33,13 @@ public class GermanPromptGenerator implements PromptGenerator {
 
     @Override
     public String queryHeader() {
-        return ppktTextGenerator.GPT_PROMPT_HEADER();
+        return ppktTextGenerator.LLM_PROMPT_HEADER();
     }
 
+    @Override
+    public String queryFooter() {
+        return ppktTextGenerator.LLM_PROMPT_FOOTER();
+    }
     @Override
     public String getIndividualInformation(PpktIndividual ppktIndividual) {
         return this.ppktAgeSexGenerator.getIndividualDescription(ppktIndividual);

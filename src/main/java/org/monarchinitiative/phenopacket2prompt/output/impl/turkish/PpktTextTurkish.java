@@ -2,23 +2,26 @@ package org.monarchinitiative.phenopacket2prompt.output.impl.turkish;
 
 import org.monarchinitiative.phenopacket2prompt.output.PhenopacketTextGenerator;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 public class PpktTextTurkish implements PhenopacketTextGenerator {
-
     @Override
-    public String GPT_PROMPT_HEADER() {
-        return  """
-Teşhislerinizin insan uzmanlarınkine kıyasla nasıl olduğunu görmek için klinik bir vaka raporu ile bir deney yapıyorum. Size tıbbi bir vakanın bir bölümünü sunacağım. Herhangi bir hastayı tedavi etmeye çalışmıyorsunuz. Bu durumda siz, teşhis koyan bir yapay zeka dil modeli olan "Dr GPT-4 "sünüz. İşte bazı kurallar. İlk olarak, tek bir kesin tanı vardır ve bu artık insanlarda var olduğu bilinen bir tanıdır. Teşhis neredeyse her zaman genetik testlerle doğrulanır. Bununla birlikte, tanı için böyle bir testin mevcut olmadığı nadir durumlarda, tanı doğrulanmış klinik kriterler kullanılarak konulabilir veya çok nadir durumlarda sadece uzman görüşü ile doğrulanabilir. Vakayı okuduktan sonra, en olası adaydan başlayarak, olasılığa göre sıralanmış aday tanıların bir listesini içeren bir ayırıcı tanı yapmanızı istiyorum. Her aday hastalık adıyla birlikte listelenmelidir. Örneğin, ilk aday brankiookülofasiyal sendrom ve ikincisi kistik fibrozis ise, aşağıdakileri İngilizce olarak belirtiniz:
-
-1. Branchiooculofacial syndrome
-2. Cystic fibrosis
-
-Bu liste uygun olduğunu düşündüğünüz kadar çok tanı içermelidir.
-
-Gerekçenizi açıklamanıza gerek yok, sadece teşhisleri listeleyin.
-Bu talimatları size Türkçe olarak verdim, ancak cevabınızı yalnızca İngilizce olarak vermenizi rica ediyorum.
-İşte vaka:
-
-""";
+    public String LLM_PROMPT_HEADER() {
+        try {
+            return Files.readString(Path.of("src/main/resources/prompts/headers/turkish_header.txt"));
+        } catch (IOException e) {
+            return "Header not found for turkish.";
+        }
     }
 
+    @Override
+    public String LLM_PROMPT_FOOTER() {
+        try {
+            return Files.readString(Path.of("src/main/resources/prompts/headers/turkish_footer.txt"));
+        } catch (IOException e) {
+            return "Header not found for turkish.";
+        }
+    }
 }

@@ -4,7 +4,8 @@ public interface PhenopacketTextGenerator {
 
 
 
-    String GPT_PROMPT_HEADER();
+    String LLM_PROMPT_HEADER();
+    String LLM_PROMPT_FOOTER();
 
 
 }

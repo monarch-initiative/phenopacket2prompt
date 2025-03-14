@@ -27,7 +27,12 @@ public class EnglishPromptGenerator implements PromptGenerator  {
 
     @Override
     public String queryHeader() {
-        return promptTextBlockGenerator.GPT_PROMPT_HEADER();
+        return promptTextBlockGenerator.LLM_PROMPT_HEADER();
+    }
+
+    @Override
+    public String queryFooter() {
+        return promptTextBlockGenerator.LLM_PROMPT_FOOTER();
     }
 
     @Override
