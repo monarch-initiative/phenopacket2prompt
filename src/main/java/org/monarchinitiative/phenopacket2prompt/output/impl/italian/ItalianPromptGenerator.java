@@ -16,7 +16,7 @@ public class ItalianPromptGenerator implements PromptGenerator {
 
     private final PPKtIndividualInfoGenerator ppktAgeSexGenerator;
 
-    private final PhenopacketTextGenerator ppktTextGenerator;
+    private final PhenopacketTextGenerator ppktTextGenerator = new PhenopacketTextGenerator() {};
 
     private final PpktPhenotypicFeatureGenerator ppktPhenotypicFeatureGenerator;
 
@@ -24,18 +24,17 @@ public class ItalianPromptGenerator implements PromptGenerator {
 
     public ItalianPromptGenerator(PpktPhenotypicFeatureGenerator pfgen) {
         ppktAgeSexGenerator = new PpktIndividualItalian();
-        ppktTextGenerator = new PpktTextItalian();
         this.ppktPhenotypicFeatureGenerator = pfgen;
     }
 
     @Override
     public String queryHeader() {
-        return ppktTextGenerator.LLM_PROMPT_HEADER();
+        return ppktTextGenerator.LLM_PROMPT_HEADER("italian");
     }
 
     @Override
     public String queryFooter() {
-        return ppktTextGenerator.LLM_PROMPT_FOOTER();
+        return ppktTextGenerator.LLM_PROMPT_FOOTER("italian");
     }
 
     @Override

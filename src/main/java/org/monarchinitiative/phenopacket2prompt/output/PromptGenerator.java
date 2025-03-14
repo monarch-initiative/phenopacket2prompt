@@ -32,7 +32,6 @@ public interface PromptGenerator {
     default boolean isOnlyPatientEnabled() {
         return Context.getInstance().isOnlyPatient();
     }
-
     String queryHeader();
     String queryFooter();
 
@@ -106,9 +105,10 @@ public interface PromptGenerator {
                     createPromptWithoutHeader(individual));
         }
         else {
-            return String.format("%s%s",
+            return String.format("%s%s%s",
                     getHeader(),
-                    createPromptWithoutHeader(individual));
+                    createPromptWithoutHeader(individual),
+                    getFooter());
         }
     }
     // TODO IMPLEMENT EVERYWHERE. WE ALSO NEED VERSIONS FOR EACH LLM, CONSIDER ADDING ENUM
@@ -131,6 +131,10 @@ public interface PromptGenerator {
     // TODO IMPLEMENT EVERYWHERE. WE ALSO NEED VERSIONS FOR EACH LLM, CONSIDER ADDING ENUM
     default String getHeader() {
         return queryHeader();
+    }
+
+    default String getFooter() {
+        return queryFooter();
     }
 
 

@@ -13,26 +13,23 @@ public class SpanishPromptGenerator implements PromptGenerator {
 
     private final PPKtIndividualInfoGenerator ppktAgeSexGenerator;
 
-    private final PhenopacketTextGenerator ppktTextGenerator;
-
     private final PpktPhenotypicFeatureGenerator ppktPhenotypicFeatureGenerator;
 
-
+    private final PhenopacketTextGenerator ppktTextGenerator = new PhenopacketTextGenerator() {};
 
     public SpanishPromptGenerator(PpktPhenotypicFeatureGenerator pfgen) {
         ppktAgeSexGenerator = new PpktIndividualSpanish();
-        ppktTextGenerator = new PpktTextSpanish();
         this.ppktPhenotypicFeatureGenerator = pfgen;
     }
 
     @Override
     public String queryHeader() {
-        return ppktTextGenerator.LLM_PROMPT_HEADER();
+        return ppktTextGenerator.LLM_PROMPT_HEADER("spanish");
     }
 
     @Override
     public String queryFooter() {
-        return ppktTextGenerator.LLM_PROMPT_FOOTER();
+        return ppktTextGenerator.LLM_PROMPT_FOOTER("spanish");
     }
     @Override
     public String getIndividualInformation(PpktIndividual ppktIndividual) {

@@ -16,23 +16,22 @@ public class CzechPromptGenerator implements PromptGenerator {
 
     private final PPKtIndividualInfoGenerator individualInfoGenerator;
     private final PpktPhenotypicFeatureGenerator ppktPhenotypicFeatureGenerator;
-    private final PhenopacketTextGenerator ppktTextGenerator;
+    private final PhenopacketTextGenerator ppktTextGenerator = new PhenopacketTextGenerator() {};
 
 
     public CzechPromptGenerator(PpktPhenotypicFeatureGenerator pfgen) {
         individualInfoGenerator = new PpktIndividualCzech();
-        ppktTextGenerator = new PpktTextCzech();
         ppktPhenotypicFeatureGenerator = pfgen;
     }
 
     @Override
     public String queryHeader() {
-        return ppktTextGenerator.LLM_PROMPT_HEADER();
+        return ppktTextGenerator.LLM_PROMPT_HEADER("czech");
     }
 
     @Override
     public String queryFooter() {
-        return ppktTextGenerator.LLM_PROMPT_FOOTER();
+        return ppktTextGenerator.LLM_PROMPT_FOOTER("czech");
     }
 
     @Override

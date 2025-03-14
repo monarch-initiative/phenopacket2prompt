@@ -16,7 +16,7 @@ public class JapanesePromptGenerator implements PromptGenerator {
 
     private final PPKtIndividualInfoGenerator ppktAgeSexGenerator;
 
-    private final PhenopacketTextGenerator ppktTextGenerator;
+    private final PhenopacketTextGenerator ppktTextGenerator = new PhenopacketTextGenerator() {};
 
     private final PpktPhenotypicFeatureGenerator ppktPhenotypicFeatureGenerator;
 
@@ -24,7 +24,6 @@ public class JapanesePromptGenerator implements PromptGenerator {
 
     public JapanesePromptGenerator(PpktPhenotypicFeatureGenerator pfgen) {
         ppktAgeSexGenerator = new PpktIndividualJapanese();
-        ppktTextGenerator = new PpktTextJapanese();
         this.ppktPhenotypicFeatureGenerator = pfgen;
     }
 
@@ -33,12 +32,12 @@ public class JapanesePromptGenerator implements PromptGenerator {
 
     @Override
     public String queryHeader() {
-        return ppktTextGenerator.LLM_PROMPT_HEADER();
+        return ppktTextGenerator.LLM_PROMPT_HEADER("japanese");
     }
 
     @Override
     public String queryFooter() {
-        return ppktTextGenerator.LLM_PROMPT_FOOTER();
+        return ppktTextGenerator.LLM_PROMPT_FOOTER("japanese");
     }
 
     @Override
