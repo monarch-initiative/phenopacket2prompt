@@ -15,9 +15,9 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
-          java-version: '17'  # Adjust if needed
-
+          java-version: '22.0.1'
+          distribution: 'adoptopenjdk'
+        
       - name: Download latest HPO
         run: |
           java -jar target/phenopacket2prompt.jar download -w
