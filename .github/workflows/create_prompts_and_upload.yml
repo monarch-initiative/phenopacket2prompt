@@ -25,13 +25,14 @@ jobs:
       - name: Fetch latest phenopackets
         run: |
           mkdir -p phenopackets-data
-          wget -O phenopackets.zip https://github.com/monarch-initiative/phenopacket-store/releases/download/0.1.24/all_phenopackets.zip
+          wget -O phenopackets.zip https://github.com/monarch-initiative/phenopacket-store/releases/latest/download/all_phenopackets.zip
           unzip phenopackets.zip -d phenopackets-data
+          dir_name=$(unzip -l phenopackets.zip | awk '/\/$/ {print $NF; exit}')
           rm phenopackets.zip
 
       - name: Run batch processing
         run: |
-          java -jar target/phenopacket2prompt.jar batch -d phenopackets-data -p --full-translations=true
+          java -jar target/phenopacket2prompt.jar batch -d "phenopackets-data/$dir_name" -p --full-translations=true
 
       - name: Check generated files # For debugging purposes
         run: |
