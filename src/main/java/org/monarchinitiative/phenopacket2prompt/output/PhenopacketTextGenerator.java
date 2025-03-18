@@ -17,7 +17,7 @@ public interface PhenopacketTextGenerator {
 
     default String LLM_PROMPT_FOOTER(String language) {
         try {
-            return Files.readString(Path.of("src/main/resources/prompts/headers/" + language + "footer.txt"));
+            return Files.readString(Path.of("src/main/resources/prompts/footers/" + language + "_footer.txt"));
         } catch (IOException e) {
             return "";
         }
