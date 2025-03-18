@@ -1,0 +1,40 @@
+name: Process Phenopackets and Upload to Zenodo
+
+on:
+  workflow_dispatch:  # Only runs when manually triggered
+
+jobs:
+  process-phenopackets:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'  # Adjust if needed
+
+      - name: Download latest HPO
+        run: |
+          java -jar target/phenopacket2prompt.jar download -w
+
+      - name: Fetch latest phenopackets
+        run: |
+          mkdir -p phenopackets-data
+          wget -O phenopackets.zip https://github.com/monarch-initiative/phenopacket-store/releases/download/0.1.24/all_phenopackets.zip
+          unzip phenopackets.zip -d phenopackets-data
+          rm phenopackets.zip
+
+      - name: Run batch processing
+        run: |
+          java -jar target/phenopacket2prompt.jar batch -d phenopackets-data -p --full-translations=true
+
+      - name: Check generated files # For debugging purposes
+        run: |
+          ls prompts/en | head
+          ls prompts/it | head
+          cat $(ls -p prompts/en | grep -v / | head -n 2 | sed 's|^|prompts/en/|')
+          
