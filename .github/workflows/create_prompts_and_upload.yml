@@ -40,4 +40,19 @@ jobs:
           ls prompts/en | head
           ls prompts/it | head
           cat $(ls -p prompts/en | grep -v / | head -n 2 | sed 's|^|prompts/en/|')
-          
+
+      - name: Set up Python for subsequent upload to zenodo
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'  # Use latest stable version
+
+      - name: Install python dependencies
+        run: pip install requests
+
+      #- name: Upload new output to Zenodo
+      #  env:
+      #    ZENODO_ACCESS_TOKEN: ${{ secrets.ZENODO_ACCESS_TOKEN }}
+      #    ZENODO_DEPOSITION_ID: ${{ secrets.ZENODO_DEPOSITION_ID }}
+        #run: python scripts/upload_to_zenodo.py prompts/
+
+
