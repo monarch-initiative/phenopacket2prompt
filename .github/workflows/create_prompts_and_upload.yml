@@ -23,16 +23,17 @@ jobs:
           java -jar target/phenopacket2prompt.jar download -w
 
       - name: Fetch latest phenopackets
+        id: dirout
         run: |
           mkdir -p phenopackets-data
           wget -O phenopackets.zip https://github.com/monarch-initiative/phenopacket-store/releases/latest/download/all_phenopackets.zip
           unzip phenopackets.zip -d phenopackets-data
-          dir_name=$(unzip -l phenopackets.zip | awk '/\/$/ {print $NF; exit}')
+          echo "DIR_NAME=$(unzip -l phenopackets.zip | awk '/\/$/ {print $NF; exit}')" >> $GITHUB_OUTPUT
           rm phenopackets.zip
-
+ 
       - name: Run batch processing
         run: |
-          java -jar target/phenopacket2prompt.jar batch -d "phenopackets-data/$dir_name" -p --full-translations=true
+          java -jar target/phenopacket2prompt.jar batch -d phenopackets-data/${{steps.dirout.outputs.DIR_NAME}} -p --full-translations=true
 
       - name: Check generated files # For debugging purposes
         run: |
