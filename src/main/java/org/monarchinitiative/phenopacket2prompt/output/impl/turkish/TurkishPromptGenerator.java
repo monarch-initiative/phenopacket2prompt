@@ -17,7 +17,7 @@ public class TurkishPromptGenerator implements PromptGenerator {
 
     private final PPKtIndividualInfoGenerator ppktAgeSexGenerator;
 
-    private final PhenopacketTextGenerator ppktTextGenerator;
+    private final PhenopacketTextGenerator ppktTextGenerator = new PhenopacketTextGenerator() {};
 
     private final PpktPhenotypicFeatureGenerator ppktPhenotypicFeatureGenerator;
 
@@ -25,7 +25,6 @@ public class TurkishPromptGenerator implements PromptGenerator {
 
     public TurkishPromptGenerator(PpktPhenotypicFeatureGenerator pfgen) {
         ppktAgeSexGenerator = new PpktIndividualTurkish();
-        ppktTextGenerator = new PpktTextTurkish();
         this.ppktPhenotypicFeatureGenerator = pfgen;
     }
 
@@ -34,7 +33,12 @@ public class TurkishPromptGenerator implements PromptGenerator {
 
     @Override
     public String queryHeader() {
-        return ppktTextGenerator.GPT_PROMPT_HEADER();
+        return ppktTextGenerator.LLM_PROMPT_HEADER("turkish");
+    }
+
+    @Override
+    public String queryFooter() {
+        return ppktTextGenerator.LLM_PROMPT_FOOTER("turkish");
     }
 
     @Override

@@ -10,14 +10,13 @@ import org.monarchinitiative.phenopacket2prompt.output.PpktPhenotypicFeatureGene
 import org.monarchinitiative.phenopacket2prompt.output.PromptGenerator;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class DutchPromptGenerator implements PromptGenerator {
 
     private final PPKtIndividualInfoGenerator ppktAgeSexGenerator;
 
-    private final PhenopacketTextGenerator ppktTextGenerator;
+    private final PhenopacketTextGenerator ppktTextGenerator = new PhenopacketTextGenerator() {};
 
     private final PpktPhenotypicFeatureGenerator ppktPhenotypicFeatureGenerator;
 
@@ -25,7 +24,6 @@ public class DutchPromptGenerator implements PromptGenerator {
 
     public DutchPromptGenerator(PpktPhenotypicFeatureGenerator pfgen) {
         ppktAgeSexGenerator = new PpktIndividualDutch();
-        ppktTextGenerator = new PpktTextDutch();
         this.ppktPhenotypicFeatureGenerator = pfgen;
     }
 
@@ -34,7 +32,12 @@ public class DutchPromptGenerator implements PromptGenerator {
 
     @Override
     public String queryHeader() {
-        return ppktTextGenerator.GPT_PROMPT_HEADER();
+        return ppktTextGenerator.LLM_PROMPT_HEADER("dutch");
+    }
+
+    @Override
+    public String queryFooter() {
+        return ppktTextGenerator.LLM_PROMPT_FOOTER("dutch");
     }
 
     @Override

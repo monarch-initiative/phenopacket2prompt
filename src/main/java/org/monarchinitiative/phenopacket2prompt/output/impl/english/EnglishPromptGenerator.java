@@ -13,21 +13,25 @@ public class EnglishPromptGenerator implements PromptGenerator  {
 
     private final PPKtIndividualInfoGenerator individualInfoGenerator;
 
-    private final PhenopacketTextGenerator promptTextBlockGenerator;
+    private final PhenopacketTextGenerator ppktTextGenerator = new PhenopacketTextGenerator() {};
 
     private final PpktPhenotypicFeatureGenerator ppktPhenotypicFeatureGenerator;
 
 
     public EnglishPromptGenerator(){
         individualInfoGenerator = new PpktIndividualEnglish();
-        promptTextBlockGenerator = new PpktTextEnglish();
         this.ppktPhenotypicFeatureGenerator = new PpktPhenotypicFeatureEnglish();
     }
 
 
     @Override
     public String queryHeader() {
-        return promptTextBlockGenerator.GPT_PROMPT_HEADER();
+        return ppktTextGenerator.LLM_PROMPT_HEADER("english");
+    }
+
+    @Override
+    public String queryFooter() {
+        return ppktTextGenerator.LLM_PROMPT_FOOTER("english");
     }
 
     @Override

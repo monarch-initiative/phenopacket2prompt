@@ -17,7 +17,7 @@ public class ChinesePromptGenerator implements PromptGenerator {
 
     private final PPKtIndividualInfoGenerator ppktAgeSexGenerator;
 
-    private final PhenopacketTextGenerator ppktTextGenerator;
+    private final PhenopacketTextGenerator ppktTextGenerator = new PhenopacketTextGenerator() {};
 
     private final PpktPhenotypicFeatureGenerator ppktPhenotypicFeatureGenerator;
 
@@ -25,7 +25,6 @@ public class ChinesePromptGenerator implements PromptGenerator {
 
     public ChinesePromptGenerator(PpktPhenotypicFeatureGenerator pfgen) {
         ppktAgeSexGenerator = new PpktIndividualChinese();
-        ppktTextGenerator = new PpktTextChinese();
         this.ppktPhenotypicFeatureGenerator = pfgen;
     }
 
@@ -34,9 +33,13 @@ public class ChinesePromptGenerator implements PromptGenerator {
 
     @Override
     public String queryHeader() {
-        return ppktTextGenerator.GPT_PROMPT_HEADER();
+        return ppktTextGenerator.LLM_PROMPT_HEADER("chinese");
     }
 
+    @Override
+    public String queryFooter() {
+        return ppktTextGenerator.LLM_PROMPT_FOOTER("chinese");
+    }
     @Override
     public String getIndividualInformation(PpktIndividual ppktIndividual) {
         return this.ppktAgeSexGenerator.getIndividualDescription(ppktIndividual);
