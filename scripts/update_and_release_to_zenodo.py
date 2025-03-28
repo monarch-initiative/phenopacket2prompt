@@ -12,14 +12,22 @@ HEADERS = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
 def create_new_version():
     """Creates a new version of the deposition and returns its ID."""
     today_date = datetime.today().strftime('%Y-%m-%d')
-
-    # Create a new version with publication date
-    data = {
-        "metadata": {
-            "publication_date": today_date
-        }
-    }
     
+    # Retrieve the current metadata
+    response = requests.get(f"{ZENODO_API_BASE}/{DEPOSITION_ID}", headers=HEADERS)
+    if response.status_code != 200:
+        print(f"Error retrieving deposition metadata: {response.text}")
+        sys.exit(1)
+
+    deposition = response.json()
+    metadata = deposition["metadata"]
+
+    # Add the publication_date if missing
+    metadata["publication_date"] = today_date
+
+    # Create a new version with the updated metadata
+    data = {"metadata": metadata}
+
     response = requests.post(f"{ZENODO_API_BASE}/{DEPOSITION_ID}/actions/newversion", headers=HEADERS, json=data)
 
     if response.status_code != 201:
