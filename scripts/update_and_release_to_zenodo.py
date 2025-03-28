@@ -11,24 +11,8 @@ HEADERS = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
 
 def create_new_version():
     """Creates a new version of the deposition and returns its ID."""
-    today_date = datetime.today().strftime('%Y-%m-%d')
-    
-    # Retrieve the current metadata
-    response = requests.get(f"{ZENODO_API_BASE}/{DEPOSITION_ID}", headers=HEADERS)
-    if response.status_code != 200:
-        print(f"Error retrieving deposition metadata: {response.text}")
-        sys.exit(1)
-
-    deposition = response.json()
-    metadata = deposition["metadata"]
-
-    # Add the publication_date if missing
-    metadata["publication_date"] = today_date
-
-    # Create a new version with the updated metadata
-    data = {"metadata": metadata}
-
-    response = requests.post(f"{ZENODO_API_BASE}/{DEPOSITION_ID}/actions/newversion", headers=HEADERS, json=data)
+    # Create a new version
+    response = requests.post(f"{ZENODO_API_BASE}/{DEPOSITION_ID}/actions/newversion", headers=HEADERS)
 
     if response.status_code != 201:
         print(f"Error creating new version: {response.text}")
@@ -37,6 +21,30 @@ def create_new_version():
     new_deposition = response.json()
     new_id = new_deposition["id"]
     print(f"New Zenodo deposition created: {new_id}")
+
+    # Get today's date for publication_date
+    today_date = datetime.today().strftime('%Y-%m-%d')
+
+    # Retrieve the current metadata and update publication_date
+    response = requests.get(f"{ZENODO_API_BASE}/{new_id}", headers=HEADERS)
+    if response.status_code != 200:
+        print(f"Error retrieving deposition metadata: {response.text}")
+        sys.exit(1)
+
+    deposition = response.json()
+    metadata = deposition["metadata"]
+    metadata["publication_date"] = today_date
+
+    # Update the metadata using PUT
+    data = {"metadata": metadata}
+    response = requests.put(f"{ZENODO_API_BASE}/{new_id}", headers=HEADERS, json=data)
+
+    if response.status_code != 200:
+        print(f"Error updating metadata: {response.text}")
+        sys.exit(1)
+
+    print(f"Metadata updated for deposition {new_id}.")
+    
     return new_id
 
 def delete_existing_files(deposition_id):
