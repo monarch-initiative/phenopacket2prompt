@@ -11,7 +11,7 @@ HEADERS = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
 
 def create_new_version():
     """Creates a new version of the deposition and returns its ID."""
-    # Create a new version
+    # Step 1: Create a new version of the deposition
     response = requests.post(f"{ZENODO_API_BASE}/{DEPOSITION_ID}/actions/newversion", headers=HEADERS)
 
     if response.status_code != 201:
@@ -22,10 +22,10 @@ def create_new_version():
     new_id = new_deposition["id"]
     print(f"New Zenodo deposition created: {new_id}")
 
-    # Get today's date for publication_date
+    # Step 2: Update the metadata for the new version
     today_date = datetime.today().strftime('%Y-%m-%d')
 
-    # Retrieve the current metadata and update publication_date
+    # Retrieve current metadata to update
     response = requests.get(f"{ZENODO_API_BASE}/{new_id}", headers=HEADERS)
     if response.status_code != 200:
         print(f"Error retrieving deposition metadata: {response.text}")
@@ -33,9 +33,12 @@ def create_new_version():
 
     deposition = response.json()
     metadata = deposition["metadata"]
+
+    # Add dates and publication_date for the draft version
+    metadata["dates"] = [{"date": today_date, "type": "published"}]
     metadata["publication_date"] = today_date
 
-    # Update the metadata using PUT
+    # Update the metadata using PUT request
     data = {"metadata": metadata}
     response = requests.put(f"{ZENODO_API_BASE}/{new_id}", headers=HEADERS, json=data)
 
@@ -44,7 +47,7 @@ def create_new_version():
         sys.exit(1)
 
     print(f"Metadata updated for deposition {new_id}.")
-    
+
     return new_id
 
 def delete_existing_files(deposition_id):
