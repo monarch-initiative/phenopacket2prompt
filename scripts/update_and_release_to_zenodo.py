@@ -1,6 +1,7 @@
 import os
 import requests
 import sys
+import json
 from datetime import datetime
 
 ZENODO_API_BASE = "https://zenodo.org/api/deposit/depositions"
@@ -34,13 +35,14 @@ def create_new_version():
     deposition = response.json()
     metadata = deposition["metadata"]
 
-    # Add dates and publication_date for the draft version
-    metadata["dates"] = [{"date": today_date, "type": "published"}]
+    # Add publication_date for the draft version
     metadata["publication_date"] = today_date
 
+    # Convert data to JSON string for PUT request
+    data = json.dumps({"metadata": metadata})
+
     # Update the metadata using PUT request
-    data = {"metadata": metadata}
-    response = requests.put(f"{ZENODO_API_BASE}/{new_id}", headers=HEADERS, json=data)
+    response = requests.put(f"{ZENODO_API_BASE}/{new_id}", headers=HEADERS, data=data)
 
     if response.status_code != 200:
         print(f"Error updating metadata: {response.text}")
