@@ -23,25 +23,20 @@ def create_new_version():
     new_id = new_deposition["id"]
     print(f"New Zenodo deposition created: {new_id}")
 
-    # Step 2: Update the metadata for the new version
+    # Step 2: Add the publication_date only (Zenodo will handle other metadata)
     today_date = datetime.today().strftime('%Y-%m-%d')
 
-    # Retrieve current metadata to update
-    response = requests.get(f"{ZENODO_API_BASE}/{new_id}", headers=HEADERS)
-    if response.status_code != 200:
-        print(f"Error retrieving deposition metadata: {response.text}")
-        sys.exit(1)
+    # Prepare the metadata update with just the publication_date
+    metadata_update = {
+        "metadata": {
+            "publication_date": today_date
+        }
+    }
 
-    deposition = response.json()
-    metadata = deposition["metadata"]
+    # Convert to JSON string for the PUT request
+    data = json.dumps(metadata_update)
 
-    # Add publication_date for the draft version
-    metadata["publication_date"] = today_date
-
-    # Convert data to JSON string for PUT request
-    data = json.dumps({"metadata": metadata})
-
-    # Update the metadata using PUT request
+    # Update the metadata with the publication_date
     response = requests.put(f"{ZENODO_API_BASE}/{new_id}", headers=HEADERS, data=data)
 
     if response.status_code != 200:
@@ -49,7 +44,6 @@ def create_new_version():
         sys.exit(1)
 
     print(f"Metadata updated for deposition {new_id}.")
-
     return new_id
 
 def delete_existing_files(deposition_id):
