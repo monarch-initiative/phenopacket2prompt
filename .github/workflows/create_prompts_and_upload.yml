@@ -2,12 +2,11 @@ name: Process Phenopackets and Upload to Zenodo
 
 on:
   workflow_dispatch:  # Only runs when manually triggered
-  pull_request: # to be removed after successful testing
 
 jobs:
   process-phenopackets:
     runs-on: ubuntu-latest
-
+    environment: create_prompts
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -55,10 +54,10 @@ jobs:
       - name: Install python dependencies
         run: pip install requests
 
-      #- name: Upload new output to Zenodo
-      #  env:
-      #    ZENODO_ACCESS_TOKEN: ${{ secrets.ZENODO_ACCESS_TOKEN }}
-      #    ZENODO_DEPOSITION_ID: ${{ secrets.ZENODO_DEPOSITION_ID }}
-      #  run: python scripts/upload_to_zenodo.py prompts/
+      - name: Upload new output to Zenodo
+        env:
+          ZENODO_ACCESS_TOKEN: ${{ secrets.ZENODO_ACCESS_TOKEN }}
+          ZENODO_DEPOSITION_ID: ${{ secrets.ZENODO_DEPOSITION_ID }}
+        run: python scripts/update_and_release_to_zenodo.py prompts/
 
 
