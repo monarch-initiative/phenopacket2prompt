@@ -23,6 +23,8 @@ def create_new_version():
     new_id = new_deposition["id"]
     print(f"New Zenodo deposition created: {new_id}")
 
+    """
+    # Issues with metadata update persist
     # Step 2: Add the publication_date only (Zenodo will handle other metadata)
     today_date = datetime.today().strftime('%Y-%m-%d')
 
@@ -44,6 +46,7 @@ def create_new_version():
         sys.exit(1)
 
     print(f"Metadata updated for deposition {new_id}.")
+    """
     return new_id
 
 def delete_existing_files(deposition_id):
