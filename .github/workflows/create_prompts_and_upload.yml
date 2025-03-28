@@ -1,0 +1,63 @@
+name: Process Phenopackets and Upload to Zenodo
+
+on:
+  workflow_dispatch:  # Only runs when manually triggered
+
+jobs:
+  process-phenopackets:
+    runs-on: ubuntu-latest
+    environment: create_prompts
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '22.0.1'
+          distribution: 'temurin' 
+        
+      - name: Download latest HPO
+        run: |
+          java -jar target/phenopacket2prompt.jar download -w
+
+      - name: Fetch latest phenopackets
+        id: dirout
+        run: |
+          mkdir -p phenopackets-data
+          wget -O phenopackets.zip https://github.com/monarch-initiative/phenopacket-store/releases/latest/download/all_phenopackets.zip
+          unzip phenopackets.zip -d phenopackets-data
+          echo "DIR_NAME=$(unzip -l phenopackets.zip | awk '/\/$/ {print $NF; exit}')" >> $GITHUB_OUTPUT
+          rm phenopackets.zip
+ 
+      - name: Run batch processing
+        run: |
+          java -jar target/phenopacket2prompt.jar batch -d phenopackets-data/${{steps.dirout.outputs.DIR_NAME}} -p --full-translations=true
+
+      #- name: Check generated files # For debugging purposes
+      #  run: |
+      #    ls prompts/en | head
+      #    ls prompts/it | head
+      #    cat $(ls -p prompts/en | grep -v / | head -n 2 | sed 's|^|prompts/en/|')
+
+      - name: Set up zipped structure for upload
+        run: |
+          for dir in prompts/*/; do
+            zip -r "${dir%/}.zip" "$dir" && rm -r "$dir"
+          done
+
+      - name: Set up Python for subsequent upload to zenodo
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'  # Use latest stable version
+
+      - name: Install python dependencies
+        run: pip install requests
+
+      - name: Upload new output to Zenodo
+        env:
+          ZENODO_ACCESS_TOKEN: ${{ secrets.ZENODO_ACCESS_TOKEN }}
+          ZENODO_DEPOSITION_ID: ${{ secrets.ZENODO_DEPOSITION_ID }}
+        run: python scripts/update_and_release_to_zenodo.py prompts/
+
+
