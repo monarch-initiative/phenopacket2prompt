@@ -69,7 +69,7 @@ def main(directory):
         if os.path.isfile(file_path):
             upload_file(new_dep_id, file_path)
 
-    publish_deposition(new_dep_id)
+    #publish_deposition(new_dep_id)
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
