@@ -1,6 +1,7 @@
 import os
 import requests
 import sys
+from datetime import datetime
 
 ZENODO_API_BASE = "https://zenodo.org/api/deposit/depositions"
 ACCESS_TOKEN = os.getenv("ZENODO_ACCESS_TOKEN")
@@ -10,7 +11,16 @@ HEADERS = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
 
 def create_new_version():
     """Creates a new version of the deposition and returns its ID."""
-    response = requests.post(f"{ZENODO_API_BASE}/{DEPOSITION_ID}/actions/newversion", headers=HEADERS)
+    today_date = datetime.today().strftime('%Y-%m-%d')
+
+    # Create a new version with publication date
+    data = {
+        "metadata": {
+            "publication_date": today_date
+        }
+    }
+    
+    response = requests.post(f"{ZENODO_API_BASE}/{DEPOSITION_ID}/actions/newversion", headers=HEADERS, json=data)
 
     if response.status_code != 201:
         print(f"Error creating new version: {response.text}")
