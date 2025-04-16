@@ -9,6 +9,8 @@ import org.monarchinitiative.phenopacket2prompt.model.PpktIndividual;
 import org.monarchinitiative.phenopacket2prompt.output.impl.czech.CzechPromptGenerator;
 import org.monarchinitiative.phenopacket2prompt.output.impl.czech.PpktPhenotypicFeatureCzech;
 import org.monarchinitiative.phenopacket2prompt.output.impl.english.EnglishPromptGenerator;
+import org.monarchinitiative.phenopacket2prompt.output.impl.french.FrenchPromptGenerator;
+import org.monarchinitiative.phenopacket2prompt.output.impl.french.PpktPhenotypicfeatureFrench;
 import org.monarchinitiative.phenopacket2prompt.output.impl.german.GermanPromptGenerator;
 import org.monarchinitiative.phenopacket2prompt.output.impl.german.PpktPhenotypicfeatureGerman;
 import org.monarchinitiative.phenopacket2prompt.output.impl.japanese.JapanesePromptGenerator;
@@ -61,6 +63,11 @@ public interface PromptGenerator {
     static PromptGenerator dutch(HpInternational international) {
         PpktPhenotypicFeatureGenerator pfgen = new PpktPhenotypicFeatureDutch(international);
         return new DutchPromptGenerator(pfgen);
+    }
+
+    static PromptGenerator french(HpInternational international) {
+        PpktPhenotypicFeatureGenerator pfgen = new PpktPhenotypicfeatureFrench(international);
+        return new FrenchPromptGenerator(pfgen);
     }
 
     static PromptGenerator german(HpInternational international) {
