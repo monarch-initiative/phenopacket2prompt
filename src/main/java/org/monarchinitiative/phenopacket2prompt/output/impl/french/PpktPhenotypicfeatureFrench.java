@@ -122,16 +122,16 @@ public class PpktPhenotypicfeatureFrench implements PpktPhenotypicFeatureGenerat
         var observedStr = getCommaList(observedSpanish);
         var excludedStr = getCommaList(excludedSpanish);
         if (!observed.isEmpty() && ! excluded.isEmpty()) {
-            return String.format("%s présentait les symptômes suivants: %s. Au contraire, il %s: %s.",
+            return String.format("%s présentait les symptômes suivants: %s. Au contraire, %s: %s.",
                     personString,
                     observedStr,
-                    excluded.size()>1? "excluait les symptômes suivants":"a exclu le symptôme suivant",
+                    excluded.size()>1? "les symptômes suivants étaient exclus :":"le symptôme suivant a été exclu :",
                     excludedStr);
         } else if (!observed.isEmpty()) {
             return String.format("%s a présenté les symptômes suivants: %s.", personString, observedStr);
         } else if (!excluded.isEmpty()) {
             return String.format("Au début de la maladie, se %s: %s.",
-                    excluded.size()>1? "excluait les symptômes suivants":"a exclu le symptôme suivant", excludedStr);
+                    excluded.size()>1? "les symptômes suivants étaient exclus :":"le symptôme suivant a été exclu :", excludedStr);
         } else {
             return "Aucune anomalie phénotypique n'a été explicitement décrite à l'apparition de la maladie.";
         }

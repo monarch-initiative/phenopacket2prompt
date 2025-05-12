@@ -40,9 +40,9 @@ public class PpktIndividualFrench implements PPKtIndividualInfoGenerator {
             }
         } else {
             individualDescription = switch (psex) {
-                case FEMALE -> individualDescription = "La paciente era de sexo femenino y de edad no especificada";
-                case MALE -> individualDescription = "El paciente era de sexo masculino y de edad no especificada";
-                default -> individualDescription = "El paciente era una persona de sexo y edad no especificados";
+                case FEMALE -> individualDescription = "La patiente était de sexe féminin et d'âge non-spécifié";
+                case MALE -> individualDescription = "Le patient était un homme et d'âge non-spécifié";
+                default -> individualDescription = "Le patient était un adulte et de sexe non-spécifié";
             };
         }
         if (onsetOpt.isPresent()) {
@@ -58,15 +58,14 @@ public class PpktIndividualFrench implements PPKtIndividualInfoGenerator {
                 throw new PhenolRuntimeException("Did not recognize last exam age type " + onsetAge.ageType());
             }
         } else {
-            onsetDescription = "L'âge d'apparition de la maladie n'a pas été indiqué.";
+            onsetDescription = "L'âge d'apparition de la maladie n'a pas été indiqué";
         }
         return String.format("%s. %s.", individualDescription, onsetDescription);
     }
 
 
     private String hpoOnsetDescription(HpoOnsetAge hpoOnsetTermAge, PhenopacketSex psex) {
-        return String.format("Le début de la maladie s'est produit\n" +
-                        "\n %s",
+        return String.format("Le début de la maladie s'est produit %s",
                 nameOfLifeStage(hpoOnsetTermAge, psex));
     }
 
@@ -200,17 +199,17 @@ public class PpktIndividualFrench implements PPKtIndividualInfoGenerator {
             return switch (psex) {
                 case FEMALE -> "Le patient était un fœtus de sexe féminin";
                 case MALE -> "Le patient était un fœtus de sexe masculin";
-                default -> "Le patient était un fœtus";
+                default -> "Le patient était un fœtus de sexe non-spécifié.";
             };
         } else if (hpoOnsetTermAge.isCongenital()) {
             return switch (psex) {
                 case FEMALE -> "Le patient était un nouveau-né";
                 case MALE -> "Le patient était un nouveau-né";
-                default -> "Le patient était un nouveau-né";
+                default -> "Le patient était un nouveau-né de sexe non-spécifié.";
             };
         } else if (hpoOnsetTermAge.isInfant()) {
             return switch (psex) {
-                case FEMALE -> "Le patient était un bébé";
+                case FEMALE -> "La patiente était un bébé";
                 case MALE -> "Le patient était un bébé";
                 default -> "Le patient était un bébé";
             };
@@ -224,31 +223,31 @@ public class PpktIndividualFrench implements PPKtIndividualInfoGenerator {
             return switch (psex) {
                 case FEMALE -> "La patiente était une adolescente";
                 case MALE -> "Le patient était un adolescent de sexe masculin";
-                default -> "Le patient était un adolescent";
+                default -> "Le patient était un adolescent de sexe non-spécifié";
             };
         } else if (hpoOnsetTermAge.isMiddleAge()) {
             return switch (psex) {
                 case FEMALE -> "Le patient était une femme d'âge moyen";
                 case MALE -> "Le patient était un homme d'âge moyen";
-                default -> "Le patient était un adulte d'âge moyen";
+                default -> "Le patient était un adulte d'âge moyen de sexe non-spécifié";
             };
         } else if (hpoOnsetTermAge.isYoungAdult()) {
             return switch (psex) {
                 case FEMALE -> "Le patient était une jeune femme adulte.";
                 case MALE -> "Le patient était un jeune adulte de sexe masculin.";
-                default -> "Le patient était un jeune adulte";
+                default -> "Le patient était un jeune adulte de sexe non-spécifié";
             };
         } else if (hpoOnsetTermAge.isLateAdultAge()) {
             return switch (psex) {
                 case FEMALE -> "Le patient était une femme âgée";
                 case MALE -> "Le patient était un homme âgé";
-                default -> "Le patient était un adulte âgé";
+                default -> "Le patient était un adulte âgé de sexe non-spécifié";
             };
         } else if (hpoOnsetTermAge.isAdult()) {
             return switch (psex) {
                 case FEMALE -> "Le patient était une femme";
                 case MALE -> "Le patient était un homme";
-                default -> "Le patient était un adulte";
+                default -> "Le patient était un adulte de sexe non-spécifié";
             };
         } else {
             throw new PhenolRuntimeException("Did not recognize French HPO Onset term");
