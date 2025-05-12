@@ -336,10 +336,16 @@ public class TestDriveCommand implements Callable<Integer> {
         sb.append("Spanish\n");
         sb.append(HEADER_LINE);
         sb.append(spText);
+        // Dutch
         String nlText = createPrompts(individualList, utility.dutch());
         sb.append("Dutch\n");
         sb.append(HEADER_LINE);
         sb.append(nlText);
+        // French
+        String frText = createPrompts(individualList, utility.french());
+        sb.append("French\n");
+        sb.append(HEADER_LINE);
+        sb.append(frText);
         // GERMAN
         PromptGenerator german = utility.german();
         String deText = createPrompts(individualList, german);

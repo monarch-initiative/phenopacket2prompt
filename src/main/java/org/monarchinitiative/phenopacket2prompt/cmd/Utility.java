@@ -62,6 +62,8 @@ public class Utility {
         return PromptGenerator.italian(internationalMap.get("it"));
     }
 
+    public PromptGenerator french() { return PromptGenerator.french(internationalMap.get("fr")); }
+
     public PromptGenerator chinese() {
         return PromptGenerator.chinese(internationalMap.get("zh"));
     }
