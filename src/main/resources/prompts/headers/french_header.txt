@@ -6,12 +6,12 @@ lorsqu'un tel test n'existe pas pour un diagnostic, le diagnostic peut être pos
 très rarement simplement confirmé par l'avis d'un expert. Après avoir lu le cas, je souhaite que vous établissiez un diagnostic différentiel à l'aide du site
 . Il s'agit d'une liste de diagnostics candidats classés par ordre de probabilité en commençant par le candidat le plus probable. Chaque candidat doit être spécifié sur
 avec le nom de la maladie. Par exemple, si le premier candidat est le syndrome Branchiooculofacial et le second
-la mucoviscidose, fournissez les informations suivantes :
+la mucoviscidose, fournissez les informations suivantes en anglais:
 
-1. Syndrome de Branchiooculofacial
-2. Mucoviscidose
+1. Branchiooculofacial syndrome
+2. Cystic fibrosis
 
 Cette liste doit contenir autant de diagnostics que vous le jugez raisonnable. Il n'est pas nécessaire d'expliquer votre raisonnement,
-. Il suffit d'énumérer les diagnostics. Voici le cas :
+mais seulement d'énumérer les diagnostics. Je vous ai donné ces instructions en français, mais je vous demande de fournir votre réponse exclusivement en anglais.
 
-Traduit avec DeepL.com (version gratuite)
+Voici le cas :
