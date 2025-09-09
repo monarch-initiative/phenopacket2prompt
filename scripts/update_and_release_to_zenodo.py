@@ -60,18 +60,28 @@ def delete_existing_files(deposition_id):
         requests.delete(delete_url, headers=HEADERS)
         print(f"Deleted {file['filename']}")
 
-def upload_file(deposition_id, file_path):
-    """Uploads a file to the specified deposition."""
-    files = {"file": open(file_path, "rb")}
+def upload_file(deposition_id, file_path, max_retries=5):
+    """Uploads a file to the specified deposition with retries."""
+    upload_url = f"{ZENODO_API_BASE}/{deposition_id}/files"
     params = {"name": os.path.basename(file_path)}
 
-    upload_url = f"{ZENODO_API_BASE}/{deposition_id}/files"
-    response = requests.post(upload_url, headers=HEADERS, files=files, params=params)
+    for attempt in range(max_retries):
+        with open(file_path, "rb") as fp:
+            files = {"file": fp}
+            response = requests.post(upload_url, headers=HEADERS, files=files, params=params)
 
-    if not (200 <= response.status_code < 300):
+        if 200 <= response.status_code < 300:
+            print(f"Uploaded {file_path} successfully.")
+            return
+
+        if response.status_code == 403 and attempt < max_retries - 1:
+            wait = 2 ** attempt
+            print(f"Deposition locked, retrying in {wait}s...")
+            time.sleep(wait)
+            continue
+
         print(f"Error uploading {file_path}: {response.text}")
         sys.exit(1)
-    print(f"Uploaded {file_path} successfully.")
 
 def publish_deposition(deposition_id):
     """Publishes the deposition on Zenodo."""
