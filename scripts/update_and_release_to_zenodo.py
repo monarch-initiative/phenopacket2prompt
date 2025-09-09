@@ -2,6 +2,7 @@ import os
 import requests
 import sys
 import json
+import time
 from datetime import datetime
 
 ZENODO_API_BASE = "https://zenodo.org/api/deposit/depositions"
