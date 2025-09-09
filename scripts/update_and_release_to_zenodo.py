@@ -9,45 +9,54 @@ ACCESS_TOKEN = os.getenv("ZENODO_ACCESS_TOKEN")
 DEPOSITION_ID = os.getenv("ZENODO_DEPOSITION_ID")
 
 HEADERS = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
-
 def create_new_version():
     """Creates a new version of the deposition and returns its ID."""
-    # Step 1: Create a new version of the deposition
-    response = requests.post(f"{ZENODO_API_BASE}/{DEPOSITION_ID}/actions/newversion", headers=HEADERS)
+    response = requests.post(
+        f"{ZENODO_API_BASE}/{DEPOSITION_ID}/actions/newversion",
+        headers=HEADERS
+    )
 
     if not (200 <= response.status_code < 300):
         print(f"Error creating new version: {response.text}")
         sys.exit(1)
 
-    new_deposition = response.json()
-    new_id = new_deposition["id"]
-    print(f"New Zenodo deposition created: {new_id}")
+    parent_data = response.json()
 
-    """
-    # Issues with metadata update persist
-    # Step 2: Add the publication_date only (Zenodo will handle other metadata)
+    # Follow the latest_draft link to get the actual new deposition
+    draft_url = parent_data["links"]["latest_draft"]
+    draft_response = requests.get(draft_url, headers=HEADERS)
+
+    if not (200 <= draft_response.status_code < 300):
+        print(f"Error retrieving draft deposition: {draft_response.text}")
+        sys.exit(1)
+
+    draft_data = draft_response.json()
+    new_id = draft_data["id"]
+    print(f"New Zenodo deposition draft created: {new_id}")
+
+    # Update just the publication_date
     today_date = datetime.today().strftime('%Y-%m-%d')
-
-    # Prepare the metadata update with just the publication_date
     metadata_update = {
         "metadata": {
             "publication_date": today_date
         }
     }
 
-    # Convert to JSON string for the PUT request
-    data = json.dumps(metadata_update)
+    response = requests.put(
+        f"{ZENODO_API_BASE}/{new_id}",
+        headers={**HEADERS, "Content-Type": "application/json"},
+        data=json.dumps(metadata_update)
+    )
 
-    # Update the metadata with the publication_date
-    response = requests.put(f"{ZENODO_API_BASE}/{new_id}", headers=HEADERS, data=data)
-
-    if response.status_code != 200:
-        print(f"Error updating metadata: {response.text}")
+    if not (200 <= response.status_code < 300):
+        print(f"Error updating publication_date: {response.text}")
         sys.exit(1)
 
-    print(f"Metadata updated for deposition {new_id}.")
-    """
+    print(f"Updated publication_date for deposition {new_id} to {today_date}.")
+
     return new_id
+
+       
 
 def delete_existing_files(deposition_id):
     """Deletes all existing files in a draft deposition."""
