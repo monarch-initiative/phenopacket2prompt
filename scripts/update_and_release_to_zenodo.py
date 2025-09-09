@@ -68,7 +68,7 @@ def upload_file(deposition_id, file_path):
     upload_url = f"{ZENODO_API_BASE}/{deposition_id}/files"
     response = requests.post(upload_url, headers=HEADERS, files=files, params=params)
 
-    if response.status_code != 201:
+    if not (200 <= response.status_code < 300):
         print(f"Error uploading {file_path}: {response.text}")
         sys.exit(1)
     print(f"Uploaded {file_path} successfully.")
@@ -78,7 +78,7 @@ def publish_deposition(deposition_id):
     publish_url = f"{ZENODO_API_BASE}/{deposition_id}/actions/publish"
     response = requests.post(publish_url, headers=HEADERS)
 
-    if response.status_code != 202:
+    if not (200 <= response.status_code < 300):
         print(f"Error publishing deposition: {response.text}")
         sys.exit(1)
     print(f"Deposition {deposition_id} published successfully.")
@@ -97,7 +97,7 @@ def main(directory):
         if os.path.isfile(file_path):
             upload_file(new_dep_id, file_path)
 
-    #publish_deposition(new_dep_id)
+    publish_deposition(new_dep_id)
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
