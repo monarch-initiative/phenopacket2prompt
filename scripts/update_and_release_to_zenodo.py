@@ -15,7 +15,7 @@ def create_new_version():
     # Step 1: Create a new version of the deposition
     response = requests.post(f"{ZENODO_API_BASE}/{DEPOSITION_ID}/actions/newversion", headers=HEADERS)
 
-    if response.status_code != 201:
+    if not (200 <= response.status_code < 300):
         print(f"Error creating new version: {response.text}")
         sys.exit(1)
 
