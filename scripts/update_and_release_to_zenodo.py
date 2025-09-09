@@ -38,11 +38,28 @@ def create_new_version():
     # Update just the publication_date
     today_date = datetime.today().strftime('%Y-%m-%d')
     metadata_update = {
-        "metadata": {
-            "publication_date": today_date
-        }
+    "metadata": {
+        "title": "Thousands (5K+) of genetic medical vignettes in 10 languages created from Phenopackets, thought for LLM-research, automatically updated.",
+        "upload_type": "dataset",
+        "creators": [
+            {
+                "name": "Chimirri, Leonardo",
+                "affiliation": "Berlin Institute of Health at Charité – Universitätsmedizin Berlin"
+            }
+        ],
+        "description": "Genetic medical vignettes created with phenopacket2prompt in 10 languages: Czech, Chinese, Dutch, English, French, German, Italian, Japanese, Spanish, and Turkish. Created from ISO-approved Phenopackets present in the phenopacket store, automatically updated as more HPO translations and cases become available. An update is triggered by a new release of the phenoacket store. The newest HPO and HPO international files are pulled anew for each update.",
+        "publication_date": today_date,
+        "related_identifiers": [
+            {
+                "identifier": "10.5281/zenodo.14804250",
+                "relation": "isVariantFormOf",
+                "scheme": "doi"
+            }
+        ],
+        "license": "cc-by-4.0"
     }
-
+ 
+    }
     response = requests.put(
         f"{ZENODO_API_BASE}/{new_id}",
         headers={**HEADERS, "Content-Type": "application/json"},
