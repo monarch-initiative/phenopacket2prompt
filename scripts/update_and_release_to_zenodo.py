@@ -10,11 +10,12 @@ ACCESS_TOKEN = os.getenv("ZENODO_ACCESS_TOKEN")
 DEPOSITION_ID = os.getenv("ZENODO_DEPOSITION_ID")
 
 HEADERS = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
+
+
 def create_new_version():
     """Creates a new version of the deposition and returns its ID."""
     response = requests.post(
-        f"{ZENODO_API_BASE}/{DEPOSITION_ID}/actions/newversion",
-        headers=HEADERS
+        f"{ZENODO_API_BASE}/{DEPOSITION_ID}/actions/newversion", headers=HEADERS
     )
 
     if not (200 <= response.status_code < 300):
@@ -35,35 +36,19 @@ def create_new_version():
     new_id = draft_data["id"]
     print(f"New Zenodo deposition draft created: {new_id}")
 
-    # Update just the publication_date
-    today_date = datetime.today().strftime('%Y-%m-%d')
-    metadata_update = {
-    "metadata": {
-        "title": "Thousands (5K+) of genetic medical vignettes in 10 languages created from Phenopackets, thought for LLM-research, automatically updated.",
-        "upload_type": "dataset",
-        "creators": [
-            {
-                "name": "Chimirri, Leonardo",
-                "affiliation": "Berlin Institute of Health at Charité – Universitätsmedizin Berlin"
-            }
-        ],
-        "description": "Genetic medical vignettes created with phenopacket2prompt in 10 languages: Czech, Chinese, Dutch, English, French, German, Italian, Japanese, Spanish, and Turkish. Created from ISO-approved Phenopackets present in the phenopacket store, automatically updated as more HPO translations and cases become available. An update is triggered by a new release of the phenoacket store. The newest HPO and HPO international files are pulled anew for each update.",
-        "publication_date": today_date,
-        "related_identifiers": [
-            {
-                "identifier": "10.5281/zenodo.14804250",
-                "relation": "isVariantFormOf",
-                "scheme": "doi"
-            }
-        ],
-        "license": "cc-by-4.0"
-    }
- 
-    }
+    # Load metadata from external JSON file
+    metadata_path = os.path.join(os.path.dirname(__file__), "zenodo_metadata.json")
+    with open(metadata_path, "r") as f:
+        metadata = json.load(f)
+
+    today_date = datetime.today().strftime("%Y-%m-%d")
+    metadata["publication_date"] = today_date
+    metadata_update = {"metadata": metadata}
+
     response = requests.put(
         f"{ZENODO_API_BASE}/{new_id}",
         headers={**HEADERS, "Content-Type": "application/json"},
-        data=json.dumps(metadata_update)
+        data=json.dumps(metadata_update),
     )
 
     if not (200 <= response.status_code < 300):
@@ -74,7 +59,6 @@ def create_new_version():
 
     return new_id
 
-       
 
 def delete_existing_files(deposition_id):
     """Deletes all existing files in a draft deposition."""
@@ -87,6 +71,7 @@ def delete_existing_files(deposition_id):
         requests.delete(delete_url, headers=HEADERS)
         print(f"Deleted {file['filename']}")
 
+
 def upload_file(deposition_id, file_path, max_retries=5):
     """Uploads a file to the specified deposition with retries."""
     upload_url = f"{ZENODO_API_BASE}/{deposition_id}/files"
@@ -95,20 +80,23 @@ def upload_file(deposition_id, file_path, max_retries=5):
     for attempt in range(max_retries):
         with open(file_path, "rb") as fp:
             files = {"file": fp}
-            response = requests.post(upload_url, headers=HEADERS, files=files, params=params)
+            response = requests.post(
+                upload_url, headers=HEADERS, files=files, params=params
+            )
 
         if 200 <= response.status_code < 300:
             print(f"Uploaded {file_path} successfully.")
             return
 
         if response.status_code == 403 and attempt < max_retries - 1:
-            wait = 2 ** attempt
+            wait = 2**attempt
             print(f"Deposition locked, retrying in {wait}s...")
             time.sleep(wait)
             continue
 
         print(f"Error uploading {file_path}: {response.text}")
         sys.exit(1)
+
 
 def publish_deposition(deposition_id):
     """Publishes the deposition on Zenodo."""
@@ -119,6 +107,7 @@ def publish_deposition(deposition_id):
         print(f"Error publishing deposition: {response.text}")
         sys.exit(1)
     print(f"Deposition {deposition_id} published successfully.")
+
 
 def main(directory):
     if not os.path.isdir(directory):
@@ -135,6 +124,7 @@ def main(directory):
             upload_file(new_dep_id, file_path)
 
     publish_deposition(new_dep_id)
+
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
