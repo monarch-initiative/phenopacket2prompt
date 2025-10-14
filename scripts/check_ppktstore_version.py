@@ -19,7 +19,7 @@ if not latest:
 r = requests.get(
     f"https://api.github.com/repos/{this_repo}/actions/variables/{var_name}",
     headers={
-        "Authorization": f"Bearer {token}",
+        "Authorization": f"token {token}",
         "Accept": "application/vnd.github+json"
         }
 )
@@ -54,14 +54,14 @@ if new_release:
     payload = {"name": var_name, "value": latest}
     res = requests.patch(
         f"https://api.github.com/repos/{this_repo}/actions/variables/{var_name}",
-        headers={"Authorization": f"Bearer {token}",
+        headers={"Authorization": f"token {token}",
                  "Accept": "application/vnd.github+json"},
         json=payload
     )
     if res.status_code == 404:
         requests.post(
             f"https://api.github.com/repos/{this_repo}/actions/variables",
-            headers={"Authorization": f"Bearer {token}",
+            headers={"Authorization": f"token {token}",
                      "Accept": "application/vnd.github+json"},
             json=payload
         )
