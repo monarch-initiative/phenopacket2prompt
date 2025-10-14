@@ -2,6 +2,7 @@ name: Process Phenopackets and Upload to Zenodo
 
 on:
   workflow_dispatch:  # Only runs when manually triggered
+  workflow_call: # Allow calling from another workflow
 
 jobs:
   process-phenopackets:

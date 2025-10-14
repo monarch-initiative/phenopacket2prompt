@@ -1,0 +1,25 @@
+{
+  "title": "Thousands (5K+) of genetic medical vignettes in 10 languages created from Phenopackets, thought for LLM-research, automatically updated.",
+  "upload_type": "dataset",
+  "creators": [
+    {
+      "name": "Chimirri, Leonardo",
+      "affiliation": "Berlin Institute of Health at Charité – Universitätsmedizin Berlin",
+      "orcid": "0000-0002-6912-8518"
+    }
+  ],
+  "description": "<p>Genetic medical vignettes created with <a title=\"phenopacket2prompt\" href=\"https://github.com/monarch-initiative/phenopacket2prompt\" target=\"_blank\" rel=\"noopener\">phenopacket2prompt</a> in 10 languages:&nbsp; Czech, Chinese, Dutch, English, French, German, Italian, Japanese, Spanish, and Turkish.</p>\n<p>Created from ISO-approved Phenopackets present in the <a title=\"phenopacket store\" href=\"https://monarch-initiative.github.io/phenopacket-store/\" target=\"_blank\" rel=\"noopener\">phenopacket store</a>, automatically updated as more <a title=\"HPO translations\" href=\"https://obophenotype.github.io/hpo-translations/\" target=\"_blank\" rel=\"noopener\">HPO translations</a> and cases become available. An update is triggered by a new release of the phenoacket store. The <a title=\"HPO Website\" href=\"https://hpo.jax.org/\" target=\"_blank\" rel=\"noopener\">newest HPO</a> and HPO international files are pulled anew for each update.&nbsp;</p>",
+  "related_identifiers": [
+    {
+      "identifier": "10.5281/zenodo.14804250",
+      "relation": "isVariantFormOf",
+      "resource_type": "dataset",
+      "scheme": "doi"
+    }
+  ],
+  "license": "cc-by-4.0",
+  "custom": {
+    "code:codeRepository": "https://github.com/monarch-initiative/phenopacket2prompt",
+    "code:programmingLanguage": [{"id": "java", "title": {"en": "Java"}}]
+  }
+}
