@@ -18,7 +18,10 @@ if not latest:
 # Get last version of phenopacket-store that ppkt2prompt ran
 r = requests.get(
     f"https://api.github.com/repos/{this_repo}/actions/variables/{var_name}",
-    headers={"Authorization": f"Bearer {token}"}
+    headers={
+        "Authorization": f"Bearer {token}",
+        "Accept": "application/vnd.github+json"
+        }
 )
 
 if r.status_code != 200:
