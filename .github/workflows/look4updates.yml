@@ -1,0 +1,33 @@
+name: Check phenopacket-store for a new release
+on:
+  schedule:
+    - cron: "0 0 * * 0" # Run weekly on Sunday at 00:00 UTC
+  workflow_dispatch:
+
+jobs:
+  check_release:
+    name: Check for new phenopacket-store release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python for to run ppkt-store checker
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'  # Use latest stable version
+
+      - name: Install python dependencies
+        run: pip install requests
+
+      - name: Run release checker
+        id: check
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/check_ppktstore_version.py
+
+      - name: Run follow-up action
+        if: steps.check.outputs.new_release == 'true'
+        uses: ./.github/workflows/create_prompts_and_upload.yml
