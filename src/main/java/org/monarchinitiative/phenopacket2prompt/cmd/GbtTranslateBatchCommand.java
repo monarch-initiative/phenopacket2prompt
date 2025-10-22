@@ -28,7 +28,7 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
 
     @CommandLine.Option(names = {"--translations"},
             description = "path to translations file")
-    private String translationsPath = "data/hp-international.obo";
+    private String translationsPath = "data/hp-all.babelon.json";
 
     @CommandLine.Option(names = {"-o", "--outdir"},
             description = "path to outdir")

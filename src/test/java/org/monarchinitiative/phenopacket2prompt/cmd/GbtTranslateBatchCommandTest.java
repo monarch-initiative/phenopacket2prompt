@@ -1,5 +1,7 @@
 package org.monarchinitiative.phenopacket2prompt.cmd;
 
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -11,6 +13,13 @@ import java.nio.file.*;
 import java.util.stream.Stream;
 
 class GbtTranslateBatchCommandTest {
+    private static final Path CLI_JAR = Paths.get("target/phenopacket2prompt.jar");
+
+    @BeforeAll
+    static void checkJarExists() {
+        Assumptions.assumeTrue(Files.exists(CLI_JAR),
+                "Skipping CLI test — JAR file not found. Run `mvn package` first.");
+    }
 
     static Stream<TestCase> provideTestCases() {
         return Stream.of(
@@ -32,7 +41,7 @@ class GbtTranslateBatchCommandTest {
 
     @ParameterizedTest
     @MethodSource("provideTestCases")
-    void testNewOption(TestCase testCase, @TempDir Path tempDir) throws IOException {
+    void testPatientOnlyMode(TestCase testCase, @TempDir Path tempDir) throws IOException {
         // Copy test data into temp directory
         Path testDataFolder = tempDir.resolve("test-data");
         Files.createDirectory(testDataFolder);
