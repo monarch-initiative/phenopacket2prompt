@@ -27,3 +27,4 @@ replay_pid*
 /prompts/
 /fenominal-mined.txt
 /p2p_test.txt
+__pycache__/
