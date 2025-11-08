@@ -1,0 +1,48 @@
+[source]
+pmid = PMID:30208878
+title = GNPTAB c.2404C > T nonsense mutation in a patient with mucolipidosis III alpha/beta: a case report
+[diagnosis]
+disease_id = OMIM:252600
+disease_label = Mucolipidosis III alpha/beta
+[text]
+The proband was born of a non-consaguineous, in-vitro fertilization dichorionic twin pregnancy at 36 weeks of gestation.
+The father and mother are Han Chinese, aged 30 and 38 years respectively (Fig. 1a). Except for previously treated
+maternal Graves’ disease, there was no significant family history including neurodevelopmental delay or metabolic disease.
+While the twin brother had a birth weight of 2.50 kg, the proband was small for gestational age with birth weight 1.79 kg,
+with length and head circumference all below the 3rd percentile (Fig. 1b). Antenatal and perinatal history was unremarkable.
+The proband was discharged on day 16 with body weight of 2.16 kg.
+The current photo shows a clear lack of catch-up growth even at four months of age for the proband Note that facial dysmorphism was minimal.
+At 24 months of age, the coarsening of facial features, trigonocephaly, flat nasal bridge and prominent eyes became more apparent (left).
+The kypho-lordosis, crouched gait with bent knee posture was seen on standing. Claw-hand deformities were seen (right) (d)
+Close-up view of the thick claw hand of the patient (left) and pectus carinatum deformity of the chest wall (right)
+He was first referred to the authors’ Paediatric out-patient clinic for poor weight gain, microcephaly and increased tone
+over all four limbs at five months of age (corrected age of four months). Head circumference and weight were below the third
+centile. When reviewed at seven months old, physical examination showed failure to thrive with body weight and height
+less than the third centile, head circumference at the third centile, plagiocephaly, and a closed anterior fontanelle.
+There were no obvious dysmorphism or neurocutaneous stigmata. Chest, cardiovascular and abdominal examination was normal with no organomegaly.
+ There was a reducible left inguinal hernia and the genitalia were normal. However, flexion contractures affecting both knees and tight hip adductors were noted.
+ There was also increase in tone over the lower limbs with brisk deep tendon reflexes. Developmental assessment showed mild gross motor delay.
+In view of the abnormal physical findings at the age of seven months, investigations include complete blood count and routine biochemical analysis of liver and renal function were done.
+ The results were all within age-specific reference intervals. Blood lactate, pyruvate and glucose levels were normal. Thyroid stimulating hormone was not elevated.
+ Urine cytomegalovirus culture was negative. Urine metabolic screening for ketones, reducing sugars, amino acids, phenylpyruvic acid, tyrosine metabolites, cysteine & homocysteine and keto acids were negative.
+ DBS metabolic screening found unremarkable patterns of amino acids and acylcarnitines. Skull X-ray and non-contrast magnetic resonance imaging (MRI) of the brain did not
+ reveal frank radiographic evidence of craniosynostosis or definite abnormal signal intensity in the brain.
+Follow up imaging with X-ray and MRI spine at 13 months old showed anterior subluxation of the cervical spine at C1/2,
+posterior hemivertebra at L2 and a mild kyphosis. Computed tomography (CT) of the brain at 14 months old showed fusion of
+metopic suture and narrowing of sagittal suture. A repeated scan at 21 months old showed craniosynostosis with slightly
+deformed skull shape, partial fusion of coronal suture near the vertex, sagittal suture and bilateral lambdoid sutures (Fig. 2a).
+Retrospective review of a previous chest X-ray film found mildly widened ribs and scalloped vertebrae (Fig. 2b).
+Subsequent regular follow up by the neurologists at 26 months of age showed persistent failure to thrive,
+with progressive evolvement of coarse facial features (including prominent eyes, microcephaly with craniosynostosis,
+low set ears, thick lips, thick spade-shaped claw hands), musculoskeletal abnormalities (kypho-lordosis, contracture over hip,
+knee, elbow and wrist and obvious pectus carinatum) (Fig. 1c) and mild global developmental delay involving the gross motor, fine motor and verbal aspect.
+Of note, there was no hepatosplenomegaly, and the child was noted to have microcephaly.
+Spot urine testing was performed and found an increased mucopolysaccharide excretion (acid mucopolysaccharide to creatinine ratio of 25.9 mg/mmol, normal: <15 mg/mmol).
+No pathological pattern was detected on mucopolysaccharide electrophoresis or oligosaccharide thin-layer chromatography.
+
+
+DBS enzyme activity testing showed increased activity of α-iduronidase (23.96 μM/h, normal: >1.32 μM/h),
+iduronate sulfatase (210.78 μM/h, normal: >4.45 μM/h), galactose-6-sulphate sulphatase (6.26 μM/h, normal: >1.02 μM/h),
+arylsulfatase B (38.77 μM/h, normal: >3.45 μM/h) and α-hexosaminidase (76.35 μM/h, normal: >1.61 μM/h).
+Urinary GAG excretion was normal. While no upper normal limits were cited for the lysosomal enzyme activities by the testing laboratory,
+their generalized elevation in the clinical context was suggestive of mucolipidosis [13].

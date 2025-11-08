@@ -1,0 +1,19 @@
+[source]
+pmid = PMID:30642278
+title = Whole exome sequencing identified a novel truncation mutation in the NHS gene associated with Nance-Horan syndrome
+[diagnosis]
+disease_id = OMIM:302350
+disease_label = Nance-Horan syndrome
+[text]
+A 15-year-old boy was admitted to the laboratory of clinical genetics of Peking Union Medical College Hospital for genetic
+counseling due to congenital cataracts. In addition to the primary physical characteristic of congenital bilateral nuclear cataracts,
+the young patient had a long-narrow face, prominent nose and large anteverted pinnae, screw-driver like incisors,
+mild mulberry like molars, one missing maxillary second molar and malocclusion (Fig. 1). Available clinical information
+regarding the families is shown in Table 1, and the carrier females lens opacity and vision were unavailable here.
+The proband (III:1) and another affected individual (II:5) underwent microincision cataract surgery at the ages of 15
+and 21 years respectively. Available photos before the surgery revealed bilateral lens opacities that heavily affected
+the nucleus in the proband (Fig. 1; Fig. 2). Individual II:5 presented with similar facial features including a long narrow face,
+mildly anteverted pinnae ear and screw-driver like incisors, mild mulberry like molars and malocclusion (Additional file 1).
+Individual II: 5 stated that he was affected by nystagmus, and at the time of recruitment in our study, which might associate with NHS.
+However, neither of these individuals had mental retardation or behavioral disturbances.
+Their family history revealed no obvious visual defects or dental abnormalities among the rest of the family members.

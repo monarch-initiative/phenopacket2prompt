@@ -62,6 +62,19 @@ public class Utility {
         return PromptGenerator.italian(internationalMap.get("it"));
     }
 
+    public PromptGenerator french() { return PromptGenerator.french(internationalMap.get("fr")); }
+
+    public PromptGenerator chinese() {
+        return PromptGenerator.chinese(internationalMap.get("zh"));
+    }
+
+    public PromptGenerator japanese() {
+        return PromptGenerator.japanese(internationalMap.get("ja"));
+    }
+
+    public PromptGenerator czech() {
+        return PromptGenerator.czech(internationalMap.get("cs"));
+    }
 
 
     public static String getFileName(String phenopacketID, String languageCode) {
@@ -83,6 +96,14 @@ public class Utility {
         outputCorrectResults(correctResultList, PROMPT_DIR);
     }
 
+    /**
+     * Output correct results to file.
+     * @param correctResultList an ArrayList of the correct results, coming from outputPromptsEnglish
+     *                           or outputPromptsEnglishFromIndividuals. Format is a list of triples
+     *                          promptFileName, Disease ID, Disease Label
+     * @param basename the directory where prompts are output to.
+     * @return The square root of the given number.
+     */
     public static  void outputCorrectResults(List<CorrectResult> correctResultList, String basename) {
         File outfile = new File(basename + File.separator + "correct_results.tsv");
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(outfile))) {
@@ -92,7 +113,7 @@ public class Utility {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.printf("[INFO] Output a total of %d prompts in en, es, nl, de, and it.\n", correctResultList.size());
+        System.out.printf("[INFO] Output a total of %d prompts in en, es, nl, cs, de, tr, zh and it.\n", correctResultList.size());
     }
 
 
@@ -105,6 +126,17 @@ public class Utility {
         }
     }
 
+    public static void writeMissingTranslations(Set<String> Untranslated, String dir, String missingFileName){
+        File missingFile = new File(dir + File.separator + missingFileName);
+        Utility.createDir(dir);
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(missingFile))) {
+            for (String noTranslation : Untranslated) {
+                bw.write(noTranslation + System.lineSeparator());
+            }
+        } catch (IOException e) {
+            throw new PhenolRuntimeException("Could not output file to " + missingFileName);
+        }
+    }
 
 
 
@@ -161,8 +193,7 @@ public class Utility {
             } catch (Exception e) {
                 String errmsg = String.format("[ERROR] Could not process %s: %s\n", promptFileName, e.getMessage());
                 System.err.println(errmsg);
-                throw new PhenolRuntimeException(errmsg);
-                //e.printStackTrace();
+                LOGGER.error(errmsg);
             }
         }
 
@@ -170,7 +201,7 @@ public class Utility {
 
 
 
-    public static void outputPromptsInternational(List<File> ppktFiles, String languageCode, PromptGenerator generator) {
+    public static void outputPromptsInternational(List<File> ppktFiles, String languageCode, PromptGenerator generator, String outdirname) {
         List<PpktIndividual> individualList = new ArrayList<>();
         for (var f: ppktFiles) {
             PpktIndividual individual = PpktIndividual.fromFile(f);
@@ -178,9 +209,11 @@ public class Utility {
         }
         outputPromptsInternationalFromIndividualList(individualList,
                 languageCode,
-                PROMPT_DIR,
+                outdirname,
                 generator);
     }
+
+
 
     public static void outputPromptsInternationalMining(List<PpktIndividual> individualList,
                                                         String languageCode,
@@ -193,8 +226,8 @@ public class Utility {
 
 
 
-    public static List<CorrectResult> outputPromptsEnglish(List<File> ppktFiles) {
-        Utility.createDir("prompts/en");
+    public static List<CorrectResult> outputPromptsEnglish(List<File> ppktFiles, String outdirname) {
+        Utility.createDir(outdirname + "/en");
         List<CorrectResult> correctResultList = new ArrayList<>();
         PromptGenerator generator = PromptGenerator.english();
         int currentCount = 0;
@@ -209,7 +242,7 @@ public class Utility {
             String promptFileName = Utility.getFileName( individual.getPhenopacketId(), "en");
             try {
                 String prompt = generator.createPrompt(individual);
-                Utility.outputPromptFromCaseBundle(prompt, promptFileName, "prompts/en");
+                Utility.outputPromptFromCaseBundle(prompt, promptFileName, outdirname + "/en");
                 System.out.printf("en      %d.\r", currentCount);
                 currentCount++;
                 var cres = new CorrectResult(promptFileName, pdisease.getDiseaseId(), pdisease.getLabel());

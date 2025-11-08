@@ -13,21 +13,25 @@ public class EnglishPromptGenerator implements PromptGenerator  {
 
     private final PPKtIndividualInfoGenerator individualInfoGenerator;
 
-    private final PhenopacketTextGenerator promptTextBlockGenerator;
+    private final PhenopacketTextGenerator ppktTextGenerator = new PhenopacketTextGenerator() {};
 
     private final PpktPhenotypicFeatureGenerator ppktPhenotypicFeatureGenerator;
 
 
     public EnglishPromptGenerator(){
         individualInfoGenerator = new PpktIndividualEnglish();
-        promptTextBlockGenerator = new PpktTextEnglish();
         this.ppktPhenotypicFeatureGenerator = new PpktPhenotypicFeatureEnglish();
     }
 
 
     @Override
     public String queryHeader() {
-        return promptTextBlockGenerator.GPT_PROMPT_HEADER();
+        return ppktTextGenerator.LLM_PROMPT_HEADER("english");
+    }
+
+    @Override
+    public String queryFooter() {
+        return ppktTextGenerator.LLM_PROMPT_FOOTER("english");
     }
 
     @Override
@@ -65,32 +69,5 @@ public class EnglishPromptGenerator implements PromptGenerator  {
         return this.ppktPhenotypicFeatureGenerator.featuresAtOnset(person, terms);
 
     }
-
-
-    /**
-     * The following structure should work for most other languages, but the function
-     * can be overridden if necessary.
-     * @param individual The individual for whom we are creating the prompt
-     * @return the prompt text
-     */
-    @Override
-    public  String createPromptWithoutHeader(PpktIndividual individual) {
-        String individualInfo = getIndividualInformation(individual);
-        // For creating the prompt, we first report the onset and the unspecified terms together, and then
-        String onsetDescription = getVignetteAtOnset(individual);
-        Map<PhenopacketAge, List<OntologyTerm>> pfMap = individual.extractSpecifiedAgePhenotypicFeatures();
-        // We then report the rest, one for each specified time
-        //String onsetFeatures = formatFeatures(onsetTerms);
-        StringBuilder sb = new StringBuilder();
-        sb.append(individualInfo).append("\n").append(onsetDescription).append("\n");
-        for (var entry: pfMap.entrySet()) {
-            String vignette = getVignetteAtAge(entry.getKey(), individual.getSex(), entry.getValue());
-            sb.append(vignette).append("\n");
-        }
-        return sb.toString();
-    }
-
-
-
 
 }

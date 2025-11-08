@@ -131,4 +131,6 @@ public interface BuildingBlockGenerator {
     String asLateOnset();
 
     String fromIso(Iso8601Age ppktAge);
+
+    String duringEmbryonic();
 }

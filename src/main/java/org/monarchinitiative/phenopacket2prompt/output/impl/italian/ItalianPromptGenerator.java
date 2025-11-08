@@ -16,7 +16,7 @@ public class ItalianPromptGenerator implements PromptGenerator {
 
     private final PPKtIndividualInfoGenerator ppktAgeSexGenerator;
 
-    private final PhenopacketTextGenerator ppktTextGenerator;
+    private final PhenopacketTextGenerator ppktTextGenerator = new PhenopacketTextGenerator() {};
 
     private final PpktPhenotypicFeatureGenerator ppktPhenotypicFeatureGenerator;
 
@@ -24,13 +24,17 @@ public class ItalianPromptGenerator implements PromptGenerator {
 
     public ItalianPromptGenerator(PpktPhenotypicFeatureGenerator pfgen) {
         ppktAgeSexGenerator = new PpktIndividualItalian();
-        ppktTextGenerator = new PpktTextItalian();
         this.ppktPhenotypicFeatureGenerator = pfgen;
     }
 
     @Override
     public String queryHeader() {
-        return ppktTextGenerator.GPT_PROMPT_HEADER();
+        return ppktTextGenerator.LLM_PROMPT_HEADER("italian");
+    }
+
+    @Override
+    public String queryFooter() {
+        return ppktTextGenerator.LLM_PROMPT_FOOTER("italian");
     }
 
     @Override
@@ -43,11 +47,23 @@ public class ItalianPromptGenerator implements PromptGenerator {
         return ppktPhenotypicFeatureGenerator.formatFeatures(ontologyTerms);
     }
 
+    // featuresAtOnset not used in italian!! To be fixed!!
+
     @Override
     public String getVignetteAtAge(PhenopacketAge page, PhenopacketSex psex, List<OntologyTerm> terms) {
         String ageString = this.ppktAgeSexGenerator.atAgeForVignette(page);
         String features = formatFeatures(terms);
-        return String.format("%s, %s è presentato %s", ageString, ppktAgeSexGenerator.heSheIndividual(psex), features);
+        return String.format("%s, %s presentò %s", ageString, ppktAgeSexGenerator.heSheIndividual(psex), features);
+    }
+
+    @Override
+    public  String getVignetteAtOnset(PpktIndividual individual){
+        String person = switch (individual.getSex()) {
+            case MALE -> "Il paziente";
+            case FEMALE -> "La paziente";
+            default -> "La persona";
+        };
+        return this.ppktPhenotypicFeatureGenerator.featuresAtOnset(person, individual.getPhenotypicFeaturesAtOnset());
     }
 
     @Override
@@ -55,4 +71,7 @@ public class ItalianPromptGenerator implements PromptGenerator {
         return this.ppktPhenotypicFeatureGenerator.getMissingTranslations();
     }
 
-}
+    }
+
+
+

@@ -94,7 +94,7 @@ public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
 
 
     private String iso8601onsetDescription(Iso8601Age isoAge) {
-        return String.format("Disease onset occurred when the proband was %s",
+        return String.format("Disease onset occurred when the proband was a %s",
                 buildBlocks.yearsMonthsDaysOld(isoAge.getYears(), isoAge.getMonths(), isoAge.getDays()));
     }
 
@@ -267,7 +267,9 @@ public class PpktIndividualEnglish implements PPKtIndividualInfoGenerator {
         if (ppktAge.ageType().equals(PhenopacketAgeType.ISO8601_AGE_TYPE)) {
             return "At an age of " + buildBlocks.fromIso((Iso8601Age)ppktAge);
         } else if (ppktAge.ageType().equals(PhenopacketAgeType.HPO_ONSET_AGE_TYPE)) {
-            if (ppktAge.isFetus()) {
+            if (ppktAge.isEmbryo()) {
+                return buildBlocks.duringEmbryonic();
+            } else if (ppktAge.isFetus()) {
                 return buildBlocks.duringFetal();
             } else if (ppktAge.isCongenital()) {
                 return buildBlocks.atBirth();

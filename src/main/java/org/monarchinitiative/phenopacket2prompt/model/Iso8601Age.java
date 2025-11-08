@@ -97,6 +97,11 @@ public final class Iso8601Age implements PhenopacketAge {
     }
 
     @Override
+    public boolean isEmbryo() {
+        // always false because we cannot express prenatal ages with iso
+        return false;
+    }
+    @Override
     public boolean isFetus() {
         // always false because we cannot express prenatal ages with iso
         return false;

@@ -5,6 +5,3 @@ title =
 disease_id = OMIM:
 disease_label =
 [text]
-
-[text]
-optionally multiple vignettes per citation

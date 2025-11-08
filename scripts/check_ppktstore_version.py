@@ -1,71 +1,72 @@
-#!/usr/bin/env python3
-"""
-Script to check and update phenopacket-store version.
-Fetches the latest release from phenopacket-store repository and updates
-the repository variable if needed.
-"""
+import os, requests, sys
 
-import os
-import sys
-import requests
+ppktstore_repo = "monarch-initiative/phenopacket-store"
+this_repo = os.environ["GITHUB_REPOSITORY"]
+token  = os.environ["GITHUB_TOKEN"]
+var_name = "LAST_RUN_RELEASE"
 
+# Get phenopacket-store latest version
+latest = requests.get(
+    f"https://api.github.com/repos/{ppktstore_repo}/releases/latest",
+    headers={"Accept": "application/vnd.github+json"}
+).json().get("tag_name")
 
-def main():
-    """Main function to check and update phenopacket-store version."""
-    github_token = os.environ.get("GITHUB_TOKEN")
-    if not github_token:
-        print("Error: GITHUB_TOKEN environment variable not set")
-        sys.exit(1)
-
-    headers = {
-        "Authorization": f"token {github_token}",
-        "Accept": "application/vnd.github.v3+json"
-    }
-
-    # Fetch latest release from phenopacket-store
-    print("Fetching latest release from phenopacket-store...")
-    release_url = "https://api.github.com/repos/phenopackets/phenopacket-store/releases/latest"
-    release_response = requests.get(release_url, headers=headers)
-    release_response.raise_for_status()
+if not latest:
+    print("Error: Could not fetch latest release tag!")
+    sys.exit(1)
     
-    latest_version = release_response.json()["tag_name"]
-    print(f"Latest phenopacket-store version: {latest_version}")
-
-    # Fetch current repository variable
-    print("Fetching current repository variable...")
-    repo_owner = os.environ.get("GITHUB_REPOSITORY_OWNER", "P2GX")
-    repo_name = os.environ.get("GITHUB_REPOSITORY", "P2GX/phenopacket2prompt").split("/")[-1]
-    
-    var_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/actions/variables/PPKTSTORE_VERSION"
-    var_response = requests.get(var_url, headers=headers)
-    
-    if var_response.status_code == 404:
-        # Variable doesn't exist, create it
-        print("Repository variable not found, creating...")
-        create_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/actions/variables"
-        create_data = {
-            "name": "PPKTSTORE_VERSION",
-            "value": latest_version
+# Get last version of phenopacket-store that ppkt2prompt ran
+r = requests.get(
+    f"https://api.github.com/repos/{this_repo}/actions/variables/{var_name}",
+    headers={
+        "Authorization": f"token {token}",
+        "Accept": "application/vnd.github+json"
         }
-        create_response = requests.post(create_url, headers=headers, json=create_data)
-        create_response.raise_for_status()
-        print(f"Created PPKTSTORE_VERSION variable with value: {latest_version}")
-    else:
-        var_response.raise_for_status()
-        current_version = var_response.json()["value"]
-        print(f"Current PPKTSTORE_VERSION: {current_version}")
-        
-        if current_version != latest_version:
-            # Update the variable
-            print(f"Updating version from {current_version} to {latest_version}...")
-            update_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/actions/variables/PPKTSTORE_VERSION"
-            update_data = {"value": latest_version}
-            update_response = requests.patch(update_url, headers=headers, json=update_data)
-            update_response.raise_for_status()
-            print(f"Successfully updated PPKTSTORE_VERSION to {latest_version}")
-        else:
-            print("Version is already up to date")
+)
+
+if r.status_code != 200:
+    print(f"Error: Could not fetch repository variable '{var_name}'! Status code: {r.status_code}")
+    sys.exit(1)
+
+stored = r.json().get("value")
+if stored is None:
+    print(f"Error: Repository variable '{var_name}' returned no value.")
+    sys.exit(1)
+
+latest = latest.strip()
+stored = stored.strip()
+new_release = (latest != stored)
+
+#---------DEBUG---------
+print(f"new_release is {new_release}")
+print(f"latest is {latest}")
+print(f"stored is {stored}")
+sys.exit(1)
+#---------DEBUG---------
+
+with open(os.environ["GITHUB_OUTPUT"], "a") as gh_out:
+    gh_out.write(f"latest_tag={latest}\n")
+    gh_out.write(f"new_release={str(new_release).lower()}\n")
 
 
-if __name__ == "__main__":
-    main()
+# Update variable if needed
+if new_release:
+    payload = {"name": var_name, "value": latest}
+    res = requests.patch(
+        f"https://api.github.com/repos/{this_repo}/actions/variables/{var_name}",
+        headers={"Authorization": f"token {token}",
+                 "Accept": "application/vnd.github+json"},
+        json=payload
+    )
+    if res.status_code == 404:
+        requests.post(
+            f"https://api.github.com/repos/{this_repo}/actions/variables",
+            headers={"Authorization": f"token {token}",
+                     "Accept": "application/vnd.github+json"},
+            json=payload
+        )
+
+    # You can also send mail here via SMTP if you prefer Python's smtplib
+    print(f"Detected new release {latest} from {ppktstore_repo}")
+else:
+    print("No new release found.")

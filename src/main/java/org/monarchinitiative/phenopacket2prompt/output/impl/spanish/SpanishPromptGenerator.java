@@ -13,23 +13,24 @@ public class SpanishPromptGenerator implements PromptGenerator {
 
     private final PPKtIndividualInfoGenerator ppktAgeSexGenerator;
 
-    private final PhenopacketTextGenerator ppktTextGenerator;
-
     private final PpktPhenotypicFeatureGenerator ppktPhenotypicFeatureGenerator;
 
-
+    private final PhenopacketTextGenerator ppktTextGenerator = new PhenopacketTextGenerator() {};
 
     public SpanishPromptGenerator(PpktPhenotypicFeatureGenerator pfgen) {
         ppktAgeSexGenerator = new PpktIndividualSpanish();
-        ppktTextGenerator = new PpktTextSpanish();
         this.ppktPhenotypicFeatureGenerator = pfgen;
     }
 
     @Override
     public String queryHeader() {
-        return ppktTextGenerator.GPT_PROMPT_HEADER();
+        return ppktTextGenerator.LLM_PROMPT_HEADER("spanish");
     }
 
+    @Override
+    public String queryFooter() {
+        return ppktTextGenerator.LLM_PROMPT_FOOTER("spanish");
+    }
     @Override
     public String getIndividualInformation(PpktIndividual ppktIndividual) {
         return this.ppktAgeSexGenerator.getIndividualDescription(ppktIndividual);
@@ -63,31 +64,6 @@ public class SpanishPromptGenerator implements PromptGenerator {
             default -> "La persona afectada";
         };
         return this.ppktPhenotypicFeatureGenerator.featuresAtOnset(person, individual.getPhenotypicFeaturesAtOnset());
-    }
-
-
-    /**
-     * The following structure should work for most other languages, but the function
-     * can be overridden if necessary.
-     * @param individual The individual for whom we are creating the prompt
-     * @return the prompt text
-     */
-    @Override
-    public  String createPrompt(PpktIndividual individual) {
-        String individualInfo = getIndividualInformation(individual);
-        // For creating the prompt, we first report the onset and the unspecified terms together, and then
-        String onsetDescription = getVignetteAtOnset(individual);
-        Map<PhenopacketAge, List<OntologyTerm>> pfMap = individual.extractSpecifiedAgePhenotypicFeatures();
-        // We then report the rest, one for each specified time
-        //String onsetFeatures = formatFeatures(onsetTerms);
-        StringBuilder sb = new StringBuilder();
-        sb.append(queryHeader());
-        sb.append(individualInfo).append("\n").append(onsetDescription).append("\n");
-        for (var entry: pfMap.entrySet()) {
-            String vignette = getVignetteAtAge(entry.getKey(), individual.getSex(), entry.getValue());
-            sb.append(vignette).append("\n");
-        }
-        return sb.toString();
     }
 
 }

@@ -10,6 +10,8 @@ import picocli.CommandLine;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,7 +25,7 @@ import java.util.concurrent.Callable;
  * @author <a href="mailto:peter.robinson@jax.org">Peter Robinson</a>
  */
 
-@CommandLine.Command(name = "download", aliases = {"D"},
+@CommandLine.Command(name = "download",
         mixinStandardHelpOptions = true,
         description = "Download files for phenopacket2promot")
 public class DownloadCommand implements Callable<Integer>{
@@ -35,13 +37,17 @@ public class DownloadCommand implements Callable<Integer>{
     public boolean overwrite;
 
     @Override
-    public Integer call() throws FileDownloadException, MalformedURLException {
+    public Integer call() throws FileDownloadException, MalformedURLException, URISyntaxException {
         logger.info(String.format("Download analysis to %s", datadir));
         Path destination = Paths.get(datadir);
         BioDownloaderBuilder builder = BioDownloader.builder(destination);
         builder.hpoJson();
-        URL hpoInternational = new URL("https://github.com/obophenotype/human-phenotype-ontology/releases/latest/download/hp-international.obo");
-        builder.custom("hp-international.obo", hpoInternational);
+        builder.overwrite(overwrite);
+        // TODO there might be a bug in newer hp-international.obo, revert to latest after it is fixed.
+        //String hpoInternational = "https://github.com/obophenotype/human-phenotype-ontology/releases/latest/download/hp-international.obo";
+        String hpoInternational = "https://github.com/obophenotype/human-phenotype-ontology/releases/download/v2025-05-06/hp-international.obo";
+        URL hpoInternationalUrl  = new URI(hpoInternational).toURL() ;
+        builder.custom("hp-international.obo", hpoInternationalUrl);
         BioDownloader downloader = builder.build();
         List<File> files = downloader.download();
         return 0;

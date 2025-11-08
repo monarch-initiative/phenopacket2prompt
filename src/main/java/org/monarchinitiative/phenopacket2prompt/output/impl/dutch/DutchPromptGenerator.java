@@ -16,7 +16,7 @@ public class DutchPromptGenerator implements PromptGenerator {
 
     private final PPKtIndividualInfoGenerator ppktAgeSexGenerator;
 
-    private final PhenopacketTextGenerator ppktTextGenerator;
+    private final PhenopacketTextGenerator ppktTextGenerator = new PhenopacketTextGenerator() {};
 
     private final PpktPhenotypicFeatureGenerator ppktPhenotypicFeatureGenerator;
 
@@ -24,13 +24,20 @@ public class DutchPromptGenerator implements PromptGenerator {
 
     public DutchPromptGenerator(PpktPhenotypicFeatureGenerator pfgen) {
         ppktAgeSexGenerator = new PpktIndividualDutch();
-        ppktTextGenerator = new PpktTextDutch();
         this.ppktPhenotypicFeatureGenerator = pfgen;
     }
 
+
+
+
     @Override
     public String queryHeader() {
-        return ppktTextGenerator.GPT_PROMPT_HEADER();
+        return ppktTextGenerator.LLM_PROMPT_HEADER("dutch");
+    }
+
+    @Override
+    public String queryFooter() {
+        return ppktTextGenerator.LLM_PROMPT_FOOTER("dutch");
     }
 
     @Override
@@ -46,13 +53,33 @@ public class DutchPromptGenerator implements PromptGenerator {
     @Override
     public String getVignetteAtAge(PhenopacketAge page, PhenopacketSex psex, List<OntologyTerm> terms) {
         String ageString = this.ppktAgeSexGenerator.atAgeForVignette(page);
-        String features = formatFeatures(terms);
-        return String.format("%s, %s presenteerde met %s", ageString, ppktAgeSexGenerator.heSheIndividual(psex), features);
+        String person = switch (psex) {
+            case MALE -> "hij";
+            case FEMALE -> "zij";
+            default -> "de persoon";
+        };
+        return this.ppktPhenotypicFeatureGenerator.featuresAtEncounter(person, ageString, terms);
     }
+
+    @Override
+    public  String getVignetteAtOnset(PpktIndividual individual){
+        String person = switch (individual.getSex()) {
+            case MALE -> "Hij";
+            case FEMALE -> "Zij";
+            default -> "De persoon";
+        };
+        return this.ppktPhenotypicFeatureGenerator.featuresAtOnset(person, individual.getPhenotypicFeaturesAtOnset());
+    }
+
 
 
     @Override
     public Set<String> getMissingTranslations() {
         return this.ppktPhenotypicFeatureGenerator.getMissingTranslations();
     }
+
+
+
+
+
 }
