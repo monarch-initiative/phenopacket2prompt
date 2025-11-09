@@ -2,7 +2,7 @@ package org.monarchinitiative.phenopacket2prompt.cmd;
 
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
 import org.monarchinitiative.phenopacket2prompt.international.HpInternational;
-import org.monarchinitiative.phenopacket2prompt.international.HpInternationalOboParser;
+import org.monarchinitiative.phenopacket2prompt.international.HpInternationalBabelonParser;
 import org.monarchinitiative.phenopacket2prompt.mining.Case;
 import org.monarchinitiative.phenopacket2prompt.mining.CaseBundle;
 import org.monarchinitiative.phenopacket2prompt.mining.CaseParser;
@@ -36,9 +36,9 @@ public class Utility {
 
     private final Map<String, HpInternational> internationalMap ;
 
-    public Utility(File translationsFile) {
-        HpInternationalOboParser oboParser = new HpInternationalOboParser(translationsFile);
-        this.internationalMap = oboParser.getLanguageToInternationalMap();
+    public Utility(File translationsFile) throws IOException {
+        HpInternationalBabelonParser babelonParser = new HpInternationalBabelonParser(translationsFile);
+        this.internationalMap = babelonParser.getLanguageToInternationalMap();
         LOGGER.info("Got {} translations", internationalMap.size());
     }
 

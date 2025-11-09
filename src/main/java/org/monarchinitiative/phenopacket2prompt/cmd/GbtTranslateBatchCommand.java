@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -55,7 +56,7 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
 
 
     @Override
-    public Integer call() {
+    public Integer call() throws IOException {
         File hpJsonFile = new File(hpoJsonPath);
         Context.getInstance().setFullTranslations(fullTransl);
         Context.getInstance().setOnlyPatient(onlyPatient);
