@@ -25,7 +25,7 @@ jobs:
       - name: Run release checker
         id: check
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            GH_TOKEN: ${{ secrets.GH_PAT_LEO }}
         run: python scripts/check_ppktstore_version.py
 
       - name: Run follow-up action
