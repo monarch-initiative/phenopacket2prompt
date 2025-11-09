@@ -35,7 +35,7 @@ def fetch_with_retry(url, headers, max_retries=3, timeout=10):
 
 ppktstore_repo = "monarch-initiative/phenopacket-store"
 this_repo = os.environ["GITHUB_REPOSITORY"]
-token  = os.environ["GITHUB_TOKEN"]
+token  = os.environ["GH_TOKEN"]
 var_name = "LAST_RUN_RELEASE"
 
 # Get phenopacket-store latest version
