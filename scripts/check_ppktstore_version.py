@@ -70,13 +70,6 @@ latest = latest.strip()
 stored = stored.strip()
 new_release = (latest != stored)
 
-#---------DEBUG---------
-print(f"new_release is {new_release}")
-print(f"latest is {latest}")
-print(f"stored is {stored}")
-sys.exit(1)
-#---------DEBUG---------
-
 with open(os.environ["GITHUB_OUTPUT"], "a") as gh_out:
     gh_out.write(f"latest_tag={latest}\n")
     gh_out.write(f"new_release={str(new_release).lower()}\n")
@@ -104,4 +97,4 @@ if new_release:
     # You can also send mail here via SMTP if you prefer Python's smtplib
     print(f"Detected new release {latest} from {ppktstore_repo}")
 else:
-    print("No new release found.")
+    print(f"The latest phenopacket-store release {stored} was already run.")
