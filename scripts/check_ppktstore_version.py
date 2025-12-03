@@ -93,7 +93,7 @@ with open(os.environ["GITHUB_OUTPUT"], "a") as gh_out:
 if new_release:
     payload = {"name": ppkt_last_run_version, "value": latest}
     res = requests.patch(
-        f"https://api.github.com/repos/{this_repo}/actions/variables/{ppkt_last_run_version}",
+        f"https://api.github.com/repos/{this_repo}/actions/variables/{latest}",
         headers={"Authorization": f"token {token}",
                  "Accept": "application/vnd.github+json"},
         json=payload,
