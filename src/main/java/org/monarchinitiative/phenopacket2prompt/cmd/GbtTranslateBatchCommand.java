@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -28,7 +29,7 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
 
     @CommandLine.Option(names = {"--translations"},
             description = "path to translations file")
-    private String translationsPath = "data/hp-international.obo";
+    private String translationsPath = "data/hp-all.babelon.json";
 
     @CommandLine.Option(names = {"-o", "--outdir"},
             description = "path to outdir")
@@ -47,6 +48,10 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
             defaultValue = "false")
     private boolean onlyPatient;
 
+    @CommandLine.Option(names = {"-j", "--jsonl-output"},
+            description = "Only output patient description")
+    private boolean jsonOutput;
+
     public boolean getPatientFlag() {
         return onlyPatient;
     }
@@ -55,10 +60,11 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
 
 
     @Override
-    public Integer call() {
+    public Integer call() throws IOException {
         File hpJsonFile = new File(hpoJsonPath);
         Context.getInstance().setFullTranslations(fullTransl);
         Context.getInstance().setOnlyPatient(onlyPatient);
+        Context.getInstance().setJsonOutput(jsonOutput);
 
         boolean useExactMatching = true;
         if (! hpJsonFile.isFile()) {
@@ -142,7 +148,9 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
             pcopy.copyFile(file);
         }
         // output file with correct diagnosis list
-        Utility.outputCorrectPPKt(correctResultList);
+        if(!Context.getInstance().isJsonOutput()) {
+            Utility.outputCorrectPPKt(correctResultList);
+        }
         return 0;
     }
 

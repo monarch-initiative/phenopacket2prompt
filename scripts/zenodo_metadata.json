@@ -21,5 +21,6 @@
   "custom": {
     "code:codeRepository": "https://github.com/monarch-initiative/phenopacket2prompt",
     "code:programmingLanguage": [{"id": "java", "title": {"en": "Java"}}]
-  }
+  },
+  "references": "https://doi.org/10.1016/j.ebiom.2025.105957"
 }

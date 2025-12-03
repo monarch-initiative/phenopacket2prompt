@@ -15,8 +15,12 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '22.0.1'
-          distribution: 'temurin' 
-        
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build JAR with Maven
+        run: mvn clean package -DskipTests
+
       - name: Download latest HPO
         run: |
           java -jar target/phenopacket2prompt.jar download -w
@@ -32,19 +36,12 @@ jobs:
  
       - name: Run batch processing
         run: |
-          java -jar target/phenopacket2prompt.jar batch -d phenopackets-data/${{steps.dirout.outputs.DIR_NAME}} -p --full-translations=true
+          java -jar target/phenopacket2prompt.jar batch -d phenopackets-data/${{steps.dirout.outputs.DIR_NAME}} -p --full-translations -j
 
-      #- name: Check generated files # For debugging purposes
-      #  run: |
-      #    ls prompts/en | head
-      #    ls prompts/it | head
-      #    cat $(ls -p prompts/en | grep -v / | head -n 2 | sed 's|^|prompts/en/|')
-
-      - name: Set up zipped structure for upload
+      - name: Zip original phenopackets for upload
         run: |
-          for dir in prompts/*/; do
-            zip -r "${dir%/}.zip" "$dir" && rm -r "$dir"
-          done
+          zip -r prompts/original_phenopackets.zip prompts/original_phenopackets
+          rm -r prompts/original_phenopackets
 
       - name: Set up Python for subsequent upload to zenodo
         uses: actions/setup-python@v4
@@ -58,6 +55,8 @@ jobs:
         env:
           ZENODO_ACCESS_TOKEN: ${{ secrets.ZENODO_ACCESS_TOKEN }}
           ZENODO_DEPOSITION_ID: ${{ secrets.ZENODO_DEPOSITION_ID }}
+          LATEST_STORE_TAG: ${{ inputs. LATEST_STORE }}
+          LATEST_HPO_TAG: ${{ inputs.LATEST_HPO }}
         run: python scripts/update_and_release_to_zenodo.py prompts/
 
 

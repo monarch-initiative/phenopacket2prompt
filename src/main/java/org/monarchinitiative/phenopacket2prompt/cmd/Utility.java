@@ -1,8 +1,9 @@
 package org.monarchinitiative.phenopacket2prompt.cmd;
 
 import org.monarchinitiative.phenol.base.PhenolRuntimeException;
+import org.monarchinitiative.phenopacket2prompt.config.Context;
 import org.monarchinitiative.phenopacket2prompt.international.HpInternational;
-import org.monarchinitiative.phenopacket2prompt.international.HpInternationalOboParser;
+import org.monarchinitiative.phenopacket2prompt.international.HpInternationalBabelonParser;
 import org.monarchinitiative.phenopacket2prompt.mining.Case;
 import org.monarchinitiative.phenopacket2prompt.mining.CaseBundle;
 import org.monarchinitiative.phenopacket2prompt.mining.CaseParser;
@@ -18,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -33,12 +35,11 @@ public class Utility {
     public static final String PROMPT_DIR = "prompts";
     public static final String TEXT_MINED_DIR = "text_mined";
 
-
     private final Map<String, HpInternational> internationalMap ;
 
-    public Utility(File translationsFile) {
-        HpInternationalOboParser oboParser = new HpInternationalOboParser(translationsFile);
-        this.internationalMap = oboParser.getLanguageToInternationalMap();
+    public Utility(File translationsFile) throws IOException {
+        HpInternationalBabelonParser babelonParser = new HpInternationalBabelonParser(translationsFile);
+        this.internationalMap = babelonParser.getLanguageToInternationalMap();
         LOGGER.info("Got {} translations", internationalMap.size());
     }
 
@@ -116,6 +117,37 @@ public class Utility {
         System.out.printf("[INFO] Output a total of %d prompts in en, es, nl, cs, de, tr, zh and it.\n", correctResultList.size());
     }
 
+    public static void outputPromptFromCaseBundle(String prompt,
+                                                  String promptFileName,
+                                                  String dir,
+                                                  PhenopacketDisease pdisease,
+                                                  String ppktId) {
+        File jsonlFile = new File(dir + ".jsonl");
+
+        // Build the JSON object to write for this line
+        Map<String, Object> jsonLine = new LinkedHashMap<>();
+        Map<String, String> diagnosisObj = new LinkedHashMap<>();
+        diagnosisObj.put("id", pdisease.getDiseaseId().toString());
+        diagnosisObj.put("label", pdisease.getLabel().toString());
+        List<Map<String, String>> diagnosisList = new ArrayList<>();
+        diagnosisList.add(diagnosisObj);
+
+        jsonLine.put("ppkt_id", ppktId);
+        if (promptFileName.endsWith(".txt")) {
+            promptFileName = promptFileName.substring(0, promptFileName.length() - 4);
+        }
+        jsonLine.put("prompt_id", promptFileName);
+        jsonLine.put("diagnosis", diagnosisList);
+        jsonLine.put("case_description", prompt);
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(jsonlFile, true))) {
+            String json = new ObjectMapper().writeValueAsString(jsonLine);
+            bw.write(json);
+            bw.newLine();
+        } catch (IOException e) {
+            throw new PhenolRuntimeException("Could not write to JSONL file: " + jsonlFile, e);
+        }
+    }
 
     public static void outputPromptFromCaseBundle(String prompt, String promptFileName, String dir) {
         File outpath = new File(dir + File.separator + promptFileName);
@@ -137,8 +169,6 @@ public class Utility {
             throw new PhenolRuntimeException("Could not output file to " + missingFileName);
         }
     }
-
-
 
     public static List<File> getAllPhenopacketJsonFiles(String ppktDir) {
         List<String> ppktDirectories = new ArrayList<>();
@@ -174,7 +204,12 @@ public class Utility {
                                                                     String baseDir,
                                                                     PromptGenerator generator) {
         String dirpath = String.format("%s%s%s", baseDir, File.separator, languageCode);
-        Utility.createDir(dirpath);
+        if(Context.getInstance().isJsonOutput()) {
+            Utility.createDir(baseDir);
+        }
+        else {
+            Utility.createDir(dirpath);
+        }
         List<String> diagnosisList = new ArrayList<>();
         for (PpktIndividual individual : individualList) {
             List<PhenopacketDisease> diseaseList = individual.getDiseases();
@@ -189,7 +224,12 @@ public class Utility {
             try {
                 diagnosisList.add(diagnosisLine);
                 String prompt = generator.createPrompt(individual);
-                Utility.outputPromptFromCaseBundle(prompt, promptFileName, dirpath);
+                if(Context.getInstance().isJsonOutput()) {
+                    Utility.outputPromptFromCaseBundle(prompt, promptFileName, dirpath, pdisease, individual.getPhenopacketId());
+                }
+                else {
+                    Utility.outputPromptFromCaseBundle(prompt, promptFileName, dirpath);
+                }
             } catch (Exception e) {
                 String errmsg = String.format("[ERROR] Could not process %s: %s\n", promptFileName, e.getMessage());
                 System.err.println(errmsg);
@@ -198,8 +238,6 @@ public class Utility {
         }
 
     }
-
-
 
     public static void outputPromptsInternational(List<File> ppktFiles, String languageCode, PromptGenerator generator, String outdirname) {
         List<PpktIndividual> individualList = new ArrayList<>();
@@ -213,8 +251,6 @@ public class Utility {
                 generator);
     }
 
-
-
     public static void outputPromptsInternationalMining(List<PpktIndividual> individualList,
                                                         String languageCode,
                                                         PromptGenerator generator) {
@@ -224,10 +260,11 @@ public class Utility {
                 generator);
     }
 
-
-
     public static List<CorrectResult> outputPromptsEnglish(List<File> ppktFiles, String outdirname) {
-        Utility.createDir(outdirname + "/en");
+        if(Context.getInstance().isJsonOutput()) {
+            Utility.createDir(outdirname);
+        }
+        else Utility.createDir(outdirname + "/en");
         List<CorrectResult> correctResultList = new ArrayList<>();
         PromptGenerator generator = PromptGenerator.english();
         int currentCount = 0;
@@ -242,7 +279,11 @@ public class Utility {
             String promptFileName = Utility.getFileName( individual.getPhenopacketId(), "en");
             try {
                 String prompt = generator.createPrompt(individual);
-                Utility.outputPromptFromCaseBundle(prompt, promptFileName, outdirname + "/en");
+                if(Context.getInstance().isJsonOutput()) {
+                    Utility.outputPromptFromCaseBundle(prompt, promptFileName, outdirname + "/en", pdisease, individual.getPhenopacketId());
+                } else {
+                    Utility.outputPromptFromCaseBundle(prompt, promptFileName, outdirname + "/en");
+                }
                 System.out.printf("en      %d.\r", currentCount);
                 currentCount++;
                 var cres = new CorrectResult(promptFileName, pdisease.getDiseaseId(), pdisease.getLabel());

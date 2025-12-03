@@ -306,7 +306,7 @@ public class TestDriveCommand implements Callable<Integer> {
     }
 
     @Override
-    public Integer call() {
+    public Integer call() throws IOException {
         java.io.File hpJsonFile = new java.io.File(hpoJsonPath);
         boolean useExactMatching = true;
         if (! hpJsonFile.isFile()) {

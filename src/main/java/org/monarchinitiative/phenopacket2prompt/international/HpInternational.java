@@ -17,7 +17,7 @@ public class HpInternational {
     }
 
     public void addTerm(TermId tid, String label) {
-        this.termIdToLabelMap.put(tid, label);
+        this.termIdToLabelMap.putIfAbsent(tid, label);
     }
 
     public String getLanguageAcronym() {

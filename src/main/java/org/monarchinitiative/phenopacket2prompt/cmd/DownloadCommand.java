@@ -43,11 +43,9 @@ public class DownloadCommand implements Callable<Integer>{
         BioDownloaderBuilder builder = BioDownloader.builder(destination);
         builder.hpoJson();
         builder.overwrite(overwrite);
-        // TODO there might be a bug in newer hp-international.obo, revert to latest after it is fixed.
-        //String hpoInternational = "https://github.com/obophenotype/human-phenotype-ontology/releases/latest/download/hp-international.obo";
-        String hpoInternational = "https://github.com/obophenotype/human-phenotype-ontology/releases/download/v2025-05-06/hp-international.obo";
+        String hpoInternational = "http://purl.obolibrary.org/obo/hp/translations/hp-all.babelon.json";
         URL hpoInternationalUrl  = new URI(hpoInternational).toURL() ;
-        builder.custom("hp-international.obo", hpoInternationalUrl);
+        builder.custom("hp-all.babelon.json", hpoInternationalUrl);
         BioDownloader downloader = builder.build();
         List<File> files = downloader.download();
         return 0;
