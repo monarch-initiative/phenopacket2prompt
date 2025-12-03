@@ -58,6 +58,8 @@ jobs:
         env:
           ZENODO_ACCESS_TOKEN: ${{ secrets.ZENODO_ACCESS_TOKEN }}
           ZENODO_DEPOSITION_ID: ${{ secrets.ZENODO_DEPOSITION_ID }}
+          LATEST_STORE_TAG: ${{ inputs. LATEST_STORE }}
+          LATEST_HPO_TAG: ${{ inputs.LATEST_HPO }}
         run: python scripts/update_and_release_to_zenodo.py prompts/
 
 

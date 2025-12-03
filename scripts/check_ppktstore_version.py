@@ -34,9 +34,10 @@ def fetch_with_retry(url, headers, max_retries=3, timeout=10):
 
 
 ppktstore_repo = "monarch-initiative/phenopacket-store"
+hpo_repo = "obophenotype/human-phenotype-ontology"
 this_repo = os.environ["GITHUB_REPOSITORY"]
 token  = os.environ["GH_TOKEN"]
-var_name = "LAST_RUN_RELEASE"
+ppkt_last_run_version = "LAST_RUN_RELEASE"
 
 # Get phenopacket-store latest version
 latest = fetch_with_retry(
@@ -45,12 +46,22 @@ latest = fetch_with_retry(
 ).json().get("tag_name")
 
 if not latest:
-    print("Error: Could not fetch latest release tag!")
+    print("Error: Could not fetch latest phenopacket-store release tag!")
     sys.exit(1)
-    
+
+# Get HPO latest version
+latest_hpo = fetch_with_retry(
+    f"https://api.github.com/repos/{hpo_repo}/releases/latest",
+    headers={"Accept": "application/vnd.github+json"}
+).json().get("tag_name")
+
+if not latest_hpo:
+    print("Error: Could not fetch latest HPO release tag!")
+    sys.exit(1)
+
 # Get last version of phenopacket-store that ppkt2prompt ran
 r = fetch_with_retry(
-    f"https://api.github.com/repos/{this_repo}/actions/variables/{var_name}",
+    f"https://api.github.com/repos/{this_repo}/actions/variables/{ppkt_last_run_version}",
     headers={
         "Authorization": f"token {token}",
         "Accept": "application/vnd.github+json"
@@ -58,28 +69,31 @@ r = fetch_with_retry(
 )
 
 if r.status_code != 200:
-    print(f"Error: Could not fetch repository variable '{var_name}'! Status code: {r.status_code}")
+    print(f"Error: Could not fetch repository variable '{ppkt_last_run_version}'! Status code: {r.status_code}")
     sys.exit(1)
 
 stored = r.json().get("value")
 if stored is None:
-    print(f"Error: Repository variable '{var_name}' returned no value.")
+    print(f"Error: Repository variable '{ppkt_last_run_version}' returned no value.")
     sys.exit(1)
 
 latest = latest.strip()
 stored = stored.strip()
+latest_hpo = latest_hpo.strip()
+
 new_release = (latest != stored)
 
 with open(os.environ["GITHUB_OUTPUT"], "a") as gh_out:
-    gh_out.write(f"latest_tag={latest}\n")
     gh_out.write(f"new_release={str(new_release).lower()}\n")
+    gh_out.write(f"latest_store_tag={latest}\n")
+    gh_out.write(f"latest_hpo_tag={latest_hpo}\n")
 
 
 # Update variable if needed
 if new_release:
-    payload = {"name": var_name, "value": latest}
+    payload = {"name": ppkt_last_run_version, "value": latest}
     res = requests.patch(
-        f"https://api.github.com/repos/{this_repo}/actions/variables/{var_name}",
+        f"https://api.github.com/repos/{this_repo}/actions/variables/{ppkt_last_run_version}",
         headers={"Authorization": f"token {token}",
                  "Accept": "application/vnd.github+json"},
         json=payload,

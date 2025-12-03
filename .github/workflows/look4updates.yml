@@ -11,6 +11,11 @@ jobs:
     permissions:
       contents: read
       actions: write
+    outputs:
+      latest_store_tag: ${{ steps.check.outputs.latest_store_tag }}
+      latest_hpo_tag: ${{ steps.check.outputs.latest_hpo_tag }}
+      new_release: ${{ steps.check.outputs.new_release }}
+
 
     steps:
       - uses: actions/checkout@v4
@@ -28,6 +33,13 @@ jobs:
             GH_TOKEN: ${{ secrets.GH_PAT_LEO }}
         run: python scripts/check_ppktstore_version.py
 
-      - name: Run follow-up action
-        if: steps.check.outputs.new_release == 'true'
-        uses: ./.github/workflows/create_prompts_and_upload.yml
+  follow_up_prompt_creation:
+      needs: check_release
+      if: needs.check_release.outputs.new_release == 'true'
+      uses: ./.github/workflows/create_prompts_and_upload.yml
+      with:
+        LATEST_STORE: ${{ needs.check_release.outputs.latest_store_tag }}
+        LATEST_HPO: ${{ needs.check_release.outputs.latest_hpo_tag }}
+      secrets:
+        ZENODO_ACCESS_TOKEN: ${{ secrets.ZENODO_ACCESS_TOKEN }}
+        ZENODO_DEPOSITION_ID: ${{ secrets.ZENODO_DEPOSITION_ID }}
