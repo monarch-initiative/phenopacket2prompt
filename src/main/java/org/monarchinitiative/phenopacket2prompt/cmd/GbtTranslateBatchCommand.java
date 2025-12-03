@@ -48,6 +48,10 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
             defaultValue = "false")
     private boolean onlyPatient;
 
+    @CommandLine.Option(names = {"-j", "--jsonl-output"},
+            description = "Only output patient description")
+    private boolean jsonOutput;
+
     public boolean getPatientFlag() {
         return onlyPatient;
     }
@@ -60,6 +64,7 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
         File hpJsonFile = new File(hpoJsonPath);
         Context.getInstance().setFullTranslations(fullTransl);
         Context.getInstance().setOnlyPatient(onlyPatient);
+        Context.getInstance().setJsonOutput(jsonOutput);
 
         boolean useExactMatching = true;
         if (! hpJsonFile.isFile()) {
@@ -143,7 +148,9 @@ public class GbtTranslateBatchCommand implements Callable<Integer> {
             pcopy.copyFile(file);
         }
         // output file with correct diagnosis list
-        Utility.outputCorrectPPKt(correctResultList);
+        if(!Context.getInstance().isJsonOutput()) {
+            Utility.outputCorrectPPKt(correctResultList);
+        }
         return 0;
     }
 
