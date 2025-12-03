@@ -36,19 +36,12 @@ jobs:
  
       - name: Run batch processing
         run: |
-          java -jar target/phenopacket2prompt.jar batch -d phenopackets-data/${{steps.dirout.outputs.DIR_NAME}} -p --full-translations=true
+          java -jar target/phenopacket2prompt.jar batch -d phenopackets-data/${{steps.dirout.outputs.DIR_NAME}} -p --full-translations -j
 
-      #- name: Check generated files # For debugging purposes
-      #  run: |
-      #    ls prompts/en | head
-      #    ls prompts/it | head
-      #    cat $(ls -p prompts/en | grep -v / | head -n 2 | sed 's|^|prompts/en/|')
-
-      - name: Set up zipped structure for upload
+      - name: Zip original phenopackets for upload
         run: |
-          for dir in prompts/*/; do
-            zip -r "${dir%/}.zip" "$dir" && rm -r "$dir"
-          done
+          zip -r prompts/original_phenopackets.zip prompts/original_phenopackets
+          rm -r prompts/original_phenopackets
 
       - name: Set up Python for subsequent upload to zenodo
         uses: actions/setup-python@v4
