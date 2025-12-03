@@ -45,7 +45,7 @@ def create_new_version():
 
     today_date = datetime.today().strftime("%Y-%m-%d")
     metadata["publication_date"] = today_date
-    metadata["notes"] = f"Used phenopacket-store version {LATEST_PPKT_STORE} and HPO version {LATEST_HPO}."
+    metadata["notes"] = f"Used phenopacket-store version {LATEST_PPKT_STORE} and HPO version {LATEST_HPO}. Beyond this record, please also cite https://doi.org/10.1016/j.ebiom.2025.105957"
     metadata_update = {"metadata": metadata}
     #TODO maybe add further data here about number of prompts in each language? Should be easy to do with JSONL
 
