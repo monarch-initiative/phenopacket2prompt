@@ -36,8 +36,8 @@ def fetch_with_retry(url, headers, max_retries=3, timeout=10):
 ppktstore_repo = "monarch-initiative/phenopacket-store"
 hpo_repo = "obophenotype/human-phenotype-ontology"
 this_repo = os.environ["GITHUB_REPOSITORY"]
-token  = os.environ["GH_TOKEN"]
-ppkt_last_run_version = "LAST_RUN_RELEASE"
+stored_name = "LAST_RUN_RELEASE"
+stored = os.environ[stored_name]
 
 # Get phenopacket-store latest version
 latest = fetch_with_retry(
@@ -59,23 +59,6 @@ if not latest_hpo:
     print("Error: Could not fetch latest HPO release tag!")
     sys.exit(1)
 
-# Get last version of phenopacket-store that ppkt2prompt ran
-r = fetch_with_retry(
-    f"https://api.github.com/repos/{this_repo}/actions/variables/{ppkt_last_run_version}",
-    headers={
-        "Authorization": f"token {token}",
-        "Accept": "application/vnd.github+json"
-        }
-)
-
-if r.status_code != 200:
-    print(f"Error: Could not fetch repository variable '{ppkt_last_run_version}'! Status code: {r.status_code}")
-    sys.exit(1)
-
-stored = r.json().get("value")
-if stored is None:
-    print(f"Error: Repository variable '{ppkt_last_run_version}' returned no value.")
-    sys.exit(1)
 
 latest = latest.strip()
 stored = stored.strip()
@@ -91,10 +74,11 @@ with open(os.environ["GITHUB_OUTPUT"], "a") as gh_out:
 
 # Update variable if needed
 if new_release:
-    payload = {"name": ppkt_last_run_version, "value": latest}
+    token = os.environ["GITHUB_TOKEN"] 
+    payload = {"name": stored_name, "value": latest}
     res = requests.patch(
-        f"https://api.github.com/repos/{this_repo}/actions/variables/{latest}",
-        headers={"Authorization": f"token {token}",
+        f"https://api.github.com/repos/{this_repo}/actions/variables/{stored_name}",
+        headers={"Authorization": f"Bearer {token}",
                  "Accept": "application/vnd.github+json"},
         json=payload,
         timeout=10
@@ -102,7 +86,7 @@ if new_release:
     if res.status_code == 404:
         requests.post(
             f"https://api.github.com/repos/{this_repo}/actions/variables",
-            headers={"Authorization": f"token {token}",
+            headers={"Authorization": f"Bearer {token}",
                      "Accept": "application/vnd.github+json"},
             json=payload,
             timeout=10
