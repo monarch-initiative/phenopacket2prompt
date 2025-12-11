@@ -3,6 +3,11 @@ on:
   schedule:
     - cron: "0 0 * * 0" # Run weekly on Sunday at 00:00 UTC
   workflow_dispatch:
+    inputs:  
+      dry_run:
+        description: 'Skip follow-up steps like Zenodo uploads'
+        required: false
+        default: 'true'
 
 jobs:
   check_release:
@@ -36,7 +41,7 @@ jobs:
 
   follow_up_prompt_creation:
       needs: check_release
-      if: needs.check_release.outputs.new_release == 'true'
+      if: needs.check_release.outputs.new_release == 'true' && github.event.inputs.dry_run != 'true'      
       uses: ./.github/workflows/create_prompts_and_upload.yml
       with:
         LATEST_STORE: ${{ needs.check_release.outputs.latest_store_tag }}
