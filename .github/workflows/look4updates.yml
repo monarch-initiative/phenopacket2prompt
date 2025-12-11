@@ -37,7 +37,6 @@ jobs:
         id: check
         env:
             LAST_RUN_RELEASE: ${{ vars.LAST_RUN_RELEASE }}
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python scripts/check_ppktstore_version.py
 
   follow_up_prompt_creation:
