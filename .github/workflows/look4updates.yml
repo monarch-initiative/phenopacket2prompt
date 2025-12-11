@@ -31,7 +31,7 @@ jobs:
       - name: Run release checker
         id: check
         env:
-            GH_TOKEN: ${{ secrets.GH_PAT_LEO }}
+            LAST_RUN_RELEASE: ${{ env.LAST_RUN_RELEASE }}
         run: python scripts/check_ppktstore_version.py
 
   follow_up_prompt_creation:
