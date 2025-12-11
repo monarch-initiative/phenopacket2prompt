@@ -8,6 +8,7 @@ jobs:
   check_release:
     name: Check for new phenopacket-store release
     runs-on: ubuntu-latest
+    environment: create_prompts
     permissions:
       contents: read
       actions: write
