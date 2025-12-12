@@ -37,7 +37,7 @@ ppktstore_repo = "monarch-initiative/phenopacket-store"
 hpo_repo = "obophenotype/human-phenotype-ontology"
 this_repo = os.environ["GITHUB_REPOSITORY"]
 token  = os.environ["GH_TOKEN"]
-ppkt_last_run_version = "LAST_RUN_RELEASE"
+ppkt_release_name = "LAST_RUN_RELEASE"
 
 # Get phenopacket-store latest version
 latest = fetch_with_retry(
@@ -61,7 +61,7 @@ if not latest_hpo:
 
 # Get last version of phenopacket-store that ppkt2prompt ran
 r = fetch_with_retry(
-    f"https://api.github.com/repos/{this_repo}/actions/variables/{ppkt_last_run_version}",
+    f"https://api.github.com/repos/{this_repo}/actions/variables/{ppkt_release_name}",
     headers={
         "Authorization": f"token {token}",
         "Accept": "application/vnd.github+json"
@@ -69,19 +69,19 @@ r = fetch_with_retry(
 )
 
 if r.status_code != 200:
-    print(f"Error: Could not fetch repository variable '{ppkt_last_run_version}'! Status code: {r.status_code}")
+    print(f"Error: Could not fetch repository variable '{ppkt_release_name}'! Status code: {r.status_code}")
     sys.exit(1)
 
-stored = r.json().get("value")
-if stored is None:
-    print(f"Error: Repository variable '{ppkt_last_run_version}' returned no value.")
+stored_ppkt_value = r.json().get("value")
+if stored_ppkt_value is None:
+    print(f"Error: Repository variable '{ppkt_release_name}' returned no value.")
     sys.exit(1)
 
 latest = latest.strip()
-stored = stored.strip()
+stored_ppkt_value = stored_ppkt_value.strip()
 latest_hpo = latest_hpo.strip()
 
-new_release = (latest != stored)
+new_release = (latest != stored_ppkt_value)
 
 with open(os.environ["GITHUB_OUTPUT"], "a") as gh_out:
     gh_out.write(f"new_release={str(new_release).lower()}\n")
@@ -91,9 +91,9 @@ with open(os.environ["GITHUB_OUTPUT"], "a") as gh_out:
 
 # Update variable if needed
 if new_release:
-    payload = {"name": ppkt_last_run_version, "value": latest}
+    payload = {"name": ppkt_release_name, "value": latest}
     res = requests.patch(
-        f"https://api.github.com/repos/{this_repo}/actions/variables/{latest}",
+        f"https://api.github.com/repos/{this_repo}/actions/variables/{ppkt_release_name}",
         headers={"Authorization": f"token {token}",
                  "Accept": "application/vnd.github+json"},
         json=payload,
@@ -111,4 +111,4 @@ if new_release:
     # You can also send mail here via SMTP if you prefer Python's smtplib
     print(f"Detected new release {latest} from {ppktstore_repo}")
 else:
-    print(f"The latest phenopacket-store release {stored} was already run.")
+    print(f"The latest phenopacket-store release {stored_ppkt_value} was already run.")
