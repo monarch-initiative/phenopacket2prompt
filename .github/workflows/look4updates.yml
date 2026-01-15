@@ -1,7 +1,7 @@
 name: Check phenopacket-store for a new release
 on:
   schedule:
-    - cron: "0 0 * * 0" # Run weekly on Sunday at 00:00 UTC
+    - cron: "0 0 * * 5" # Run weekly on Friday at 00:00 UTC
   workflow_dispatch:
     inputs:  
       dry_run:
