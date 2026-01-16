@@ -1,0 +1,29 @@
+[source]
+pmid = PMID:23726037
+title = The first case of CDK5RAP2-related primary microcephaly in a non-consanguineous patient identified by next generation sequencing
+[diagnosis]
+disease_id = OMIM:604804
+disease_label = Microcephaly 3, primary, autosomal recessive
+[text]
+The patient, a 6 year old Caucasian female, was the product of a triplet pregnancy born at 33 weeks gestation.
+She was noted, in utero, to have a smaller head than either of her siblings, and by parents’ report at 30 days of age
+her head circumference was 30 cm (−2 SD on preterm growth curve).
+At birth, she was noted to have issues with temperature regulation, waking and feeding, but was able to be discharged
+with her siblings at 29 days of age. Besides a history of short stature, delayed bone age, asthma, environmental allergies
+and a question of sleep apnea, she has been generally in good health. Primary concerns for the patient has been with her development.
+ While motor milestones were met fairly normally, her cognitive, language, and fine motor/adaptive skills were delayed.
+ She required early intervention and attended developmental preschool. For the current school year she is in an integrated
+ 1st grade class with an aide. She receives occupational therapy to assist with visual motor integration, speech therapy to
+ improve her articulation, and extra help for reading. Most recent measures of general intelligence (performed at 6½ years of age)
+ reveal a below average full scale IQ of 75 with greatest impairment in processing speed. On the Wechsler Preschool and
+ Primary Scale of Intelligence III Revised (for children 2 years 6 m – 7 years 3 m), she obtained a Verbal IQ of 83,
+ Nonverbal IQ of 75, and Processing speed 71. On the Wechsler Individual Achievement Testing (WIAT) she showed
+ significant struggles in secondary language on tasks of early reading (SS 60), word reading (SS 70), reading comprehension (SS 69)
+ and struggles in math on the task of numerical operations (SS 61) (WPPSI – R and WIAT mean = 100 and SD = 15).
+ Parents report subjectively that differences in development relative to her sisters are becoming more apparent with time.
+
+In terms of the patient’s family history, the patient was born to a Northern European mother and Caucasian father with
+Cherokee ancestry with no reported consanguinity (Fig. 1b). The patient’s family history was remarkable for benign familial
+epilepsy and pseudohypoparathyroidism in her older sibling, history of seizures on her maternal side and a history of attention
+deficient disorder and cleft palate on the paternal side. Head circumferences measurements were taken on the patient’s
+three sisters and were all well within the normal range.

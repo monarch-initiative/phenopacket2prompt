@@ -1,0 +1,20 @@
+[source]
+pmid = PMID:24800029
+title = A Novel Missense Mutation in BRAF Caused Cardio-Facio-Cutaneous Syndrome
+[diagnosis]
+disease_id = OMIM:115150
+disease_label = Cardiofaciocutaneous syndrome
+[text]
+We present here a 10-year-old boy who was referred to the department of Medical Genetics for dysmorphological evaluation
+because of severe developmental delay, short stature and dysmorphic features. He was the third child of healthy, non-consanguineous Turkish parents.
+His parents and two siblings were healthy. He was born at term after an uneventful pregnancy. His birth weight was 3000 g (10-25th centile),
+height 50 cm (50th centile). His developmental milestones were globally delayed.
+
+At the age of 10, his height was 87.5 cm (<3rd centile), his weight 15300 g (10-25 centile) and head circumference 49,5 cm (<3rd centile).
+Physical examination revealed coarse facial appearance, low-set ears, sparse eyebrows, bilateral ptosis, down-slanted palpebral fissures,
+epicanthal folds, bulbous nose, prominent philtrum, high-arched palate, thick lower lip, pectus excavatum, clinodactyly of fifth fingers (Fig. 1a).
+His hair was curly. Two cafe-au-lait spots were also noted. A hypertrophic cardiomyopathy was detected by echocardiography.
+On neurological examination, he had severe mental retardation (IQ below 50) with poor social interaction at the age of 10.
+Myopia was detected on ophthalmical examination. Fundus examination and visual evoked potentials were normal. Laboratory tests were normal.
+Magnetic resonance imaging showed cortical atrophy of the brain. Abdominal ultrasonography, X-ray of vertebral column and extremities were normal.
+A hearing test was normal. His karyotype was 46 XY.

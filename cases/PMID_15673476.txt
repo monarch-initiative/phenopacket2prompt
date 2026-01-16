@@ -1,0 +1,15 @@
+[source]
+pmid = PMID:15673476
+title = A novel heterozygous missense mutation in the UMOD gene responsible for Familial Juvenile Hyperuricemic Nephropathy
+[diagnosis]
+disease_id = OMIM:162000
+disease_label = Tubulointerstitial kidney disease, autosomal dominant, 1
+[text]
+The proband is an affected female who was first evaluated at the age of 24, when she presented with a gout attack and hyperuricemia.
+ At age 27 she was told having renal failure. However, a renal biopsy was not performed.
+ At age 44, serum creatinine was 2.8 mg/dl and ultrasound imaging detected numerous renal cysts.
+ Renal disease slowly progressed and the patient reached ESRD when she was 49 years old.
+ Her father died at the age of 55 from ESRD and suffered from hyperuricemia and gout.
+ The proband's only son is also affected. At the age of 18 years he had a gout attack.
+ On the initial evaluation, serum uric acid was 15 mg/dl and serum creatinine 1.6 mg/dl.
+ Renal cysts were also detected on ultrasound examination.

@@ -1,0 +1,25 @@
+[source]
+pmid = PMID:28757203
+title = Biallelic Mutations in LIPT2 Cause a Mitochondrial Lipoylation Defect Associated with Severe Neonatal Encephalopathy
+[diagnosis]
+disease_id = OMIM:617668
+disease_label = Encephalopathy, neonatal severe, with lactic acidosis and brain abnormalities
+[text]
+Individual 1 (P1), a boy, was the first child of non-consanguineous parents of French (mother) and Ivory
+Coast (father) origin. He was born after an uneventful pregnancy and spontaneous delivery at term with
+normal birth parameters (body weight 3,750 g, length 51 cm, head circumference 35 cm). Apgar scores
+were 9/10/10. From birth on, he presented with truncal hypotonia, spastic tetraparesis, and dystonia.
+Brain MRI showed marked supra-tentorial cortical atrophy with ventricular dilatation as well as bifrontal white matter abnormalities and delayed myelination (Figure 1Amiddle). MRS spectroscopy with
+a long TE (144) showed a lactate peak (Figure 1B). This clinical and radiological presentation led us to
+suspect a mitochondrial disease. At age 2.5 years, the affected individual was bed- and wheelchair-bound
+with no head control. He could neither sit unaided nor speak or understand simple orders. He was
+otherwise fully conscious and alert, and he could smile at times and follow with his eyes. His weight
+was -2.5 SD, his length was at the median, and his head circumference (HC) was -4 SD. Major
+swallowing difficulties led to gastrostomy. At the age of 3 years, he developed complex epilepsy treated
+by oxcarbazepine (Trileptal®), clobazam (Urbanyl®), and topiramate (Epitomax®).
+Electroencephalography at the age of 7 years showed in the awake state, an absence of occipital alpha
+rhythm, polyrhythmic background activity with diffuse alpha, theta and rare delta rhythms, multifocal
+spikes and sharp waves, sometimes in bursts or rhythmic sequences, with right posterior predominance
+(Figure S3A). Cardiac ultrasonography, audiological and ophthalmological examination were normal.
+At the age of 7 years and 9 months, the ventricular dilatation and sub-tentorial cortical atrophy were
+increased. No episodes of metabolic decompensation have been documented.

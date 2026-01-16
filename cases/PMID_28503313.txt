@@ -1,0 +1,24 @@
+[source]
+pmid = PMID:28503313
+title = Novel DHCR7 mutation in a case of Smith-Lemli-Opitz syndrome showing 46,XY disorder of sex development
+[diagnosis]
+disease_id = OMIM:270400
+disease_label = Smith-Lemli-Opitz syndrome
+[text]
+The patient was born at 38 weeks of gestation to non-consanguineous Japanese parents. Birth weight, length and head
+circumference were 2,59Z g (−0.92 s.d.), 45 cm (−1.7 s.d.) and 33 cm (−0.1 s.d.), respectively.
+Ambiguous genitalia, low set ears, a short nose and Y-shaped 2–3 toe syndactyly were detected at birth (Figure 1a and b).
+Examination of the patient’s genitalia revealed a micropenis (stretch length: 1.5 cm),
+left lateral testicular hypoplasia (right and left diameters: 10 and 5 mm, respectively), hypospadias and a bifid scrotum (Figure 1c).
+Echography and magnetic resonance imaging failed to detect the presence of a uterus or ovaries.
+Blood examination revealed a relatively low total cholesterol (T. Chol) level (46 mg/dl) (reference: 129–232),
+normal testosterone and slightly low anti-mullerian hormone level for males.
+Urine steroid profile was normal.
+G-banding analysis confirmed a normal 46,XY male karyotype. From these results, the patient was recorded in public office documents as male.
+We performed cholesterol analysis with high-performance liquid chromatography.
+This analysis revealed relative hypocholesterolemia and high 7-DHC and 8-dehydrocholesterol levels in the patient and normal levels
+(undetectable) in his parents (Table 1). T.
+Chol/7-DHC was significantly lower in the patient than in his parents.
+Therefore, he was biochemically diagnosed with SLOS.
+The patient also presented with allergies for milk and eggs, and eczema throughout his body.
+His eczema, considered to be atopic dermatitis, was treated with corticosteroid ointment.

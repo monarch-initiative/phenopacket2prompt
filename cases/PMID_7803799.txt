@@ -1,0 +1,23 @@
+[source]
+pmid = PMID:7803799
+title = A deletional frameshift mutation in protein 4.2 gene (allele 4.2 Lisboa) associated with hereditary hemolytic anemia
+[diagnosis]
+disease_id = OMIM:612690
+disease_label = Spherocytosis, type 5
+[text]
+The proband was born in 1967, 80 km north of Lisboa (Portugal). She had no major medical history until the age of 20.
+Several tests in 1986 failed to show any conspicuous anemia [hemoglobin (Hb) level: 124, 128, and 135 g/L],
+suggesting retrospectively that hemolysis was compensated. In 1987, however, the patient was admitted to the hospital
+with anemia (RBC count: 3.19 T/L; Hb: 102 g/L; hematocrit (Ht) level: 30%; reticulocyte count: 7.5%),
+mild icterus (bilirubin level: 2.6 mg/dL), and splenomegaly. There was no obvious reason for these acute symptoms.
+The leukocyte and platelet counts were normal. In 1989, she was readmitted with more severe symptoms: fever (39°C),
+abdominal pain, pallor, and icterus, again without any conspicuous cause
+(RBC count: 1.45 T/L; Hb level: 43 g/L; Ht level: 12.7%; reticulocyte count: 13%; bilirubin level: 3.29 mg/dL;
+leukocyte count: 2.4 G/L; platelet count: 120 G/L). Her spleen was felt 4 cm below the costal margin.
+Osmotic resistance was reduced, yet moderately: 50% hemolysis for 0.049 g/L NaCl versus 0.040 to 0.046 g/L in controls.
+Incubated osmotic tests yielded more disturbed results: 50% hemolysis for 0.076 g/L NaCl, vs. 0.048-0.059 g/L in controls.
+The blood film showed only a few spherocytes. The leukocyte count (3.0 to 5.4 G/L) and the platelet count (150-178 G/L) was normal.
+The patient was transfused, but recovery was only partial (Hb level: 90 to 110 g/L:
+RBC count: 2.9 to 3.5 T/L; elevated reticulocytes).
+During the period from 1988 to 1989, routine hemostasis tests
+(bleeding time, prothrombin level. partial thromboplastin time) were always normal.

@@ -1,0 +1,27 @@
+[source]
+pmid = PMID:30046498
+title = A Novel c.91dupG JAG1 Gene Mutation Is Associated with Early Onset and Severe Alagille Syndrome
+[diagnosis]
+disease_id = OMIM:118450
+disease_label = Alagille syndrome 1
+[text]
+The proband is a 2-year and 7-month-old Mexican mestizo male (Figure 1(a), individual III.2).
+He was referred at 5 months of age due to cholestatic syndrome characterized by jaundice and pale stools,
+which began as of the third week of life. He is the only child of a young, apparently healthy, and unrelated couple.
+The pregnancy lasted 39 weeks and was complicated by maternal cholelithiasis at the fourth month.
+Antibiotics were indicated for repetitive urinary infections as of the fifth month.
+Delivery was carried out by cesarean section due to fetal distress.
+The newborn’s weight was 2200 g (P<5), height was 48 cm (P<5), and Apgar score was 8/9.
+
+The cognitive development of the patient is normal. At nine months of age, his weight was 6 kg (P<5),
+height was 64 cm (P<5), and head circumference was 44.5 cm (P25-50). He manifested generalized jaundice,
+dry skin, and an anterior fontanelle that had not yet closed. He had sparse eyebrows, a broad forehead,
+deep-set eyes, a triangular face, prominent ears, a heart murmur, hepatomegaly, and hypotrophic limbs (Figures 1(b) and 1(c)).
+His liver function tests were abnormal (Figure 1(d)) and an abdominal ultrasound analysis demonstrated
+generalized thickening of the biliary tract. The X-ray analysis showed a butterfly-like image in several dorsal
+vertebrae (Figure 1(e)). Right and left pulmonary hypoplasia were diagnosed by echocardiogram analysis.
+A magnetic resonance image analysis at the age of 1 year and 2 months displayed
+widening of the subarachnoid space and bilateral subarachnoid cysts in the temporal fossa.
+The optic nerve in both eyes was normal. At 2 years and 2 months of age, he developed xanthomata
+in both elbows and in his knuckles, and at 2 years and 4 months of age, posterior embryotoxon was diagnosed.
+A hepatic biopsy detected intracytoplasmic cholestasis and the absence of interlobular conducts.

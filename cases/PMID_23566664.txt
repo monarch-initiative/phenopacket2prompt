@@ -1,0 +1,23 @@
+[source]
+pmid = PMID:23566664
+title = A mutation in NOTCH2 gene in a Chinese patient with Hajdu-Cheney syndrome
+[diagnosis]
+disease_id = OMIM:102500
+disease_label = Hajdu-Cheney syndrome
+[text]
+The affected individual has normal secondary sexual characteristics with no pregnancy history.
+When she was 12 years old, her fingers and toes became shorter and broader. Because she did not feel any
+pain, she did not go to see a doctor at that time. Since a compression fracture of lumbar spine one in 2007,
+she has had severe lumbago and difficulty in walking. She came to our department in December 2008.
+
+She was presented with a short stature of 152 cm. She had bushy eyebrows, and her hair was black and coarse.
+She had a flat face, a large auricle, and a small lower jaw (Fig. 1a) Her fingers and toes were short and broad (Fig. 1b).
+Her hearing was normal. On superficial examination, the teeth appear normal. Her intelligence was normal,
+but a memory decline had been progressing during the last 5 years.
+Radiographs showed osteoporosis of the hands and acro-osteolysis and soft tissue swelling at the proximal ends of the
+distal phalanges of the fingers (Fig. 1c) and toes. There was osteoporosis of the spine, with compression fractures of
+T4, T5, T7, T11 and L1 vertebrae.
+Physical characteristics: her hair was black and coarse, and she had facial features characteristic of elderly individuals,
+a broad nose, bushy eyebrows, a flat face, a large auricle and a small lower jaw (a);
+her fingers were short and broad (b). Radiography features: osteoporosis of the hands,
+osteolysis and soft tissue swelling at the proximal end of the distal phalanges of the fingers (c).

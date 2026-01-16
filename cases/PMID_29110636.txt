@@ -1,0 +1,36 @@
+[source]
+pmid = PMID:29110636
+title = Phenotypic and genotypic aspects of Townes-Brock syndrome: case report of patient in southern Brazil with a new SALL1 hotspot region nonsense mutation
+[diagnosis]
+disease_id = OMIM:107480
+disease_label = Townes-Brocks syndrome 1
+[text]
+The proband, VMFS, who was 5 years old at the time this report was written,
+was born by normal vaginal delivery at 38.5 weeks gestational age with Apgar scores of 9 and 10
+ (first and fifth minutes, respectively). His birth weight (2.735 kg), length (48 cm), and
+ head circumference (34.5 cm) were within normal ranges. The pregnancy occurred with no
+ intercurrences and no concerns were raised in prenatal examinations. The child was born with
+ anal atresia, which was corrected by posterior sagittal anorretoplasty on his second day of life.
+ After the operation, VMFS remained hospitalized for 10 days in the neonatal intensive care unit.
+VMFS is the second child of non-consanguineous healthy young adult parents. He has a brother
+(11 years old) with attention deficit hyperactivity disorder and a cousin who was born with an
+imperforate anus. The patient has exhibited developmental and speech delays. He displays
+hyperactive and sometimes aggressive behavior, which has been managed with antipsychotic drugs
+starting from the age of 4. He has a short stature for his age, a low anterior hairline,
+left microtia with agenesis of the helix, bilateral preauricular tags, low set ears,
+long eyelashes, epicanthus, a deviated nose with a downward pointing tip, and a short neck.
+Skeletal anomalies were prominent and included a bifid thumb on the right hand,
+a long left thumb with a size and shape similar to that of the second left hand finger,
+and overlapping toes on the feet.
+VFMS was also noted to have hypospadias and a hypochromic spot on the right thigh.
+An abdominal ultrasound was normal. Echocardiography showed an atrial septal defect.
+Cystourethrography showed vesicoureteral reflux (grade II) and
+bilateral reduction of the distal urethral caliber.
+However, blood tests results ruled out renal insufficiency,
+and renal scintigraphy and ultrasonography findings were normal.
+Analysis of auditory brainstem evoked potentials indicated bilateral moderate hearing,
+with better responses to low-frequency stimuli. Brain computerized axial tomography and
+ magnetic resonance imaging scans were normal (Fig. 1).
+ An electroencephalogram (International 10–20 System of Electrode Placement), showed normal
+ background activity. X-rays showed preaxial polydactyly with ulnar deviation (Fig. 2),
+ and a rudimentary rib at T12.

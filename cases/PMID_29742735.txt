@@ -1,0 +1,17 @@
+[source]
+pmid = PMID:29742735
+title = A case report of heterozygous TINF2 gene mutation associated with pulmonary fibrosis in a patient with dyskeratosis congenita
+[diagnosis]
+disease_id = OMIM:613990
+disease_label = Dyskeratosis congenita, autosomal dominant 3
+[text]
+At the time of admission, the proband was a 32-year-old woman. She had been complaining of a
+dry irritating cough for 2 years and progressive breathlessness on exertion for 6 months.
+She had no exudative retinopathy, growth retardation, immune deficiency, or cancer.
+Physical examination revealed reticulated hypopigmentation of the body, nail dystrophy, and tongue leukoplakia
+(Fig.1A–C). Computed tomography of chest showed subpleural, basal predominance of reticular abnormalities
+and honeycombing with traction bronchiectasis (Fig.1D). Her pulmonary function test showed severe
+restrictive ventilator dysfunction. Forced vital capacity was 32.46% of the predicted value, and the
+forced expiratory volume in first second was 36.81% of the predicted value.
+A right heel rash biopsy showed obvious pathological hyperkeratosis, focal acantholysis,
+squamous epithelial hyperplasia, and epithelial foot extension.

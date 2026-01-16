@@ -1,0 +1,30 @@
+[source]
+pmid = PMID:30034812
+title = Camurati-Engelmann disease: a case report from sub-Saharan Africa
+[diagnosis]
+disease_id = OMIM:131300
+disease_label = Camurati-Engelmann disease
+[text]
+A 35-year-old female patient was referred to us. She had a 15-year history of left shoulder joint pain,
+bone pain, progressive enlargement of bones in the arms and legs and waddling gait,
+associated with general body weakness. Also protrusion of both eyes was reported.
+There were no associated hearing and visual problems. Her cognitive and motor development was normal,
+though from the age of 10 years she could not keep pace with her peers in sports activities.
+No close relative had the same or similar symptoms; she has a 3 years old healthy daughter.
+On physical examination she had prominent forehead, proptosis and blepharoptosis (Fig. 1).
+Prominent palpable bones in upper limbs, humerus, ulna and radius (Fig. 2) and lower limbs (Fig. 3)
+were noted with muscle wasting and pseudo-atrophy of skin above affected bones.
+The left shoulder joint was tender, but not swollen. There were good passive and active joint movements.
+Cranial nerve examination was normal.
+She had elevated alkaline phosphatase of 256 μmol/L (normal range50-150 μmol/L) and
+low calcium of 2.01 mmol/L (normal range 2.15–2.65 mmol/L). Full blood count, creatinine,
+thyroid function test and uric acid were normal. ECG and chest radiography were normal.
+Radiographs of left and right upper limbs (Fig. 4) showed bilateral, dense cortices of diaphyses,
+sparing metaphyses and epiphyses.
+Hyperostosis of diaphyses of long bones of upper limbs (arrows).
+(A) Left humerus with irregular cortical thickening and medullary canal stenosis.
+(B) Right humerus with irregular cortical thickening and medullary canal stenosis.
+(C) Right radius and ulna with cortical thickening, medullary canal obliteration
+and narrowing of space between radius and ulna.
+(D) Left radius and ulna with cortical thickening, medullary canal obliteration and
+narrowing of space between radius and ulna.

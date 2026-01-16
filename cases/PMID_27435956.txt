@@ -1,0 +1,45 @@
+[source]
+pmid = PMID:27435956
+title = Muckle-Wells Syndrome: A Case Report with an NLRP3 T348M Mutation
+[diagnosis]
+disease_id = OMIM:191900
+disease_label = Muckle-Wells syndrome
+[text]
+A 5-year-old girl presented with a 4-year history of
+recurrent urticarial skin eruptions. We first examined
+the child at the age of 11 months, when she had an
+urticarial rash flare consisting of different-sized
+plaques on the trunk, extremities, and face (Fig. 1).
+These skin lesions were evanescent in 24 hours and
+were asymptomatic. Her body temperature was 36°C,
+without any previous episodes of fever. She never had
+conjunctivitis. She was born at 29 weeks weighing
+1,200 g. She exhibited slight growth retardation
+(height 72 cm, weight 7.8 kg). Her Romanian mother
+had a history of chronic urticaria, arthralgias, and
+deafness. Her 11-year-old brother and father were
+healthy.
+Laboratory examination revealed an elevated
+white blood cell count (438,000/lL), a high erythrocyte sedimentation rate (ESR; 48 mm at 1 hour), and
+high C-reactive protein (CRP; 8–10 mg/dL). Laboratory investigations of complete blood cell count,
+electrolytes, rheumatoid factor, antinuclear antibody,
+and complement components (C3, C4, CH50) and
+liver and renal tests yielded normal results. A chest
+radiograph was also normal. Skin biopsy showed
+moderate, nonspecific dermal inflammation and
+perivascular infiltration with predominantly polymorphonuclear cells, compatible with common urticaria
+without signs of vasculitis (Fig. 2A, B). Direct
+immunofluorescence was negative.
+A diagnosis of chronic urticaria was made and
+therapy with systemic antihistamines was initiated,
+with variable response. The intermittent urticarial
+rash persisted for several years. The few laboratory
+tests performed during this time showed anemia,
+leukocytosis, and high CRP and ESR levels.
+When she was 5 years old, the patient presented
+with a severe headache. Magnetic resonance imaging
+examination and lumbar puncture with an analysis of
+the cerebrospinal fluid (CSF) revealed intracranial
+hypertension (opening pressure 40–45 mm H2O).
+Ophthalmologic examination found bilateral papillary edema without any other ocular abnormalities
+(Fig. 3A).

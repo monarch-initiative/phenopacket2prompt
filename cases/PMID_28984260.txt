@@ -1,0 +1,44 @@
+[source]
+pmid = PMID:28984260
+title = Glycogen Storage Disease Type VI With a Novel Mutation in PYGL Gene
+[diagnosis]
+disease_id = OMIM:232700
+disease_label = Glycogen storage disease VI
+[text]
+A 2-year-5-month-old, developmentally normal female
+child was brought with complaints of progressive
+abdominal distension noticed since one year of age.
+There was no history of fever, vomiting, loose stools or
+constipation. Jaundice or bleeding manifestations were
+absent. Poor weight- and height-gain were noticed since
+infancy. There were no seizures, altered sensorium, early
+morning lethargy or earlier hospital admissions. The
+child was the first-born of second-degree consanguineous
+parents. There was no similar illness in the family. She
+had a cherubic facies. There was no pallor, icterus or
+clubbing. The height (74 cm) and weight (8.45 kg) were
+less for the age (weight-for-age z-score was -3.4; heightfor-age z-score was -4.7).
+A firm hepatomegaly was
+palpable 12 cm below the costal margin. The spleen was
+not palpable.
+The haematological workup, serum electrolytes,
+bilirubin, creatinine, International Normalized Ratio, uric
+acid, and Creatinine phospho kinase (and its MB
+component) were within normal range. The child had
+serum aspartate transaminase of 445 IU/L, serum alanine
+aminotransferase of 484 IU/L, serum alkaline
+phosphatase of 813 IU/L, serum albumin of 4.2 g/dL,
+serum total protein of 7 g/dL. Serum triglycerides were
+854 mg/dL and serum cholesterol was 249 mg/dL.
+Fasting blood glucose was 60 mg/dL and serum
+bicarbonate was 23 meq/L. Ultrasound showed
+hepatomegaly without any adenoma or nodularity and
+normal-sized kidneys. Liver biopsy showed mildly
+distorted architecture. Hepatocytes were swollen with
+rarefaction of cytoplasm, prominent cell membrane and
+centrally placed nucleus. Portal tracts showed mild to
+moderate inflammatory infiltrate composed predominantly of lymphocytes and few neutrophils. There was
+fibrous expansion of portal tracts with porto-portal
+bridging and occasional incomplete nodule. PeriodicAcid-Schiff staining positivity with diastase-sensitivity
+was present. Esophago-gastroduodenoscopy did not
+show varices.
