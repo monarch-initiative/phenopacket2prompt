@@ -82,6 +82,11 @@ def delete_existing_files(deposition_id):
         requests.delete(delete_url, headers=HEADERS)
         print(f"Deleted {file['filename']}")
 
+    # Give Zenodo time to process the deletions
+    if files:
+        print("Waiting for Zenodo to process deletions...")
+        time.sleep(3)
+
 
 def upload_file(deposition_id, file_path, max_retries=5):
     """Uploads a file to the specified deposition with retries."""
@@ -99,9 +104,14 @@ def upload_file(deposition_id, file_path, max_retries=5):
             print(f"Uploaded {file_path} successfully.")
             return
 
-        if response.status_code == 403 and attempt < max_retries - 1:
-            wait = 2**attempt
-            print(f"Deposition locked, retrying in {wait}s...")
+        if response.status_code in (400, 403) and attempt < max_retries - 1:
+            # For "already exists" errors, use longer waits: 3s, then 30s
+            if response.status_code == 400:
+                wait = 3 if attempt == 0 else 30
+                print(f"File already exists (cache not cleared), retrying in {wait}s...")
+            else:
+                wait = 2**attempt
+                print(f"Deposition locked, retrying in {wait}s...")
             time.sleep(wait)
             continue
 
